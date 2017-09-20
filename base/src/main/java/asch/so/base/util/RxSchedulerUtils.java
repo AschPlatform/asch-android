@@ -7,7 +7,7 @@ import rx.schedulers.Schedulers;
 
 
 /**
- * @author baronzhang (baron[dot]zhanglei[at]gmail[dot]com)
+ * @author kimziv (kimziv@qq.com)
  *         2017/2/17
  */
 public final class RxSchedulerUtils {

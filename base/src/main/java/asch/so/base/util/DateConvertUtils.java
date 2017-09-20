@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * @author baronzhang (baron[dot]zhanglei[at]gmail[dot]com)
+ * @author kimziv (kimziv@qq.com)
  *         2016/12/12
  */
 public final class DateConvertUtils {

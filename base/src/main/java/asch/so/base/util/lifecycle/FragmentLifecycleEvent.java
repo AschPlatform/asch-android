@@ -1,7 +1,7 @@
 package asch.so.base.util.lifecycle;
 
 /**
- * @author baronzhang (baron[dot]zhanglei[at]gmail[dot]com)
+ * @author kimziv (kimziv@qq.com)
  *         2017/2/17
  */
 public enum FragmentLifecycleEvent {

@@ -10,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * 适配4.4以上版本 MIUI6、Flyme 和其他 Android6.0 及以上版本状态栏字体颜色
  *
- * @author baronzhang (baron[dot]zhanglei[at]gmail[dot]com)
+ * @author kimziv (kimziv@qq.com)
  *         2017/6/2
  */
 public class StatusBarHelper {

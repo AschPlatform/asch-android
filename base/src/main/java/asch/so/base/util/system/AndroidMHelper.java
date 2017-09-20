@@ -5,7 +5,7 @@ import android.os.Build;
 import android.view.View;
 
 /**
- * @author baronzhang (baron[dot]zhanglei[at]gmail[dot]com)
+ * @author kimziv (kimziv@qq.com)
  *         2017/6/2
  */
 class AndroidMHelper implements SystemHelper {

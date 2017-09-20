@@ -7,7 +7,7 @@ import android.view.WindowManager;
 import java.lang.reflect.Field;
 
 /**
- * @author baronzhang (baron[dot]zhanglei[at]gmail[dot]com)
+ * @author kimziv (kimziv@qq.com)
  *         2017/6/2
  */
 class FlymeHelper implements SystemHelper {
