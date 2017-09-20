@@ -45,10 +45,10 @@ public class MainTabActivity extends BaseActivity {
                                 viewPager.setCurrentItem(0);
                                 break;
                             case R.id.item_discovery:
-                                viewPager.setCurrentItem(2);
+                                viewPager.setCurrentItem(1);
                                 break;
                             case R.id.item_mine:
-                                viewPager.setCurrentItem(3);
+                                viewPager.setCurrentItem(2);
                                 break;
                         }
                         return false;
