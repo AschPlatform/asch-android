@@ -1,6 +1,7 @@
 package asch.so.wallet;
 
 import android.app.Application;
+import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
 /**
@@ -8,4 +9,23 @@ import android.support.multidex.MultiDexApplication;
  */
 
 public class WalletApplication extends MultiDexApplication{
+    private  static final String TAG = WalletApplication.class.getSimpleName();
+    private ApplicationComponent applicationComponent;
+    private static WalletApplication walletApplication;
+
+
+    public static WalletApplication getInstance(){
+
+        return walletApplication;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
 }

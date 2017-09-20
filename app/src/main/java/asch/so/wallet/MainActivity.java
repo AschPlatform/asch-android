@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d("++++++++"+MainActivity.class.getSimpleName()+"-secureLogin:", rawJson+" ");
         //Assert.assertTrue(result.isSuccessful());
 
-        AschHelper helper =new AschHelper();
-        String secret= helper.generateSecret();
-        Log.d(mTAG,"++++++++ "+secret);
+        //AschHelper helper =new AschHelper();
+        //String secret= helper.generateSecret();
+       // Log.d(mTAG,"++++++++ "+secret);
 
     }
 }
