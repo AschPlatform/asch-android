@@ -7,9 +7,9 @@ import android.widget.TextView;
 
 //import junit.framework.Assert;
 
-import so.asch.sdk.AschHelper;
-import so.asch.sdk.AschResult;
-import so.asch.sdk.AschSDK;
+//import so.asch.sdk.AschHelper;
+//import so.asch.sdk.AschResult;
+//import so.asch.sdk.AschSDK;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         new Thread(){
             @Override
             public void run() {
-                testSDK();
+                //testSDK();
             }
         }.start();
     }
@@ -49,27 +49,27 @@ public class MainActivity extends AppCompatActivity {
         System.loadLibrary("native-lib");
     }
 
-    private  void testSDK(){
-        AschSDK.Config.setAschServer(root);
-        AschResult result= AschSDK.Account.login(secret);
-        String rawJson=result.getRawJson();
-        Log.d("++++++++"+MainActivity.class.getSimpleName(), rawJson+" ");
-//        this.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                mTv.setText(result.getRawJson());
-//            }
-//        });
-
-        //Assert.assertTrue(result.isSuccessful());
-
-        result= AschSDK.Account.secureLogin(TestData.secret);
-        Log.d("++++++++"+MainActivity.class.getSimpleName()+"-secureLogin:", rawJson+" ");
-        //Assert.assertTrue(result.isSuccessful());
-
-        //AschHelper helper =new AschHelper();
-        //String secret= helper.generateSecret();
-       // Log.d(mTAG,"++++++++ "+secret);
-
-    }
+//    private  void testSDK(){
+//        AschSDK.Config.setAschServer(root);
+//        AschResult result= AschSDK.Account.login(secret);
+//        String rawJson=result.getRawJson();
+//        Log.d("++++++++"+MainActivity.class.getSimpleName(), rawJson+" ");
+////        this.runOnUiThread(new Runnable() {
+////            @Override
+////            public void run() {
+////                mTv.setText(result.getRawJson());
+////            }
+////        });
+//
+//        //Assert.assertTrue(result.isSuccessful());
+//
+//        result= AschSDK.Account.secureLogin(TestData.secret);
+//        Log.d("++++++++"+MainActivity.class.getSimpleName()+"-secureLogin:", rawJson+" ");
+//        //Assert.assertTrue(result.isSuccessful());
+//
+//        //AschHelper helper =new AschHelper();
+//        //String secret= helper.generateSecret();
+//       // Log.d(mTAG,"++++++++ "+secret);
+//
+//    }
 }

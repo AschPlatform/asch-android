@@ -1,5 +1,6 @@
 package asch.so.wallet.contract;
 
+import java.io.InvalidClassException;
 import java.util.List;
 
 import asch.so.base.presenter.BasePresenter;
@@ -14,10 +15,12 @@ import asch.so.wallet.presenter.AccountsPresenter;
 public interface AccountsContract {
 
     interface View extends BaseView<AccountsPresenter> {
-
+        void displaySavedAccounts(List<Account> accountList);
     }
 
     interface Presenter extends BasePresenter{
+        void loadSavedAccounts();
 
+        void saveCurrentAccountToPreference(String address) throws InvalidClassException;
     }
 }

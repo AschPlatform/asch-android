@@ -1,6 +1,11 @@
 package asch.so.wallet;
 
-import so.asch.sdk.AschSDK;
+//import so.asch.sdk.AschSDK;
+
+import java.util.Random;
+
+import asch.so.wallet.model.entity.Account;
+import io.realm.Realm;
 
 /**
  * Created by eagle on 17-7-16.
@@ -42,8 +47,28 @@ public class TestData {
 
     public static final String senderPublicKey = "fd6df6dc35852ac7edcc081eb5195718e0c77a6ad4f8157eeb78c865fa83efc4";
 
-    public static String publicKey(){
-        return AschSDK.Helper.getPublicKey(secret);
+//    public static String publicKey(){
+//        return AschSDK.Helper.getPublicKey(secret);
+//    }
+
+
+    public static void createTestAccountsData(){
+     //final Random random =new Random(1234);
+     Realm realm=Realm.getDefaultInstance();
+     realm.executeTransaction(r->{
+        int i;
+        for (i = 0;i<20;i++){
+         createAccount(r,i);
+        }
+     });
+    }
+
+    private static void createAccount(Realm realm, int i){
+     Account account=realm.createObject(Account.class, "address"+i);
+            // createObject(Account.class);
+     account.name="name"+i;
+     //account.address="address"+i;
+     account.publicKey="publicKey"+i;
     }
 
 }

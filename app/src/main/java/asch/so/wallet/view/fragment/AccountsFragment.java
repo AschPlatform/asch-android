@@ -16,7 +16,9 @@ import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.contract.AccountsContract;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.presenter.AccountsPresenter;
 import asch.so.wallet.view.adapter.AccountsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +28,7 @@ import butterknife.Unbinder;
  * Created by kimziv on 2017/9/21.
  */
 
-public class AccountsFragment extends BaseFragment {
+public class AccountsFragment extends BaseFragment implements AccountsContract.View{
     private static final String TAG=AccountsFragment.class.getSimpleName();
 
     @BindView(R.id.accounts_rcv)
@@ -35,6 +37,8 @@ public class AccountsFragment extends BaseFragment {
 
     private Unbinder unbinder;
     private List<Account> accountList;
+
+    private AccountsContract.Presenter presenter;
 
 
 
@@ -68,7 +72,7 @@ public class AccountsFragment extends BaseFragment {
             }
         });
         accountsRecycleView.setAdapter(accountsAdapter);
-
+        presenter.subscribe();
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -81,8 +85,17 @@ public class AccountsFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-
+        presenter.unSubscribe();
     }
 
+    public void setPresenter(AccountsPresenter presenter) {
+        this.presenter = presenter;
+    }
 
+    @Override
+    public void displaySavedAccounts(List<Account> accountList) {
+        this.accountList.clear();
+        this.accountList.addAll(accountList);
+        accountsAdapter.notifyDataSetChanged();
+    }
 }

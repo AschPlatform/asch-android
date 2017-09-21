@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
@@ -18,9 +20,9 @@ android {
             }
         }
 
-        jackOptions {
-            enabled true
-        }
+//        jackOptions {
+//            enabled true
+//        }
         multiDexEnabled true
     }
 
@@ -56,6 +58,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+//    configurations.all {
+//        resolutionStrategy.force 'com.google.code.findbugs:jsr305:3.0.2'
+//    }
+
+//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2') {
+//        exclude group: 'com.google.code.findbugs'
+//    }
 }
 
 dependencies {
@@ -63,12 +73,12 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.2'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
-    //    compile files('libs/asch-java-0.1.1-SNAPSHOT-jar-with-dependencies.jar')
     compile 'com.android.support:multidex:1.0.1'
-    compile files('libs/asch-android-0.1.2-SNAPSHOT-jar-with-dependencies.jar')
+    //compile files('libs/asch-android-0.1.2-SNAPSHOT-jar-with-dependencies.jar')
 
     releaseCompile project(path: ':base', configuration: 'release')
     debugCompile project(path: ':base', configuration: 'debug')
@@ -82,5 +92,6 @@ dependencies {
 
     compile rootProject.ext.dependencies["retrofit2-fastjson-converter"]
     compile rootProject.ext.dependencies["cardview"]
+    compile rootProject.ext.dependencies["rxandroid"]
 
 }
