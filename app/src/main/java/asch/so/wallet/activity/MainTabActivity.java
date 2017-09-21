@@ -6,6 +6,8 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +18,8 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
 import asch.so.wallet.view.fragment.TestFragment;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by kimziv on 2017/9/21.
@@ -27,10 +31,16 @@ public class MainTabActivity extends BaseActivity {
     private MenuItem menuItem;
     private BottomNavigationView bottomNavigationView;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -77,13 +87,13 @@ public class MainTabActivity extends BaseActivity {
             }
         });
 
-        //禁止ViewPager滑动
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+//        //禁止ViewPager滑动
+//        viewPager.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return true;
+//            }
+//        });
 
         setupViewPager(viewPager);
     }
@@ -95,6 +105,25 @@ public class MainTabActivity extends BaseActivity {
         adapter.addFragment(TestFragment.newInstance("发现"));
         adapter.addFragment(TestFragment.newInstance("我的"));
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_mine, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch(id){
+            case R.id.item_manage_wallet:
+            {
+
+            }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static void disableShiftMode(BottomNavigationView navigationView) {
