@@ -81,5 +81,6 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
 
     compile rootProject.ext.dependencies["retrofit2-fastjson-converter"]
+    compile rootProject.ext.dependencies["cardview"]
 
 }
