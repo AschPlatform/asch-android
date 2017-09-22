@@ -1,6 +1,7 @@
 package asch.so.wallet.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,12 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.AccountImportActivity;
 import asch.so.wallet.contract.AccountsContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountsPresenter;
@@ -33,6 +36,14 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
 
     @BindView(R.id.accounts_rcv)
     RecyclerView accountsRecycleView;
+
+    @BindView(R.id.goto_create_btn)
+    Button createBtn;
+
+    @BindView(R.id.goto_import_btn)
+    Button importBtn;
+
+
     private AccountsAdapter accountsAdapter;
 
     private Unbinder unbinder;
@@ -73,7 +84,23 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         });
         accountsRecycleView.setAdapter(accountsAdapter);
         presenter.subscribe();
-        return super.onCreateView(inflater, container, savedInstanceState);
+
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        importBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent =new Intent(getActivity(),AccountImportActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        return rootView;
     }
 
     @Override
@@ -88,6 +115,7 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         presenter.unSubscribe();
     }
 
+    @Override
     public void setPresenter(AccountsPresenter presenter) {
         this.presenter = presenter;
     }
@@ -97,5 +125,15 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         this.accountList.clear();
         this.accountList.addAll(accountList);
         accountsAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void gotoCreateAccount() {
+
+    }
+
+    @Override
+    public void gotoImportAccount() {
+
     }
 }

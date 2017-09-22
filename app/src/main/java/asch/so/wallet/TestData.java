@@ -55,20 +55,30 @@ public class TestData {
     public static void createTestAccountsData(){
      //final Random random =new Random(1234);
      Realm realm=Realm.getDefaultInstance();
-     realm.executeTransaction(r->{
-        int i;
-        for (i = 0;i<20;i++){
-         createAccount(r,i);
-        }
+     realm.executeTransaction(new Realm.Transaction(){
+      @Override
+      public void execute(Realm realm) {
+       int i;
+       for (i = 0;i<20;i++){
+        createAccount(realm,i);
+       }
+      }
      });
+//     realm.executeTransaction(r->{
+//        int i;
+//        for (i = 0;i<20;i++){
+//         createAccount(r,i);
+//        }
+//     });
     }
 
     private static void createAccount(Realm realm, int i){
-     Account account=realm.createObject(Account.class, "address"+i);
+//     Account account=realm.createObject(Account.class, "address"+i);
             // createObject(Account.class);
-     account.name="name"+i;
-     //account.address="address"+i;
-     account.publicKey="publicKey"+i;
+     Account account=realm.createObject(Account.class);
+     account.setName("name"+i);
+    // account.address="address"+i;
+     account.setPublicKey("publicKey"+i);
     }
 
 }

@@ -6,13 +6,46 @@
     android:orientation="vertical"
     tools:context="asch.so.wallet.view.fragment.AccountsFragment"
     >
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/header"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:background="@android:color/holo_blue_light"-->
+        <!--android:layout_height="20dp"></LinearLayout>-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/accounts_rcv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
+        android:layout_alignParentTop="true"
         />
+
+    <LinearLayout
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/goto_create_btn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="创建账户" />
+        <Button
+            android:id="@+id/goto_import_btn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="导入账户" />
+
+
+    </LinearLayout>
+
+
 </RelativeLayout>
 

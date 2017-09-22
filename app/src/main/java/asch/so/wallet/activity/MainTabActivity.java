@@ -1,5 +1,6 @@
 package asch.so.wallet.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -119,7 +120,8 @@ public class MainTabActivity extends BaseActivity {
         switch(id){
             case R.id.item_manage_wallet:
             {
-
+                Intent intent = new Intent(this, AccountsActivity.class);
+                startActivity(intent);
             }
                 break;
         }

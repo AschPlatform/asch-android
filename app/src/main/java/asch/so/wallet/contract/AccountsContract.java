@@ -16,6 +16,8 @@ public interface AccountsContract {
 
     interface View extends BaseView<AccountsPresenter> {
         void displaySavedAccounts(List<Account> accountList);
+        void gotoCreateAccount();
+        void gotoImportAccount();
     }
 
     interface Presenter extends BasePresenter{

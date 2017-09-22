@@ -1,6 +1,7 @@
 package asch.so.wallet.model.db.dao;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ import rx.schedulers.Schedulers;
 
 public class AccountsDao {
 
+    private static final String TAG=AccountsDao.class.getSimpleName();
+
     private Context context;
 
     @Inject
@@ -32,8 +35,49 @@ public class AccountsDao {
     }
 
 
-    public Observable<RealmResults<Account>> queryAllSavedAccounts(){
+    /**
+     *
+     * @return
+     */
+   public RealmResults<Account> queryAllSavedAccounts(){
 
-        return getRealm().where(Account.class).findAllAsync().asObservable();
+    RealmResults<Account> results = getRealm().where(Account.class).findAllAsync();
+    //Log.v(TAG,"+++++++"+results.get(0).getName());
+    return results;
+   }
+
+    /**
+     *
+     * @param account
+     */
+   public void addAccount(Account account){
+
+   }
+
+    /**
+     *
+     * @param address
+     */
+   public void  removeAccount(String address){
+
+   }
+
+    /**
+     *
+     * @param account
+     */
+   public void  updateAccount(Account account){
+
+   }
+
+    /**
+     *
+     * @param name
+     */
+    public void  updateAccountName(String name){
+
     }
+
+
+
 }

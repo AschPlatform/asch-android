@@ -30,13 +30,18 @@ public class WalletApplication extends MultiDexApplication{
     @Override
     public void onCreate() {
         super.onCreate();
+
+        applicationComponent=DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
+        walletApplication=this;
         initRealm();
     }
 
     private void initRealm(){
         Realm.init(this);
         RealmConfiguration configuration=new RealmConfiguration.Builder().build();
-        Realm.deleteRealm(configuration);
+        //Realm.deleteRealm(configuration);
         Realm.setDefaultConfiguration(configuration);
         TestData.createTestAccountsData();
     }

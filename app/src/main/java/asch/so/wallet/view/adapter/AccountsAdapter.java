@@ -35,7 +35,7 @@ public class AccountsAdapter extends BaseRecyclerViewAdapter<AccountsAdapter.Vie
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Account account=accountList.get(position);
-        holder.nameTv.setText(account.name);
+        holder.nameTv.setText(account.getName()+"xxxx");
         //todo
     }
 

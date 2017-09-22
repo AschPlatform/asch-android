@@ -23,7 +23,7 @@ import rx.subscriptions.CompositeSubscription;
 public class AccountsPresenter implements AccountsContract.Presenter{
     private AccountsContract.View view;
 
-    private CompositeSubscription subscription;
+    private CompositeSubscription subscriptions;
 
     @Inject
     AccountsDao accountsDao;
@@ -33,7 +33,7 @@ public class AccountsPresenter implements AccountsContract.Presenter{
     public AccountsPresenter(Context context, AccountsContract.View view){
 
         this.view=view;
-        this.subscription=new CompositeSubscription();
+        this.subscriptions=new CompositeSubscription();
         view.setPresenter(this);
         DaggerPresenterComponent.builder()
                 .applicationModule(new ApplicationModule(context))
@@ -50,16 +50,31 @@ public class AccountsPresenter implements AccountsContract.Presenter{
 
     @Override
     public void unSubscribe() {
-        subscription.clear();
+        subscriptions.clear();
     }
 
-    @Override
-    public void loadSavedAccounts() {
-        Subscription subscription= accountsDao.queryAllSavedAccounts()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(accounts->view.displaySavedAccounts(accounts));
-    }
+//    @Override
+//    public void loadSavedAccounts() {
+//        Subscription subscription= accountsDao.queryAllSavedAccounts()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(accounts->view.displaySavedAccounts(accounts));
+//        subscriptions.add(subscription);
+//    }
+@Override
+public void loadSavedAccounts() {
+//    Subscription subscription= accountsDao.queryAllSavedAccounts()
+//            .subscribeOn(Schedulers.io())
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(accounts->view.displaySavedAccounts(accounts));
+//    subscriptions.add(subscription);
+
+    Subscription subscription = Observable.just(accountsDao.queryAllSavedAccounts())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(accounts -> view.displaySavedAccounts(accounts));
+    subscriptions.add(subscription);
+}
 
     @Override
     public void saveCurrentAccountToPreference(String address) throws InvalidClassException {

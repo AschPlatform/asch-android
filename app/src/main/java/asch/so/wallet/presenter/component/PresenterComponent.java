@@ -3,6 +3,7 @@ package asch.so.wallet.presenter.component;
 import javax.inject.Singleton;
 
 import asch.so.wallet.ApplicationModule;
+import asch.so.wallet.presenter.AccountImportPresenter;
 import asch.so.wallet.presenter.AccountsPresenter;
 import dagger.Component;
 
@@ -14,4 +15,6 @@ import dagger.Component;
 @Component(modules = {ApplicationModule.class})
 public interface PresenterComponent {
     void inject(AccountsPresenter presenter);
+
+    void inject(AccountImportPresenter presenter);
 }

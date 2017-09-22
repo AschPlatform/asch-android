@@ -10,9 +10,32 @@ import io.realm.annotations.PrimaryKey;
 
 public class Account extends RealmObject{
 
-    public String name;
-    @PrimaryKey
-    public String address;
-    public String publicKey;
+    private String name;
+    //@PrimaryKey
+    private String address;
+    private String publicKey;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPublicKey(String publicKey) {
+        this.publicKey = publicKey;
+    }
 }
