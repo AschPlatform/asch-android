@@ -10,10 +10,15 @@ import io.realm.annotations.PrimaryKey;
 
 public class Account extends RealmObject{
 
+    //钱包别名
     private String name;
     //@PrimaryKey
+    //地址
     private String address;
+    //公钥
     private String publicKey;
+
+
 
     public String getName() {
         return name;

@@ -8,6 +8,10 @@ def daggerVersion = "2.8"
 def ormLiteVersion = "4.48"
 def fastJsonVersion = "1.1.60.android"
 
+def zxingCoreVersion = "3.3.0"
+def bgaQRCodeVersion = "1.1.8"
+def easypermissionsVersion = "1.0.0"
+
 project.ext {
     android = [
             compileSdkVersion: 26,
@@ -58,6 +62,17 @@ project.ext {
             "butterknife-compiler"        : "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
             "retrofit2-fastjson-converter": "com.github.BaronZ88:Retrofit2-FastJson-Converter:1.2",
             "SmartRefreshLayout"          : "com.scwang.smartrefresh:SmartRefreshLayout:1.0.3",
-            "SmartRefreshHeader"          : "com.scwang.smartrefresh:SmartRefreshHeader:1.0.3"
+            "SmartRefreshHeader"          : "com.scwang.smartrefresh:SmartRefreshHeader:1.0.3",
+
+            //ZXing
+            "zxing-core"                   : "com.google.zxing:core:${zxingCoreVersion}",
+            "bga-qrcodecore"              : "cn.bingoogolapple:bga-qrcodecore:${bgaQRCodeVersion}@aar",
+            "bga-zxing"                   : "cn.bingoogolapple:bga-zxing:${bgaQRCodeVersion}@aar",
+
+//            //ZBar
+//            "bga-qrcodecore"              : "cn.bingoogolapple:bga-qrcodecore:${bgaQRCodeVersion}@aar",
+//            "bga-zbar"                    : "ccn.bingoogolapple:bga-zbar:${bgaQRCodeVersion}@aar",
+
+            "easypermissions"              : "pub.devrel:easypermissions:${easypermissionsVersion}"
     ]
 }

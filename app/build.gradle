@@ -94,4 +94,9 @@ dependencies {
     compile rootProject.ext.dependencies["cardview"]
     compile rootProject.ext.dependencies["rxandroid"]
 
+    compile rootProject.ext.dependencies["zxing-core"]
+    compile rootProject.ext.dependencies["bga-qrcodecore"]
+    compile rootProject.ext.dependencies["bga-zxing"]
+    compile rootProject.ext.dependencies["easypermissions"]
+
 }
