@@ -11,7 +11,7 @@
         android:layout_height="120dp"
         android:ems="10"
         android:hint="输入钱包密码或者扫描二维码"
-        android:inputType="textPersonName"
+        android:inputType="textMultiLine"
         android:singleLine="false" />
 
     <EditText

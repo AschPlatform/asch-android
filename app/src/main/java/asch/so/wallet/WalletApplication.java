@@ -43,7 +43,7 @@ public class WalletApplication extends MultiDexApplication{
         RealmConfiguration configuration=new RealmConfiguration.Builder().build();
         //Realm.deleteRealm(configuration);
         Realm.setDefaultConfiguration(configuration);
-        TestData.createTestAccountsData();
+       // TestData.createTestAccountsData();
     }
 
     public ApplicationComponent getApplicationComponent() {

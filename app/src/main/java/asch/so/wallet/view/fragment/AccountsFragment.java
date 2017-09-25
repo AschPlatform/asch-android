@@ -18,6 +18,7 @@ import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.AccountCreateActivity;
 import asch.so.wallet.activity.AccountImportActivity;
 import asch.so.wallet.contract.AccountsContract;
 import asch.so.wallet.model.entity.Account;
@@ -88,7 +89,8 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent =new Intent(getActivity(),AccountCreateActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -96,7 +98,7 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
             @Override
             public void onClick(View view) {
                 Intent intent =new Intent(getActivity(),AccountImportActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
@@ -127,6 +129,10 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         accountsAdapter.notifyDataSetChanged();
     }
 
+    public void refresh(){
+        presenter.subscribe();
+    }
+
     @Override
     public void gotoCreateAccount() {
 
@@ -135,5 +141,11 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
     @Override
     public void gotoImportAccount() {
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        presenter.subscribe();
     }
 }

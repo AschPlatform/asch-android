@@ -60,25 +60,21 @@ public class TestData {
       public void execute(Realm realm) {
        int i;
        for (i = 0;i<20;i++){
-        createAccount(realm,i);
+        Account account=createAccount(i);
+         realm.insertOrUpdate(account);
        }
       }
      });
-//     realm.executeTransaction(r->{
-//        int i;
-//        for (i = 0;i<20;i++){
-//         createAccount(r,i);
-//        }
-//     });
     }
 
-    private static void createAccount(Realm realm, int i){
-//     Account account=realm.createObject(Account.class, "address"+i);
-            // createObject(Account.class);
-     Account account=realm.createObject(Account.class);
+    private static Account createAccount(int i){
+
+     Account account= new Account();//realm.createObject(Account.class);
+     account.setAddress("address"+i);
      account.setName("name"+i);
     // account.address="address"+i;
      account.setPublicKey("publicKey"+i);
+     return account;
     }
 
 }

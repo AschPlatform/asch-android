@@ -25,6 +25,10 @@ public class AccountsDao {
 
     private Context context;
 
+    public AccountsDao(){
+
+    }
+
     @Inject
     AccountsDao(Context context){
         this.context=context;
@@ -51,6 +55,12 @@ public class AccountsDao {
      * @param account
      */
    public void addAccount(Account account){
+       getRealm().executeTransaction(new Realm.Transaction() {
+           @Override
+           public void execute(Realm realm) {
+              realm.insertOrUpdate(account);
+           }
+       });
 
    }
 
@@ -59,7 +69,12 @@ public class AccountsDao {
      * @param address
      */
    public void  removeAccount(String address){
+       getRealm().executeTransaction(new Realm.Transaction() {
+           @Override
+           public void execute(Realm realm) {
 
+           }
+       });
    }
 
     /**

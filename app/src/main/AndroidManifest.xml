@@ -37,8 +37,12 @@
         <activity android:name=".activity.AccountImportActivity" >
         </activity>
 
+        <activity android:name=".activity.AccountCreateActivity" >
+        </activity>
+
         <activity android:name=".activity.QRCodeScanActivity" >
         </activity>
+
     </application>
 
 </manifest>

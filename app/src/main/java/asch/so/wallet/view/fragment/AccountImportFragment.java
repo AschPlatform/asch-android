@@ -8,10 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.AccountImportContract;
+import asch.so.wallet.crypto.AccountSecurity;
+import asch.so.wallet.model.db.dao.AccountsDao;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountImportPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +74,24 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
             @Override
             public void onClick(View view) {
                 //presenter.subscribe();
+                String name = nameEt.getText().toString().trim();
+                String passwd = passwdEt.getText().toString();
+                String passwd2=passwdEt2.getText().toString();
+                String hint=hintEt.getText().toString();
+                String seed=seedEt.getText().toString();
+
+                Account account=new Account();
+                account.setName(name);
+                account.setPasswd(passwd);
+                account.setPublicKey("publickey need asch sdk android port");
+                account.setAddress(seed);
+                account.setHint(hint);
+                account.setSeed(seed);
+                AccountSecurity.encryptAccount(account,passwd);
+                new AccountsDao().addAccount(account);
+
+                Toast.makeText(getContext(),"导入成功",Toast.LENGTH_SHORT).show();
+                getActivity().finish();
             }
         });
 
@@ -96,6 +118,11 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
     @Override
     public void reset() {
 
+    }
+
+    //设置种子
+    public void setSeed(String seed){
+        this.seedEt.setText(seed);
     }
 
 }

@@ -1,6 +1,7 @@
 package asch.so.wallet.activity;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -8,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class AccountImportActivity extends BaseActivity implements  EasyPermissi
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    AccountImportFragment fragment;
 //    @Inject
 //    AccountImportPresenter presenter;
 
@@ -49,7 +52,7 @@ public class AccountImportActivity extends BaseActivity implements  EasyPermissi
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        AccountImportFragment fragment = AccountImportFragment.newInstance();
+        fragment = AccountImportFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 
 
@@ -67,7 +70,7 @@ public class AccountImportActivity extends BaseActivity implements  EasyPermissi
             case  R.id.item_scan_qrcode:
             {
                 Intent intent =new Intent(this, QRCodeScanActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
                 break;
         }
@@ -80,6 +83,16 @@ public class AccountImportActivity extends BaseActivity implements  EasyPermissi
     protected void onStart() {
         super.onStart();
         requestCodeQRCodePermissions();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String qrDecodeString=data.getStringExtra("QRDecodeString");
+       // Toast.makeText(this,"qrxxxx",Toast.LENGTH_SHORT).show();
+        if (fragment!=null){
+            fragment.setSeed(qrDecodeString);
+        }
     }
 
     @Override

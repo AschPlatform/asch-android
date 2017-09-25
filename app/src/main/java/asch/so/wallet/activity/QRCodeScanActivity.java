@@ -13,7 +13,8 @@ import asch.so.wallet.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
-import cn.bingoogolapple.qrcode.zxing.ZXingView;
+import cn.bingoogolapple.qrcode.zbar.ZBarView;
+
 
 /**
  * Created by kimziv on 2017/9/22.
@@ -27,16 +28,15 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @BindView(R.id.zxingview)
-    ZXingView zxingView;
-    //private QRCodeView qrCodeView;
+    @BindView(R.id.zbarview)
+    ZBarView zbarView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode_scan);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        zxingView.setDelegate(this);
+        zbarView.setDelegate(this);
 
 //        zxingView.startSpot();
     }
@@ -44,22 +44,22 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     @Override
     protected void onStart() {
         super.onStart();
-        zxingView.startCamera();
+        zbarView.startCamera();
 //        mQRCodeView.startCamera(Camera.CameraInfo.CAMERA_FACING_FRONT);
 
-        zxingView.showScanRect();
-        zxingView.startSpot();
+        zbarView.showScanRect();
+        zbarView.startSpot();
     }
 
     @Override
     protected void onStop() {
-        zxingView.stopCamera();
+        zbarView.stopCamera();
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
-        zxingView.onDestroy();
+        zbarView.onDestroy();
         super.onDestroy();
     }
 
@@ -73,7 +73,13 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
         Log.i(TAG, "result:" + result);
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         vibrate();
-        zxingView.startSpot();
+       // zbarView.startSpot();
+
+        Intent intent = new Intent();
+        intent.putExtra("QRDecodeString", result);
+        setResult(RESULT_OK, intent);
+        finish();
+
     }
 
     @Override
@@ -134,7 +140,6 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        zxingView.showScanRect();
 
 //        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY) {
 //            final String picturePath = BGAPhotoPickerActivity.getSelectedImages(data).get(0);
