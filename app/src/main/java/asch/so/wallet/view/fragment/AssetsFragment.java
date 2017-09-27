@@ -34,8 +34,8 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
 
     Unbinder unbinder;
 
-    private List<BaseAsset> assetList;
-    private AssetsAdapter adapter;
+    private List<BaseAsset> assetList=new ArrayList<>();
+    private AssetsAdapter adapter=new AssetsAdapter(assetList);
 
     private AssetsContract.Presenter presenter;
 
@@ -57,7 +57,7 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
         assetsRcv.setItemAnimator(new DefaultItemAnimator());
         assetList=new ArrayList<>();
 
-        adapter=new AssetsAdapter(assetList);
+//        adapter=new AssetsAdapter(assetList);
         assetsRcv.setAdapter(adapter);
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -95,10 +95,12 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
 
     @Override
     public void displayAssets(List<BaseAsset> assetList) {
-        if (this.assetList != null){
+//        if (this.assetList != null){
             this.assetList.clear();
             this.assetList.addAll(assetList);
             adapter.notifyDataSetChanged();
-        }
+//        }else {
+//            this.assetList=new ArrayList<>();
+//        }
     }
 }

@@ -41,7 +41,7 @@ public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHol
 
     @Override
     public int getItemCount() {
-        return 0;
+        return assetList==null?0:assetList.size();
     }
     static class  ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.asset_name_tv)
