@@ -78,11 +78,11 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:multidex:1.0.1'
-    //compile files('libs/asch-android-0.1.2-SNAPSHOT-jar-with-dependencies.jar')
 
     releaseCompile project(path: ':base', configuration: 'release')
     debugCompile project(path: ':base', configuration: 'debug')
     compile project(':widget')
+    compile project(':asch-java')
 
     compile rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
@@ -97,5 +97,8 @@ dependencies {
     compile rootProject.ext.dependencies["bga-qrcodecore"]
     compile rootProject.ext.dependencies["bga-zbar"]
     compile rootProject.ext.dependencies["easypermissions"]
+
+
+   // compile files('libs/asch-android-0.1.2-SNAPSHOT-jar-with-dependencies.jar')
 
 }

@@ -2,15 +2,33 @@ package asch.so.wallet;
 
 //import so.asch.sdk.AschSDK;
 
+import android.util.Log;
+
+import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
+import net.i2p.crypto.eddsa.spec.EdDSAParameterSpec;
+import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
+import net.i2p.crypto.eddsa.EdDSAPrivateKey;
+
+
+import java.security.PrivateKey;
 import java.util.Random;
 
 import asch.so.wallet.model.entity.Account;
 import io.realm.Realm;
+import io.realm.annotations.PrimaryKey;
+import so.asch.sdk.AschHelper;
+import so.asch.sdk.AschResult;
+import so.asch.sdk.AschSDK;
+import so.asch.sdk.impl.AschFactory;
+import so.asch.sdk.security.DefaultSecurityStrategy;
+import so.asch.sdk.security.SecurityException;
 
 /**
  * Created by eagle on 17-7-16.
  */
 public class TestData {
+
+   public static  final  String TAG =TestData.class.getSimpleName();
 
    // public static final String root = "http://127.0.0.1:4096";
     public static final String root = "http://testnet.asch.so:4096";//http://106.14.156.245:4096";
@@ -47,9 +65,8 @@ public class TestData {
 
     public static final String senderPublicKey = "fd6df6dc35852ac7edcc081eb5195718e0c77a6ad4f8157eeb78c865fa83efc4";
 
-//    public static String publicKey(){
-//        return AschSDK.Helper.getPublicKey(secret);
-//    }
+
+
 
 
     public static void createTestAccountsData(){
@@ -76,5 +93,55 @@ public class TestData {
      account.setPublicKey("publicKey"+i);
      return account;
     }
+
+
+
+
+ public static   void testSDK(){
+  Log.d(TAG, "publicKey:testSDK begin");
+  String publicKey = AschSDK.Helper.getPublicKey(secret);
+  Log.d(TAG, "publicKey:"+publicKey);
+
+  String  address = null;
+  try {
+   address = AschFactory.getInstance().getSecurity().getAddress(publicKey);
+   Log.i(TAG, "address:"+address);
+  } catch (SecurityException e) {
+   e.printStackTrace();
+  }
+
+//  new Thread(new Runnable() {
+//   @Override
+//   public void run() {
+////    AschSDK.Config.setAschServer(root);
+////    AschResult result= AschSDK.Account.login(secret);
+////    String rawJson=result.getRawJson();
+////    Log.d("++++++++"+TAG, rawJson+" ");
+//
+//    //Assert.assertTrue(result.isSuccessful());
+//
+////    result= AschSDK.Account.secureLogin(TestData.secret);
+////    Log.d("++++++++"+TAG+"-secureLogin:", rawJson+" ");
+//    //Assert.assertTrue(result.isSuccessful());
+////    String publicKey = AschSDK.Helper.getPublicKey(secret);
+////    Log.d(TAG, "publicKey:"+publicKey);
+//
+//
+//    String  address = null;
+//    try {
+//     address = AschFactory.getInstance().getSecurity().getAddress(publicKey);
+//    } catch (SecurityException e) {
+//     e.printStackTrace();
+//    }
+//
+//   // Log.d(TAG, "address:"+address);
+//
+//    //AschHelper helper =new AschHelper();
+//    //String secret= helper.generateSecret();
+//    // Log.d(mTAG,"++++++++ "+secret);
+//   }
+//  }).start();
+
+ }
 
 }
