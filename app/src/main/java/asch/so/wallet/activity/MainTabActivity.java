@@ -17,7 +17,9 @@ import java.lang.reflect.Field;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
+import asch.so.wallet.presenter.AssetsPresenter;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
+import asch.so.wallet.view.fragment.AssetsFragment;
 import asch.so.wallet.view.fragment.TestFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,6 +33,8 @@ public class MainTabActivity extends BaseActivity {
     private ViewPager viewPager;
     private MenuItem menuItem;
     private BottomNavigationView bottomNavigationView;
+
+    private AssetsPresenter presenter;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -102,10 +106,15 @@ public class MainTabActivity extends BaseActivity {
     private void setupViewPager(ViewPager viewPager) {
         TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
 
-        adapter.addFragment(TestFragment.newInstance("资产"));
+        AssetsFragment  assetsFragment=AssetsFragment.newInstance();
+        adapter.addFragment(assetsFragment);
         adapter.addFragment(TestFragment.newInstance("发现"));
         adapter.addFragment(TestFragment.newInstance("我的"));
         viewPager.setAdapter(adapter);
+
+        presenter=new AssetsPresenter(assetsFragment);
+        assetsFragment.setPresenter(presenter);
+        presenter.loadAssets();
     }
 
     @Override
