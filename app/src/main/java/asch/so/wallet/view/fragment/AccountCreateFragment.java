@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.TestData;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import so.asch.sdk.AschSDK;
@@ -20,6 +22,8 @@ import so.asch.sdk.AschSDK;
 public class AccountCreateFragment extends BaseFragment {
 
     Unbinder unbinder;
+    @BindView(R.id.create_btn)
+    Button createBtn;
 
     public static AccountCreateFragment newInstance() {
         
@@ -34,11 +38,15 @@ public class AccountCreateFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_account_create,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder= ButterKnife.bind(this,rootView);
 
-        String publicKey = AschSDK.Helper.getPublicKey(TestData.secret);
-        Toast.makeText(getContext(),"publicKey:"+publicKey,Toast.LENGTH_SHORT).show();
-
+         createBtn.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                String words = TestData.testGenerateSeeds(getActivity());
+                 Toast.makeText(getActivity(),words,Toast.LENGTH_SHORT).show();
+             }
+         });
         return rootView;
     }
 

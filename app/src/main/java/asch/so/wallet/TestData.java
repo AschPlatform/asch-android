@@ -2,6 +2,7 @@ package asch.so.wallet;
 
 //import so.asch.sdk.AschSDK;
 
+import android.content.Context;
 import android.util.Log;
 
 import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
@@ -10,6 +11,7 @@ import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
 import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 
 
+import java.io.InputStream;
 import java.security.PrivateKey;
 import java.util.Random;
 
@@ -20,6 +22,7 @@ import so.asch.sdk.AschHelper;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 import so.asch.sdk.impl.AschFactory;
+import so.asch.sdk.security.Bip39;
 import so.asch.sdk.security.DefaultSecurityStrategy;
 import so.asch.sdk.security.SecurityException;
 
@@ -95,6 +98,19 @@ public class TestData {
     }
 
 
+
+ public static  String testGenerateSeeds(Context context){
+  try {
+   InputStream wis = context.getResources().getAssets().open(Bip39.BIP39_WORDLIST_FILENAME);
+   String words = Bip39.generateMnemonic(wis,12);
+
+   Log.i(TAG, "words:"+words);
+   return words;
+  }catch (Exception ex){
+   ex.printStackTrace();
+  }
+  return null;
+ }
 
 
  public static   void testSDK(){

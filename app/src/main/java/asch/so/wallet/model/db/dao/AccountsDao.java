@@ -24,6 +24,7 @@ public class AccountsDao {
     private static final String TAG=AccountsDao.class.getSimpleName();
 
     private Context context;
+    private  static  AccountsDao accountsDao=null;
 
     public AccountsDao(){
 
@@ -32,6 +33,13 @@ public class AccountsDao {
     @Inject
     AccountsDao(Context context){
         this.context=context;
+    }
+
+    public static AccountsDao getInstance(){
+        if (accountsDao==null){
+            accountsDao=new AccountsDao();
+        }
+        return accountsDao;
     }
 
     private Realm getRealm(){

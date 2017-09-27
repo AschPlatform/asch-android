@@ -84,7 +84,9 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
             }
         });
         accountsRecycleView.setAdapter(accountsAdapter);
-        presenter.subscribe();
+        if (presenter!=null) {
+            presenter.subscribe();
+        }
 
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
