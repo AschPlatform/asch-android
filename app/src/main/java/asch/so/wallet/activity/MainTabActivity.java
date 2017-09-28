@@ -10,16 +10,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
 
 import java.lang.reflect.Field;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
 import asch.so.wallet.presenter.AssetsPresenter;
+import asch.so.wallet.presenter.MinePresenter;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
 import asch.so.wallet.view.fragment.AssetsFragment;
+import asch.so.wallet.view.fragment.MineFragment;
 import asch.so.wallet.view.fragment.TestFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +34,8 @@ public class MainTabActivity extends BaseActivity {
     private MenuItem menuItem;
     private BottomNavigationView bottomNavigationView;
 
-    private AssetsPresenter presenter;
+    private AssetsPresenter assetsPresenter;
+    private MinePresenter minePresenter;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -107,14 +108,21 @@ public class MainTabActivity extends BaseActivity {
         TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
 
         AssetsFragment  assetsFragment=AssetsFragment.newInstance();
+        MineFragment mineFragment=MineFragment.newInstance();
+
         adapter.addFragment(assetsFragment);
         adapter.addFragment(TestFragment.newInstance("发现"));
-        adapter.addFragment(TestFragment.newInstance("我的"));
+        adapter.addFragment(mineFragment);
         viewPager.setAdapter(adapter);
 
-        presenter=new AssetsPresenter(assetsFragment);
-        assetsFragment.setPresenter(presenter);
-        presenter.loadAssets();
+        assetsPresenter =new AssetsPresenter(assetsFragment);
+        assetsFragment.setPresenter(assetsPresenter);
+        assetsPresenter.loadAssets();
+
+        minePresenter=new MinePresenter(this, mineFragment);
+        mineFragment.setPresenter(minePresenter);
+        minePresenter.loadItems();
+
     }
 
     @Override

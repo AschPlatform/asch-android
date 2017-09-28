@@ -55,7 +55,7 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
         unbinder = ButterKnife.bind(this,rootView);
         assetsRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         assetsRcv.setItemAnimator(new DefaultItemAnimator());
-        assetList=new ArrayList<>();
+       // assetList=new ArrayList<>();
 
 //        adapter=new AssetsAdapter(assetList);
         assetsRcv.setAdapter(adapter);
