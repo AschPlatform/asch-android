@@ -20,6 +20,9 @@ import asch.so.wallet.presenter.AccountImportPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import so.asch.sdk.AschSDK;
+import so.asch.sdk.impl.AschFactory;
+import so.asch.sdk.security.SecurityException;
 
 /**
  * Created by kimziv on 2017/9/21.
@@ -79,19 +82,30 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
                 String passwd2=passwdEt2.getText().toString();
                 String hint=hintEt.getText().toString();
                 String seed=seedEt.getText().toString();
+                if (seed.split(" ").length!=12){
+                    Toast.makeText(getContext(),"secret格式不正确",Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
-                Account account=new Account();
-                account.setName(name);
-                account.setPasswd(passwd);
-                account.setPublicKey("publickey need asch sdk android port");
-                account.setAddress(seed);
-                account.setHint(hint);
-                account.setSeed(seed);
-                AccountSecurity.encryptAccount(account,passwd);
-                new AccountsDao().addAccount(account);
+                try {
+                    String publicKey=AschSDK.Helper.getPublicKey(seed);
+                    String address=AschFactory.getInstance().getSecurity().getAddress(publicKey);
+                    Account account=new Account();
+                    account.setName(name);
+                    account.setPasswd(passwd);
+                    account.setPublicKey(publicKey);
+                    account.setAddress(address);
+                    account.setHint(hint);
+                    account.setSeed(seed);
+                    AccountSecurity.encryptAccount(account,passwd);
+                    new AccountsDao().addAccount(account);
 
-                Toast.makeText(getContext(),"导入成功",Toast.LENGTH_SHORT).show();
-                getActivity().finish();
+                    Toast.makeText(getContext(),"导入成功",Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
+                } catch (SecurityException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
 

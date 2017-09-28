@@ -7,6 +7,10 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +22,7 @@ import asch.so.wallet.model.db.dao.AccountsDao;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
+import rx.Observable;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 
@@ -49,7 +54,7 @@ public class AssetsPresenter implements AssetsContract.Presenter {
     @Override
     public void loadAssets() {
 
-
+        ArrayList<Balance> list=new ArrayList<>();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -62,13 +67,9 @@ public class AssetsPresenter implements AssetsContract.Presenter {
                 xasBalance.setBalance(map.getOrDefault("balance","0")+"");
                 xasBalance.setPrecision(8);
 
-                ArrayList<Balance> list=new ArrayList<>();
+                result = AschSDK.UIA.getAddressBalances(TestData.address,100,0);
+
                 list.add(xasBalance);
-//                list.add(new Balance());
-//                list.add(new Balance());
-//                list.add(new Balance());
-//                list.add(new Balance());
-//                list.add(new Balance());
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -79,8 +80,29 @@ public class AssetsPresenter implements AssetsContract.Presenter {
             }
         }).start();
 
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                AschResult result = AschSDK.UIA.getAddressBalances(TestData.address,100,0);
+                Log.i(TAG,result.getRawJson());
+                JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
+                JSONArray balanceJsonArray=resultJSONObj.getJSONArray("balances");
+                List<Balance> balances=JSON.parseArray(balanceJsonArray.toJSONString(),Balance.class);
+                list.addAll(balances);
+//                for (Object balanceJsonObj :
+//                        balanceJsonArray) {
+//                    Balance balance=((JSONObject)balanceJsonObj).toJavaObject(Balance.class);
+//                    list.add(balance);
+//                }
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        view.displayAssets(list);
+                    }
+                });
 
-
+            }
+        }).start();
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()){

@@ -36,7 +36,7 @@ public class AccountsAdapter extends BaseRecyclerViewAdapter<AccountsAdapter.Vie
     public void onBindViewHolder(ViewHolder holder, int position) {
         Account account=accountList.get(position);
         holder.nameTv.setText(account.getName());
-        //todo
+        holder.addressTv.setText(account.getAddress());
     }
 
     @Override
@@ -47,6 +47,9 @@ public class AccountsAdapter extends BaseRecyclerViewAdapter<AccountsAdapter.Vie
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.item_tv_name)
         TextView nameTv;
+
+        @BindView(R.id.address_tv)
+        TextView addressTv;
 
         public ViewHolder(View itemView, AccountsAdapter adapter) {
             super(itemView);

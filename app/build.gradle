@@ -106,6 +106,7 @@ dependencies {
     compile rootProject.ext.dependencies["retrofit2-fastjson-converter"]
     compile rootProject.ext.dependencies["cardview"]
     compile rootProject.ext.dependencies["rxandroid"]
+    compile rootProject.ext.dependencies["fastjson"]
 
     compile rootProject.ext.dependencies["bga-qrcodecore"]
     compile rootProject.ext.dependencies["bga-zbar"]

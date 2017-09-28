@@ -92,7 +92,7 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
             @Override
             public void onClick(View view) {
                 Intent intent =new Intent(getActivity(),AccountCreateActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent,1);
             }
         });
 
