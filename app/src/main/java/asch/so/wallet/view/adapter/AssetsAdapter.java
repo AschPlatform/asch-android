@@ -11,6 +11,7 @@ import java.util.List;
 import asch.so.base.adapter.BaseRecyclerViewAdapter;
 import asch.so.wallet.R;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,8 +22,8 @@ import butterknife.ButterKnife;
 
 public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHolder>{
 
-    private final List<BaseAsset> assetList;
-    public AssetsAdapter(List<BaseAsset>  assets){
+    private final List<Balance> assetList;
+    public AssetsAdapter(List<Balance>  assets){
         this.assetList=assets;
     }
 
@@ -34,9 +35,9 @@ public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        BaseAsset asset =assetList.get(position);
-        holder.assetNameTv.setText("XAS");
-        holder.balanceTv.setText("10000");
+        Balance balance =assetList.get(position);
+        holder.assetNameTv.setText(balance.getCurrency());
+        holder.balanceTv.setText(balance.getBalance());
     }
 
     @Override

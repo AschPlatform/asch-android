@@ -16,6 +16,7 @@ import java.util.List;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.AssetsContract;
+import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.view.adapter.AccountsAdapter;
 import asch.so.wallet.view.adapter.AssetsAdapter;
@@ -34,7 +35,7 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
 
     Unbinder unbinder;
 
-    private List<BaseAsset> assetList=new ArrayList<>();
+    private List<Balance> assetList=new ArrayList<>();
     private AssetsAdapter adapter=new AssetsAdapter(assetList);
 
     private AssetsContract.Presenter presenter;
@@ -94,7 +95,7 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
     }
 
     @Override
-    public void displayAssets(List<BaseAsset> assetList) {
+    public void displayAssets(List<Balance> assetList) {
             this.assetList.clear();
             this.assetList.addAll(assetList);
             adapter.notifyDataSetChanged();

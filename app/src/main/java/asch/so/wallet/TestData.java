@@ -34,7 +34,7 @@ public class TestData {
    public static  final  String TAG =TestData.class.getSimpleName();
 
    // public static final String root = "http://127.0.0.1:4096";
-    public static final String root = "http://testnet.asch.so:4096";//http://106.14.156.245:4096";
+    public static final String root = "http://testnet.asch.so:4096";//http://106.14.156.245:4096"; "http://wallet.asch.mobi:9999";
     public static final String secret = "spatial slush action typical emerge feature confirm edge game desk orphan burst";
     public static final String address = "AHcGmYnCyr6jufT5AGbpmRUv55ebwMLCym";
     public static final String secondSecret = "";//"asch111111";

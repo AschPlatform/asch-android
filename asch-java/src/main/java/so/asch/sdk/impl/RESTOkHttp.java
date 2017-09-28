@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URL;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.MediaType;
@@ -27,7 +28,11 @@ public final class RESTOkHttp {
 	if(client==null)
 	{
 	    client = new OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30,TimeUnit.SECONDS)
+                .writeTimeout(30,TimeUnit.SECONDS)
 	        .build();
+
 	}
 	    return client;
 	}
