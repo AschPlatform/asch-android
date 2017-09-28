@@ -23,6 +23,12 @@ import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
 import rx.Observable;
+import rx.Scheduler;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 
@@ -55,54 +61,60 @@ public class AssetsPresenter implements AssetsContract.Presenter {
     public void loadAssets() {
 
         ArrayList<Balance> list=new ArrayList<>();
-        new Thread(new Runnable() {
+        Observable  xasObservable = Observable.create(new Observable.OnSubscribe<List<Balance>>() {
             @Override
-            public void run() {
-                //Account account = AccountsDao.getInstance().queryCurrentAccount();
+            public void call(Subscriber<? super List<Balance>> subscriber) {
                 AschResult result = AschSDK.Account.getBalance(TestData.address);
                 Log.i(TAG,result.getRawJson());
-                Map<String, Object> map =result.parseMap();
-                Balance xasBalance=new Balance();
-                xasBalance.setCurrency("XAS");
-                xasBalance.setBalance(map.getOrDefault("balance","0")+"");
-                xasBalance.setPrecision(8);
-
-                result = AschSDK.UIA.getAddressBalances(TestData.address,100,0);
-
-                list.add(xasBalance);
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        view.displayAssets(list);
-                    }
-                });
+                if (result.isSuccessful()){
+                    Map<String, Object> map =result.parseMap();
+                    Balance xasBalance=new Balance();
+                    xasBalance.setCurrency("XAS");
+                    xasBalance.setBalance(map.getOrDefault("balance","0")+"");
+                    xasBalance.setPrecision(8);
+                    list.add(xasBalance);
+                    subscriber.onNext(list);
+                    subscriber.onCompleted();
+                }else {
+                    subscriber.onError(result.getException());
+                }
 
             }
-        }).start();
-
-        new Thread(new Runnable() {
+        });
+        Observable  uiaOervable =
+                Observable.create(new Observable.OnSubscribe<List<Balance>>(){
             @Override
-            public void run() {
+            public void call(Subscriber<? super List<Balance>> subscriber) {
                 AschResult result = AschSDK.UIA.getAddressBalances(TestData.address,100,0);
                 Log.i(TAG,result.getRawJson());
-                JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
-                JSONArray balanceJsonArray=resultJSONObj.getJSONArray("balances");
-                List<Balance> balances=JSON.parseArray(balanceJsonArray.toJSONString(),Balance.class);
-                list.addAll(balances);
-//                for (Object balanceJsonObj :
-//                        balanceJsonArray) {
-//                    Balance balance=((JSONObject)balanceJsonObj).toJavaObject(Balance.class);
-//                    list.add(balance);
-//                }
-                handler.post(new Runnable() {
+                if (result.isSuccessful()){
+                    JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
+                    JSONArray balanceJsonArray=resultJSONObj.getJSONArray("balances");
+                    List<Balance> balances=JSON.parseArray(balanceJsonArray.toJSONString(),Balance.class);
+                    list.addAll(balances);
+                    subscriber.onNext(list);
+                    subscriber.onCompleted();
+                }else{
+                    subscriber.onError(result.getException());
+                }
+            }
+        });
+
+        xasObservable.flatMap(new Func1<List<Balance>, Observable<List<Balance>>>() {
                     @Override
-                    public void run() {
-                        view.displayAssets(list);
+                    public Observable<List<Balance>> call(List<Balance> balances) {
+                        return uiaOervable;
+                    }
+                })
+                        .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<List<Balance>>() {
+                    @Override
+                    public void call(List<Balance> balances) {
+                        view.displayAssets(balances);
                     }
                 });
 
-            }
-        }).start();
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()){
