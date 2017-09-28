@@ -9,6 +9,11 @@ public class MineItem {
     private String icon;
     private String title;
 
+    public MineItem(String icon, String title) {
+        this.icon = icon;
+        this.title = title;
+    }
+
     public String getIcon() {
         return icon;
     }

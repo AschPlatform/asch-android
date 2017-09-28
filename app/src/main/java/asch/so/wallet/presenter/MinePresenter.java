@@ -35,11 +35,12 @@ public class MinePresenter implements MineContract.Presenter {
     @Override
     public void loadItems() {
         ArrayList<MineItem> list=new ArrayList<>();
-        list.add(new MineItem());
-        list.add(new MineItem());
-        list.add(new MineItem());
-        list.add(new MineItem());
-        list.add(new MineItem());
+        list.add(new MineItem("","账户管理"));
+        list.add(new MineItem("","交易记录"));
+        list.add(new MineItem("","联系人"));
+        list.add(new MineItem("","设置"));
+        list.add(new MineItem("","关于我们"));
+
 
         view.displayItems(list);
     }

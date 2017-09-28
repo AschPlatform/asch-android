@@ -112,6 +112,10 @@ public class TestData {
   return null;
  }
 
+ public static void configAschSDK(){
+  AschSDK.Config.setAschServer(root);
+  //String.join(" ", new String[]{"aaa", "bbb"});
+ }
 
  public static   void testSDK(){
   Log.d(TAG, "publicKey:testSDK begin");

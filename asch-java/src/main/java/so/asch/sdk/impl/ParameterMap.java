@@ -5,6 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.*;
 import java.util.function.Consumer;
 
+import so.asch.sdk.Utils;
+
 public class ParameterMap implements Iterable<Map.Entry<String, Object>> {
     private Map<String, Object> map = new HashMap<>();
 
@@ -51,7 +53,7 @@ public class ParameterMap implements Iterable<Map.Entry<String, Object>> {
     public String toQueryString(){
         List<String> parameterList = new ArrayList<>();
         map.forEach((key,value) -> parameterList.add(key + "=" + (value == null ? "" : value.toString())));
-        return  String.join("&", parameterList);
+        return  Utils.join("&", parameterList);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class MineAdapter extends BaseRecyclerViewAdapter <MineAdapter.ViewHolder
 
 
 
-        return new ViewHolder(itemView);
+        return new ViewHolder(itemView,this);
     }
 
     @Override
@@ -54,9 +54,10 @@ public class MineAdapter extends BaseRecyclerViewAdapter <MineAdapter.ViewHolder
         TextView subTitleTv;
 
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, MineAdapter adapter) {
             super(itemView);
             ButterKnife.bind(this,itemView);
+            itemView.setOnClickListener(v->adapter.onItemHolderClick(this));
         }
     }
 }

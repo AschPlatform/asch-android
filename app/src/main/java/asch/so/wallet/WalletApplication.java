@@ -44,6 +44,7 @@ public class WalletApplication extends MultiDexApplication{
         //Realm.deleteRealm(configuration);
         Realm.setDefaultConfiguration(configuration);
        // TestData.createTestAccountsData();
+        TestData.configAschSDK();
         TestData.testSDK();
        // TestData.testED25519();
     }

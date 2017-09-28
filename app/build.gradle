@@ -91,8 +91,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:multidex:1.0.1'
 
-    releaseCompile project(path: ':base', configuration: 'release')
-    debugCompile project(path: ':base', configuration: 'debug')
+//    releaseCompile project(path: ':base', configuration: 'release')
+//    debugCompile project(path: ':base', configuration: 'debug')
+    compile project(':base')
     compile project(':widget')
     compile project(':asch-java')
 
