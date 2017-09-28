@@ -95,12 +95,8 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
 
     @Override
     public void displayAssets(List<BaseAsset> assetList) {
-//        if (this.assetList != null){
             this.assetList.clear();
             this.assetList.addAll(assetList);
             adapter.notifyDataSetChanged();
-//        }else {
-//            this.assetList=new ArrayList<>();
-//        }
     }
 }

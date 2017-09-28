@@ -1,5 +1,7 @@
 package asch.so.wallet.presenter;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import asch.so.wallet.model.entity.BaseAsset;
 public class AssetsPresenter implements AssetsContract.Presenter {
 
     private final  AssetsContract.View view;
+    private Context context;
 
     public AssetsPresenter(AssetsContract.View view) {
         this.view = view;

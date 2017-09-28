@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <item
-        android:id="@+id/item_manage_wallet"
+        android:id="@+id/item_refresh"
         android:icon="@mipmap/ic_news_gray"
-        android:title="管理钱包"
+        android:title="刷新"
         app:showAsAction="always"
         />
 </menu>

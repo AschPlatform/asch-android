@@ -2,11 +2,15 @@ package asch.so.wallet.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.R;
+import asch.so.wallet.contract.AccountCreateContract;
+import asch.so.wallet.presenter.AccountCreatePresenter;
 import asch.so.wallet.view.fragment.AccountCreateFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +23,8 @@ public class AccountCreateActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    private AccountCreateContract.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +41,17 @@ public class AccountCreateActivity extends BaseActivity {
         AccountCreateFragment fragment =AccountCreateFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 
+        presenter=new AccountCreatePresenter(this,fragment);
 
     }
 
-
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        return super.onOptionsItemSelected(item);
+//    }
 }

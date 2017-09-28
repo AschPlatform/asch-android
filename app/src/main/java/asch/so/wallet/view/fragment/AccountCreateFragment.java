@@ -1,15 +1,22 @@
 package asch.so.wallet.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.TestData;
+import asch.so.wallet.contract.AccountCreateContract;
+import asch.so.wallet.model.entity.Account;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -19,11 +26,25 @@ import so.asch.sdk.AschSDK;
  * Created by kimziv on 2017/9/21.
  */
 
-public class AccountCreateFragment extends BaseFragment {
+public class AccountCreateFragment extends BaseFragment implements AccountCreateContract.View{
 
     Unbinder unbinder;
+
+    @BindView(R.id.seed_et)
+    EditText seedEt;
+    @BindView(R.id.name_et)
+    EditText nameEt;
+    @BindView(R.id.passwd_et)
+    EditText passwdEt;
+    @BindView(R.id.passwd_et2)
+    EditText passwdEt2;
+    @BindView(R.id.hint_et)
+    EditText hintEt;
+
     @BindView(R.id.create_btn)
     Button createBtn;
+
+    private AccountCreateContract.Presenter presenter;
 
     public static AccountCreateFragment newInstance() {
         
@@ -34,6 +55,11 @@ public class AccountCreateFragment extends BaseFragment {
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,11 +69,25 @@ public class AccountCreateFragment extends BaseFragment {
          createBtn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
-                String words = TestData.testGenerateSeeds(getActivity());
-                 Toast.makeText(getActivity(),words,Toast.LENGTH_SHORT).show();
+                    createAccount();
+                    getActivity().finish();
              }
          });
         return rootView;
+    }
+
+
+    /**
+     * 创建账户
+     */
+    private void createAccount(){
+        String seed=seedEt.getText().toString().trim();
+        String name=nameEt.getText().toString();
+        String passwd=passwdEt.getText().toString();
+        String passwd2=passwdEt2.getText().toString();
+        String hint=hintEt.getText().toString();
+
+        presenter.storeAccount(seed,name,passwd,hint);
     }
 
     @Override
@@ -56,5 +96,34 @@ public class AccountCreateFragment extends BaseFragment {
         if (unbinder!=null){
             unbinder.unbind();
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_account_create,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.item_refresh:
+            {
+                this.presenter.generateSeed();
+            }
+            break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void setPresenter(AccountCreateContract.Presenter presenter) {
+        this.presenter=presenter;
+    }
+
+    @Override
+    public void resetSeed(String seed) {
+
+        seedEt.setText(seed);
     }
 }
