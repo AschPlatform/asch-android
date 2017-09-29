@@ -11,6 +11,7 @@ public final class AschConst {
     public static final int CLIENT_DRIFT_SECONDS = 5;
     public static final int COIN = 100000000;
     public static final char BASE58_ADDRESS_PREFIX = 'A';
+    public static final int BASE58_ADDRESS_LEN = 34 ;
     public static final Date ASCH_BEGIN_EPOCH;
 
     static {
@@ -28,6 +29,7 @@ public final class AschConst {
 
     public static class Fees{
         public static final long TRANSFER = 10000000;
+        public static final long UIA_TRANSFER = 10000000;
         public static final long VOTE = 10000000;
         public static final long SECOND_SIGNATURE =500000000;
         public static final long MULTI_SIGNATURE =500000000;
