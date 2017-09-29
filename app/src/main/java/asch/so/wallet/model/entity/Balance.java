@@ -67,4 +67,8 @@ public class Balance {
     public void setWriteoff(int writeoff) {
         this.writeoff = writeoff;
     }
+
+    public float getRealBalance(){
+       return (float) (Double.parseDouble(balance)/(Math.pow(10,precision)));
+    }
 }

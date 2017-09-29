@@ -42,6 +42,12 @@
 
         <activity android:name=".activity.QRCodeScanActivity" >
         </activity>
+        <activity android:name=".activity.AssetTransactionsActivity" >
+        </activity>
+        <activity android:name=".activity.AssetTransferActivity" >
+        </activity>
+        <activity android:name=".activity.AssetReceiveActivity" >
+        </activity>
 
     </application>
 

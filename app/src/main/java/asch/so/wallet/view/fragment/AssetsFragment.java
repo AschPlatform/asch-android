@@ -1,6 +1,7 @@
 package asch.so.wallet.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,9 @@ import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.AccountsActivity;
+import asch.so.wallet.activity.AssetTransactionsActivity;
+import asch.so.wallet.activity.AssetTransferActivity;
 import asch.so.wallet.contract.AssetsContract;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
@@ -62,8 +66,9 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
         assetsRcv.setAdapter(adapter);
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
+                Intent intent = new Intent(getActivity(), AssetTransactionsActivity.class);
+                startActivity(intent);
             }
         });
         return rootView;

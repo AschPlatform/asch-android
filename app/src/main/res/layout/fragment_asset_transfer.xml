@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        >
+        <EditText
+            android:id="@+id/target_et"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:ems="10"
+            android:hint="收款人地址"
+            android:inputType="textPersonName"
+            android:singleLine="true" />
+        <EditText
+            android:id="@+id/ammount_et"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:ems="10"
+            android:hint="转账金额"
+            android:inputType="numberDecimal"
+            android:singleLine="true" />
+        <EditText
+            android:id="@+id/memo_et"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:ems="10"
+            android:hint="备注"
+            android:inputType="textPersonName"
+            android:singleLine="true" />
+        <EditText
+            android:id="@+id/fee_et"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:ems="10"
+            android:hint="费用"
+            android:text="0.1"
+            android:inputType="textPersonName"
+            android:singleLine="true" />
 
-</LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/transfer_btn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="转账"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+</RelativeLayout>

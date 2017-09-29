@@ -154,7 +154,7 @@ public class UIAService extends AschRESTService implements UIA {
 
             TransactionInfo transaction = getTransactionBuilder()
                     .buildUIATransfer(currency, amount, recipientId, message, secret, secondSecret);
-
+            System.out.println("====== transaction:"+transaction.toString());
             return broadcastTransaction(transaction);
         }
         catch (Exception ex){

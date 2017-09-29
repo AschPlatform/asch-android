@@ -37,7 +37,7 @@ public class TestData {
     public static final String root = "http://testnet.asch.so:4096";//http://106.14.156.245:4096"; "http://wallet.asch.mobi:9999";
     public static final String secret = "spatial slush action typical emerge feature confirm edge game desk orphan burst";
     public static final String address = "AHcGmYnCyr6jufT5AGbpmRUv55ebwMLCym";
-    public static final String secondSecret = "";//"asch111111";
+    public static final String secondSecret = null;//"asch111111";
     public static final String userName = "asch_g11";
     public static final String magic="594fe0f3";
 
@@ -114,6 +114,7 @@ public class TestData {
 
  public static void configAschSDK(){
   AschSDK.Config.setAschServer(root);
+  AschSDK.Config.setMagic(magic);
   //String.join(" ", new String[]{"aaa", "bbb"});
  }
 

@@ -37,7 +37,7 @@ public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHol
     public void onBindViewHolder(ViewHolder holder, int position) {
         Balance balance =assetList.get(position);
         holder.assetNameTv.setText(balance.getCurrency());
-        holder.balanceTv.setText(balance.getBalance());
+        holder.balanceTv.setText(String.valueOf(balance.getRealBalance()));
     }
 
     @Override
@@ -54,6 +54,8 @@ public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHol
         public ViewHolder(View itemView, AssetsAdapter adapter){
             super(itemView);
             ButterKnife.bind(this,itemView);
+
+            itemView.setOnClickListener(view -> adapter.onItemHolderClick(this));
         }
     }
 }

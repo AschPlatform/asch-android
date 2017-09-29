@@ -5,4 +5,9 @@ package asch.so.wallet;
  */
 
 public class AppConstants {
+
+    public static final  String XAS_NAME="XAS";
+    public static final  int  PRECISION=8;
+    public static final String DIGITS = "0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 }
