@@ -67,7 +67,10 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
+                Balance balance = assetList.get(position);
                 Intent intent = new Intent(getActivity(), AssetTransactionsActivity.class);
+                intent.putExtra("curreny",balance.getCurrency());
+                intent.putExtra("precision",balance.getPrecision());
                 startActivity(intent);
             }
         });

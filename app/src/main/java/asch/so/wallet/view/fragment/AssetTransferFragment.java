@@ -78,10 +78,12 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
             @Override
             public void onClick(View view) {
 //                String currency= AppConstants.XAS_NAME;
-                String currency= "KIM.KIM";
+               Bundle bundle = getArguments();
+                String currency= bundle.getString("curreny"); //"KIM.KIM";
+                int precision=bundle.getInt("precision");
                 String targetAddress= targetEt.getText().toString().trim();
 //                long amount=(long)(Float.parseFloat(amountEt.getText().toString().trim())*Math.pow(10,AppConstants.PRECISION));
-                long amount=(long)(Float.parseFloat(amountEt.getText().toString().trim())*Math.pow(10,6));
+                long amount=(long)(Float.parseFloat(amountEt.getText().toString().trim())*Math.pow(10,precision));
 
                 String message=memoEt.getText().toString();
                 String secret=TestData.secret;

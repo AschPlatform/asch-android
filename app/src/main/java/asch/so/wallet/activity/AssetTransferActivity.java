@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.j256.ormlite.stmt.query.In;
+
 import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
@@ -45,7 +47,14 @@ public class AssetTransferActivity extends BaseActivity implements EasyPermissio
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        Intent intent=getIntent();
+
         fragment=AssetTransferFragment.newInstance();
+
+        Bundle bundle=new Bundle();
+        bundle.putString("curreny",intent.getStringExtra("curreny"));
+        bundle.putInt("precision",intent.getIntExtra("precision",0));
+        fragment.setArguments(bundle);
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
         presenter =new AssetTransferPresenter(this,fragment);
         fragment.setPresenter(presenter);
