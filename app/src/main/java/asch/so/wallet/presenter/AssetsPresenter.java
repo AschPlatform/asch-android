@@ -70,7 +70,7 @@ public class AssetsPresenter implements AssetsContract.Presenter {
                     Map<String, Object> map =result.parseMap();
                     Balance xasBalance=new Balance();
                     xasBalance.setCurrency("XAS");
-                    xasBalance.setBalance(map.getOrDefault("balance","0")+"");
+                    xasBalance.setBalance(String.valueOf(map.getOrDefault("balance","0")));
                     xasBalance.setPrecision(8);
                     list.add(xasBalance);
                     subscriber.onNext(list);
