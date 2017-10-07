@@ -9,6 +9,7 @@ import android.widget.Button;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,7 +52,8 @@ public class AssetTransactionsFragment extends BaseFragment {
         receiveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
+                startActivity(intent);
             }
         });
         return rootView;

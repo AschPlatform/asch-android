@@ -5,7 +5,7 @@ package asch.so.wallet.model.entity;
  */
 
 public class QRCodeURL {
-    private static  final  String REQUEST_PAY_PATH="/asch/pay/"
+    private static  final  String REQUEST_PAY_PATH="/asch/pay/";
     private  String path;
     private String address;
     private String currency;
