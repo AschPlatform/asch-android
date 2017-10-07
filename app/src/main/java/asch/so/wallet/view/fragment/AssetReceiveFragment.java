@@ -1,5 +1,6 @@
 package asch.so.wallet.view.fragment;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     @BindView(R.id.copy_btn)
     Button copyBtn;
 
+    private AssetReceiveContract.Presenter presenter;
     public static AssetReceiveFragment newInstance() {
         
         Bundle args = new Bundle();
@@ -46,11 +48,11 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
     @Override
     public void setPresenter(AssetReceiveContract.Presenter presenter) {
-
+        this.presenter=presenter;
     }
 
     @Override
-    public void displayQrCode() {
-
+    public void displayQrCode(Bitmap bitmap) {
+        qrcodeIv.setImageBitmap(bitmap);
     }
 }

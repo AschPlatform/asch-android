@@ -108,6 +108,9 @@ dependencies {
     compile rootProject.ext.dependencies["rxandroid"]
     compile rootProject.ext.dependencies["fastjson"]
 
+
+    compile rootProject.ext.dependencies["zxing-core"]
+    compile rootProject.ext.dependencies["bga-zxing"]
     compile rootProject.ext.dependencies["bga-qrcodecore"]
     compile rootProject.ext.dependencies["bga-zbar"]
     compile rootProject.ext.dependencies["easypermissions"]

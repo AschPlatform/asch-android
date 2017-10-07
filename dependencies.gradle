@@ -65,9 +65,9 @@ project.ext {
             "SmartRefreshHeader"          : "com.scwang.smartrefresh:SmartRefreshHeader:1.0.3",
 
             //ZXing
-//            "zxing-core"                   : "com.google.zxing:core:${zxingCoreVersion}",
+            "zxing-core"                   : "com.google.zxing:core:${zxingCoreVersion}",
 //            "bga-qrcodecore"              : "cn.bingoogolapple:bga-qrcodecore:${bgaQRCodeVersion}@aar",
-//            "bga-zxing"                   : "cn.bingoogolapple:bga-zxing:${bgaQRCodeVersion}@aar",
+            "bga-zxing"                   : "cn.bingoogolapple:bga-zxing:${bgaQRCodeVersion}@aar",
 
 //            //ZBar
             "bga-qrcodecore"              : "cn.bingoogolapple:bga-qrcodecore:${bgaQRCodeVersion}@aar",

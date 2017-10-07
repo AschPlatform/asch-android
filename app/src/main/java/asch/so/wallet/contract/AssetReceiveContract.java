@@ -1,5 +1,8 @@
 package asch.so.wallet.contract;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+
 import asch.so.base.presenter.BasePresenter;
 import asch.so.base.view.BaseView;
 
@@ -10,10 +13,10 @@ import asch.so.base.view.BaseView;
 public interface AssetReceiveContract {
 
     interface View extends BaseView<Presenter> {
-        void displayQrCode();
+        void displayQrCode(Bitmap bitmap);
     }
 
     interface Presenter extends BasePresenter {
-        void generateQrCode();
+        void generateQrCode(String content);
     }
 }

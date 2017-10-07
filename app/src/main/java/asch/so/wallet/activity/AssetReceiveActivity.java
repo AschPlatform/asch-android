@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.R;
+import asch.so.wallet.TestData;
 import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.presenter.AssetReceivePresenter;
 import asch.so.wallet.presenter.AssetTransferPresenter;
@@ -35,5 +36,6 @@ public class AssetReceiveActivity extends BaseActivity {
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
         presenter=new AssetReceivePresenter(this,fragment);
         fragment.setPresenter(presenter);
+        presenter.generateQrCode(TestData.address);
     }
 }
