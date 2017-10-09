@@ -13,8 +13,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import junit.framework.Test;
+
 import asch.so.wallet.R;
 import asch.so.base.fragment.BaseFragment;
+import asch.so.wallet.TestData;
 import asch.so.wallet.contract.AssetReceiveContract;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +37,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
     @BindView(R.id.ammount_et)
     EditText ammountEt;
-    String currency;
+    String currency="XAS";
 
     TextWatcher textWatcher=new TextWatcher() {
 
@@ -69,6 +72,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
         View rootView =inflater.inflate(R.layout.fragment_asset_receive,container,false);
         ButterKnife.bind(this,rootView);
 
+        addressTv.setText(TestData.address);
         ammountEt.addTextChangedListener(textWatcher);
 
         return rootView;
