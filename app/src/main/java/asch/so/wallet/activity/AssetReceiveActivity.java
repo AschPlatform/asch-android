@@ -36,6 +36,6 @@ public class AssetReceiveActivity extends BaseActivity {
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
         presenter=new AssetReceivePresenter(this,fragment);
         fragment.setPresenter(presenter);
-        presenter.generateQrCode(TestData.address);
+        presenter.generateQrCode(TestData.address,"XAS","88");
     }
 }

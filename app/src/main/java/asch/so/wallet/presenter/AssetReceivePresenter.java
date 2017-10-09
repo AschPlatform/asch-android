@@ -7,7 +7,9 @@ import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import asch.so.wallet.TestData;
 import asch.so.wallet.contract.AssetReceiveContract;
+import asch.so.wallet.model.entity.QRCodeURL;
 import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 
@@ -21,9 +23,12 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
     private  AssetReceiveContract.View view;
     private Context context;
 
+    private QRCodeURL qrCodeURL;
+
     public AssetReceivePresenter(Context context, AssetReceiveContract.View view) {
         this.context=context;
         this.view=view;
+        this.qrCodeURL=new QRCodeURL();
     }
 
     @Override
@@ -37,11 +42,12 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
     }
 
     @Override
-    public void generateQrCode(String content) {
+   public void generateQrCode(String address,String currency, String ammount) {
         new AsyncTask<Void, Void, Bitmap>() {
             @Override
             protected Bitmap doInBackground(Void... params) {
-                return QRCodeEncoder.syncEncodeQRCode(content, BGAQRCodeUtil.dp2px(context, 150), Color.parseColor("#000000"));
+                String qrcodeURL=buildQRCodeURL(address, currency,ammount);
+                return QRCodeEncoder.syncEncodeQRCode(qrcodeURL, BGAQRCodeUtil.dp2px(context, 150), Color.parseColor("#000000"));
             }
 
             @Override
@@ -54,4 +60,12 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
             }
         }.execute();
     }
+
+    private String buildQRCodeURL(String address,String currency, String ammount){
+        qrCodeURL.setAddress(address);
+        qrCodeURL.setCurrency(currency);
+        qrCodeURL.setAmount(ammount);
+       return qrCodeURL.encodeQRCodeURL();
+    }
+
 }

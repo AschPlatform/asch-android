@@ -7,22 +7,7 @@
     android:orientation="vertical"
     >
 
-    <LinearLayout
-        android:id="@+id/bottom_bar"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/copy_btn"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:text="复制地址"
-            tools:ignore="HardcodedText" />
-    </LinearLayout>
+
 
     <TextView
         android:id="@+id/address_tv"
@@ -39,4 +24,30 @@
         android:layout_height="200dp"
         android:layout_centerInParent="true"
         app:srcCompat="@android:drawable/star_big_on" />
+
+    <EditText
+        android:id="@+id/ammount_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/qrcode_iv"
+        android:ems="10"
+        android:layout_centerHorizontal="true"
+        android:inputType="numberDecimal"
+        android:text="88" />
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/copy_btn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="复制地址"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
 </RelativeLayout>

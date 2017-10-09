@@ -42,4 +42,12 @@ public class QRCodeURL {
     public void setAmount(String amount) {
         this.amount = amount;
     }
+
+    public String encodeQRCodeURL(){
+        return String.format(REQUEST_PAY_PATH+address+"?currency=%$&&amount=%$",currency,amount);
+    }
+
+    public void decodeQRCodeURL(String url){
+        // TODO: 2017/10/9
+    }
 }

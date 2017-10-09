@@ -17,6 +17,6 @@ public interface AssetReceiveContract {
     }
 
     interface Presenter extends BasePresenter {
-        void generateQrCode(String content);
+        void generateQrCode(String address,String currency, String ammount);
     }
 }
