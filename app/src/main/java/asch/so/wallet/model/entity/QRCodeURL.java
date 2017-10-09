@@ -52,13 +52,13 @@ public class QRCodeURL {
         return String.format(REQUEST_PAY_SCHEME+address+"?currency=%s&amount=%s",currency,amount);
     }
 
-    public void decodeQRCodeURL(String url) throws UnsupportedEncodingException{
+    public static QRCodeURL decodeQRCodeURL(String url) throws UnsupportedEncodingException{
         if (url!=null){
             //int start=0;
             if (url.startsWith(REQUEST_PAY_SCHEME)){
               int mid1=REQUEST_PAY_SCHEME.length();
               int mid2=url.indexOf('?',mid1);
-               address=url.substring(mid1,mid2-1);
+               String address=url.substring(mid1,mid2-1);
                 String query=url.substring(mid2+1);
                 final  Map<String, String> queryPairs=new HashMap<String, String>();
                final String [] pairs = query.split("&");
@@ -69,12 +69,22 @@ public class QRCodeURL {
                         final String value = idx > 0 && pair.length() > idx + 1 ? URLDecoder.decode(pair.substring(idx + 1), "UTF-8") : null;
                         queryPairs.put(key, value);
                     }
-
-                    currency=queryPairs.getOrDefault("currency","");
-                    amount=queryPairs.getOrDefault("amount","");
                 }
+                String  currency=queryPairs.getOrDefault("currency","");
+                String  amount=queryPairs.getOrDefault("amount","");
+                QRCodeURL codeURL= new QRCodeURL();
+                codeURL.setAddress(address);
+                codeURL.setCurrency(currency);
+                codeURL.setAmount(amount);
+                return codeURL;
 
             }
         }
+        return null;
+    }
+
+    @Override
+    public String toString() {
+        return "address: "+address+"\ncurrency: "+currency+"\namount:"+amount;
     }
 }

@@ -19,6 +19,7 @@ import asch.so.wallet.R;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.TestData;
 import asch.so.wallet.contract.AssetReceiveContract;
+import asch.so.wallet.model.entity.QRCodeURL;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -74,6 +75,13 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
         addressTv.setText(TestData.address);
         ammountEt.addTextChangedListener(textWatcher);
+
+        copyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.testDecodeQRCodeURL();
+            }
+        });
 
         return rootView;
     }

@@ -7,6 +7,8 @@ import android.os.AsyncTask;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.UnsupportedEncodingException;
+
 import asch.so.wallet.TestData;
 import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.model.entity.QRCodeURL;
@@ -66,6 +68,16 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
         qrCodeURL.setCurrency(currency);
         qrCodeURL.setAmount(ammount);
        return qrCodeURL.encodeQRCodeURL();
+    }
+
+    @Override
+    public  void testDecodeQRCodeURL(){
+        try {
+            QRCodeURL url =  QRCodeURL.decodeQRCodeURL(qrCodeURL.encodeQRCodeURL());
+            Toast.makeText(context,url.toString(),Toast.LENGTH_SHORT).show();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
 }
