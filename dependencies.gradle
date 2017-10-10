@@ -11,6 +11,7 @@ def fastJsonVersion = "1.1.60.android"
 def zxingCoreVersion = "3.3.0"
 def bgaQRCodeVersion = "1.1.8"
 def easypermissionsVersion = "1.0.0"
+def jsBridgeVersion = "1.0.4"
 
 project.ext {
     android = [
@@ -73,6 +74,8 @@ project.ext {
             "bga-qrcodecore"              : "cn.bingoogolapple:bga-qrcodecore:${bgaQRCodeVersion}@aar",
             "bga-zbar"                    : "cn.bingoogolapple:bga-zbar:${bgaQRCodeVersion}@aar",
 
-            "easypermissions"              : "pub.devrel:easypermissions:${easypermissionsVersion}"
+            "easypermissions"              : "pub.devrel:easypermissions:${easypermissionsVersion}",
+            //JSBridge
+            "js-bridge"                   : "com.github.lzyzsd:jsbridge:${jsBridgeVersion}"
     ]
 }

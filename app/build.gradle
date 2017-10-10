@@ -115,6 +115,8 @@ dependencies {
     compile rootProject.ext.dependencies["bga-zbar"]
     compile rootProject.ext.dependencies["easypermissions"]
 
+    compile rootProject.ext.dependencies["js-bridge"]
+
 
    // compile files('libs/asch-android-0.1.2-SNAPSHOT-jar-with-dependencies.jar')
 

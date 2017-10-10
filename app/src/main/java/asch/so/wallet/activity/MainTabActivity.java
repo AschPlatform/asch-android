@@ -19,6 +19,7 @@ import asch.so.wallet.presenter.AssetsPresenter;
 import asch.so.wallet.presenter.MinePresenter;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
 import asch.so.wallet.view.fragment.AssetsFragment;
+import asch.so.wallet.view.fragment.DappFragment;
 import asch.so.wallet.view.fragment.MineFragment;
 import asch.so.wallet.view.fragment.TestFragment;
 import butterknife.BindView;
@@ -109,9 +110,10 @@ public class MainTabActivity extends BaseActivity {
 
         AssetsFragment  assetsFragment=AssetsFragment.newInstance();
         MineFragment mineFragment=MineFragment.newInstance();
+        DappFragment dappFragment=DappFragment.newInstance();
 
         adapter.addFragment(assetsFragment);
-        adapter.addFragment(TestFragment.newInstance("发现"));
+        adapter.addFragment(dappFragment);
         adapter.addFragment(mineFragment);
         viewPager.setAdapter(adapter);
 
