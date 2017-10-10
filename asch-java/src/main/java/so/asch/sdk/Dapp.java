@@ -1,6 +1,7 @@
 package so.asch.sdk;
 
 import so.asch.sdk.dto.query.BlockQueryParameters;
+import so.asch.sdk.dto.query.TransactionQueryParameters;
 
 /**
  * Created by eagle on 17-7-7.
@@ -123,5 +124,88 @@ public interface Dapp extends AschInterface{
 //    success	boole	是否成功获得response数据
 //    transactionId	string	设置昵称的交易id
     AschResult setNickname(String dappID, String nickname);
+
+//    3.2 获取未确认的交易
+//
+//    接口地址：/api/dapps/dappID/transactions/unconfirmed
+//    请求方式：GET
+//    支持格式：urlencode
+//
+//    返回参数说明：
+//
+//    名称	类型	说明
+//    success	boole	是否成功获得response数据
+//    transactions	array	未确认交易列表
+    AschResult queryUnconfirmedTransactions(String dappID);
+
+//    3.3 获取已确认的交易
+//
+//    接口地址：/api/dapps/dappID/transactions
+//    请求方式：GET
+//    支持格式：urlencode
+//    请求参数说明：
+//
+//    名称	类型	必填	说明
+//    limit	interger	N	限制返回的条数,默认值是100
+//    offset	interger	N	偏移量
+//    返回参数说明：
+//
+//    名称	类型	说明
+//    success	boole	是否成功获得response数据
+//    transactions	array	交易列表
+//    count	integer	符合查询条件的总交易条数
+
+    AschResult queryTransactions(TransactionQueryParameters parameters);
+
+//    3.4 根据交易id获取交易详情
+//
+//    接口地址：/api/dapps/dappID/transactions/:id
+//    请求方式：GET
+//    支持格式：urlencode
+//    请求参数说明：
+//
+//    名称	类型	必填	说明
+//    id	string	Y	交易id
+//    返回参数说明：
+//
+//    名称	类型	说明
+//    success	boole	是否成功获得response数据
+//    transaction	dict	该交易id对应的交易详情
+
+    AschResult getTransaction(String transactionId);
+
+//    3.5 根据查询条件获取交易
+//
+//    接口地址：/api/dapps/dappID/transfers
+//    请求方式：GET
+//    支持格式：urlencode
+//    请求参数说明：
+//
+//    名称	类型	必填	说明
+//    ownerId	string	N	发送者地址，ownerId和currency必须有一个或者两个都存在
+//    currency	string	N	代币名称，ownerId和currency必须有一个或者两个都存在
+//    limit	interger	N	限制返回的条数,默认值是10
+//    offset	interger	N	偏移量，默认0
+//    返回参数说明：
+//
+//    名称	类型	说明
+//    success	boole	是否成功获得response数据
+//    transfers	array	符合查询条件的交易列表
+//    count	integer	符合查询条件的条数
+    AschResult getTransactions(String ownerId, String currency, int limit, int offset);
+
+//    4.1 获取dapp内的所有智能合约
+//
+//    接口地址：/api/dapps/dappID/contracts
+//    请求方式：GET
+//    支持格式：urlencode
+//
+//    返回参数说明：
+//
+//    名称	类型	说明
+//    success	boole	是否成功获得response数据
+//    contracts	array	每个元素都是一个字典，由合约编号、合约名字组成，其中core开头的合约为每个dapp通用的内置合约
+    AschResult getContracts();
+
 
 }
