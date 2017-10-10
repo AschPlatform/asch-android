@@ -173,6 +173,49 @@ public class TransactionInfo {
         return result;
     }
 
+    public byte[] getBytes2(boolean skipSignature , boolean skipSignSignature){
+
+        ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.BIG_ENDIAN);
+        switch (transactionType){
+            case Transfer:
+                break;
+            case Signature:
+                break;
+            case Delegate:
+                break;
+            case Vote:
+                break;
+            case MultiSignature:
+                break;
+            case Dapp:
+                break;
+            case InTransfer:
+            {
+                //buffer.put(getAsset().)
+            }
+            break;
+            case OutTransfer:
+                break;
+            case Store:
+                break;
+            case UIAIssuer:
+                break;
+            case UIAAsset:
+                break;
+            case UIAFlags:
+                break;
+            case UIA_ACL:
+                break;
+            case UIAIssue:
+                break;
+            case UIATransfer:
+                break;
+            case Lock:
+                break;
+        }
+        return null;
+    }
+
     private byte[] getRecipientIdBuffer(){
         if (null == recipientId)  return new byte[8];
         //数字地址
