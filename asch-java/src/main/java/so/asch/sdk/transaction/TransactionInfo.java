@@ -128,6 +128,15 @@ public class TransactionInfo {
         return this;
     }
 
+    public OptionInfo getOption() {
+        return optionInfo;
+    }
+
+    public TransactionInfo setOption(OptionInfo optionInfo) {
+        this.optionInfo = optionInfo;
+        return this;
+    }
+
     private String transactionId = null;
     private TransactionType transactionType = null;
     private String recipientId = null;
@@ -142,6 +151,8 @@ public class TransactionInfo {
     private String signature = null;
     private String signSignature = null;
     private AssetInfo assetInfo = null;
+    private OptionInfo optionInfo = null;
+
 
     public byte[] getBytes(boolean skipSignature , boolean skipSignSignature){
         //1 + 4 + 32 + 32 + 8 + 8 + 64 + 64
@@ -191,7 +202,11 @@ public class TransactionInfo {
                 break;
             case InTransfer:
             {
-                //buffer.put(getAsset().)
+                buffer.putInt(getTimestamp())
+                        .put(getDappTransactionFee())
+                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                        .put(getType().byteValue())
+                        .put(getDappArgsBuffer());
             }
             break;
             case OutTransfer:
@@ -213,7 +228,18 @@ public class TransactionInfo {
             case Lock:
                 break;
         }
-        return null;
+        if (!skipSignature){
+            buffer.put(Decoding.unsafeDecodeHex(getSignature()));
+        }
+
+        if (!skipSignSignature){
+            buffer.put(Decoding.unsafeDecodeHex(getSignSignature()));
+        }
+
+        buffer.flip();
+        byte[] result = new byte[buffer.remaining()];
+        buffer.get(result);
+        return result;
     }
 
     private byte[] getRecipientIdBuffer(){
@@ -234,5 +260,14 @@ public class TransactionInfo {
 
     private byte[] getMessageBuffer(){
         return message == null ? new byte[0] : message.getBytes();
+    }
+
+    private byte[] getDappTransactionFee(){
+
+        return fee ==null?new byte[0]:String.valueOf(fee).getBytes();
+    }
+
+    private byte[] getDappArgsBuffer(){
+        return optionInfo==null?new byte[0]:optionInfo.getArgsJson().getBytes();
     }
 }

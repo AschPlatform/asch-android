@@ -11,6 +11,8 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
+import static so.asch.sdk.TransactionType.Transfer;
+
 public class TransactionBuilder {
 
     public TransactionInfo buildVote(String[] upvotePublicKeys, String[] downvotePublicKeys,
@@ -77,7 +79,7 @@ public class TransactionBuilder {
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
 
         TransactionInfo transaction =  newTransaction(
-                TransactionType.Transfer,
+                Transfer,
                 amount,
                 AschConst.Fees.TRANSFER,
                 keyPair.getPublic())
@@ -119,14 +121,76 @@ public class TransactionBuilder {
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
     }
 
-    protected TransactionInfo newTransaction(TransactionType type, long amount, long fee, PublicKey publicKey) throws SecurityException{
-        return new TransactionInfo()
-                .setTransactionType(type)
-                .setAmount(amount)
-                .setFee(fee)
-                .setTimestamp(getSecurity().getTransactionTimestamp())
-                .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
+    /**
+     * Dapp inner transaction
+     * @param fee
+     * @param type
+     * @param args
+     * @param secret
+     * @return
+     * @throws SecurityException
+     */
+    public TransactionInfo buildInnerTransaction(long fee, TransactionType type, String [] args, String secret) throws SecurityException{
+        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+
+        TransactionInfo transaction= newTransaction(TransactionType.InTransfer,0,fee,keyPair.getPublic())
+                .setOption(new OptionInfo(fee,type,args));
+        return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),null);
     }
+
+    protected TransactionInfo newTransaction(TransactionType type, long amount, long fee, PublicKey publicKey) throws SecurityException{
+       return newTransaction(type,amount,fee,publicKey,null);
+    }
+
+
+        protected TransactionInfo newTransaction(TransactionType type, long amount, long fee, PublicKey publicKey, OptionInfo optionInfo) throws SecurityException{
+        switch (type){
+            case Transfer:
+                return new TransactionInfo()
+                        .setTransactionType(type)
+                        .setAmount(amount)
+                        .setFee(fee)
+                        .setTimestamp(getSecurity().getTransactionTimestamp())
+                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
+            case Signature:
+                break;
+            case Delegate:
+                break;
+            case Vote:
+                break;
+            case MultiSignature:
+                break;
+            case Dapp:
+                break;
+            case InTransfer:
+                return new TransactionInfo()
+                        .setFee(fee)
+                        .setTimestamp(getSecurity().getTransactionTimestamp())
+                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey))
+                        .setTransactionType(type)
+                        .setOption(optionInfo);
+            case OutTransfer:
+                break;
+            case Store:
+                break;
+            case UIAIssuer:
+                break;
+            case UIAAsset:
+                break;
+            case UIAFlags:
+                break;
+            case UIA_ACL:
+                break;
+            case UIAIssue:
+                break;
+            case UIATransfer:
+                break;
+            case Lock:
+                break;
+        }
+        return null;
+    }
+
 
     protected TransactionInfo signatureAndGenerateTransactionId(TransactionInfo transaction,
                                                                 PrivateKey privateKey, String secondSecret) throws SecurityException{
