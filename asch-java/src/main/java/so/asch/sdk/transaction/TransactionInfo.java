@@ -4,6 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import so.asch.sdk.TransactionType;
 import so.asch.sdk.codec.Decoding;
 import so.asch.sdk.transaction.asset.AssetInfo;
+import so.asch.sdk.transaction.asset.DappAssetInfo;
 
 import java.beans.Transient;
 import java.math.BigInteger;
@@ -159,16 +160,62 @@ public class TransactionInfo {
         //type(1)|timestamp(4)|senderPublicKey(32)|requesterPublicKey(32)|recipientId(8)|amount(8)|
         //message(?)|asset(?)|setSignature(64)|signSignature(64)
 
-        ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.LITTLE_ENDIAN)
-                .put(getType().byteValue())
-                .putInt(getTimestamp())
-                .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
-                .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
-                .put(getRecipientIdBuffer())
-                .putLong(getAmount())
-                .put(getMessageBuffer())
-                .put(getAsset().assetBytes());
+        ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.BIG_ENDIAN);
+        switch (transactionType){
+            case Transfer:
+            {
+                buffer.put(getType().byteValue())
+                    .putInt(getTimestamp())
+                    .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                    .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
+                    .put(getRecipientIdBuffer())
+                    .putLong(getAmount())
+                    .put(getMessageBuffer())
+                    .put(getAsset().assetBytes());
 
+            }
+                break;
+            case Signature:
+                break;
+            case Delegate:
+                break;
+            case Vote:
+                break;
+            case MultiSignature:
+                break;
+            case Dapp:
+                break;
+            case InTransfer:
+            {
+                buffer.put(getType().byteValue())
+                        .putInt(getTimestamp())
+                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                        .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
+                        .put(getRecipientIdBuffer())
+                        .putLong(getAmount())
+                        .put(getMessageBuffer())
+                        .put(getAsset().assetBytes());
+            }
+            break;
+            case OutTransfer:
+                break;
+            case Store:
+                break;
+            case UIAIssuer:
+                break;
+            case UIAAsset:
+                break;
+            case UIAFlags:
+                break;
+            case UIA_ACL:
+                break;
+            case UIAIssue:
+                break;
+            case UIATransfer:
+                break;
+            case Lock:
+                break;
+        }
         if (!skipSignature){
             buffer.put(Decoding.unsafeDecodeHex(getSignature()));
         }
@@ -180,8 +227,31 @@ public class TransactionInfo {
         buffer.flip();
         byte[] result = new byte[buffer.remaining()];
         buffer.get(result);
-
         return result;
+
+//        ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.LITTLE_ENDIAN)
+//                .put(getType().byteValue())
+//                .putInt(getTimestamp())
+//                .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+//                .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
+//                .put(getRecipientIdBuffer())
+//                .putLong(getAmount())
+//                .put(getMessageBuffer())
+//                .put(getAsset().assetBytes());
+//
+//        if (!skipSignature){
+//            buffer.put(Decoding.unsafeDecodeHex(getSignature()));
+//        }
+//
+//        if (!skipSignSignature){
+//            buffer.put(Decoding.unsafeDecodeHex(getSignSignature()));
+//        }
+//
+//        buffer.flip();
+//        byte[] result = new byte[buffer.remaining()];
+//        buffer.get(result);
+//
+//        return result;
     }
 
     public byte[] getBytes2(boolean skipSignature , boolean skipSignSignature){
@@ -270,4 +340,8 @@ public class TransactionInfo {
     private byte[] getDappArgsBuffer(){
         return optionInfo==null?new byte[0]:optionInfo.getArgsJson().getBytes();
     }
+
+//    private byte[] getInTransferBuffer(DappAssetInfo assetInfo){
+//        assetInfo.assetBytes();
+//    }
 }

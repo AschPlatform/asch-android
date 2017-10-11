@@ -68,6 +68,7 @@ public class TestData {
 
     public static final String senderPublicKey = "fd6df6dc35852ac7edcc081eb5195718e0c77a6ad4f8157eeb78c865fa83efc4";
 
+    public  static final String dappID="f8da1167eabc89111004e6a3e5165855458ef4ad1600a0ea98a13c77d23f719f";
 
 
 

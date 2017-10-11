@@ -13,6 +13,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 
 /**
@@ -27,7 +28,10 @@ public final class RESTOkHttp {
 	protected static OkHttpClient getHttpClient(){
 	if(client==null)
 	{
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 	    client = new OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
                 .connectTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30,TimeUnit.SECONDS)
                 .writeTimeout(30,TimeUnit.SECONDS)
@@ -116,7 +120,8 @@ public final class RESTOkHttp {
         catch (IOException ex){
             String errorInfo = String.format("Exception when post,url:%s,data:%s", url, parameters);
            // logger.error(errorInfo, ex);
-            //ex.printStackTrace();
+            System.out.println(errorInfo);
+            ex.printStackTrace();
             throw ex;
         }
     }

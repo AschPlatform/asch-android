@@ -2,6 +2,7 @@ package so.asch.sdk.impl;
 
 import so.asch.sdk.AschResult;
 import so.asch.sdk.Dapp;
+import so.asch.sdk.Transaction;
 import so.asch.sdk.TransactionType;
 import so.asch.sdk.dbc.Argument;
 import so.asch.sdk.dto.query.BlockQueryParameters;
@@ -26,8 +27,21 @@ public class DappService extends AschRESTService implements Dapp {
 
     @Override
     public AschResult deposit(String dappID, String currency, long amount, String message, String secret, String secondSecret) {
+        try {
+           Argument.notNull(dappID,"invalid dappID");
+           Argument.notNull(currency, "invalid currency");
+           Argument.require(Validation.isValidInTransferAmount(currency, amount), "invalid ammount");
+           Argument.require(Validation.isValidSecret(secret),"invalid secret");
+           Argument.optional(secondSecret, Validation::isValidSecondSecret,"invalid secondSecret");
 
-        return null;
+            TransactionInfo transaction=getTransactionBuilder()
+                    .buildInTransfer(dappID,currency,amount,secret,secondSecret);
+            System.out.println("====== transaction:"+transaction.toString());
+
+            return broadcastTransaction(transaction);
+        }catch (Exception e){
+            return fail(e);
+        }
     }
 
     @Override

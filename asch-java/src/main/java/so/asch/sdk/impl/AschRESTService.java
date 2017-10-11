@@ -11,6 +11,7 @@ import so.asch.sdk.dbc.Argument;
 import so.asch.sdk.security.SecurityStrategy;
 import so.asch.sdk.transaction.TransactionBuilder;
 import so.asch.sdk.transaction.TransactionInfo;
+import so.asch.sdk.transaction.asset.InTransferAssetInfo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -118,7 +119,14 @@ public abstract class AschRESTService implements AschInterface{
     protected AschResult broadcastTransaction(TransactionInfo transaction){
         ParameterMap transactionParameter = new ParameterMap()
                 .put("transaction", transaction);
-        return postMagic(AschServiceUrls.Peer.BROADCAST_TRANSACTION, transactionParameter );
+//        if (transaction.getAsset() instanceof InTransferAssetInfo){
+//            InTransferAssetInfo assetInfo =(InTransferAssetInfo) transaction.getAsset();
+//            String dappId = assetInfo.getInTransfer().getDappId();
+//
+//        }else {
+            return postMagic(AschServiceUrls.Peer.BROADCAST_TRANSACTION, transactionParameter );
+        //}
+
     }
 
     protected AschResult fail(Exception ex){

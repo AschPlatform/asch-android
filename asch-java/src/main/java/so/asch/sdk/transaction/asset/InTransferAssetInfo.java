@@ -14,12 +14,12 @@ public class InTransferAssetInfo extends AssetInfo {
     public  static  class  InTransferInfo{
 
         private String dappId;
-        private long amount;
+        private String amount;
         private String currency;
 
         public InTransferInfo(String dappId, String currency, long amount) {
             this.dappId = dappId;
-            this.amount = amount;
+            this.amount = String.valueOf(amount);
             this.currency = currency;
         }
 
@@ -28,7 +28,7 @@ public class InTransferAssetInfo extends AssetInfo {
         }
 
         public String getAmount() {
-            return Long.toString(amount);
+            return amount;
         }
 
         public String getCurrency() {

@@ -81,4 +81,8 @@ public final class AschServiceUrls {
         static final String GET_TRANSACTIONS = "/api/uia/transactions";
     }
 
+    final static class Dapp{
+        static final String BROADCAST_TRANSACTION = "/peer/transactions";
+    }
+
 }

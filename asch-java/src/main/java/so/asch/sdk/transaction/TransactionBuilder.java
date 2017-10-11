@@ -1,5 +1,6 @@
 package so.asch.sdk.transaction;
 
+import so.asch.sdk.Transaction;
 import so.asch.sdk.TransactionType;
 import so.asch.sdk.impl.AschConst;
 import so.asch.sdk.impl.AschFactory;
@@ -138,12 +139,19 @@ public class TransactionBuilder {
         return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),null);
     }
 
+    public TransactionInfo buildInTransfer(String dappID, String currency, long amount,String  secret, String secondSecret) throws SecurityException{
+        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+        TransactionInfo transaction=newTransaction(TransactionType.InTransfer,amount,AschConst.Fees.TRANSFER,keyPair.getPublic())
+                .setAsset(new InTransferAssetInfo(dappID,currency,amount));
+        return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),secondSecret);
+    }
+
     protected TransactionInfo newTransaction(TransactionType type, long amount, long fee, PublicKey publicKey) throws SecurityException{
-       return newTransaction(type,amount,fee,publicKey,null);
+       return newTransaction(type,amount,fee,publicKey,null,null);
     }
 
 
-        protected TransactionInfo newTransaction(TransactionType type, long amount, long fee, PublicKey publicKey, OptionInfo optionInfo) throws SecurityException{
+        protected TransactionInfo newTransaction(TransactionType type, long amount, long fee, PublicKey publicKey, String dappID, OptionInfo optionInfo) throws SecurityException{
         switch (type){
             case Transfer:
                 return new TransactionInfo()
@@ -164,11 +172,11 @@ public class TransactionBuilder {
                 break;
             case InTransfer:
                 return new TransactionInfo()
+                        .setTransactionType(type)
+                        .setAmount(amount)
                         .setFee(fee)
                         .setTimestamp(getSecurity().getTransactionTimestamp())
-                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey))
-                        .setTransactionType(type)
-                        .setOption(optionInfo);
+                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
             case OutTransfer:
                 break;
             case Store:

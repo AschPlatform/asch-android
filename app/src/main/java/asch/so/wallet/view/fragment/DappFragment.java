@@ -21,9 +21,18 @@ import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
+import asch.so.wallet.TestData;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+import so.asch.sdk.AschResult;
+import so.asch.sdk.AschSDK;
 
 /**
  * Created by kimziv on 2017/9/21.
@@ -86,6 +95,7 @@ public class DappFragment extends BaseFragment implements View.OnClickListener{
             @Override
             public void handler(String data, CallBackFunction callBackFunction) {
                 Log.i(TAG, "handler = submitFromWeb, data from web = " + data);
+                deposit(TestData.dappID,"XAS",100,null,TestData.secret,null);
                 callBackFunction.onCallBack("haha"+data);
             }
 
@@ -107,6 +117,38 @@ public class DappFragment extends BaseFragment implements View.OnClickListener{
         Intent chooserIntent = new Intent(Intent.ACTION_GET_CONTENT);
         chooserIntent.setType("image/*");
         startActivityForResult(chooserIntent, RESULT_CODE);
+    }
+
+    public void deposit(String dappID,String currency,long amount, String message,String secret, String secondSecret) {
+
+        Observable.create(new Observable.OnSubscribe<AschResult>(){
+
+            @Override
+            public void call(Subscriber<? super AschResult> subscriber) {
+                AschResult result=null;
+//                if (AppConstants.XAS_NAME.equals(currency)){
+//                    result = AschSDK.Account.transfer(targetAddress,amount,message,secret,secondSecret);
+//                }else {
+//                    result = AschSDK.UIA.transfer(currency,targetAddress,amount,message,secret,secondSecret);
+//                }
+                result=AschSDK.Dapp.deposit(dappID,currency,amount,message,secret,secondSecret);
+                if (result!=null && result.isSuccessful()){
+                    subscriber.onNext(result);
+                    subscriber.onCompleted();
+                }else {
+                    subscriber.onError(result!=null?result.getException():new Exception("result is null"));
+                }
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<AschResult>() {
+                    @Override
+                    public void call(AschResult aschResult) {
+                        Log.i(TAG, "+++++++"+aschResult.getRawJson());
+                        Toast.makeText(getContext(),"充值成功", Toast.LENGTH_SHORT).show();
+                        //view.displayToast("转账成功");
+                    }
+                });
     }
 
 

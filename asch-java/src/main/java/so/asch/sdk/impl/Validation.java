@@ -61,6 +61,12 @@ public class Validation {
         return amount > 0 && amount <100000000;
     }
 
+    public static boolean isValidInTransferAmount(String currency, long amount){
+        //TODO:validate amount
+        //return amount > 0 && amount <100000000;
+        return amount > 0;
+    }
+
     public static boolean isValidFee(long fee){
         return fee>=0;
     }
