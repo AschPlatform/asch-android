@@ -15,10 +15,13 @@ import java.lang.reflect.Field;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
+import asch.so.wallet.contract.DappCenterContract;
 import asch.so.wallet.presenter.AssetsPresenter;
+import asch.so.wallet.presenter.DappCenterPresenter;
 import asch.so.wallet.presenter.MinePresenter;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
 import asch.so.wallet.view.fragment.AssetsFragment;
+import asch.so.wallet.view.fragment.DappCenterFragment;
 import asch.so.wallet.view.fragment.DappFragment;
 import asch.so.wallet.view.fragment.MineFragment;
 import asch.so.wallet.view.fragment.TestFragment;
@@ -36,6 +39,7 @@ public class MainTabActivity extends BaseActivity {
     private BottomNavigationView bottomNavigationView;
 
     private AssetsPresenter assetsPresenter;
+    private DappCenterPresenter dappCenterPresenter;
     private MinePresenter minePresenter;
 
     @BindView(R.id.toolbar)
@@ -110,16 +114,19 @@ public class MainTabActivity extends BaseActivity {
 
         AssetsFragment  assetsFragment=AssetsFragment.newInstance();
         MineFragment mineFragment=MineFragment.newInstance();
-        DappFragment dappFragment=DappFragment.newInstance();
+        DappCenterFragment dappCenterFragment=DappCenterFragment.newInstance();
 
         adapter.addFragment(assetsFragment);
-        adapter.addFragment(dappFragment);
+        adapter.addFragment(dappCenterFragment);
         adapter.addFragment(mineFragment);
         viewPager.setAdapter(adapter);
 
         assetsPresenter =new AssetsPresenter(assetsFragment);
         assetsFragment.setPresenter(assetsPresenter);
         assetsPresenter.loadAssets();
+
+        dappCenterPresenter=new DappCenterPresenter(this,dappCenterFragment);
+        dappCenterPresenter.loadDappList();
 
         minePresenter=new MinePresenter(this, mineFragment);
         mineFragment.setPresenter(minePresenter);

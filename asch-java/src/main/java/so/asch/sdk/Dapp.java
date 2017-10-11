@@ -89,7 +89,7 @@ public interface Dapp extends AschInterface{
 //    名称	类型	说明
 //    success	boole	是否成功获得response数据
 //    transactionId	string	提币交易id
-    AschResult withdraw(String dappID,String currency,long amount, String message, String secret, String secondSecret);
+    public AschResult withdraw(String dappID, long fee,  String[] args, String secret, String secondSecret);
 
     //    3.1.1.2 dapp内部转账,type=3
 //

@@ -34,10 +34,10 @@ public class DappService extends AschRESTService implements Dapp {
     public AschResult withdraw(String dappID, long fee,  String[] args, String secret, String secondSecret) {
 
         try {
-//            Argument.notNullOrEmpty(currency, "invalid currency");
-//            Argument.require(Validation.isValidAddress(recipientId), "invalid recipientId");
-//            Argument.require(Validation.isValidSecret(secret), "invalid secret");
-//            Argument.optional(secondSecret, Validation::isValidSecret, "invalid second secret");
+            Argument.notNullOrEmpty(dappID, "invalid dappID");
+            Argument.require(Validation.isValidFee(fee), "invalid fee");
+            Argument.require(Validation.isValidSecret(secret), "invalid secret");
+            Argument.optional(secondSecret, Validation::isValidSecret, "invalid second secret");
 
             TransactionInfo transaction = getTransactionBuilder()
                     .buildInnerTransaction(fee, TransactionType.InTransfer,args,secret);

@@ -86,7 +86,7 @@ public class DappFragment extends BaseFragment implements View.OnClickListener{
             @Override
             public void handler(String data, CallBackFunction callBackFunction) {
                 Log.i(TAG, "handler = submitFromWeb, data from web = " + data);
-                callBackFunction.onCallBack("submitFromWeb exe, response data 中文 from Java");
+                callBackFunction.onCallBack("haha"+data);
             }
 
         });
