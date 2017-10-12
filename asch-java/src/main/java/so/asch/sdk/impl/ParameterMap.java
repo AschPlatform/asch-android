@@ -1,11 +1,13 @@
 package so.asch.sdk.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.*;
 import java.util.function.Consumer;
 
 import so.asch.sdk.Utils;
+import so.asch.sdk.transaction.asset.InTransferAssetInfo;
 
 public class ParameterMap implements Iterable<Map.Entry<String, Object>> {
     private Map<String, Object> map = new HashMap<>();
@@ -44,7 +46,9 @@ public class ParameterMap implements Iterable<Map.Entry<String, Object>> {
     public String toJSONString(){
         JSONObject jsonObject = new JSONObject();
         jsonObject.putAll(map);
+
         return jsonObject.toString();
+       // return JSON.toJSONString(jsonObject, InTransferAssetInfo.InTransferInfo.FILTER);
 //        return new JSONObject()
 //                .fluentPutAll(map)
 //                .toString();

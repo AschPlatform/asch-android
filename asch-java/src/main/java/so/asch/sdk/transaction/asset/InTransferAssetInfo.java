@@ -1,8 +1,12 @@
 package so.asch.sdk.transaction.asset;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.PropertyFilter;
+
 import java.nio.ByteBuffer;
 
 import so.asch.sdk.codec.Encoding;
+import so.asch.sdk.impl.AschConst;
 
 /**
  * Created by kimziv on 2017/10/10.
@@ -11,24 +15,18 @@ import so.asch.sdk.codec.Encoding;
 public class InTransferAssetInfo extends AssetInfo {
 
 
-    public  static  class  InTransferInfo{
+    public  static  class  InTransferInfoBase{
 
-        private String dappId;
-        private String amount;
-        private String currency;
+        protected String dappId;
+        protected String currency;
 
-        public InTransferInfo(String dappId, String currency, long amount) {
+        public InTransferInfoBase(String dappId, String currency) {
             this.dappId = dappId;
-            this.amount = String.valueOf(amount);
             this.currency = currency;
         }
 
         public String getDappId() {
             return dappId;
-        }
-
-        public String getAmount() {
-            return amount;
         }
 
         public String getCurrency() {
@@ -37,15 +35,38 @@ public class InTransferAssetInfo extends AssetInfo {
 
     }
 
+    public  static  class  InTransferInfo extends InTransferInfoBase{
 
+        private String amount;
 
-    private InTransferInfo inTransfer;
+        public InTransferInfo(String dappId, String currency, long amount) {
+            super(dappId,currency);
+            this.amount = String.valueOf(amount);
+        }
 
-    public InTransferAssetInfo(String dappId, String currency, long amount) {
-        this.inTransfer = new InTransferInfo(dappId,currency,amount);
+        public String getAmount() {
+            return amount;
+        }
+
     }
 
-    public InTransferInfo getInTransfer() {
+    private InTransferInfoBase inTransfer;
+
+    public InTransferAssetInfo(String dappId, String currency, long amount) {
+        if (AschConst.CORE_COIN_NAME.equals(currency))
+        {
+            this.inTransfer = new InTransferInfoBase(dappId,currency);
+        }
+        else{
+            this.inTransfer = new InTransferInfo(dappId,currency,amount);
+        }
+    }
+
+//    public InTransferAssetInfo(String dappId, String currency) {
+//        this.inTransfer = new InTransferInfoBase(dappId,currency);
+//    }
+
+    public InTransferInfoBase getInTransfer() {
         return inTransfer;
     }
 
@@ -54,7 +75,7 @@ public class InTransferAssetInfo extends AssetInfo {
         buffer.put(Encoding.getUTF8Bytes(inTransfer.getDappId()));
         buffer.put(Encoding.getUTF8Bytes(inTransfer.getCurrency()));
         if (!inTransfer.getCurrency().equals("XAS")){
-            buffer.put(Encoding.getUTF8Bytes(inTransfer.getAmount()));
+            buffer.put(Encoding.getUTF8Bytes(((InTransferInfo)inTransfer).getAmount()));
         }
     }
 }

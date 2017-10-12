@@ -71,7 +71,7 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
 //                Intent intent=new Intent(getActivity(), DappActivity.class);
 //                startActivity(intent);
-                deposit(TestData.dappID,"XAS",100000003,null,TestData.secret,null);
+                deposit(TestData.dappID,"dujunhui.ZICHAN",100000003,null,TestData.secret,null);
             }
         });
 

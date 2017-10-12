@@ -141,7 +141,7 @@ public class TransactionBuilder {
 
     public TransactionInfo buildInTransfer(String dappID, String currency, long amount,String  secret, String secondSecret) throws SecurityException{
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
-        TransactionInfo transaction=newTransaction(TransactionType.InTransfer,amount,AschConst.Fees.TRANSFER,keyPair.getPublic())
+        TransactionInfo transaction=newTransaction(TransactionType.InTransfer,AschConst.CORE_COIN_NAME.equals(currency)?amount:0,AschConst.Fees.TRANSFER,keyPair.getPublic())
                 .setAsset(new InTransferAssetInfo(dappID,currency,amount));
         return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),secondSecret);
     }
