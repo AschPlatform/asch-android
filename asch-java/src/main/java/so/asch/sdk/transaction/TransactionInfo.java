@@ -1,8 +1,10 @@
 package so.asch.sdk.transaction;
 
 import com.alibaba.fastjson.annotation.JSONField;
+
 import so.asch.sdk.TransactionType;
 import so.asch.sdk.codec.Decoding;
+import so.asch.sdk.codec.Encoding;
 import so.asch.sdk.transaction.asset.AssetInfo;
 import so.asch.sdk.transaction.asset.DappAssetInfo;
 
@@ -160,7 +162,7 @@ public class TransactionInfo {
         //type(1)|timestamp(4)|senderPublicKey(32)|requesterPublicKey(32)|recipientId(8)|amount(8)|
         //message(?)|asset(?)|setSignature(64)|signSignature(64)
 
-        ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.BIG_ENDIAN);
+        ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.LITTLE_ENDIAN);
         switch (transactionType){
             case Transfer:
             {
@@ -195,6 +197,7 @@ public class TransactionInfo {
                         .putLong(getAmount())
                         .put(getMessageBuffer())
                         .put(getAsset().assetBytes());
+
             }
             break;
             case OutTransfer:
@@ -227,31 +230,8 @@ public class TransactionInfo {
         buffer.flip();
         byte[] result = new byte[buffer.remaining()];
         buffer.get(result);
+        System.out.println("InTransfer bytes:"+ Encoding.hex(result));
         return result;
-
-//        ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.LITTLE_ENDIAN)
-//                .put(getType().byteValue())
-//                .putInt(getTimestamp())
-//                .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
-//                .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
-//                .put(getRecipientIdBuffer())
-//                .putLong(getAmount())
-//                .put(getMessageBuffer())
-//                .put(getAsset().assetBytes());
-//
-//        if (!skipSignature){
-//            buffer.put(Decoding.unsafeDecodeHex(getSignature()));
-//        }
-//
-//        if (!skipSignSignature){
-//            buffer.put(Decoding.unsafeDecodeHex(getSignSignature()));
-//        }
-//
-//        buffer.flip();
-//        byte[] result = new byte[buffer.remaining()];
-//        buffer.get(result);
-//
-//        return result;
     }
 
     public byte[] getBytes2(boolean skipSignature , boolean skipSignSignature){

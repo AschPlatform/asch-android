@@ -18,6 +18,7 @@
             android:ems="10"
             android:hint="收款人地址"
             android:inputType="textPersonName"
+            android:text="AAmTPHrenFQdZHnUGqhE3qV9nr8BP5SzWx"
             android:singleLine="true" />
         <EditText
             android:id="@+id/ammount_et"
