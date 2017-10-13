@@ -42,15 +42,15 @@ public class MainTabActivity extends BaseActivity {
     private DappCenterPresenter dappCenterPresenter;
     private MinePresenter minePresenter;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
-        ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+       // ButterKnife.bind(this);
+       // setSupportActionBar(toolbar);
 
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);

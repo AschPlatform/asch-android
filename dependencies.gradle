@@ -62,8 +62,9 @@ project.ext {
             "butterknife"                 : "com.jakewharton:butterknife:${butterKnifeVersion}",
             "butterknife-compiler"        : "com.jakewharton:butterknife-compiler:${butterKnifeVersion}",
             "retrofit2-fastjson-converter": "com.github.BaronZ88:Retrofit2-FastJson-Converter:1.2",
-            "SmartRefreshLayout"          : "com.scwang.smartrefresh:SmartRefreshLayout:1.0.3",
-            "SmartRefreshHeader"          : "com.scwang.smartrefresh:SmartRefreshHeader:1.0.3",
+            "smart-refresh-layout"          : "com.scwang.smartrefresh:SmartRefreshLayout:1.0.3",
+            "smart-refresh-header"          : "com.scwang.smartrefresh:SmartRefreshHeader:1.0.3",
+            "circleimageview"             :"de.hdodenhof:circleimageview:2.1.0",
 
             //ZXing
             "zxing-core"                   : "com.google.zxing:core:${zxingCoreVersion}",

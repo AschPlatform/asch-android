@@ -2,7 +2,16 @@ package asch.so.wallet;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
+import android.support.v7.app.AppCompatDelegate;
+
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
@@ -16,6 +25,18 @@ public class WalletApplication extends MultiDexApplication{
     private ApplicationComponent applicationComponent;
     private static WalletApplication walletApplication;
 
+
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater() {
+            @NonNull
+            @Override
+            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
+                return new ClassicsHeader(context).setSpinnerStyle(SpinnerStyle.Translate);
+            }
+        });
+    }
 
     public static WalletApplication getInstance(){
 
@@ -48,6 +69,7 @@ public class WalletApplication extends MultiDexApplication{
         TestData.testSDK();
        // TestData.testED25519();
     }
+
 
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;

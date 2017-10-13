@@ -19,6 +19,13 @@
     <style name="LaunchTheme" parent="AppTheme">
         <item name="android:windowBackground">@drawable/bg_launch_window</item>
     </style>
+
+    <style name="AppTheme.Toolbar" parent="Widget.AppCompat.ActionBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">?attr/actionBarSize</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
     <!--&lt;!&ndash; Base application theme. &ndash;&gt;-->
     <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">-->
         <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
