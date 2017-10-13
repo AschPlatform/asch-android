@@ -13,6 +13,7 @@ import asch.so.wallet.R;
 import asch.so.wallet.model.entity.Transaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import so.asch.sdk.impl.AschConst;
 
 /**
  * Created by kimziv on 2017/10/13.
@@ -35,8 +36,9 @@ public class AssetTransactionsAdapter extends BaseRecyclerViewAdapter<AssetTrans
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        holder.transactionTv.setText("");
-//        holder.amountTv.setText("");
+        Transaction transaction=txList.get(position);
+        holder.transactionTv.setText(transaction.getId());
+        holder.amountTv.setText(transaction.getAmount()/ AschConst.COIN+" XAS");
     }
 
     @Override

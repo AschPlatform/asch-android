@@ -5,5 +5,22 @@ package asch.so.wallet.model.entity;
  */
 
 public class Transaction {
-    private String txId;
+    private String id;
+    private long amount;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(long amount) {
+        this.amount = amount;
+    }
 }

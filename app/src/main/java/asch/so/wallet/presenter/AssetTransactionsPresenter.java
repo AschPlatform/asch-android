@@ -55,10 +55,11 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
             @Override
             public void call(Subscriber<? super List<Transaction>> subscriber) {
                 TransactionQueryParameters params=new TransactionQueryParameters()
-                .setOwnerAddress(TestData.address)
-                .setTransactionType(TransactionType.Transfer)
-                .setUia(0)
-                .setCurrency("XAS");        ;
+                        .setSenderId(TestData.address);
+//                .setOwnerAddress(TestData.address)
+//                .setTransactionType(TransactionType.Transfer)
+//                .setUia(0)
+//                .setCurrency("XAS");        ;
                 AschResult result = AschSDK.Transaction.queryTransactions(params);
                 if (result.isSuccessful()){
                     JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
