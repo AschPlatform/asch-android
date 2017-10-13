@@ -107,6 +107,28 @@ public class TransactionQueryParameters extends QueryParameters {
         return this;
     }
 
+    public String getCurrency() {
+        return currency;
+    }
+
+    public TransactionQueryParameters setCurrency(String currency) {
+        this.currency = currency;
+        return this;
+    }
+
+    public void setSenderPublicKey(String senderPublicKey) {
+        this.senderPublicKey = senderPublicKey;
+    }
+
+    public Integer getUia() {
+        return uia;
+    }
+
+    public TransactionQueryParameters setUia(Integer uia) {
+        this.uia = uia;
+        return this;
+    }
+
     private String blockId = null;
     private TransactionType transactionType = null;
     private String senderPublicKey = null;
@@ -116,4 +138,6 @@ public class TransactionQueryParameters extends QueryParameters {
     private String recipientId = null;
     private Long amount = null;
     private Integer fee = null;
+    private String currency=null;
+    private Integer uia=null;
 }

@@ -7,10 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import java.util.List;
+
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
+import asch.so.wallet.contract.AssetTransactionsContract;
+import asch.so.wallet.model.entity.Transaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -18,12 +22,15 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2017/9/27.
  */
 
-public class AssetTransactionsFragment extends BaseFragment {
+public class AssetTransactionsFragment extends BaseFragment implements AssetTransactionsContract.View{
 
     @BindView(R.id.goto_transfer_btn)
     Button transferBtn;
     @BindView(R.id.goto_receive_btn)
     Button receiveBtn;
+
+    AssetTransactionsContract.Presenter presenter;
+
 
     public static AssetTransactionsFragment newInstance() {
         
@@ -57,5 +64,15 @@ public class AssetTransactionsFragment extends BaseFragment {
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void setPresenter(AssetTransactionsContract.Presenter presenter) {
+        this.presenter=presenter;
+    }
+
+    @Override
+    public void displayTransactions(List<Transaction> transactions) {
+
     }
 }
