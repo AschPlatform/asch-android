@@ -15,6 +15,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
@@ -90,13 +92,17 @@ public class DappFragment extends BaseFragment implements View.OnClickListener{
             }
         });
 
-        webView.loadUrl("file:///android_asset/demo.html");
-        webView.registerHandler("submitFromWeb", new BridgeHandler() {
+        webView.loadUrl("file:///android_asset/deposit.html");
+        webView.registerHandler("jsbridgeDeposit", new BridgeHandler() {
             @Override
-            public void handler(String data, CallBackFunction callBackFunction) {
-                Log.i(TAG, "handler = submitFromWeb, data from web = " + data);
-                deposit(TestData.dappID,"XAS",100,null,TestData.secret,null);
-                callBackFunction.onCallBack("haha"+data);
+            public void handler(String input, CallBackFunction callBackFunction) {
+                Log.i(TAG, "handler = submitFromWeb, data from web = " + input);
+                JSONObject params= JSON.parseObject(input);
+                String dappId=params.getString("dappId");
+                String currency=params.getString("currency");
+                long amount=(long)(Float.parseFloat(params.getString("amount"))*100000000);
+                deposit(dappId,currency,amount,null,TestData.secret,null,callBackFunction);
+                //callBackFunction.onCallBack("haha"+data);
             }
 
         });
@@ -119,19 +125,13 @@ public class DappFragment extends BaseFragment implements View.OnClickListener{
         startActivityForResult(chooserIntent, RESULT_CODE);
     }
 
-    public void deposit(String dappID,String currency,long amount, String message,String secret, String secondSecret) {
+    public void deposit(String dappID,String currency,long amount, String message,String secret, String secondSecret, CallBackFunction callBack) {
 
         Observable.create(new Observable.OnSubscribe<AschResult>(){
 
             @Override
             public void call(Subscriber<? super AschResult> subscriber) {
-                AschResult result=null;
-//                if (AppConstants.XAS_NAME.equals(currency)){
-//                    result = AschSDK.Account.transfer(targetAddress,amount,message,secret,secondSecret);
-//                }else {
-//                    result = AschSDK.UIA.transfer(currency,targetAddress,amount,message,secret,secondSecret);
-//                }
-                result=AschSDK.Dapp.deposit(dappID,currency,amount,message,secret,secondSecret);
+                AschResult result=AschSDK.Dapp.deposit(dappID,currency,amount,message,secret,secondSecret);
                 if (result!=null && result.isSuccessful()){
                     subscriber.onNext(result);
                     subscriber.onCompleted();
@@ -144,7 +144,9 @@ public class DappFragment extends BaseFragment implements View.OnClickListener{
                 .subscribe(new Action1<AschResult>() {
                     @Override
                     public void call(AschResult aschResult) {
-                        Log.i(TAG, "+++++++"+aschResult.getRawJson());
+                        String rawJson=aschResult.getRawJson();
+                        Log.i(TAG, "+++++++"+rawJson);
+                        callBack.onCallBack(rawJson);
                         Toast.makeText(getContext(),"充值成功", Toast.LENGTH_SHORT).show();
                         //view.displayToast("转账成功");
                     }
