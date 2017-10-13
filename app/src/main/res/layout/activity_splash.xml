@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:pv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <asch.so.widget.particleview.ParticleView
+        android:id="@+id/splash_pv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FD5F15"
+        pv:pv_background_color="#2E2E2E"
+        pv:pv_host_text="ASCH"
+        pv:pv_host_text_size="32sp"
+        pv:pv_particle_text=".so"
+        pv:pv_particle_text_size="20sp"
+        pv:pv_text_color="#FFF" />
+
+</LinearLayout>
