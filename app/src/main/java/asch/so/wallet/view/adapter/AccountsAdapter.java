@@ -11,6 +11,7 @@ import java.util.List;
 import asch.so.base.adapter.BaseRecyclerViewAdapter;
 import asch.so.wallet.R;
 import asch.so.wallet.model.entity.Account;
+import asch.so.widget.itenticon.SymmetricIdenticon;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -35,6 +36,7 @@ public class AccountsAdapter extends BaseRecyclerViewAdapter<AccountsAdapter.Vie
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Account account=accountList.get(position);
+        holder.identicon.show(account.getAddress());
         holder.nameTv.setText(account.getName());
         holder.addressTv.setText(account.getAddress());
     }
@@ -45,6 +47,9 @@ public class AccountsAdapter extends BaseRecyclerViewAdapter<AccountsAdapter.Vie
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.ident_icon)
+        SymmetricIdenticon identicon;
+
         @BindView(R.id.item_tv_name)
         TextView nameTv;
 

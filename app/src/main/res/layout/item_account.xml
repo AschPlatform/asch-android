@@ -18,6 +18,7 @@
 
         <TextView
             android:id="@+id/item_tv_name"
+            android:layout_toRightOf="@+id/ident_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceListItem"
@@ -27,59 +28,27 @@
 
         <TextView
             android:id="@+id/address_tv"
+            android:layout_toRightOf="@+id/ident_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:textColor="@color/default_title_text_color"
             android:textAppearance="?attr/textAppearanceListItem"
             android:textSize="16sp"
+            android:maxLines="1"
             android:text="AHcGmYnCyr6jufT5AGbpmRUv55ebwMLCym"
             />
 
 
-        <ImageView
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:contentDescription="头像"
-            android:src="@mipmap/ic_launcher" />
-
-        <!--<TextView-->
-            <!--android:id="@+id/item_tv_publish_time"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:textColor="@color/textColorDarkerGray"-->
-            <!--android:textAppearance="?attr/textAppearanceListItem"-->
-            <!--android:textSize="@dimen/text_size_caption_small" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/item_tv_weather"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_above="@id/item_tv_publish_time"-->
-            <!--android:textAppearance="?attr/textAppearanceListItem"-->
-            <!--android:textSize="@dimen/text_size_body" />-->
-
-        <!--<TextView-->
-            <!--android:id="@+id/item_tv_temp"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignBottom="@id/item_tv_weather"-->
-            <!--android:layout_marginLeft="4dp"-->
-            <!--android:layout_toRightOf="@id/item_tv_weather"-->
-            <!--android:textAppearance="?attr/textAppearanceListItem"-->
-            <!--android:textSize="@dimen/text_size_caption" />-->
-
-        <!--<ImageButton-->
-            <!--android:id="@+id/item_delete"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:background="@null"-->
-            <!--android:src="@android:drawable/ic_menu_more" />-->
+        <asch.so.widget.itenticon.SymmetricIdenticon
+            android:id="@+id/ident_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="4dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true" />
 
     </RelativeLayout>
     </android.support.v7.widget.CardView>
