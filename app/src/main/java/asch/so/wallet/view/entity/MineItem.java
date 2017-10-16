@@ -4,14 +4,13 @@ package asch.so.wallet.view.entity;
  * Created by kimziv on 2017/9/28.
  */
 
-public class MineItem {
+public class MineItem extends BaseItem{
 
     private String icon;
-    private String title;
 
     public MineItem(String icon, String title) {
+        super(title);
         this.icon = icon;
-        this.title = title;
     }
 
     public String getIcon() {
@@ -22,11 +21,4 @@ public class MineItem {
         this.icon = icon;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }

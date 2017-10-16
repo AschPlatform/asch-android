@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import java.util.ArrayList;
 import java.util.List;
 
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AccountsActivity;
@@ -33,6 +34,23 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     @BindView(R.id.mine_rcv)
     RecyclerView mineRcv;
 
+    public enum Item{
+       AccountManagement("","账户管理",true),
+        AppSetting("","设置",true),
+        Contacts("","联系人",true),
+        BlockInfo("","区块详情",true),
+        About("","关于",true);
+
+        public String icon;
+        public String title;
+        public boolean hasArrow;
+
+        Item(String icon, String title, boolean hasArrow) {
+            this.icon = icon;
+            this.title = title;
+            this.hasArrow = hasArrow;
+        }
+    }
 
     private List<MineItem> itemList=new ArrayList<>();
     private MineAdapter adapter =new MineAdapter(itemList);
@@ -71,6 +89,16 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                     {
                         Intent intent = new Intent(getActivity(), AccountsActivity.class);
                         startActivity(intent);
+                    }
+                    break;
+                    case 1:
+                    {
+                        BaseActivity.start(MineFragment.this,AppSettingFragment.class);
+                    }
+                    break;
+                    case 2:
+                    {
+
                     }
                     break;
                 }

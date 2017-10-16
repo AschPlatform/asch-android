@@ -25,6 +25,9 @@
             <!--</intent-filter>-->
         <!--</activity>-->
 
+        <activity android:name="asch.so.base.activity.BaseActivity">
+
+        </activity>
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
