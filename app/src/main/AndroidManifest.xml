@@ -72,6 +72,9 @@
         <activity android:name=".activity.DappActivity">
 
         </activity>
+        <activity android:name=".activity.WebActivity">
+
+        </activity>
 
     </application>
 

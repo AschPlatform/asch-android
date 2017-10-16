@@ -14,10 +14,12 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
+import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.AssetTransactionsContract;
 import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.view.adapter.AssetTransactionsAdapter;
@@ -65,7 +67,8 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                // TODO: 2017/10/13
+                Intent intent =new Intent(getContext(),WebActivity.class);
+                startActivity(intent);
             }
         });
         transferBtn.setOnClickListener(new View.OnClickListener() {

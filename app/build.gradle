@@ -120,6 +120,7 @@ dependencies {
     compile rootProject.ext.dependencies["easypermissions"]
 
     compile rootProject.ext.dependencies["js-bridge"]
+    compile rootProject.ext.dependencies["agentweb"]
 
 
    // compile files('libs/asch-android-0.1.2-SNAPSHOT-jar-with-dependencies.jar')
