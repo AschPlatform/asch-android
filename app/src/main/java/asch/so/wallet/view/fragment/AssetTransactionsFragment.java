@@ -59,6 +59,9 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         txRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         txRcv.setItemAnimator(new DefaultItemAnimator());
         txRcv.setAdapter(adapter);
+        //添加Header
+        //View header = LayoutInflater.from(getContext()).inflate(R.layout.header_asset_transactions, txRcv, false);
+
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {

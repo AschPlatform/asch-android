@@ -38,7 +38,7 @@ public class AssetTransactionsAdapter extends BaseRecyclerViewAdapter<AssetTrans
     public void onBindViewHolder(ViewHolder holder, int position) {
         Transaction transaction=txList.get(position);
         holder.transactionTv.setText(transaction.getId());
-        holder.amountTv.setText(transaction.getAmount()/ AschConst.COIN+" XAS");
+        holder.amountTv.setText(transaction.getAmount()/ (double)AschConst.COIN+" XAS");
     }
 
     @Override

@@ -7,15 +7,26 @@
     android:orientation="vertical"
     >
 
-
-
     <TextView
-        android:id="@+id/address_tv"
+        android:id="@+id/address_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
+        android:layout_centerHorizontal="false"
+        android:textSize="14sp"
+        android:text="收款二维码"
+        />
+
+    <TextView
+        android:id="@+id/address_tv"
+        android:layout_below="@+id/address_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_centerHorizontal="false"
         android:text="xxxx"
         />
     <ImageView
@@ -24,16 +35,33 @@
         android:layout_height="200dp"
         android:layout_centerInParent="true"
         app:srcCompat="@android:drawable/star_big_on" />
-
-    <EditText
-        android:id="@+id/ammount_et"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <LinearLayout
+        android:id="@+id/ammount_ll"
         android:layout_below="@+id/qrcode_iv"
-        android:ems="10"
+        android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
-        android:inputType="numberDecimal"
-        android:text="88" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/ammount_et"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/qrcode_iv"
+            android:ems="10"
+            android:layout_centerHorizontal="true"
+            android:inputType="numberDecimal"
+            android:text="88" />
+        <Button
+            android:id="@+id/save_btn"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="保存二维码"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/bottom_bar"
         android:layout_alignParentBottom="true"
