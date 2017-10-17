@@ -80,7 +80,7 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         accountsAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                
+                view.findViewById(R.id.checkmark).setVisibility(View.VISIBLE);
                Account account = accountList.get(position);
                 presenter.setCurrentAccount(account);
             }
