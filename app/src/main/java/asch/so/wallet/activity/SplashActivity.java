@@ -31,7 +31,8 @@ public class SplashActivity extends BaseActivity {
         particleView.setOnParticleAnimListener(new ParticleView.ParticleAnimListener() {
             @Override
             public void onAnimationEnd() {
-                Intent intent = new Intent(SplashActivity.this, MainTabActivity.class);
+//                Intent intent = new Intent(SplashActivity.this, MainTabActivity.class);
+                Intent intent = new Intent(SplashActivity.this, FirstStartActivity.class);
                 SplashActivity.this.startActivity(intent);
                 finish();
             }

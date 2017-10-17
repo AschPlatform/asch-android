@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -40,29 +41,34 @@ public class BaseActivity extends AppCompatActivity {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
 
+    private boolean hasInit = false;
+
     protected static final String EXTRA_FRAGMENT = "EXTRA_FRAGMENT";
     private Fragment mFragment;
 
     //<editor-fold desc="跳转封装">
-    private static void start(Context context, Class<?> clazz, Object... params){
-        if (context != null && Fragment.class.isAssignableFrom(clazz)) {
-            context.startActivity(newIntent(clazz, context, params));
+    private static void start(Context context, Class<?> clazz,  Bundle bundle){
+        if (context != null && BaseActivity.class.isAssignableFrom(clazz)) {
+            context.startActivity(newIntent(clazz, context, bundle));
+        }else{
+           // context.startActivity(newIntent(clazz, context, bundle));
         }
     }
 
-    public static void start(Activity activity, Class<?> clazz, Object... params){
-        start((Context) activity, clazz, params);
+    public static void start(Activity activity, Class<?> clazz,  Bundle bundle){
+        start((Context) activity, clazz, bundle);
     }
 
-    public static void start(Fragment fragment, Class<?> clazz, Object... params){
+    public static void start(Fragment fragment, Class<?> clazz,  Bundle bundle){
         if (fragment != null) {
-            start((Context) fragment.getActivity(), clazz, params);
+            start((Context) fragment.getActivity(), clazz, bundle);
         }
     }
 
-    private static Intent newIntent(Class<?> clazz, Context context, Object... params) {
-        Intent intent = new Intent(context, BaseActivity.class);
-        intent.putExtra(EXTRA_FRAGMENT, clazz.getName());
+    private static Intent newIntent(Class<?> clazz, Context context, Bundle bundle) {
+        Intent intent = new Intent(context, clazz);
+        //intent.putExtra(EXTRA_FRAGMENT, clazz.getName());
+        intent.putExtras(bundle);
         return intent;
     }
     //</editor-fold>
@@ -72,9 +78,23 @@ public class BaseActivity extends AppCompatActivity {
     //@InjectExtra(value = EXTRA_FRAGMENT,remark = "Fragment类名")
     protected String mFragmentClazz = null;
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        if (!hasInit) {
+            ActivityStackManager.getInstance().push(this);
+            hasInit = true;
+        }
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!hasInit) {
+            ActivityStackManager.getInstance().push(this);
+            hasInit = true;
+        }
         mFragmentClazz = getIntent().getStringExtra(EXTRA_FRAGMENT);
         FrameLayout frameLayout = new FrameLayout(this);
         frameLayout.setId(widget_frame);
@@ -110,17 +130,22 @@ public class BaseActivity extends AppCompatActivity {
         return mFragment;
     }
 
+    public Bundle getBundle(){
+        return getIntent().getExtras();
+    }
+
     //</editor-fold>
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityStackManager.getInstance().remove(this);
+    }
 //
 //
 //    @Override

@@ -93,7 +93,7 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                     break;
                     case 1:
                     {
-                        BaseActivity.start(MineFragment.this,AppSettingFragment.class);
+                       // BaseActivity.start(MineFragment.this,AppSettingFragment.class);
                     }
                     break;
                     case 2:

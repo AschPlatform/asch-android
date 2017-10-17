@@ -1,5 +1,6 @@
 package asch.so.wallet.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,9 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.TestData;
+import asch.so.wallet.activity.FirstStartActivity;
+import asch.so.wallet.activity.MainTabActivity;
 import asch.so.wallet.contract.AccountCreateContract;
 import asch.so.wallet.model.entity.Account;
 import butterknife.BindView;
@@ -65,12 +69,17 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_account_create,container,false);
         unbinder= ButterKnife.bind(this,rootView);
-
          createBtn.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                     createAccount();
-                    getActivity().finish();
+                   if (getArguments()!=null && getArguments().getString("clazz").equals(FirstStartActivity.class.getName())){
+                       Intent intent =new Intent(getActivity(), MainTabActivity.class);
+                       startActivity(intent);
+                       ActivityStackManager.getInstance().finishAll();
+                   }else {
+                       getActivity().finish();
+                   }
              }
          });
         return rootView;

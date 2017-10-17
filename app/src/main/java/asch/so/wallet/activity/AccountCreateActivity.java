@@ -39,6 +39,7 @@ public class AccountCreateActivity extends BaseActivity {
         }
 
         AccountCreateFragment fragment =AccountCreateFragment.newInstance();
+        fragment.setArguments(getBundle());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 
         presenter=new AccountCreatePresenter(this,fragment);
