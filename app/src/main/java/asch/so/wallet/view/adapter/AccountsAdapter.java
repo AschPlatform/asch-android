@@ -4,12 +4,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import asch.so.base.adapter.BaseRecyclerViewAdapter;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.model.entity.Account;
 import asch.so.widget.itenticon.SymmetricIdenticon;
 import butterknife.BindView;
@@ -39,6 +41,11 @@ public class AccountsAdapter extends BaseRecyclerViewAdapter<AccountsAdapter.Vie
         holder.identicon.show(account.getAddress());
         holder.nameTv.setText(account.getName());
         holder.addressTv.setText(account.getAddress());
+        if (account.equals(AccountsManager.getInstance().getCurrentAccount())){
+            holder.checkmarkIv.setVisibility(View.VISIBLE);
+        }else {
+            holder.checkmarkIv.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -55,6 +62,9 @@ public class AccountsAdapter extends BaseRecyclerViewAdapter<AccountsAdapter.Vie
 
         @BindView(R.id.address_tv)
         TextView addressTv;
+
+        @BindView(R.id.checkmark)
+        ImageView checkmarkIv;
 
         public ViewHolder(View itemView, AccountsAdapter adapter) {
             super(itemView);
