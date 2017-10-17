@@ -6,9 +6,12 @@ import java.io.InvalidClassException;
 
 import javax.inject.Inject;
 
+import asch.so.wallet.AppConfig;
 import asch.so.wallet.ApplicationModule;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountsContract;
 import asch.so.wallet.model.db.dao.AccountsDao;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.component.DaggerPresenterComponent;
 import rx.Observable;
 import rx.Subscription;
@@ -75,6 +78,13 @@ public void loadSavedAccounts() {
             .subscribe(accounts -> view.displaySavedAccounts(accounts));
     subscriptions.add(subscription);
 }
+
+    @Override
+    public void setCurrentAccount(Account account) {
+        AccountsManager.getInstance().setCurrentAccount(account);
+        AppConfig.putLastAccountAddress(account.getAddress());
+        AppConfig.putLastAccountPublicKey(account.getPublicKey());
+    }
 
     @Override
     public void saveCurrentAccountToPreference(String address) throws InvalidClassException {

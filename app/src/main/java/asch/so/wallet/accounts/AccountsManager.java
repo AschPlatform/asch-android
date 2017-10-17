@@ -36,7 +36,7 @@ public class AccountsManager {
 
 
 
-    public AccountsManager getInstance(Context context){
+    public static AccountsManager getInstance(){
         if (accountsManager==null){
             accountsManager=new AccountsManager();
         }
@@ -44,7 +44,6 @@ public class AccountsManager {
     }
 
     public AccountsManager() {
-        //this.context = context;
         this.accounts =new ArrayList<>();
         loadAccounts();
     }

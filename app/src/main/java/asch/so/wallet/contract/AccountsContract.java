@@ -23,6 +23,8 @@ public interface AccountsContract {
     interface Presenter extends BasePresenter{
         void loadSavedAccounts();
 
+        void setCurrentAccount(Account account);
+
         void saveCurrentAccountToPreference(String address) throws InvalidClassException;
     }
 }

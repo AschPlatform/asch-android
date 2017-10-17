@@ -79,8 +79,10 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         accountsAdapter=new AccountsAdapter(accountList);
         accountsAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                
+               Account account = accountList.get(position);
+                presenter.setCurrentAccount(account);
             }
         });
         accountsRecycleView.setAdapter(accountsAdapter);
