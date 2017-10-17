@@ -39,7 +39,6 @@ public class WalletApplication extends MultiDexApplication{
     }
 
     public static WalletApplication getInstance(){
-
         return walletApplication;
     }
 
@@ -56,6 +55,8 @@ public class WalletApplication extends MultiDexApplication{
                 .applicationModule(new ApplicationModule(this))
                 .build();
         walletApplication=this;
+
+        AppConfig.init(this);
         initRealm();
     }
 

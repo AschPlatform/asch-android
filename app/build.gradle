@@ -121,6 +121,7 @@ dependencies {
 
     compile rootProject.ext.dependencies["js-bridge"]
     compile rootProject.ext.dependencies["agentweb"]
+    compile rootProject.ext.dependencies["hawk"]
 
 
    // compile files('libs/asch-android-0.1.2-SNAPSHOT-jar-with-dependencies.jar')

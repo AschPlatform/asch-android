@@ -13,6 +13,7 @@ def bgaQRCodeVersion = "1.1.8"
 def easypermissionsVersion = "1.0.0"
 def jsBridgeVersion = "1.0.4"
 def agentwebVersion = "2.0.1"
+def hawkVersion = "2.0.1"
 
 project.ext {
     android = [
@@ -79,6 +80,7 @@ project.ext {
             "easypermissions"              : "pub.devrel:easypermissions:${easypermissionsVersion}",
             //JSBridge
             "js-bridge"                   : "com.github.lzyzsd:jsbridge:${jsBridgeVersion}",
-            "agentweb"                    :"com.just.agentweb:agentweb:${agentwebVersion}"
+            "agentweb"                    :"com.just.agentweb:agentweb:${agentwebVersion}",
+            "hawk"                        :"com.orhanobut:hawk:${hawkVersion}"
     ]
 }

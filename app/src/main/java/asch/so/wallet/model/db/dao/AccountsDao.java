@@ -54,7 +54,14 @@ public class AccountsDao {
    public RealmResults<Account> queryAllSavedAccounts(){
 
     RealmResults<Account> results = getRealm().where(Account.class).findAllAsync();
+       
     return results;
+   }
+
+   public Account queryAccount(String addressOrPublicKey){
+
+     return getRealm().where(Account.class).equalTo("address",addressOrPublicKey).findFirst();
+
    }
 
     /**
