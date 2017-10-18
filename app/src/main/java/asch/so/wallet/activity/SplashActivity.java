@@ -35,15 +35,6 @@ public class SplashActivity extends BaseActivity {
         unbinder=ButterKnife.bind(this);
         StatusBarUtil.immersive(this);
 
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-//            WindowManager.LayoutParams localLayoutParams = getWindow().getAttributes();
-//            localLayoutParams.flags = (WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS | localLayoutParams.flags);
-//            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
-//                particleView.setFitsSystemWindows(true);
-//                //particleView.setClipToPadding(false);
-//            }
-//        }
-
         particleView.startAnim();
         particleView.setOnParticleAnimListener(new ParticleView.ParticleAnimListener() {
             @Override

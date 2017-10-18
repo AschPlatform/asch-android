@@ -64,7 +64,7 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
 
     DappCenterContract.Presenter presenter;
 
-    private List<Dapp> dappList=new ArrayList<>();
+   // private List<Dapp> dappList=new ArrayList<>();
     private DappsCenterAdapter adapter=new DappsCenterAdapter();
 
 
@@ -133,38 +133,6 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
         public void displayImage(Context context, Object path, ImageView imageView) {
             imageView.setImageResource(((BannerItem) path).pic);
         }
-    }
-
-    public void deposit(String dappID,String currency,long amount, String message,String secret, String secondSecret) {
-
-        Observable.create(new Observable.OnSubscribe<AschResult>(){
-
-            @Override
-            public void call(Subscriber<? super AschResult> subscriber) {
-                AschResult result=null;
-//                if (AppConstants.XAS_NAME.equals(currency)){
-//                    result = AschSDK.Account.transfer(targetAddress,amount,message,secret,secondSecret);
-//                }else {
-//                    result = AschSDK.UIA.transfer(currency,targetAddress,amount,message,secret,secondSecret);
-//                }
-                result= AschSDK.Dapp.deposit(dappID,currency,amount,message,secret,secondSecret);
-                if (result!=null && result.isSuccessful()){
-                    subscriber.onNext(result);
-                    subscriber.onCompleted();
-                }else {
-                    subscriber.onError(result!=null?result.getException():new Exception("result is null"));
-                }
-            }
-        }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<AschResult>() {
-                    @Override
-                    public void call(AschResult aschResult) {
-                        Log.i(TAG, "+++++++"+aschResult.getRawJson());
-                        Toast.makeText(getContext(),"充值成功", Toast.LENGTH_SHORT).show();
-                        //view.displayToast("转账成功");
-                    }
-                });
     }
 
     @Override
