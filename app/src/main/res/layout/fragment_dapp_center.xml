@@ -1,26 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    >
-    <include
-        layout="@layout/layout_app_bar"
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        />
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/dapp_list_rv"
-    android:layout_below="@+id/app_bar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:choiceMode="singleChoice"
-    android:divider="@android:color/transparent"
-    android:dividerHeight="0dp"
-    >
+    android:background="#f2f2f2">
 
-</android.support.v7.widget.RecyclerView>
-</RelativeLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:srlPrimaryColor="@color/colorPrimary"
+        app:srlAccentColor="@android:color/white"
+        app:srlEnableHeaderTranslationContent="false"
+        app:srlEnablePreviewInEditMode="false"
+        app:srlEnableNestedScrolling="false">
+        <com.scwang.smartrefresh.header.MaterialHeader
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?attr/actionBarSize"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/dapp_list_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="?attr/actionBarSize"
+            android:background="@android:color/white"
+            tools:listitem="@layout/item_dapp_center"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <com.github.mmin18.widget.RealtimeBlurView
+        android:id="@+id/blurview"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:realtimeBlurRadius="10dp"
+        app:realtimeOverlayColor="#cc0094ff"/>
+
+    <include layout="@layout/layout_app_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        />
+    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
+        android:id="@+id/toolbar"
+        android:background="@android:color/transparent"
+        app:title="应用中心"/>
+
+</FrameLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical"-->
+    <!--&gt;-->
+    <!--<include-->
+        <!--layout="@layout/layout_app_bar"-->
+        <!--android:id="@+id/app_bar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--/>-->
+<!--<android.support.v7.widget.RecyclerView-->
+    <!--android:id="@+id/dapp_list_rv"-->
+    <!--android:layout_below="@+id/app_bar"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:choiceMode="singleChoice"-->
+    <!--android:divider="@android:color/transparent"-->
+    <!--android:dividerHeight="0dp"-->
+    <!--&gt;-->
+
+<!--</android.support.v7.widget.RecyclerView>-->
+<!--</RelativeLayout>-->

@@ -14,7 +14,9 @@ def easypermissionsVersion = "1.0.0"
 def jsBridgeVersion = "1.0.4"
 def agentwebVersion = "2.0.1"
 def hawkVersion = "2.0.1"
-
+def youthBannerVersion ="1.4.10"
+def realtimeblurviewVersion="1.1.0"
+def baseRecyclerViewAdapterHelperVersion="2.9.32"
 project.ext {
     android = [
             compileSdkVersion: 26,
@@ -81,6 +83,9 @@ project.ext {
             //JSBridge
             "js-bridge"                   : "com.github.lzyzsd:jsbridge:${jsBridgeVersion}",
             "agentweb"                    :"com.just.agentweb:agentweb:${agentwebVersion}",
-            "hawk"                        :"com.orhanobut:hawk:${hawkVersion}"
+            "hawk"                        :"com.orhanobut:hawk:${hawkVersion}",
+            "youth-banner"                            :"com.youth.banner:banner:${youthBannerVersion}",
+            "realtimeblurview"            :"com.github.mmin18:realtimeblurview:${realtimeblurviewVersion}",
+            "baseRecyclerViewAdapterHelper":"com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewAdapterHelperVersion}"
     ]
 }
