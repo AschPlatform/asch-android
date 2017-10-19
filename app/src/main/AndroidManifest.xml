@@ -42,7 +42,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainTabActivity" >
+        <activity android:name=".activity.MainTabActivity"
+            android:theme="@style/AppTheme"
+            >
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
@@ -60,7 +62,7 @@
 
         <activity android:name=".activity.QRCodeScanActivity" >
         </activity>
-        <activity android:name=".activity.AssetTransactionsActivity" >
+        <activity android:name=".activity.AssetTransactionsActivity">
         </activity>
         <activity android:name=".activity.AssetTransferActivity" >
         </activity>

@@ -106,7 +106,7 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="70dp"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:layout_collapseMode="pin">
                 <!--?attr/actionBarSize-->
@@ -114,6 +114,7 @@
                     android:id="@+id/balance_bbl"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:paddingTop="12dp"
                     android:gravity="left"
                     android:visibility="visible">
                     <de.hdodenhof.circleimageview.CircleImageView
@@ -136,9 +137,9 @@
                 </android.support.v7.widget.ButtonBarLayout>
                 <ImageView
                     android:id="@+id/add_icon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_margin="4dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="20dp"
                     android:visibility="visible"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical|right"

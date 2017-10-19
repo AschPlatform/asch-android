@@ -3,15 +3,23 @@ package asch.so.wallet.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -50,7 +58,7 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  * Created by kimziv on 2017/9/21.
  */
 
-public class AssetsFragment extends BaseFragment implements AssetsContract.View{
+public class AssetsFragment extends BaseFragment implements AssetsContract.View, View.OnClickListener{
 
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
@@ -60,6 +68,9 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
    AppBarLayout appBarLayout;
     @BindView(R.id.fab)
     FloatingActionButton floatingActionButton;
+
+    @BindView(R.id.add_icon)
+     ImageView addIconIv;
     Unbinder unbinder;
 
     private int mOffset = 0;
@@ -79,6 +90,10 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,9 +113,13 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
                 startActivity(intent);
             }
         });
+        addIconIv.setOnClickListener(this);
+
         setupRefreshLayout();
+
         return rootView;
     }
+
 
     private void setupRefreshLayout(){
 
@@ -139,6 +158,43 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View{
                 }
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view==addIconIv){
+            PopupMenu popupMenu =new PopupMenu(getActivity(),addIconIv, Gravity.END);
+            popupMenu.getMenuInflater().inflate(R.menu.menu_home, popupMenu.getMenu());
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()){
+                        case R.id.item_scan:
+                        {
+
+                        }
+                        break;
+                        case R.id.item_receive:
+                        {
+
+                        }
+                        break;
+                        case R.id.item_transactions:
+                        {
+
+                        }
+                        break;
+                    }
+                    return false;
+                }
+            });
+
+            MenuPopupHelper menuHelper = new MenuPopupHelper(getContext(), (MenuBuilder)popupMenu.getMenu(), addIconIv);
+            menuHelper.setForceShowIcon(true);
+            menuHelper.show();
+
+            //popupMenu.show();
+        }
     }
 
     @Override

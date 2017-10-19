@@ -134,25 +134,25 @@ public class MainTabActivity extends BaseActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_mine, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch(id){
-            case R.id.item_manage_wallet:
-            {
-                Intent intent = new Intent(this, AccountsActivity.class);
-                startActivity(intent);
-            }
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_mine, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        switch(id){
+//            case R.id.item_manage_wallet:
+//            {
+//                Intent intent = new Intent(this, AccountsActivity.class);
+//                startActivity(intent);
+//            }
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     public static void disableShiftMode(BottomNavigationView navigationView) {
 
