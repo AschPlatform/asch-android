@@ -13,9 +13,12 @@ import asch.so.wallet.model.entity.Transaction;
 public interface TransactionsContract {
     interface View extends BaseView<Presenter>{
        void displayTranscations(List<Transaction> transactions);
+        void displayMoreTranscations(List<Transaction> transactions);
     }
 
     interface Presenter extends BasePresenter{
        void loadTransactions();
+        void  refreshTransactions();
+        void loadMoreTransactions();
     }
 }

@@ -78,6 +78,10 @@
 
         </activity>
 
+        <activity android:name=".activity.TransactionsActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

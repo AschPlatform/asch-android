@@ -36,11 +36,13 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.AssetTransactionsActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
+import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.contract.AssetsContract;
 import asch.so.wallet.model.entity.Balance;
@@ -181,6 +183,8 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
                         break;
                         case R.id.item_transactions:
                         {
+
+                            BaseActivity.start(getActivity(), TransactionsActivity.class ,new Bundle());
 
                         }
                         break;
