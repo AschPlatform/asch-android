@@ -31,7 +31,8 @@ public class AssetsActivity extends BaseActivity {
 
         presenter=new AssetsPresenter(assetsFragment);
         assetsFragment.setPresenter(presenter);
-        presenter.loadAssets();
+
+
 
     }
 }

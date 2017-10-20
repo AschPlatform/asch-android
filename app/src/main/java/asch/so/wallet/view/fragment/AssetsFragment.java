@@ -2,19 +2,23 @@ package asch.so.wallet.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringDef;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.view.menu.MenuPopupHelper;
+import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -40,11 +45,14 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AccountsActivity;
+import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransactionsActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
+import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.contract.AssetsContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.util.StatusBarUtil;
@@ -53,6 +61,7 @@ import asch.so.wallet.view.adapter.AssetsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
@@ -61,7 +70,7 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  */
 
 public class AssetsFragment extends BaseFragment implements AssetsContract.View, View.OnClickListener{
-
+    private static final String TAG=AssetsFragment.class.getSimpleName();
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.assets_rcv)
@@ -70,9 +79,27 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
    AppBarLayout appBarLayout;
     @BindView(R.id.fab)
     FloatingActionButton floatingActionButton;
+    @BindView(R.id.balance_bbl)
+    ButtonBarLayout blanceBll;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.parallax)
+    ImageView parallax;
+
+    @BindView(R.id.xas_balance_tv)
+    TextView xasBalanceTv;
+
+    @BindView(R.id.ident_icon)
+    CircleImageView identicon;
+    @BindView(R.id.name_tv)
+    TextView nameTv;
+    @BindView(R.id.address_tv)
+    TextView addressTv;
 
     @BindView(R.id.add_icon)
      ImageView addIconIv;
+
+
     Unbinder unbinder;
 
     private int mOffset = 0;
@@ -119,6 +146,9 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
 
         setupRefreshLayout();
 
+        presenter.loadAccount();
+        presenter.loadAssets();
+
         return rootView;
     }
 
@@ -160,6 +190,7 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
                 }
             }
         });
+
     }
 
     @Override
@@ -173,12 +204,14 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
                     switch (item.getItemId()){
                         case R.id.item_scan:
                         {
-
+                            Intent intent =new Intent(getActivity(), QRCodeScanActivity.class);
+                            startActivity(intent);
                         }
                         break;
                         case R.id.item_receive:
                         {
-
+                            Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
+                            startActivity(intent);
                         }
                         break;
                         case R.id.item_transactions:
@@ -231,5 +264,16 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
             this.assetList.clear();
             this.assetList.addAll(assetList);
             adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void displayXASBalance(Balance balance) {
+        xasBalanceTv.setText(String.valueOf(balance.getRealBalance()));
+    }
+
+    @Override
+    public void displayAccount(Account account) {
+        nameTv.setText(account.getName());
+        addressTv.setText(account.getAddress());
     }
 }

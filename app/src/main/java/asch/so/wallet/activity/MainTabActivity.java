@@ -123,7 +123,8 @@ public class MainTabActivity extends BaseActivity {
 
         assetsPresenter =new AssetsPresenter(assetsFragment);
         assetsFragment.setPresenter(assetsPresenter);
-        assetsPresenter.loadAssets();
+//        assetsPresenter.loadAccount();
+//        assetsPresenter.loadAssets();
 
         dappCenterPresenter=new DappCenterPresenter(this,dappCenterFragment);
         dappCenterPresenter.loadDappList();

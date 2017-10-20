@@ -21,7 +21,7 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
             <ImageView
-                android:id="@+id/imageview"
+                android:id="@+id/parallax"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -67,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
                     android:text="Kimziv"
+                    android:textSize="18sp"
                     />
                 ​
                 <TextView
@@ -77,6 +78,7 @@
                     android:layout_marginBottom="4dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                     android:text="xxxxx"
+                    android:textSize="12sp"
                     android:textColor="@android:color/white"
                     />
             </LinearLayout>
@@ -88,11 +90,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <TextView
+                        android:id="@+id/xas_balance_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:textSize="32sp"
-                        android:text="8888888"
+                        android:text="0"
                         />
                     <TextView
                         android:layout_width="wrap_content"
@@ -125,13 +128,13 @@
                         app:civ_border_color="@color/white"
                         app:civ_border_width="2dp"
                         android:layout_gravity="center_vertical"
-                        android:src="@color/colorPrimaryDark"
+                        android:src="@mipmap/ic_launcher"
                         />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="#ffffff"
-                        android:text="XAS余额 89969"
+                        android:text=""
                         android:layout_gravity="center_vertical"
                         />
                 </android.support.v7.widget.ButtonBarLayout>

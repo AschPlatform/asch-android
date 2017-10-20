@@ -58,6 +58,14 @@ public class AssetsPresenter implements AssetsContract.Presenter {
     }
 
     @Override
+    public void loadAccount() {
+        Account account=new Account();
+        account.setName("牛牛");
+        account.setAddress(TestData.address);
+        view.displayAccount(account);
+    }
+
+    @Override
     public void loadAssets() {
 
         ArrayList<Balance> list=new ArrayList<>();
@@ -111,6 +119,9 @@ public class AssetsPresenter implements AssetsContract.Presenter {
                 .subscribe(new Action1<List<Balance>>() {
                     @Override
                     public void call(List<Balance> balances) {
+                        if (balances!=null && balances.size()>0){
+                            view.displayXASBalance(balances.get(0));
+                        }
                         view.displayAssets(balances);
                     }
                 });

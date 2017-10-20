@@ -15,10 +15,16 @@ import asch.so.wallet.model.entity.BaseAsset;
 public interface AssetsContract {
 
     interface View extends BaseView<Presenter>{
+        //资产列表
         void displayAssets(List<Balance> assetList);
+        //XAS余额
+        void displayXASBalance(Balance balance);
+        //用户信息
+        void displayAccount(Account account);
     }
 
     interface Presenter extends BasePresenter{
+        void loadAccount();
         void loadAssets();
     }
 }
