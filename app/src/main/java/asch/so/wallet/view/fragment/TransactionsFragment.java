@@ -109,5 +109,6 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     @Override
     public void displayMoreTranscations(List<Transaction> transactions) {
         adapter.addData(transactions);
+        refreshLayout.finishLoadmore();
     }
 }
