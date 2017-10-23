@@ -9,6 +9,7 @@ import asch.so.wallet.contract.MineContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.view.entity.MineItem;
+import asch.so.wallet.view.entity.MineSection;
 
 /**
  * Created by kimziv on 2017/9/28.
@@ -45,13 +46,17 @@ public class MinePresenter implements MineContract.Presenter {
 
     @Override
     public void loadItems() {
-        ArrayList<MineItem> list=new ArrayList<>();
-        list.add(new MineItem("","账户管理"));
-        list.add(new MineItem("","设置"));
-        list.add(new MineItem("","联系人"));
-        list.add(new MineItem("","交易记录"));
-        list.add(new MineItem("","区块详情"));
-        list.add(new MineItem("","关于我们"));
+        ArrayList<MineSection> list=new ArrayList<>();
+
+        list.add(new MineSection(true,"Section 1"));
+        list.add(new MineSection(new MineItem("","账户管理")) );
+        list.add(new MineSection(new MineItem("","设置")));
+        list.add(new MineSection(true,"Section 2"));
+        list.add(new MineSection(new MineItem("","联系人")));
+        list.add(new MineSection(new MineItem("","交易记录")));
+        list.add(new MineSection(true,"Section 3"));
+        list.add(new MineSection(new MineItem("","区块详情")));
+        list.add(new MineSection(new MineItem("","关于我们")));
 
 
         view.displayItems(list);

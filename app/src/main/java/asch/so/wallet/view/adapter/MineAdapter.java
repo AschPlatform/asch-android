@@ -1,16 +1,17 @@
 package asch.so.wallet.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseSectionQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 
 import java.util.List;
 
-import asch.so.base.adapter.BaseRecyclerViewAdapter;
 import asch.so.wallet.R;
 import asch.so.wallet.view.entity.MineItem;
+import asch.so.wallet.view.entity.MineSection;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -18,35 +19,53 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2017/9/28.
  */
 
-public class MineAdapter extends BaseRecyclerViewAdapter <MineAdapter.ViewHolder>{
+public class MineAdapter extends BaseSectionQuickAdapter<MineSection,MineAdapter.ViewHolder> {
 
-    private List<MineItem> itemList;
-
-    public MineAdapter(List<MineItem> items) {
-        this.itemList=items;
+    public MineAdapter(List<MineSection> data) {
+        super(R.layout.item_mine, R.layout.mine_section_head, data);
     }
 
     @Override
-    public MineAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mine,parent, false);
+    protected void convertHead(ViewHolder viewHolder, MineSection mineSection) {
 
-
-
-        return new ViewHolder(itemView,this);
     }
 
     @Override
-    public void onBindViewHolder(MineAdapter.ViewHolder holder, int position) {
-        MineItem item=itemList.get(position);
-        holder.titleTv.setText(item.getTitle());
+    protected void convert(ViewHolder viewHolder, MineSection mineSection) {
+        MineItem item=mineSection.t;
+        viewHolder.titleTv.setText(item.getTitle());
+        int postion = viewHolder.getLayoutPosition();
+        switch (postion){
+            case 0:{
+
+            }
+            break;
+            case 1:{
+
+            }
+            break;
+            case 2:{
+
+            }
+            break;
+            case 3:{
+
+            }
+            break;
+            case 4:{
+
+            }
+            break;
+            case 5:{
+
+            }
+            break;
+        }
+
     }
 
-    @Override
-    public int getItemCount() {
-        return itemList==null?0:itemList.size();
-    }
 
-    static class  ViewHolder extends RecyclerView.ViewHolder{
+    static class  ViewHolder extends BaseViewHolder{
 
         @BindView(R.id.item_title_tv)
         TextView titleTv;
@@ -54,10 +73,10 @@ public class MineAdapter extends BaseRecyclerViewAdapter <MineAdapter.ViewHolder
         TextView subTitleTv;
 
 
-        public ViewHolder(View itemView, MineAdapter adapter) {
+        public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-            itemView.setOnClickListener(v->adapter.onItemHolderClick(this));
+           // itemView.setOnClickListener(v->adapter.onItemHolderClick(this));
         }
     }
 }

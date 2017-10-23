@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ import asch.so.wallet.contract.MineContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.view.adapter.MineAdapter;
 import asch.so.wallet.view.entity.MineItem;
+import asch.so.wallet.view.entity.MineSection;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -66,7 +69,7 @@ public class MineFragment extends BaseFragment implements MineContract.View{
         }
     }
 
-    private List<MineItem> itemList=new ArrayList<>();
+    private List<MineSection> itemList=new ArrayList<>();
     private MineAdapter adapter =new MineAdapter(itemList);
 
     public static MineFragment newInstance() {
@@ -92,10 +95,9 @@ public class MineFragment extends BaseFragment implements MineContract.View{
         mineRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         mineRcv.setItemAnimator(new DefaultItemAnimator());
         mineRcv.setAdapter(adapter);
-
-        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
                 switch (position){
                     case 0:
                     {
@@ -140,9 +142,10 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     }
 
     @Override
-    public void displayItems(List<MineItem> items) {
-        this.itemList.clear();
-        this.itemList.addAll(items);
-        this.adapter.notifyDataSetChanged();
+    public void displayItems(List<MineSection> items) {
+        //this.itemList.clear();
+        //this.itemList.addAll(items);
+        this.adapter.replaceData(items);
+        //this.adapter.notifyDataSetChanged();
     }
 }
