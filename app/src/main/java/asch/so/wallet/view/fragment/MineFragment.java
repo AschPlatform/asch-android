@@ -19,6 +19,8 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AboutActivity;
 import asch.so.wallet.activity.AccountsActivity;
+import asch.so.wallet.activity.AppSettingActivity;
+import asch.so.wallet.activity.PincodeSettingActivity;
 import asch.so.wallet.contract.MineContract;
 import asch.so.wallet.view.adapter.MineAdapter;
 import asch.so.wallet.view.entity.MineItem;
@@ -94,7 +96,7 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                     break;
                     case 1:
                     {
-                       // BaseActivity.start(MineFragment.this,AppSettingFragment.class);
+                        BaseActivity.start(getActivity(),AppSettingActivity.class,null);
                     }
                     break;
                     case 2:

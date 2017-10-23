@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include
-        layout="@layout/layout_app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <!--<include-->
+        <!--layout="@layout/layout_app_bar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"

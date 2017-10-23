@@ -17,6 +17,8 @@ def hawkVersion = "2.0.1"
 def youthBannerVersion ="1.4.10"
 def realtimeblurviewVersion="1.1.0"
 def baseRecyclerViewAdapterHelperVersion="2.9.32"
+def passcodeviewVersion="1.2.1"
+
 project.ext {
     android = [
             compileSdkVersion: 26,
@@ -86,6 +88,8 @@ project.ext {
             "hawk"                        :"com.orhanobut:hawk:${hawkVersion}",
             "youth-banner"                            :"com.youth.banner:banner:${youthBannerVersion}",
             "realtimeblurview"            :"com.github.mmin18:realtimeblurview:${realtimeblurviewVersion}",
-            "baseRecyclerViewAdapterHelper":"com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewAdapterHelperVersion}"
+            "baseRecyclerViewAdapterHelper":"com.github.CymChad:BaseRecyclerViewAdapterHelper:${baseRecyclerViewAdapterHelperVersion}",
+            "passcodeview"                            :"in.arjsna:passcodeview:${passcodeviewVersion}"
+
     ]
 }

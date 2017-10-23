@@ -16,8 +16,11 @@ import android.widget.AdapterView;
 import java.util.Arrays;
 import java.util.List;
 
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.NodeURLSettingActivity;
+import asch.so.wallet.activity.PincodeSettingActivity;
 import asch.so.wallet.contract.AppSettingContract;
 import asch.so.wallet.view.adapter.BaseRecyclerAdapter;
 import asch.so.wallet.view.adapter.SmartViewHolder;
@@ -40,6 +43,15 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
+    public static AppSettingFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        AppSettingFragment fragment = new AppSettingFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
         Item item = Item.values()[position];
@@ -51,12 +63,12 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
                 break;
             case NodeURL:
             {
-                // TODO: 2017/10/16  
+                BaseActivity.start(getActivity(), NodeURLSettingActivity.class,null);
             }
                 break;
             case WalletPasswd:
             {
-                // TODO: 2017/10/16  
+                BaseActivity.start(getActivity(), PincodeSettingActivity.class,null);
             }
                 break;
             case MineProfile:
