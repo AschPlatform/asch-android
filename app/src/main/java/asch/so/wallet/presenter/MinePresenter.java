@@ -4,7 +4,9 @@ import android.content.Context;
 
 import java.util.ArrayList;
 
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.MineContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.view.entity.MineItem;
 
@@ -30,6 +32,15 @@ public class MinePresenter implements MineContract.Presenter {
     @Override
     public void unSubscribe() {
 
+    }
+
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
+    }
+
+    @Override
+    public void loadAccount() {
+        view.displayAccount(getAccount());
     }
 
     @Override

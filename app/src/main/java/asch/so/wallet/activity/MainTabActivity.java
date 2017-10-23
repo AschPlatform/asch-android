@@ -131,7 +131,9 @@ public class MainTabActivity extends BaseActivity {
 
         minePresenter=new MinePresenter(this, mineFragment);
         mineFragment.setPresenter(minePresenter);
-        minePresenter.loadItems();
+//        minePresenter.loadAccount();
+//        minePresenter.loadItems();
+
 
     }
 

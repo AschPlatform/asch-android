@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.widget.particleview.ParticleView;
 import butterknife.BindView;
@@ -39,8 +40,12 @@ public class SplashActivity extends BaseActivity {
         particleView.setOnParticleAnimListener(new ParticleView.ParticleAnimListener() {
             @Override
             public void onAnimationEnd() {
-                Intent intent = new Intent(SplashActivity.this, MainTabActivity.class);
-                //Intent intent = new Intent(SplashActivity.this, FirstStartActivity.class);
+                Intent intent=null;
+                if (AccountsManager.getInstance().getCurrentAccount()!=null){
+                     intent = new Intent(SplashActivity.this, MainTabActivity.class);
+                }else {
+                     intent = new Intent(SplashActivity.this, FirstStartActivity.class);
+                }
                 SplashActivity.this.startActivity(intent);
                 finish();
             }

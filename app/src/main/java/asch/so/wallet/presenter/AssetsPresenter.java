@@ -17,6 +17,7 @@ import java.util.Map;
 
 import asch.so.base.presenter.BasePresenter;
 import asch.so.wallet.TestData;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetsContract;
 import asch.so.wallet.model.db.dao.AccountsDao;
 import asch.so.wallet.model.entity.Account;
@@ -57,22 +58,29 @@ public class AssetsPresenter implements AssetsContract.Presenter {
 
     }
 
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
+    }
+
     @Override
     public void loadAccount() {
-        Account account=new Account();
-        account.setName("牛牛");
-        account.setAddress(TestData.address);
-        view.displayAccount(account);
+//        Account account=new Account();
+//        account.setName("牛牛");
+//        account.setAddress(TestData.address);
+        view.displayAccount(getAccount());
     }
 
     @Override
     public void loadAssets() {
 
+        Account account = getAccount();
+        String address=account.getAddress();
         ArrayList<Balance> list=new ArrayList<>();
         Observable  xasObservable = Observable.create(new Observable.OnSubscribe<List<Balance>>() {
             @Override
             public void call(Subscriber<? super List<Balance>> subscriber) {
-                AschResult result = AschSDK.Account.getBalance(TestData.address);
+                //Account account = getAccount();
+                AschResult result = AschSDK.Account.getBalance(address);
                 Log.i(TAG,result.getRawJson());
                 if (result.isSuccessful()){
                     Map<String, Object> map =result.parseMap();
@@ -93,7 +101,7 @@ public class AssetsPresenter implements AssetsContract.Presenter {
                 Observable.create(new Observable.OnSubscribe<List<Balance>>(){
             @Override
             public void call(Subscriber<? super List<Balance>> subscriber) {
-                AschResult result = AschSDK.UIA.getAddressBalances(TestData.address,100,0);
+                AschResult result = AschSDK.UIA.getAddressBalances(address,100,0);
                 Log.i(TAG,result.getRawJson());
                 if (result.isSuccessful()){
                     JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());

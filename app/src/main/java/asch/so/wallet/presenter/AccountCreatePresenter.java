@@ -5,6 +5,8 @@ import android.util.Log;
 
 import java.io.InputStream;
 
+import asch.so.wallet.AppConfig;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountCreateContract;
 import asch.so.wallet.model.db.dao.AccountsDao;
 import asch.so.wallet.model.entity.Account;
@@ -72,7 +74,9 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
             account.setName(name);
             account.setPasswd(passwd);
             account.setHint(hint);
-            AccountsDao.getInstance().addAccount(account);
+            //AccountsDao.getInstance().addAccount(account);
+            AccountsManager.getInstance().addAccount(account);
+            AppConfig.putLastAccountAddress(account.getAddress());
         } catch (SecurityException e) {
             e.printStackTrace();
         }

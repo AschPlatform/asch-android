@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +23,12 @@ import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.AppSettingActivity;
 import asch.so.wallet.activity.PincodeSettingActivity;
 import asch.so.wallet.contract.MineContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.view.adapter.MineAdapter;
 import asch.so.wallet.view.entity.MineItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by kimziv on 2017/9/21.
@@ -36,6 +39,14 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     MineContract.Presenter presenter;
     @BindView(R.id.mine_rcv)
     RecyclerView mineRcv;
+    @BindView(R.id.name_tv)
+    TextView nameTv;
+    @BindView(R.id.address_tv)
+    TextView addressTv;
+    @BindView(R.id.ident_icon)
+    CircleImageView identicon;
+
+
 
     public enum Item{
        AccountManagement("","账户管理",true),
@@ -80,8 +91,6 @@ public class MineFragment extends BaseFragment implements MineContract.View{
         ButterKnife.bind(this,rootView);
         mineRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         mineRcv.setItemAnimator(new DefaultItemAnimator());
-//        itemList=new ArrayList<>();
-//        adapter =new MineAdapter(itemList);
         mineRcv.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -112,6 +121,9 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                 }
             }
         });
+
+        presenter.loadAccount();
+        presenter.loadItems();
         return rootView;
     }
 
@@ -119,6 +131,12 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     @Override
     public void setPresenter(MineContract.Presenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayAccount(Account account) {
+        nameTv.setText(account.getName());
+        addressTv.setText(account.getAddress());
     }
 
     @Override

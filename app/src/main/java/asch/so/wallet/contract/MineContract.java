@@ -4,6 +4,7 @@ import java.util.List;
 
 import asch.so.base.presenter.BasePresenter;
 import asch.so.base.view.BaseView;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.view.entity.MineItem;
 
 /**
@@ -13,10 +14,12 @@ import asch.so.wallet.view.entity.MineItem;
 public interface MineContract {
 
     interface View extends BaseView<Presenter>{
+        void displayAccount(Account account);
         void displayItems(List<MineItem> items);
     }
 
     interface Presenter extends BasePresenter{
+        void loadAccount();
         void loadItems();
     }
 }
