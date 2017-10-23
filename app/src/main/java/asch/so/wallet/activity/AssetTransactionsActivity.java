@@ -8,6 +8,7 @@ import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.AssetTransactionsContract;
 import asch.so.wallet.presenter.AssetTransactionsPresenter;
+import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.fragment.AssetTransactionsFragment;
 import asch.so.wallet.view.fragment.AssetTransferFragment;
 
@@ -23,6 +24,8 @@ public class AssetTransactionsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
+
         Intent intent=getIntent();
 
         fragment=AssetTransactionsFragment.newInstance();
@@ -34,6 +37,9 @@ public class AssetTransactionsActivity extends BaseActivity {
 
         presenter=new AssetTransactionsPresenter(this,fragment);
         presenter.loadTransactions();
+
+        StatusBarUtil.immersive(this);
+        //StatusBarUtil.hideNavigationBar(getWindow());
     }
 
 

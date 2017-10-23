@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
     private AssetTransactionsContract.Presenter presenter;
     private List<Transaction> list=new ArrayList<>();
-    private AssetTransactionsAdapter adapter=new AssetTransactionsAdapter(list);
+    private AssetTransactionsAdapter adapter=new AssetTransactionsAdapter();
 
 
     public static AssetTransactionsFragment newInstance() {
@@ -62,11 +64,11 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         txRcv.setItemAnimator(new DefaultItemAnimator());
         txRcv.setAdapter(adapter);
         //添加Header
-        //View header = LayoutInflater.from(getContext()).inflate(R.layout.header_asset_transactions, txRcv, false);
-
-        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        View header = LayoutInflater.from(getContext()).inflate(R.layout.header_asset_transactions, txRcv, false);
+        adapter.addHeaderView(header);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
                 Intent intent =new Intent(getContext(),WebActivity.class);
                 startActivity(intent);
             }
@@ -99,8 +101,9 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
     @Override
     public void displayTransactions(List<Transaction> transactions) {
-        list.clear();
-        list.addAll(transactions);
-        adapter.notifyDataSetChanged();
+        //list.clear();
+        //list.addAll(transactions);
+        //adapter.notifyDataSetChanged();
+        adapter.addData(transactions);
     }
 }

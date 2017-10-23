@@ -127,7 +127,6 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
                     JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
                     JSONArray transactionsJsonArray=resultJSONObj.getJSONArray("transactions");
                     List<Transaction> balances= JSON.parseArray(transactionsJsonArray.toJSONString(),Transaction.class);
-                    // list.addAll(balances);
                     subscriber.onNext(balances);
                     subscriber.onCompleted();
                 }else{

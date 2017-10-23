@@ -68,7 +68,8 @@ public class BaseActivity extends AppCompatActivity {
     private static Intent newIntent(Class<?> clazz, Context context, Bundle bundle) {
         Intent intent = new Intent(context, clazz);
         //intent.putExtra(EXTRA_FRAGMENT, clazz.getName());
-        intent.putExtras(bundle);
+        if (bundle!=null)
+         intent.putExtras(bundle);
         return intent;
     }
     //</editor-fold>

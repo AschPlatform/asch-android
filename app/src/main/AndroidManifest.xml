@@ -62,7 +62,9 @@
 
         <activity android:name=".activity.QRCodeScanActivity" >
         </activity>
-        <activity android:name=".activity.AssetTransactionsActivity">
+        <activity android:name=".activity.AssetTransactionsActivity"
+            android:theme="@style/AppTheme"
+            >
         </activity>
         <activity android:name=".activity.AssetTransferActivity" >
         </activity>
@@ -80,6 +82,9 @@
 
         <activity android:name=".activity.TransactionsActivity">
 
+        </activity>
+        <activity android:name=".activity.AboutActivity">
+            
         </activity>
 
     </application>

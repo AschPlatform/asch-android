@@ -17,6 +17,7 @@ import java.util.List;
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.AboutActivity;
 import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.contract.MineContract;
 import asch.so.wallet.view.adapter.MineAdapter;
@@ -99,6 +100,11 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                     case 2:
                     {
 
+                    }
+                    break;
+                    case 5:
+                    {
+                        BaseActivity.start(getActivity(),AboutActivity.class,null);
                     }
                     break;
                 }
