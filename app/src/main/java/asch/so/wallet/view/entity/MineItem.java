@@ -6,18 +6,18 @@ package asch.so.wallet.view.entity;
 
 public class MineItem extends BaseItem{
 
-    private String icon;
+    private int icon;
 
-    public MineItem(String icon, String title) {
+    public MineItem(int icon, String title) {
         super(title);
         this.icon = icon;
     }
 
-    public String getIcon() {
+    public int getIcon() {
         return icon;
     }
 
-    public void setIcon(String icon) {
+    public void setIcon(int icon) {
         this.icon = icon;
     }
 

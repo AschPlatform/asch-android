@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/item_assets"
-        android:icon="@mipmap/ic_news_gray"
+        android:icon="@mipmap/tab_property_nor"
         android:title="资产" />
 
     <item
         android:id="@+id/item_discovery"
-        android:icon="@mipmap/ic_discovery_gray"
+        android:icon="@mipmap/tab_app_nor"
         android:title="发现" />
 
     <item
         android:id="@+id/item_mine"
-        android:icon="@mipmap/ic_more_gray"
+        android:icon="@mipmap/tab_my_nor"
         android:title="我的" />
 
 </menu>

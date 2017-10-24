@@ -19,21 +19,26 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2017/9/28.
  */
 
-public class MineAdapter extends BaseSectionQuickAdapter<MineSection,MineAdapter.ViewHolder> {
+public class MineAdapter extends BaseSectionQuickAdapter<MineSection,BaseViewHolder> {
 
     public MineAdapter(List<MineSection> data) {
         super(R.layout.item_mine, R.layout.mine_section_head, data);
     }
 
     @Override
-    protected void convertHead(ViewHolder viewHolder, MineSection mineSection) {
-
+    protected void convertHead(BaseViewHolder viewHolder, MineSection mineSection) {
+//        if (viewHolder.getLayoutPosition()==0){
+//            viewHolder.itemView.setVisibility(View.GONE);
+//        }
     }
 
     @Override
-    protected void convert(ViewHolder viewHolder, MineSection mineSection) {
+    protected void convert(BaseViewHolder viewHolder, MineSection mineSection) {
         MineItem item=mineSection.t;
-        viewHolder.titleTv.setText(item.getTitle());
+
+        viewHolder.setImageResource(R.id.setting_icon,item.getIcon());
+        viewHolder.setText(R.id.item_title_tv,item.getTitle());
+       // viewHolder.titleTv.setText(item.getTitle());
         int postion = viewHolder.getLayoutPosition();
         switch (postion){
             case 0:{
@@ -65,18 +70,18 @@ public class MineAdapter extends BaseSectionQuickAdapter<MineSection,MineAdapter
     }
 
 
-    static class  ViewHolder extends BaseViewHolder{
-
-        @BindView(R.id.item_title_tv)
-        TextView titleTv;
-        @BindView(R.id.item_sub_title_tv)
-        TextView subTitleTv;
-
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this,itemView);
-           // itemView.setOnClickListener(v->adapter.onItemHolderClick(this));
-        }
-    }
+//    static class  ViewHolder extends BaseViewHolder{
+//
+//        @BindView(R.id.item_title_tv)
+//        TextView titleTv;
+//        @BindView(R.id.item_sub_title_tv)
+//        TextView subTitleTv;
+//
+//
+//        public ViewHolder(View itemView) {
+//            super(itemView);
+//            ButterKnife.bind(this,itemView);
+//           // itemView.setOnClickListener(v->adapter.onItemHolderClick(this));
+//        }
+//    }
 }

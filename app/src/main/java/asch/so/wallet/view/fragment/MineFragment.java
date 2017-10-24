@@ -4,12 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -94,18 +96,21 @@ public class MineFragment extends BaseFragment implements MineContract.View{
         ButterKnife.bind(this,rootView);
         mineRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         mineRcv.setItemAnimator(new DefaultItemAnimator());
+        mineRcv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
         mineRcv.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
-                switch (position){
-                    case 0:
+                MineSection section =(MineSection) baseQuickAdapter.getItem(position);
+                MineItem item=section.t;
+                switch (item.getIcon()){
+                    case R.mipmap.my_account_managment:
                     {
                         Intent intent = new Intent(getActivity(), AccountsActivity.class);
                         startActivity(intent);
                     }
                     break;
-                    case 1:
+                    case R.mipmap.my_settings:
                     {
                         BaseActivity.start(getActivity(),AppSettingActivity.class,null);
                     }
@@ -115,7 +120,7 @@ public class MineFragment extends BaseFragment implements MineContract.View{
 
                     }
                     break;
-                    case 5:
+                    case R.mipmap.my_users:
                     {
                         BaseActivity.start(getActivity(),AboutActivity.class,null);
                     }
