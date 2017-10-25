@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2017/9/22.
  */
 
-public class AccountCreateActivity extends BaseActivity {
+public class AccountCreateActivity extends TitleToolbarActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -29,14 +29,14 @@ public class AccountCreateActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        //setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
-
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar()!=null){
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+        setTitle("创建账户");
+//        setSupportActionBar(toolbar);
+//        if (getSupportActionBar()!=null){
+//            getSupportActionBar().setDisplayShowHomeEnabled(true);
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        }
 
         AccountCreateFragment fragment =AccountCreateFragment.newInstance();
         fragment.setArguments(getBundle());

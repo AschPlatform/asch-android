@@ -16,16 +16,14 @@ import asch.so.wallet.view.fragment.AssetTransferFragment;
  * Created by kimziv on 2017/9/27.
  */
 
-public class AssetTransactionsActivity extends BaseActivity {
+public class AssetTransactionsActivity extends TitleToolbarActivity {
 
     private AssetTransactionsContract.Presenter presenter;
     private AssetTransactionsFragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
-
-
+        setTitle("XAS");
         Intent intent=getIntent();
 
         fragment=AssetTransactionsFragment.newInstance();

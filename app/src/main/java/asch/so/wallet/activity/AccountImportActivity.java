@@ -29,7 +29,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by kimziv on 2017/9/22.
  */
 
-public class AccountImportActivity extends BaseActivity implements  EasyPermissions.PermissionCallbacks{
+public class AccountImportActivity extends TitleToolbarActivity implements  EasyPermissions.PermissionCallbacks{
     private static final int REQUEST_CODE_QRCODE_PERMISSIONS = 1;
 
     @BindView(R.id.toolbar)
@@ -43,14 +43,14 @@ public class AccountImportActivity extends BaseActivity implements  EasyPermissi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_base);
+        //setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
-
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() !=null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        setTitle("导入账户");
+//        setSupportActionBar(toolbar);
+//        if (getSupportActionBar() !=null){
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        }
 
         fragment = AccountImportFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);

@@ -12,12 +12,12 @@ import asch.so.wallet.view.fragment.PincodeSettingFragment;
  * Created by kimziv on 2017/10/23.
  */
 
-public class PincodeSettingActivity extends BaseActivity {
+public class PincodeSettingActivity extends TitleToolbarActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        setTitle("设置Pin码");
         PincodeSettingFragment fragment =PincodeSettingFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment, R.id.fragment_container);
 

@@ -16,12 +16,12 @@ import asch.so.wallet.view.fragment.TransactionsFragment;
  * Created by kimziv on 2017/10/18.
  */
 
-public class TransactionsActivity extends BaseActivity {
+public class TransactionsActivity extends TitleToolbarActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        setTitle("交易记录");
         //StatusBarUtil.immersive(this);
         TransactionsFragment transactionsFragment=TransactionsFragment.newInstance();
 

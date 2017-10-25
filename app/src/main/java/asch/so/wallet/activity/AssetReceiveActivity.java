@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2017/9/27.
  */
 
-public class AssetReceiveActivity extends BaseActivity {
+public class AssetReceiveActivity extends TitleToolbarActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -29,9 +29,9 @@ public class AssetReceiveActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+//        setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
-
+        setTitle("接收");
         fragment=AssetReceiveFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
         presenter=new AssetReceivePresenter(this,fragment);

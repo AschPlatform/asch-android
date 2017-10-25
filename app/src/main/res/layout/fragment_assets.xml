@@ -140,13 +140,14 @@
                 </android.support.v7.widget.ButtonBarLayout>
                 <ImageView
                     android:id="@+id/add_icon"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
+                    android:padding="4dp"
                     android:visibility="visible"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical|right"
-                    app:srcCompat="@drawable/ic_add_black_24dp"
+                    android:src="@mipmap/more_menu_icon"
                     />
                 </android.support.v7.widget.Toolbar>
         </android.support.design.widget.CollapsingToolbarLayout>

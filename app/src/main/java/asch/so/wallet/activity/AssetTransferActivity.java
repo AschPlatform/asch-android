@@ -27,7 +27,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by kimziv on 2017/9/27.
  */
 
-public class AssetTransferActivity extends BaseActivity implements EasyPermissions.PermissionCallbacks{
+public class AssetTransferActivity extends TitleToolbarActivity implements EasyPermissions.PermissionCallbacks{
 
     private static final int REQUEST_CODE_QRCODE_PERMISSIONS = 1;
 
@@ -39,13 +39,13 @@ public class AssetTransferActivity extends BaseActivity implements EasyPermissio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar()!=null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        setTitle("资产转账");
+        //setSupportActionBar(toolbar);
+//        if (getSupportActionBar()!=null){
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        }
 
         Intent intent=getIntent();
 

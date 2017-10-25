@@ -12,8 +12,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import java.util.HashMap;
@@ -87,7 +89,9 @@ public class BaseActivity extends AppCompatActivity {
             ActivityStackManager.getInstance().push(this);
             hasInit = true;
         }
+
     }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

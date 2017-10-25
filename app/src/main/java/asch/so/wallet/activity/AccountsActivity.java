@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2017/9/21.
  */
 
-public class AccountsActivity extends BaseActivity {
+public class AccountsActivity extends TitleToolbarActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -34,13 +34,14 @@ public class AccountsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_accounts);
+        //setContentView(R.layout.activity_accounts);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() !=null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        setTitle("所有账户");
+       // setSupportActionBar(toolbar);
+//        if (getSupportActionBar() !=null){
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        }
 
         AccountsFragment accountsFragment=AccountsFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), accountsFragment, R.id.fragment_container);
