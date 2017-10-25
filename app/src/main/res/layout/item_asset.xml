@@ -4,15 +4,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="48dp"
     android:layout_margin="4dp">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/currency_icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        app:civ_border_width="1dp"
+        app:civ_border_color="@color/black_shade"
+        />
     <TextView
         android:id="@+id/asset_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/currency_icon"
+        android:layout_marginLeft="10dp"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:textSize="24sp"
+        android:textColor="#444444"
+        android:textSize="18sp"
         android:text="XAS"
         />
 
@@ -20,10 +35,11 @@
         android:id="@+id/balance_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:textColor="@color/default_title_text_color"
-        android:textAppearance="?attr/textAppearanceListItem"
-        android:textSize="16sp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:textColor="#666666"
+        android:textSize="13sp"
         android:text="889"
         />
 

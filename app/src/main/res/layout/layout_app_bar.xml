@@ -5,11 +5,12 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:theme="@style/AppTheme.AppBarOverlay">
+    <!--android:background="?attr/colorPrimary"-->
     <asch.so.widget.toolbar.TitleToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@mipmap/toolbar"
         app:backIcon="@mipmap/back"
         app:backText="返回"
         app:backTextAppearance="?attr/actionMenuTextAppearance"

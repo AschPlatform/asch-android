@@ -97,7 +97,9 @@
         <activity android:name=".activity.NodeURLSettingActivity">
 
         </activity>
+        <activity android:name=".activity.BackupActivity">
 
+        </activity>
 
     </application>
 

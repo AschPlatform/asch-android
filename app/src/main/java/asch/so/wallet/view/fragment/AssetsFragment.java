@@ -27,6 +27,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,6 +49,7 @@ import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransactionsActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
+import asch.so.wallet.activity.BackupActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.contract.AssetReceiveContract;
@@ -77,8 +79,8 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
     RecyclerView assetsRcv;
     @BindView(R.id.app_bar)
    AppBarLayout appBarLayout;
-    @BindView(R.id.fab)
-    FloatingActionButton floatingActionButton;
+//    @BindView(R.id.fab)
+//    FloatingActionButton floatingActionButton;
     @BindView(R.id.balance_bbl)
     ButtonBarLayout blanceBll;
     @BindView(R.id.toolbar)
@@ -93,8 +95,8 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
     CircleImageView identicon;
     @BindView(R.id.name_tv)
     TextView nameTv;
-    @BindView(R.id.address_tv)
-    TextView addressTv;
+    @BindView(R.id.backup_btn)
+    Button backupBtn;
 
     @BindView(R.id.add_icon)
      ImageView addIconIv;
@@ -143,6 +145,7 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
             }
         });
         addIconIv.setOnClickListener(this);
+        backupBtn.setOnClickListener(this);
 
         setupRefreshLayout();
 
@@ -182,11 +185,11 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
                 float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
                 if (fraction < 0.1 && misAppbarExpand) {
                     misAppbarExpand = false;
-                    floatingActionButton.animate().scaleX(0).scaleY(0);
+                   // floatingActionButton.animate().scaleX(0).scaleY(0);
                 }
                 if (fraction > 0.8 && !misAppbarExpand) {
                     misAppbarExpand = true;
-                    floatingActionButton.animate().scaleX(1).scaleY(1);
+                    //floatingActionButton.animate().scaleX(1).scaleY(1);
                 }
             }
         });
@@ -231,6 +234,8 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
             menuHelper.show();
 
             //popupMenu.show();
+        }else if (backupBtn==view){
+            BaseActivity.start(getActivity(), BackupActivity.class,null);
         }
     }
 
@@ -274,6 +279,6 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
     @Override
     public void displayAccount(Account account) {
         nameTv.setText(account.getName());
-        addressTv.setText(account.getAddress());
+        //addressTv.setText(account.getAddress());
     }
 }
