@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -75,6 +76,7 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         Context ctx=rootView.getContext();
         accountsRecycleView.setLayoutManager(new LinearLayoutManager(ctx));
         accountsRecycleView.setItemAnimator(new DefaultItemAnimator());
+        accountsRecycleView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         accountList=new ArrayList<>();
         accountsAdapter=new AccountsAdapter(accountList);
         accountsAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
