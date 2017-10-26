@@ -37,22 +37,27 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="43dp"
         android:orientation="horizontal">
-        <Button
+        <TextView
             android:id="@+id/goto_transfer_btn"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#333333"
+            android:textSize="15sp"
             android:text="转账"
             tools:ignore="HardcodedText" />
-        <Button
+        <TextView
             android:id="@+id/goto_receive_btn"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
+            android:background="@color/colorAccent"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
             android:text="接收"
             tools:ignore="HardcodedText" />
 

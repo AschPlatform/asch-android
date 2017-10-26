@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
@@ -36,9 +37,9 @@ import butterknife.ButterKnife;
 public class AssetTransactionsFragment extends BaseFragment implements AssetTransactionsContract.View{
 
     @BindView(R.id.goto_transfer_btn)
-    Button transferBtn;
+    TextView transferBtn;
     @BindView(R.id.goto_receive_btn)
-    Button receiveBtn;
+    TextView receiveBtn;
     @BindView(R.id.asset_transactions_rcv)
     RecyclerView txRcv;
 
