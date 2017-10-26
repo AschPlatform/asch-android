@@ -1,57 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/page_bg"
     android:orientation="vertical"
     >
 
-    <EditText
-        android:id="@+id/seed_et"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:ems="10"
-        android:hint="输入钱包密码或者扫描二维码"
-        android:inputType="textMultiLine"
-        android:singleLine="false" />
-
-    <EditText
-        android:id="@+id/name_et"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:hint="输入钱包别名"
-        android:inputType="textPersonName"
-        android:singleLine="true" />
-
-    <EditText
-        android:id="@+id/passwd_et"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="输入密码"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/passwd_et2"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:background="@android:color/transparent"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:background="@android:color/white"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="私钥"
+                />
+            </LinearLayout>
+        <EditText
+            android:id="@+id/seed_et"
+            android:layout_width="match_parent"
+            android:layout_height="113dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/secret_et_bg"
+            android:hint="私密秘钥（可扫码输入）"
+            android:textSize="13sp"
+            android:textColor="#333333"
+            android:enabled="true"
+            android:gravity="top"
+            android:padding="8dp"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            android:minLines="2"
+            android:maxLines="6" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"
+            />
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="请再次输入密码"
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/hint_et"
+        android:layout_height="57dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:background="@android:color/white"
+        >
+        <EditText
+            android:id="@+id/name_et"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:hint="钱包别名"
+            android:textSize="15sp"
+            android:textColor="#333333"
+            android:inputType="textPersonName"
+            android:maxLines="1" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@android:color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="输入提示语"
-        android:inputType="textPassword" />
+        android:layout_height="57dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        >
+        <EditText
+            android:id="@+id/passwd_et"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:hint="密码"
+            android:textSize="15sp"
+            android:textColor="#333333"
+            android:inputType="textPassword"
+            android:maxLines="1" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        >
+        <EditText
+            android:id="@+id/passwd_et2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:hint="重复密码"
+            android:textSize="15sp"
+            android:textColor="#333333"
+            android:inputType="textPassword"
+            android:maxLines="1" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        >
+        <EditText
+            android:id="@+id/hint_et"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:hint="密码提示（可不填）"
+            android:textSize="15sp"
+            android:textColor="#333333"
+            android:inputType="textPassword"
+            android:maxLines="1" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"
+            />
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/import_btn"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="开始导入" />
-
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:text="导入账户" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="13sp"
+        android:textColor="#888888"
+        android:text="注：请备份好你的密码，该账户不提供密码找回功能，密码用于加密保护私钥，强度非常重要。"
+        />
 </LinearLayout>
+</ScrollView>
