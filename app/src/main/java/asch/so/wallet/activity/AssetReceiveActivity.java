@@ -31,7 +31,7 @@ public class AssetReceiveActivity extends TitleToolbarActivity {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
-        setTitle("收款");
+        setTitle("二维码收款");
         fragment=AssetReceiveFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
         presenter=new AssetReceivePresenter(this,fragment);
