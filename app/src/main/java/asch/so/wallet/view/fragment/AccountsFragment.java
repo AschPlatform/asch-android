@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +41,7 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
     @BindView(R.id.accounts_rcv)
     RecyclerView accountsRecycleView;
 
-    @BindView(R.id.goto_create_btn)
-    Button createBtn;
 
-    @BindView(R.id.goto_import_btn)
-    Button importBtn;
 
 
     private AccountsAdapter accountsAdapter;
@@ -74,39 +72,46 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         View rootView=inflater.inflate(R.layout.fragment_accounts, container, false);
         unbinder= ButterKnife.bind(this,rootView);
         Context ctx=rootView.getContext();
+
         accountsRecycleView.setLayoutManager(new LinearLayoutManager(ctx));
         accountsRecycleView.setItemAnimator(new DefaultItemAnimator());
         accountsRecycleView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         accountList=new ArrayList<>();
-        accountsAdapter=new AccountsAdapter(accountList);
-        accountsAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        accountsAdapter=new AccountsAdapter();
+        accountsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-               Account account = accountList.get(position);
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+
+                Account account = accountList.get(position);
                 presenter.setCurrentAccount(account);
                 accountsAdapter.notifyDataSetChanged();
             }
         });
+
         accountsRecycleView.setAdapter(accountsAdapter);
         if (presenter!=null) {
             presenter.subscribe();
         }
 
-        createBtn.setOnClickListener(new View.OnClickListener() {
+
+        View header=LayoutInflater.from(getContext()).inflate(R.layout.footer_accounts,accountsRecycleView,false);
+        header.findViewById(R.id.create_ll).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent =new Intent(getActivity(),AccountCreateActivity.class);
                 startActivityForResult(intent,1);
             }
         });
-
-        importBtn.setOnClickListener(new View.OnClickListener() {
+        header.findViewById(R.id.import_ll).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent =new Intent(getActivity(),AccountImportActivity.class);
                 startActivityForResult(intent,1);
             }
         });
+        accountsAdapter.addFooterView(header);
+        presenter=new AccountsPresenter(getContext(),this);
+        presenter.loadSavedAccounts();
 
         return rootView;
     }
@@ -130,14 +135,16 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
 
     @Override
     public void displaySavedAccounts(List<Account> accountList) {
+        this.accountsAdapter.replaceData(accountList);
         this.accountList.clear();
         this.accountList.addAll(accountList);
-        accountsAdapter.notifyDataSetChanged();
+        accountsAdapter.replaceData(accountList);
+//        accountsAdapter.notifyDataSetChanged();
     }
 
-    public void refresh(){
-        presenter.subscribe();
-    }
+    //public void refresh(){
+        //presenter.subscribe();
+    //}
 
     @Override
     public void gotoCreateAccount() {

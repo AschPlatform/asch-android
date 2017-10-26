@@ -36,6 +36,7 @@ public class TitleToolbarActivity extends BaseActivity {
                 }
             }
         });
+        setSupportActionBar(toolbar);
         setBackTitle("返回");
     }
 

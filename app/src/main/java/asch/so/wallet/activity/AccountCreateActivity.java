@@ -1,6 +1,7 @@
 package asch.so.wallet.activity;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import asch.so.wallet.R;
 import asch.so.wallet.contract.AccountCreateContract;
 import asch.so.wallet.presenter.AccountCreatePresenter;
 import asch.so.wallet.view.fragment.AccountCreateFragment;
+import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,7 +23,7 @@ import butterknife.ButterKnife;
 
 public class AccountCreateActivity extends TitleToolbarActivity {
 
-    @BindView(R.id.toolbar)
+   // @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     private AccountCreateContract.Presenter presenter;
@@ -32,11 +34,7 @@ public class AccountCreateActivity extends TitleToolbarActivity {
         //setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
         setTitle("创建账户");
-//        setSupportActionBar(toolbar);
-//        if (getSupportActionBar()!=null){
-//            getSupportActionBar().setDisplayShowHomeEnabled(true);
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        }
+
 
         AccountCreateFragment fragment =AccountCreateFragment.newInstance();
         fragment.setArguments(getBundle());

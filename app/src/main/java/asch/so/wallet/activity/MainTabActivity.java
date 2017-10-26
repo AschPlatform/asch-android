@@ -129,11 +129,8 @@ public class MainTabActivity extends BaseActivity {
         dappCenterPresenter=new DappCenterPresenter(this,dappCenterFragment);
         dappCenterPresenter.loadDappList();
 
-        minePresenter=new MinePresenter(this, mineFragment);
-        mineFragment.setPresenter(minePresenter);
-//        minePresenter.loadAccount();
-//        minePresenter.loadItems();
-
+//        minePresenter=new MinePresenter(this, mineFragment);
+//        mineFragment.setPresenter(minePresenter);
 
     }
 

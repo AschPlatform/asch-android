@@ -28,8 +28,8 @@ public class AccountsActivity extends TitleToolbarActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-    @Inject
-    AccountsPresenter accountsPresenter;
+//    @Inject
+//    AccountsPresenter accountsPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +46,11 @@ public class AccountsActivity extends TitleToolbarActivity {
         AccountsFragment accountsFragment=AccountsFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), accountsFragment, R.id.fragment_container);
 
-        DaggerAccountsManagerComponent.builder()
-                .applicationComponent(WalletApplication.getInstance().getApplicationComponent())
-                .accountsModule(new AccountsModule(accountsFragment))
-                .build().inject(this);
+
+//        DaggerAccountsManagerComponent.builder()
+//                .applicationComponent(WalletApplication.getInstance().getApplicationComponent())
+//                .accountsModule(new AccountsModule(accountsFragment))
+//                .build().inject(this);
 
 
     }
