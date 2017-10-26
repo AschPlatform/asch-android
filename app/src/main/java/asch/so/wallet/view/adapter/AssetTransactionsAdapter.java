@@ -33,7 +33,7 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
     @Override
     protected void convert(ViewHolder viewHolder, Transaction transaction) {
         viewHolder.transactionTv.setText(transaction.getId());
-        viewHolder.amountTv.setText(transaction.getAmount()/ (double)AschConst.COIN+" XAS");
+        viewHolder.amountTv.setText(String.format("%.3f",transaction.getAmount()/ (double)AschConst.COIN)+" XAS");
     }
 
 

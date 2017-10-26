@@ -3,6 +3,7 @@ package asch.so.wallet.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -62,6 +63,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
         txRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         txRcv.setItemAnimator(new DefaultItemAnimator());
+        txRcv.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         txRcv.setAdapter(adapter);
         //添加Header
         View header = LayoutInflater.from(getContext()).inflate(R.layout.header_asset_transactions, txRcv, false);

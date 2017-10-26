@@ -58,7 +58,7 @@
             android:visibility="invisible"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            app:srcCompat="@drawable/ic_check_black_24dp"
+            app:srcCompat="@mipmap/checkmark_icon"
             />
 
     </RelativeLayout>

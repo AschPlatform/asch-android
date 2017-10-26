@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
 public class AccountCreateActivity extends TitleToolbarActivity {
 
    // @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    //Toolbar toolbar;
 
     private AccountCreateContract.Presenter presenter;
 
@@ -32,7 +32,7 @@ public class AccountCreateActivity extends TitleToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_base);
-        ButterKnife.bind(this);
+       // ButterKnife.bind(this);
         setTitle("创建账户");
 
 
