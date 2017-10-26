@@ -38,6 +38,8 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
     @BindView(R.id.ammount_et)
     EditText ammountEt;
+    @BindView(R.id.save_btn)
+     TextView saveTv;
     String currency="XAS";
 
     TextWatcher textWatcher=new TextWatcher() {
@@ -82,7 +84,13 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
                 presenter.testDecodeQRCodeURL();
             }
         });
-
+        
+        saveTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO: 2017/10/26  
+            }
+        });
         return rootView;
     }
 
