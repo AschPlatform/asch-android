@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
+import asch.so.widget.toolbar.BaseToolbar;
+import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
@@ -26,7 +29,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
    // private static final int REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY = 666;
 
     @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    TitleToolbar toolbar;
 
     @BindView(R.id.zbarview)
     ZBarView zbarView;
@@ -36,6 +39,15 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
         setContentView(R.layout.activity_qrcode_scan);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("扫一扫");
+        toolbar.setOnOptionItemClickListener(new BaseToolbar.OnOptionItemClickListener() {
+            @Override
+            public void onOptionItemClick(View v) {
+                if (v.getId()==R.id.back){
+                    onBackPressed();
+                }
+            }
+        });
         zbarView.setDelegate(this);
 
 //        zxingView.startSpot();
