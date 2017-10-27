@@ -10,6 +10,7 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.AccountImportContract;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.fragment.AccountCreateFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,6 +34,8 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
         ButterKnife.bind(this);
         createBtn.setOnClickListener(this);
         importBtn.setOnClickListener(this);
+        StatusBarUtil.immersive(this);
+
     }
 
 

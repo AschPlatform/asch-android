@@ -2,38 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/start_bg"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="102dp"
+        android:layout_height="128dp"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/asch_logo"
+        />
     <LinearLayout
         android:id="@+id/create_ll"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="43.33dp"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
             android:id="@+id/create_btn"
-            style="@style/Widget.AppCompat.Button.Colored"
+            android:background="@drawable/create_btn_bg"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="创建钱包"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:text="创建账户"
             tools:ignore="HardcodedText" />
     </LinearLayout>
     <LinearLayout
         android:id="@+id/import_ll"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
             android:id="@+id/import_btn"
-            style="@style/Widget.AppCompat.Button.Colored"
+            android:background="@drawable/import_btn_bg"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="导入钱包"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:text="导入账户"
             tools:ignore="HardcodedText" />
     </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:buttonTint="@color/white"
+        android:text="默认阅读并同意阅读条款" />
 </LinearLayout>

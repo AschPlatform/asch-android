@@ -6,6 +6,7 @@ import android.view.View;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
+import asch.so.wallet.util.StatusBarUtil;
 import asch.so.widget.toolbar.BaseToolbar;
 import asch.so.widget.toolbar.TitleToolbar;
 
@@ -21,6 +22,7 @@ public class TitleToolbarActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
         initToolBar();
+        StatusBarUtil.immersive(this);
     }
 
     protected void initToolBar(){

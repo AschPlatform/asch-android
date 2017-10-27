@@ -66,7 +66,9 @@
             android:theme="@style/AppTheme"
             >
         </activity>
-        <activity android:name=".activity.AssetTransferActivity" >
+        <activity android:name=".activity.AssetTransferActivity"
+            android:windowSoftInputMode="adjustResize"
+            >
         </activity>
         <activity android:name=".activity.AssetReceiveActivity" >
         </activity>

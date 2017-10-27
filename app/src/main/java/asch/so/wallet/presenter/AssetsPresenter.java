@@ -32,6 +32,9 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
+import so.asch.sdk.dbc.Argument;
+import so.asch.sdk.impl.ParameterMap;
+import so.asch.sdk.impl.Validation;
 
 /**
  * Created by kimziv on 2017/9/20.
@@ -71,7 +74,7 @@ public class AssetsPresenter implements AssetsContract.Presenter {
     }
 
     @Override
-    public void loadAssets() {
+    public void loadAssets(){
 
         Account account = getAccount();
         String address=account.getAddress();
@@ -79,22 +82,25 @@ public class AssetsPresenter implements AssetsContract.Presenter {
         Observable  xasObservable = Observable.create(new Observable.OnSubscribe<List<Balance>>() {
             @Override
             public void call(Subscriber<? super List<Balance>> subscriber) {
-                //Account account = getAccount();
-                AschResult result = AschSDK.Account.getBalance(address);
-                Log.i(TAG,result.getRawJson());
-                if (result.isSuccessful()){
-                    Map<String, Object> map =result.parseMap();
-                    Balance xasBalance=new Balance();
-                    xasBalance.setCurrency("XAS");
-                    xasBalance.setBalance(String.valueOf(map.getOrDefault("balance","0")));
-                    xasBalance.setPrecision(8);
-                    list.add(xasBalance);
-                    subscriber.onNext(list);
-                    subscriber.onCompleted();
-                }else {
-                    subscriber.onError(result.getException());
+                try {
+                    AschResult result = AschSDK.Account.getBalance(address);
+                    if (result!=null && result.isSuccessful()){
+                        Log.i(TAG,result.getRawJson());
+                        Map<String, Object> map =result.parseMap();
+                        Balance xasBalance=new Balance();
+                        xasBalance.setCurrency("XAS");
+                        xasBalance.setBalance(String.valueOf(map.getOrDefault("balance","0")));
+                        xasBalance.setPrecision(8);
+                        list.add(xasBalance);
+                        subscriber.onNext(list);
+                        subscriber.onCompleted();
+                    }else {
+                        subscriber.onError(result.getException());
+                    }
                 }
-
+                catch (Exception ex){
+                    subscriber.onError(ex);
+                }
             }
         });
         Observable  uiaOervable =
@@ -124,6 +130,7 @@ public class AssetsPresenter implements AssetsContract.Presenter {
                 })
                         .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
                 .subscribe(new Action1<List<Balance>>() {
                     @Override
                     public void call(List<Balance> balances) {

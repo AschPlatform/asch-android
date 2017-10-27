@@ -31,22 +31,16 @@ public class AssetTransferActivity extends TitleToolbarActivity implements EasyP
 
     private static final int REQUEST_CODE_QRCODE_PERMISSIONS = 1;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    Toolbar toolbar;
 
     private AssetTransferPresenter presenter;
     private AssetTransferFragment fragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
+//        ButterKnife.bind(this);
         setTitle("资产转账");
-        //setSupportActionBar(toolbar);
-//        if (getSupportActionBar()!=null){
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//            getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        }
-
         Intent intent=getIntent();
 
         fragment=AssetTransferFragment.newInstance();

@@ -19,6 +19,7 @@ import asch.so.wallet.contract.DappCenterContract;
 import asch.so.wallet.presenter.AssetsPresenter;
 import asch.so.wallet.presenter.DappCenterPresenter;
 import asch.so.wallet.presenter.MinePresenter;
+import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
 import asch.so.wallet.view.fragment.AssetsFragment;
 import asch.so.wallet.view.fragment.DappCenterFragment;
@@ -107,6 +108,8 @@ public class MainTabActivity extends BaseActivity {
 //        });
 
         setupViewPager(viewPager);
+
+        StatusBarUtil.immersive(this);
     }
 
     private void setupViewPager(ViewPager viewPager) {
