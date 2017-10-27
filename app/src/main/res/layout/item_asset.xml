@@ -11,11 +11,11 @@
         android:id="@+id/currency_icon"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:src="@mipmap/ic_launcher"
+        android:src="@mipmap/cctime_logo"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        app:civ_border_width="1dp"
+        app:civ_border_width="0dp"
         app:civ_border_color="@color/black_shade"
         />
     <TextView
