@@ -45,6 +45,7 @@ import java.util.List;
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.AccountDetailActivity;
 import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransactionsActivity;
@@ -235,7 +236,7 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
 
             //popupMenu.show();
         }else if (backupBtn==view){
-            BaseActivity.start(getActivity(), BackupActivity.class,null);
+            BaseActivity.start(getActivity(), AccountDetailActivity.class,null);
         }
     }
 

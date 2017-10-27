@@ -102,6 +102,9 @@
         <activity android:name=".activity.BackupActivity">
 
         </activity>
+        <activity android:name=".activity.AccountDetailActivity">
+
+        </activity>
 
     </application>
 
