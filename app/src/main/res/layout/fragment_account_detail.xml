@@ -133,7 +133,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/create_btn"
+            android:id="@+id/backup_btn"
            android:background="@drawable/general_button_bg"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -154,7 +154,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/import_btn"
+            android:id="@+id/delete_btn"
             android:background="@drawable/delete_account_btn_bg"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

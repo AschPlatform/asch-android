@@ -128,6 +128,7 @@ dependencies {
     compile rootProject.ext.dependencies["realtimeblurview"]
     compile rootProject.ext.dependencies["baseRecyclerViewAdapterHelper"]
     compile rootProject.ext.dependencies["passcodeview"]
+    compile rootProject.ext.dependencies["dialogplus"]
    // compile files('libs/asch-android-0.1.2-SNAPSHOT-jar-with-dependencies.jar')
 
 }
