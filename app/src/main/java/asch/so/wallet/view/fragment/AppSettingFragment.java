@@ -19,6 +19,7 @@ import java.util.List;
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.LanguagesActivity;
 import asch.so.wallet.activity.NodeURLSettingActivity;
 import asch.so.wallet.activity.PincodeSettingActivity;
 import asch.so.wallet.contract.AppSettingContract;
@@ -58,7 +59,7 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
         switch (item){
             case  Language:
             {
-                // TODO: 2017/10/16  
+                BaseActivity.start(getActivity(), LanguagesActivity.class,null);
             }
                 break;
             case NodeURL:

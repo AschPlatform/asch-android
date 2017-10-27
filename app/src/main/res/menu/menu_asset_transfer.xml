@@ -4,7 +4,7 @@
     >
     <item
         android:id="@+id/item_scan_qrcode"
-        android:icon="@mipmap/ic_news_gray"
+        android:icon="@mipmap/account_scan"
         android:title="刷新"
         app:showAsAction="always"
         />

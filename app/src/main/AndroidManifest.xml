@@ -105,6 +105,9 @@
         <activity android:name=".activity.AccountDetailActivity">
 
         </activity>
+        <activity android:name=".activity.LanguagesActivity">
+
+        </activity>
 
     </application>
 

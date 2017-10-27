@@ -1,5 +1,6 @@
 package asch.so.wallet.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.TransactionsContract;
 import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.presenter.TransactionsPresenter;
@@ -62,7 +64,8 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
-                // TODO: 2017/10/19
+                Intent intent =new Intent(getContext(),WebActivity.class);
+                startActivity(intent);
             }
         });
 
