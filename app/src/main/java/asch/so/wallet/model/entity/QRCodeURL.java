@@ -58,7 +58,7 @@ public class QRCodeURL {
             if (url.startsWith(REQUEST_PAY_SCHEME)){
               int mid1=REQUEST_PAY_SCHEME.length();
               int mid2=url.indexOf('?',mid1);
-               String address=url.substring(mid1,mid2-1);
+               String address=url.substring(mid1,mid2);
                 String query=url.substring(mid2+1);
                 final  Map<String, String> queryPairs=new HashMap<String, String>();
                final String [] pairs = query.split("&");

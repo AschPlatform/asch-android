@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
+import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.widget.toolbar.BaseToolbar;
 import asch.so.widget.toolbar.TitleToolbar;
@@ -28,6 +29,29 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
 
     private static final String TAG = QRCodeScanActivity.class.getSimpleName();
    // private static final int REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY = 666;
+    public enum Action{
+       ScanSecretToPaste(1),
+       ScanAddressToPaste(2),
+       ScanAddressToPay(3);
+
+       public int value;
+       Action(int value) {
+           this.value = value;
+       }
+
+       public static Action valueOf(int value) {
+           switch (value) {
+               case 1:
+                   return ScanSecretToPaste;
+               case 2:
+                   return ScanAddressToPaste;
+               case 3:
+                   return ScanAddressToPay;
+               default:
+                   return null;
+           }
+       }
+   }
 
     @BindView(R.id.toolbar)
     TitleToolbar toolbar;
@@ -35,8 +59,14 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     @BindView(R.id.zbarview)
     ZBarView zbarView;
 
+    private Action action;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Bundle bundle = getIntent().getExtras();
+        int act= bundle.getInt("action");
+        action = Action.valueOf(act);
+
         setContentView(R.layout.activity_qrcode_scan);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
@@ -88,12 +118,36 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
         Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
         vibrate();
        // zbarView.startSpot();
-
-        Intent intent = new Intent();
-        intent.putExtra("QRDecodeString", result);
-        setResult(RESULT_OK, intent);
-        finish();
-
+        switch (action){
+            case ScanSecretToPaste:
+            {
+                Intent intent = new Intent();
+                intent.putExtra("QRDecodeString", result);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+                break;
+            case ScanAddressToPaste:
+            {
+                Intent intent = new Intent();
+                intent.putExtra("QRDecodeString", result);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+                break;
+            case ScanAddressToPay:
+            {
+                Bundle bundle =new Bundle();
+                try {
+                    //QRCodeURL uri = QRCodeURL.decodeQRCodeURL(result);
+                    bundle.putString("qrcode_uri",result);
+                    BaseActivity.start(this,AssetTransferActivity.class,bundle);
+                }catch (Exception e){
+                    Toast.makeText(this,"二维码格式无效",Toast.LENGTH_SHORT).show();
+                }
+            }
+                break;
+        }
     }
 
     @Override

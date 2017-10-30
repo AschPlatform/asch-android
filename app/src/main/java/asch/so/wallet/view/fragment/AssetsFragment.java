@@ -213,8 +213,9 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
                     switch (item.getItemId()){
                         case R.id.item_scan:
                         {
-                            Intent intent =new Intent(getActivity(), QRCodeScanActivity.class);
-                            startActivity(intent);
+                            Bundle bundle=new Bundle();
+                            bundle.putInt("action", QRCodeScanActivity.Action.ScanAddressToPay.value);
+                            BaseActivity.start(getActivity(),QRCodeScanActivity.class,bundle);
                         }
                         break;
                         case R.id.item_receive:

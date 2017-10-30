@@ -70,6 +70,9 @@ public class AccountImportActivity extends TitleToolbarActivity implements  Easy
             case  R.id.item_scan_qrcode:
             {
                 Intent intent =new Intent(this, QRCodeScanActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putInt("action", QRCodeScanActivity.Action.ScanSecretToPaste.value);
+                intent.putExtras(bundle);
                 startActivityForResult(intent, 1);
             }
                 break;

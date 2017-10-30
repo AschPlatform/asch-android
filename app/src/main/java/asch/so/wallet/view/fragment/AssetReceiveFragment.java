@@ -1,5 +1,8 @@
 package asch.so.wallet.view.fragment;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import junit.framework.Test;
 
@@ -81,6 +85,8 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
         copyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                copyAddress(TestData.address);
                 presenter.testDecodeQRCodeURL();
             }
         });
@@ -92,6 +98,12 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
             }
         });
         return rootView;
+    }
+
+    private void copyAddress(String content){
+       ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboardManager.setText(content);
+        Toast.makeText(getContext(),"复制成功",Toast.LENGTH_SHORT).show();
     }
 
     @Override

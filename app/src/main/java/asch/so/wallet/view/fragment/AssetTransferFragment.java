@@ -28,6 +28,7 @@ import asch.so.wallet.activity.AssetTransferActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Balance;
+import asch.so.wallet.model.entity.QRCodeURL;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -54,6 +55,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     Button transferBtn;
 
     private Balance balance;
+    private QRCodeURL qrCodeURL;
 
 
     public static AssetTransferFragment newInstance() {
@@ -69,7 +71,13 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         balance= JSON.parseObject(getArguments().getString("balance"),Balance.class);
+        String uri = getArguments().getString("qrcode_uri");
 
+        try {
+            qrCodeURL=QRCodeURL.decodeQRCodeURL(uri);
+        }catch (Exception e){
+            //
+        }
         setHasOptionsMenu(true);
     }
 
@@ -83,11 +91,16 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         transferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String currency= AppConstants.XAS_NAME;
-               //Bundle bundle = getArguments();
-
-                String currency= balance.getCurrency(); //"KIM.KIM";
-                int precision=balance.getPrecision();
+                String currency;
+                int precision;
+                if (balance!=null){
+                     currency= balance.getCurrency(); //"KIM.KIM";
+                     precision=balance.getPrecision();
+                }else {
+                    currency= qrCodeURL.getCurrency();
+                    precision=8;
+                    // TODO: 2017/10/30
+                }
                 String targetAddress= targetEt.getText().toString().trim();
 //                long amount=(long)(Float.parseFloat(amountEt.getText().toString().trim())*Math.pow(10,AppConstants.PRECISION));
                 long amount=(long)(Float.parseFloat(amountEt.getText().toString().trim())*Math.pow(10,precision));
@@ -101,6 +114,11 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
         feeEt.setKeyListener(null);
 
+        if (qrCodeURL!=null){
+            targetEt.setText(qrCodeURL.getAddress());
+            amountEt.setText(qrCodeURL.getAmount());
+
+        }
         return rootView;
     }
 
@@ -116,6 +134,9 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
             case R.id.item_scan_qrcode:
             {
                 Intent intent =new Intent(getActivity(), QRCodeScanActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putInt("action", QRCodeScanActivity.Action.ScanAddressToPaste.value);
+                intent.putExtras(bundle);
                 startActivityForResult(intent, 11);
             }
             break;
