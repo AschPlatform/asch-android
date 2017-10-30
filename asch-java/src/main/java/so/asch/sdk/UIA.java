@@ -110,6 +110,27 @@ public interface UIA extends AschInterface {
     //count	integer	资产交易总个数
     AschResult getTransactions(String ownerPublicKey, int limit, int offset);
 
+//    获取指定账户指定资产转账记录
+//
+//    接口地址：/api/uia/transactions/my/:address/:currency
+//    请求方式：get
+//    支持格式：urlencoded
+//    备注：只返回资产转账记录
+//    请求参数说明：
+//
+//    名称	类型	必填	说明
+//    address	string	Y	Asch地址
+//    currency	string	Y	资产名字
+//    limit	integer	N	限制结果集个数，最小值：0,最大值：100
+//    offset	integer	N	偏移量，最小值0
+//    返回参数说明：
+//
+//    名称	类型	说明
+//    success	boole	是否成功
+//    transactions	list	交易列表，每个元素是一个字典代表一次交易，包含交易id、区块高度、区块id、交易类型、时间戳、发送者公钥、发送者id、接收者id（系统为空，如资产注册）、交易数量（资产交易都为0）、手续费0.1XAS、签名、多重签名、确认数、资产信息（包含发行商id、发行商名字、描述）、交易id。
+//    count	integer	资产交易总个数
+    AschResult getTransactions(String address, String  currency, int limit, int offset);
+
     //注册资产发行商
     //请求参数说明：
     //name  string  Y   名称

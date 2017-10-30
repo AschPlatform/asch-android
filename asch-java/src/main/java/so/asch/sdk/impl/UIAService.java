@@ -125,6 +125,22 @@ public class UIAService extends AschRESTService implements UIA {
     }
 
     @Override
+    public AschResult getTransactions(String address, String currency, int limit, int offset) {
+        try {
+            Argument.require(Validation.isValidLimit(limit), "invalid limit");
+            Argument.require(Validation.isValidOffset(offset), "invalid offset");
+            Argument.notNullOrEmpty(address, "invalid address");
+
+            ParameterMap parameters = createLimitAndOffsetParameters(limit, offset);
+
+            return get(transactionsUrl(AschServiceUrls.UIA.GET_ADDRESS_CURRENCY_TRANSACTIONS,address,currency), parameters);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
+    @Override
     public AschResult createIssuer(String name, String desc, String secret, String secondSecret) {
         return null;
     }
@@ -179,5 +195,9 @@ public class UIAService extends AschRESTService implements UIA {
 
     private String issuerUrl(String baseUrl, String issuerName){
         return baseUrl.replace("${IssuerName}", issuerName);
+    }
+
+    private String transactionsUrl(String baseUrl, String address, String currency){
+        return baseUrl.replace("${Address}",address).replace("${Currency}",currency);
     }
 }

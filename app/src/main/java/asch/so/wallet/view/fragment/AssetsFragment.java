@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -142,6 +143,10 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
                 Intent intent = new Intent(getActivity(), AssetTransactionsActivity.class);
                 intent.putExtra("curreny",balance.getCurrency());
                 intent.putExtra("precision",balance.getPrecision());
+               Bundle bundle=new Bundle();
+               // bundle.putString();
+               String json = JSON.toJSONString(balance);
+                intent.putExtra("balance",json);
                 startActivity(intent);
             }
         });

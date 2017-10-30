@@ -62,7 +62,7 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+        //setHasOptionsMenu(true);
     }
 
     @Override
@@ -82,6 +82,8 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
                    }
              }
          });
+
+        this.presenter.generateSeed();
         return rootView;
     }
 
@@ -107,23 +109,23 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_account_create,menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item_refresh:
-            {
-                this.presenter.generateSeed();
-            }
-            break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.menu_account_create,menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.item_refresh:
+//            {
+//                this.presenter.generateSeed();
+//            }
+//            break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @Override
     public void setPresenter(AccountCreateContract.Presenter presenter) {

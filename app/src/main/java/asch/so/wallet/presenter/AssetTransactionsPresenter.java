@@ -48,19 +48,27 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
     }
 
     @Override
-    public void loadTransactions() {
+    public void loadTransactions(String currency, boolean isUIA) {
 
      Observable.create(new Observable.OnSubscribe<List<Transaction>>() {
 
             @Override
             public void call(Subscriber<? super List<Transaction>> subscriber) {
-                TransactionQueryParameters params=new TransactionQueryParameters()
-                        .setSenderId(TestData.address);
-//                .setOwnerAddress(TestData.address)
-//                .setTransactionType(TransactionType.Transfer)
-//                .setUia(0)
-//                .setCurrency("XAS");        ;
-                AschResult result = AschSDK.Transaction.queryTransactions(params);
+
+
+                AschResult result=null;
+                if (isUIA){
+                    result = AschSDK.UIA.getTransactions(TestData.address,currency,10,0);
+                }else {
+                    TransactionQueryParameters params=new TransactionQueryParameters()
+                            .setSenderId(TestData.address)
+                            .setRecipientId(TestData.address)
+//                 .setTransactionType(TransactionType.Transfer)
+                            .setUia(isUIA?1:0);
+                    //.setCurrency("XAS");
+                    result = AschSDK.Transaction.queryTransactions(params);
+                }
+
                 if (result.isSuccessful()){
                     JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
                     JSONArray transactionsJsonArray=resultJSONObj.getJSONArray("transactions");

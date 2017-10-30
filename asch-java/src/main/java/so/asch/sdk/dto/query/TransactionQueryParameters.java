@@ -107,6 +107,15 @@ public class TransactionQueryParameters extends QueryParameters {
         return this;
     }
 
+    public Integer getAnd(){
+        return and;
+    }
+
+    public TransactionQueryParameters setAnd(Integer and){
+        this.and=and;
+        return this;
+    }
+
     public String getCurrency() {
         return currency;
     }
@@ -140,4 +149,5 @@ public class TransactionQueryParameters extends QueryParameters {
     private Integer fee = null;
     private String currency=null;
     private Integer uia=null;
+    private Integer and=null;
 }

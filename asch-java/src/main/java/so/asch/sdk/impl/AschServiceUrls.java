@@ -79,6 +79,7 @@ public final class AschServiceUrls {
         static final String GET＿ASSET＿ACL = "/api/uia/assets/${AssetName}/acl/flag";
         static final String GET_ADDRESS_BALANCES = "/api/uia/balances/";
         static final String GET_TRANSACTIONS = "/api/uia/transactions";
+        static final String GET_ADDRESS_CURRENCY_TRANSACTIONS="/api/uia/transactions/my/${Address}/${Currency}";
     }
 
     final static class Dapp{

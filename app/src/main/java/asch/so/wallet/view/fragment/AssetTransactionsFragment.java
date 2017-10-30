@@ -2,6 +2,7 @@ package asch.so.wallet.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
 import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.AssetTransactionsContract;
+import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.view.adapter.AssetTransactionsAdapter;
 import butterknife.BindView;
@@ -42,6 +45,10 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     TextView receiveBtn;
     @BindView(R.id.asset_transactions_rcv)
     RecyclerView txRcv;
+    TextView amountTv;
+    TextView assetTv;
+
+    private Balance balance;
 
     private AssetTransactionsContract.Presenter presenter;
     private List<Transaction> list=new ArrayList<>();
@@ -58,6 +65,12 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        balance= (Balance) JSON.parseObject(getArguments().getString("balance"),Balance.class);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_asset_transactions,container,false);
         ButterKnife.bind(this,rootView);
@@ -69,6 +82,9 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         //添加Header
         View header = LayoutInflater.from(getContext()).inflate(R.layout.header_asset_transactions, txRcv, false);
         adapter.addHeaderView(header);
+        amountTv=ButterKnife.findById(header,R.id.ammount_tv);
+        assetTv=ButterKnife.findById(header,R.id.asset_tv);
+
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
@@ -94,12 +110,19 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
                 startActivity(intent);
             }
         });
+        this.displayBalance(balance);
         return rootView;
     }
 
     @Override
     public void setPresenter(AssetTransactionsContract.Presenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayBalance(Balance balance) {
+        amountTv.setText(String.valueOf(balance.getRealBalance()));
+        assetTv.setText(balance.getCurrency()+" 余额");
     }
 
     @Override
