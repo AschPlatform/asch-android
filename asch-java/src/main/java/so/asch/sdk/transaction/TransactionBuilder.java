@@ -192,7 +192,12 @@ public class TransactionBuilder {
             case UIAIssue:
                 break;
             case UIATransfer:
-                break;
+                return new TransactionInfo()
+                        .setTransactionType(type)
+                        .setAmount(amount)
+                        .setFee(fee)
+                        .setTimestamp(getSecurity().getTransactionTimestamp())
+                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
             case Lock:
                 break;
         }

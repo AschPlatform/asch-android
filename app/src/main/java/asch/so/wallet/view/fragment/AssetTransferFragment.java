@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+
 import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
@@ -25,6 +27,7 @@ import asch.so.wallet.TestData;
 import asch.so.wallet.activity.AssetTransferActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.contract.AssetTransferContract;
+import asch.so.wallet.model.entity.Balance;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -50,6 +53,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @BindView(R.id.transfer_btn)
     Button transferBtn;
 
+    private Balance balance;
+
 
     public static AssetTransferFragment newInstance() {
         
@@ -63,6 +68,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        balance= JSON.parseObject(getArguments().getString("balance"),Balance.class);
 
         setHasOptionsMenu(true);
     }
@@ -78,9 +84,10 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
             @Override
             public void onClick(View view) {
 //                String currency= AppConstants.XAS_NAME;
-               Bundle bundle = getArguments();
-                String currency= bundle.getString("curreny"); //"KIM.KIM";
-                int precision=bundle.getInt("precision");
+               //Bundle bundle = getArguments();
+
+                String currency= balance.getCurrency(); //"KIM.KIM";
+                int precision=balance.getPrecision();
                 String targetAddress= targetEt.getText().toString().trim();
 //                long amount=(long)(Float.parseFloat(amountEt.getText().toString().trim())*Math.pow(10,AppConstants.PRECISION));
                 long amount=(long)(Float.parseFloat(amountEt.getText().toString().trim())*Math.pow(10,precision));

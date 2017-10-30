@@ -32,26 +32,21 @@ public class AssetTransactionsActivity extends TitleToolbarActivity {
 
 
         Intent intent=getIntent();
-        String currency=intent.getStringExtra("curreny");
-        int precision=intent.getIntExtra("precision",0);
-        String json = intent.getStringExtra("balance");
-
-        setTitle(currency);
+        String json =intent.getExtras().getString("balance");
+        Balance balance=JSON.parseObject(json,Balance.class);
+        setTitle(balance.getCurrency());
 
         fragment=AssetTransactionsFragment.newInstance();
-        Bundle bundle=new Bundle();
-        bundle.putString("curreny",currency);
-        bundle.putInt("precision",precision);
-        bundle.putString("balance", json);
-        fragment.setArguments(bundle);
+//        Bundle bundle=new Bundle();
+//        bundle.putString("balance", json);
+        fragment.setArguments(intent.getExtras());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 
         presenter=new AssetTransactionsPresenter(this,fragment);
-        presenter.loadTransactions(currency, !AschConst.CORE_COIN_NAME.equals(currency));
+        presenter.loadTransactions(balance.getCurrency(), !AschConst.CORE_COIN_NAME.equals(balance.getCurrency()));
 
 
         StatusBarUtil.immersive(this);
-        //StatusBarUtil.hideNavigationBar(getWindow());
     }
 
 

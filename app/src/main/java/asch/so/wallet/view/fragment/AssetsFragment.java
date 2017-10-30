@@ -140,14 +140,14 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
                 Balance balance = assetList.get(position);
-                Intent intent = new Intent(getActivity(), AssetTransactionsActivity.class);
-                intent.putExtra("curreny",balance.getCurrency());
-                intent.putExtra("precision",balance.getPrecision());
-               Bundle bundle=new Bundle();
-               // bundle.putString();
-               String json = JSON.toJSONString(balance);
-                intent.putExtra("balance",json);
-                startActivity(intent);
+               // Intent intent = new Intent(getActivity(), AssetTransactionsActivity.class);
+//                intent.putExtra("curreny",balance.getCurrency());
+//                intent.putExtra("precision",balance.getPrecision());
+                Bundle bundle=new Bundle();
+                String json = JSON.toJSONString(balance);
+                bundle.putString("balance",json);
+                BaseActivity.start(getActivity(),AssetTransactionsActivity.class, bundle);
+                //startActivity(intent);
             }
         });
         addIconIv.setOnClickListener(this);

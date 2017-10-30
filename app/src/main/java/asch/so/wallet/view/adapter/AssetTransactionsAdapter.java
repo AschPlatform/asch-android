@@ -36,32 +36,6 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
         viewHolder.amountTv.setText(String.format("%.3f",transaction.getAmount()/ (double)AschConst.COIN)+" XAS");
     }
 
-
-    //   private List<Transaction> txList;
-
-//    public AssetTransactionsAdapter(List<Transaction> txList) {
-//        this.txList = txList;
-//    }
-//
-//    @Override
-//    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaction,parent,false);
-//
-//        return new ViewHolder(itemView,this);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(ViewHolder holder, int position) {
-//        Transaction transaction=txList.get(position);
-//        holder.transactionTv.setText(transaction.getId());
-//        holder.amountTv.setText(transaction.getAmount()/ (double)AschConst.COIN+" XAS");
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return txList==null?0:txList.size();
-//    }
-//
     static class ViewHolder extends BaseViewHolder {
         @BindView(R.id.transaction_id_tv)
         TextView transactionTv;

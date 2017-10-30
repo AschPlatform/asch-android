@@ -45,9 +45,7 @@ public class AssetTransferActivity extends TitleToolbarActivity implements EasyP
 
         fragment=AssetTransferFragment.newInstance();
 
-        Bundle bundle=new Bundle();
-        bundle.putString("curreny",intent.getStringExtra("curreny"));
-        bundle.putInt("precision",intent.getIntExtra("precision",0));
+        Bundle bundle=getIntent().getExtras();
         fragment.setArguments(bundle);
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
         presenter =new AssetTransferPresenter(this,fragment);

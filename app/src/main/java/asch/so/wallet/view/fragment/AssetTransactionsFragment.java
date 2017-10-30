@@ -97,8 +97,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             public void onClick(View view) {
                 Bundle bundle = getArguments();
                 Intent intent =new Intent(getActivity(), AssetTransferActivity.class);
-                intent.putExtra("curreny",bundle.getString("curreny"));
-                intent.putExtra("precision",bundle.getInt("precision"));
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
