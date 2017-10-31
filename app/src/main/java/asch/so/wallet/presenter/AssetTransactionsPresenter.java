@@ -8,8 +8,9 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.util.List;
 
-import asch.so.wallet.TestData;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetTransactionsContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.Transaction;
 import rx.Observable;
@@ -47,22 +48,29 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
 
     }
 
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
+    }
+
+    private String getAddress(){
+        return getAccount().getAddress();
+    }
+
     @Override
     public void loadTransactions(String currency, boolean isUIA) {
-
+        String address=getAddress();
      Observable.create(new Observable.OnSubscribe<List<Transaction>>() {
 
             @Override
             public void call(Subscriber<? super List<Transaction>> subscriber) {
 
-
                 AschResult result=null;
                 if (isUIA){
-                    result = AschSDK.UIA.getTransactions(TestData.address,currency,10,0);
+                    result = AschSDK.UIA.getTransactions(address,currency,10,0);
                 }else {
                     TransactionQueryParameters params=new TransactionQueryParameters()
-                            .setSenderId(TestData.address)
-                            .setRecipientId(TestData.address)
+                            .setSenderId(address)
+                            .setRecipientId(address)
 //                 .setTransactionType(TransactionType.Transfer)
                             .setUia(isUIA?1:0);
                     //.setCurrency("XAS");

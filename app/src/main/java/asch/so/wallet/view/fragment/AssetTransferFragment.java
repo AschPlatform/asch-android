@@ -1,9 +1,11 @@
 package asch.so.wallet.view.fragment;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,16 +27,22 @@ import asch.so.base.presenter.BasePresenter;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.TestData;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.activity.AssetTransferActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.contract.AssetTransferContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.QRCodeURL;
+import asch.so.wallet.view.validator.Validator;
+import asch.so.wallet.view.widget.DialogFactory;
+import asch.so.wallet.view.widget.TransferConfirmationDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import so.asch.sdk.impl.AschConst;
+import so.asch.sdk.impl.Validation;
 
 /**
  * Created by kimziv on 2017/9/27.
@@ -81,6 +90,9 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         setHasOptionsMenu(true);
     }
 
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_asset_transfer,container,false);
@@ -93,22 +105,31 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
             public void onClick(View view) {
                 String currency;
                 int precision;
+                hideKeyboard();
+
                 if (balance!=null){
                      currency= balance.getCurrency(); //"KIM.KIM";
                      precision=balance.getPrecision();
                 }else {
                     currency= qrCodeURL.getCurrency();
                     precision=8;
-                    // TODO: 2017/10/30
                 }
                 String targetAddress= targetEt.getText().toString().trim();
-//                long amount=(long)(Float.parseFloat(amountEt.getText().toString().trim())*Math.pow(10,AppConstants.PRECISION));
-                long amount=(long)(Float.parseFloat(amountEt.getText().toString().trim())*Math.pow(10,precision));
-
+                String ammountStr=amountEt.getText().toString().trim();
+                Account account=getAccount();
                 String message=memoEt.getText().toString();
-                String secret=TestData.secret;
-                String secondSecret=TestData.secondSecret;
-                presenter.transfer(currency,targetAddress,amount,message,secret,secondSecret);
+                String secret=account.getSeed(); //TestData.secret;
+                String secondSecret= null; //TestData.secondSecret;
+                if (Validator.check(getContext(), Validator.Type.Address,targetAddress,"地址输入错误")){
+                    showConfirmationDialog(targetAddress, ammountStr, ammountStr, new TransferConfirmationDialog.OnConfirmListener() {
+                        @Override
+                        public void onConfirm(TransferConfirmationDialog dialog) {
+
+                            long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
+                            presenter.transfer(currency,targetAddress,amount,message,secret,secondSecret);
+                        }
+                    });
+                }
             }
         });
 
@@ -120,6 +141,20 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
         }
         return rootView;
+    }
+
+    private void showConfirmationDialog(String address, String ammount, String currency, TransferConfirmationDialog.OnConfirmListener onConfirmListener){
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        TransferConfirmationDialog dialog =TransferConfirmationDialog.newInstance(address,ammount,currency);
+        dialog.setOnClickListener(onConfirmListener);
+        dialog.show(fm,"confirmation");
+    }
+
+    private void hideKeyboard(){
+        InputMethodManager imm =  (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(imm != null) {
+            imm.hideSoftInputFromWindow(getActivity().getWindow().getDecorView().getWindowToken(),0);
+        }
     }
 
     @Override
@@ -158,4 +193,5 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     public void setTargetAddress(String address){
         this.targetEt.setText(address);
     }
+
 }

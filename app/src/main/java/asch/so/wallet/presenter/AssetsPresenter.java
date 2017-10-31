@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import asch.so.base.presenter.BasePresenter;
-import asch.so.wallet.TestData;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetsContract;
 import asch.so.wallet.model.db.dao.AccountsDao;
@@ -67,9 +66,6 @@ public class AssetsPresenter implements AssetsContract.Presenter {
 
     @Override
     public void loadAccount() {
-//        Account account=new Account();
-//        account.setName("牛牛");
-//        account.setAddress(TestData.address);
         view.displayAccount(getAccount());
     }
 

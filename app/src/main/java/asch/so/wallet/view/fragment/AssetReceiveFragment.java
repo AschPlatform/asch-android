@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -21,8 +22,9 @@ import junit.framework.Test;
 
 import asch.so.wallet.R;
 import asch.so.base.fragment.BaseFragment;
-import asch.so.wallet.TestData;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetReceiveContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.QRCodeURL;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +47,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     @BindView(R.id.save_btn)
      TextView saveTv;
     String currency="XAS";
+    private Account account;
 
     TextWatcher textWatcher=new TextWatcher() {
 
@@ -75,19 +78,24 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        account= AccountsManager.getInstance().getCurrentAccount();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_asset_receive,container,false);
         ButterKnife.bind(this,rootView);
-
-        addressTv.setText(TestData.address);
+        addressTv.setText(account.getAddress());
         ammountEt.addTextChangedListener(textWatcher);
 
         copyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                copyAddress(TestData.address);
-                presenter.testDecodeQRCodeURL();
+                copyAddress(account.getAddress());
+                //presenter.testDecodeQRCodeURL();
             }
         });
         
@@ -97,6 +105,8 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
                 // TODO: 2017/10/26  
             }
         });
+
+        presenter.generateQrCode(account.getAddress(),"XAS","8");
         return rootView;
     }
 

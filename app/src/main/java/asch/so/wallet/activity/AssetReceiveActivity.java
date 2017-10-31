@@ -36,7 +36,7 @@ public class AssetReceiveActivity extends TitleToolbarActivity {
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
         presenter=new AssetReceivePresenter(this,fragment);
         fragment.setPresenter(presenter);
-        presenter.generateQrCode(TestData.address,"XAS","88");
+//        presenter.generateQrCode(TestData.address,"XAS","88");
 
 
     }
