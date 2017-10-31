@@ -6,6 +6,7 @@ import android.text.InputType;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import asch.so.wallet.view.validator.checkable.AccountNameCheckable;
 import asch.so.wallet.view.validator.checkable.AddressCheckable;
 import asch.so.wallet.view.validator.checkable.Checkable;
 import asch.so.wallet.view.validator.checkable.TextCheckable;
@@ -20,6 +21,7 @@ public class Validator {
 
     public enum Type{
         Secret,
+        Name,
         Address,
         Ammount,
         ;
@@ -88,6 +90,8 @@ public class Validator {
         switch(type) {
             case Address:
                 return new AddressCheckable(value);
+            case  Name:
+                return new AccountNameCheckable(value);
 //            case InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_DATE :
 //                return new DateValidator(value);
 //            case InputType.TYPE_CLASS_PHONE : return new PhoneValidator(value);

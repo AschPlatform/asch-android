@@ -4,9 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.contract.AccountDetailContract;
+import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.presenter.AccountDetailPresenter;
 import asch.so.widget.toolbar.BaseToolbar;
 import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
@@ -16,10 +21,16 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2017/9/21.
  */
 
-public class AccountDetailFragment extends BaseFragment{
+public class AccountDetailFragment extends BaseFragment implements AccountDetailContract.View{
 
     @BindView(R.id.toolbar)
     TitleToolbar toolbar;
+    @BindView(R.id.name_et)
+    EditText nameEt;
+    @BindView(R.id.address_tv)
+    TextView addressTv;
+
+    AccountDetailContract.Presenter presenter;
 
     public static AccountDetailFragment newInstance() {
         
@@ -36,7 +47,19 @@ public class AccountDetailFragment extends BaseFragment{
 
         ButterKnife.bind(this, rootView);
 
+        presenter=new AccountDetailPresenter(getContext(),this);
+        presenter.loadAccount(null);
         return rootView;
     }
 
+    @Override
+    public void setPresenter(AccountDetailContract.Presenter presenter) {
+        this.presenter=presenter;
+    }
+
+    @Override
+    public void displayAccount(Account account) {
+        this.addressTv.setText(account.getAddress());
+        this.nameEt.setText(account.getName());
+    }
 }

@@ -4,37 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
-
-    <!--<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:fitsSystemWindows="true"-->
-        <!--android:theme="@style/AppTheme.AppBarOverlay">-->
-        <!--<asch.so.widget.toolbar.TitleToolbar-->
-            <!--android:id="@+id/toolbar"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/toolBarHeight"-->
-            <!--android:background="#00ffffff"-->
-            <!--android:paddingTop="@dimen/toolBarPaddingTop"-->
-            <!--android:fitsSystemWindows="true"-->
-            <!--app:backIcon="@mipmap/back"-->
-            <!--app:backText="返回"-->
-            <!--app:backTextAppearance="?attr/actionMenuTextAppearance"-->
-            <!--app:backTextColor="@android:color/white"-->
-            <!--app:backVisible="true"-->
-            <!--app:closeText="关闭"-->
-            <!--app:closeTextAppearance="?attr/actionMenuTextAppearance"-->
-            <!--app:closeTextColor="@android:color/white"-->
-            <!--app:closeVisible="false"-->
-            <!--app:subtitle=""-->
-            <!--app:subtitleTextAppearance="@style/Subtitle_Appearance"-->
-            <!--app:subtitleVisible="false"-->
-            <!--app:title="标题"-->
-            <!--app:titleTextAppearance="@style/Title_Appearance"-->
-            <!--app:titleTextColor="@android:color/white"-->
-            <!--app:title_gravity="center" />-->
-    <!--</android.support.design.widget.AppBarLayout>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="260dp"
@@ -80,6 +49,7 @@
             android:text="899 XAS"
             />
         <TextView
+            android:id="@+id/address_tv"
             android:layout_marginTop="13.333dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

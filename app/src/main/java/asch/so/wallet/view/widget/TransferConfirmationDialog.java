@@ -38,11 +38,11 @@ public class TransferConfirmationDialog extends BaseDialogFragment implements Vi
     private OnDismissListener onDismissListener;
 
 
-    public static TransferConfirmationDialog newInstance(String address, String ammount, String currency) {
+    public static TransferConfirmationDialog newInstance(String address, String amount, String currency) {
         
         Bundle args = new Bundle();
         args.putString("address",address);
-        args.putString("ammount",ammount);
+        args.putString("amount",amount);
         args.putString("currency",currency);
         
         TransferConfirmationDialog fragment = new TransferConfirmationDialog();
@@ -54,25 +54,6 @@ public class TransferConfirmationDialog extends BaseDialogFragment implements Vi
         super();
     }
 
-//    @Nullable
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        Dialog dialog = getDialog();
-//        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); // 设置Content前设定
-//        //dialog.setContentView(R.layout.fragment_transfer_confirmation);
-//        dialog.setCanceledOnTouchOutside(true); // 外部点击取消
-//        Window window = dialog.getWindow();
-//        WindowManager.LayoutParams lp = window.getAttributes();
-//        lp.gravity = Gravity.BOTTOM; // 紧贴底部
-//        lp.width = WindowManager.LayoutParams.MATCH_PARENT; // 宽度持平
-//        window.setAttributes(lp);
-//
-//
-//        View view=inflater.inflate(R.layout.fragment_transfer_confirmation,container);
-//        ButterKnife.bind(this, view);
-//        this.tranferBtn.setOnClickListener(this);
-//        return view;
-//    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -93,9 +74,9 @@ public class TransferConfirmationDialog extends BaseDialogFragment implements Vi
         ButterKnife.bind(this, dialog);
         this.tranferBtn.setOnClickListener(this);
         String address = getArguments().getString("address");
-        String ammount = getArguments().getString("ammount");
+        String amount = getArguments().getString("amount");
         String currency = getArguments().getString("currency");
-        setConfirmInfo(address,ammount,currency);
+        setConfirmInfo(address,amount,currency);
         return dialog;
     }
 

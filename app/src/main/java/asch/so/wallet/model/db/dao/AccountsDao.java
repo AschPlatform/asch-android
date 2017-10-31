@@ -104,8 +104,23 @@ public class AccountsDao {
      * @param account
      */
    public void  updateAccount(Account account){
-
+       getRealm().executeTransaction(new Realm.Transaction() {
+           @Override
+           public void execute(Realm realm) {
+               realm.insertOrUpdate(account);
+           }
+       });
    }
+
+    public void  updateAccount(Account account, String name){
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                account.setName(name);
+//                realm.insertOrUpdate(account);
+            }
+        });
+    }
 
     /**
      *

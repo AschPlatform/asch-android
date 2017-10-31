@@ -166,8 +166,9 @@ public class AccountsManager {
      */
     public void updateAccount(String name){
         if (currentAccount!=null){
-            currentAccount.setName(name);
-            updateAccount(currentAccount.getAddress(),name);
+           // currentAccount.setName(name);
+            //updateAccount(currentAccount.getAddress(),name);
+            AccountsDao.getInstance().updateAccount(currentAccount,name);
         }
     }
 

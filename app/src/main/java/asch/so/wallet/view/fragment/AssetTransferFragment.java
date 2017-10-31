@@ -22,8 +22,10 @@ import com.alibaba.fastjson.JSON;
 
 import java.util.List;
 
+import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.presenter.BasePresenter;
+import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.TestData;
@@ -83,7 +85,15 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         String uri = getArguments().getString("qrcode_uri");
 
         try {
-            qrCodeURL=QRCodeURL.decodeQRCodeURL(uri);
+            if (uri.startsWith("A")){
+                qrCodeURL=new QRCodeURL();
+                qrCodeURL.setAmount("0");
+                qrCodeURL.setCurrency("XAS");
+                qrCodeURL.setAddress(uri);
+            }else {
+                qrCodeURL=QRCodeURL.decodeQRCodeURL(uri);
+            }
+
         }catch (Exception e){
             //
         }
@@ -121,7 +131,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 String secret=account.getSeed(); //TestData.secret;
                 String secondSecret= null; //TestData.secondSecret;
                 if (Validator.check(getContext(), Validator.Type.Address,targetAddress,"地址输入错误")){
-                    showConfirmationDialog(targetAddress, ammountStr, ammountStr, new TransferConfirmationDialog.OnConfirmListener() {
+                    showConfirmationDialog(targetAddress, ammountStr, currency, new TransferConfirmationDialog.OnConfirmListener() {
                         @Override
                         public void onConfirm(TransferConfirmationDialog dialog) {
 
@@ -143,9 +153,9 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         return rootView;
     }
 
-    private void showConfirmationDialog(String address, String ammount, String currency, TransferConfirmationDialog.OnConfirmListener onConfirmListener){
+    private void showConfirmationDialog(String address, String amount, String currency, TransferConfirmationDialog.OnConfirmListener onConfirmListener){
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        TransferConfirmationDialog dialog =TransferConfirmationDialog.newInstance(address,ammount,currency);
+        TransferConfirmationDialog dialog =TransferConfirmationDialog.newInstance(address,amount,currency);
         dialog.setOnClickListener(onConfirmListener);
         dialog.show(fm,"confirmation");
     }
@@ -187,7 +197,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @Override
     public void displayToast(String toast) {
         Toast.makeText(getActivity(),toast,Toast.LENGTH_SHORT).show();
-        getActivity().finish();
+            getActivity().finish();
     }
 
     public void setTargetAddress(String address){

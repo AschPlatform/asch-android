@@ -42,6 +42,23 @@ public class ActivityStackManager {
         }
     }
 
+    public void finishToActivity(Activity activity){
+        while (!activityStack.isEmpty()) {
+            if (activityStack.peek()==activity){
+                break;
+            }
+            activityStack.pop().finish();
+        }
+    }
+
+    public void finishNActivity(int n){
+        int i=n;
+        while (!activityStack.isEmpty() && i>0) {
+            activityStack.pop().finish();
+            i--;
+        }
+    }
+
     public void finishUntilLast() {
         if (!activityStack.isEmpty()) {
             Activity activity = activityStack.pop();

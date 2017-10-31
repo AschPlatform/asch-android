@@ -1,5 +1,7 @@
 package asch.so.wallet.model.entity;
 
+import com.alibaba.fastjson.JSON;
+
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -83,5 +85,9 @@ public class Account extends RealmObject{
 
     public void setEncryptSeed(String encryptSeed) {
         this.encryptSeed = encryptSeed;
+    }
+
+    public String toJSON(){
+      return  JSON.toJSONString(this);
     }
 }

@@ -142,6 +142,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                     //QRCodeURL uri = QRCodeURL.decodeQRCodeURL(result);
                     bundle.putString("qrcode_uri",result);
                     BaseActivity.start(this,AssetTransferActivity.class,bundle);
+                    finish();
                 }catch (Exception e){
                     Toast.makeText(this,"二维码格式无效",Toast.LENGTH_SHORT).show();
                 }
