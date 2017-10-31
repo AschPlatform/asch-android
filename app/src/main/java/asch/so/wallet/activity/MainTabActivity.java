@@ -1,19 +1,28 @@
 package asch.so.wallet.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.omadahealth.lollipin.lib.PinCompatActivity;
+import com.github.omadahealth.lollipin.lib.interfaces.LifeCycleInterface;
+import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
+
 import java.lang.reflect.Field;
 
 import asch.so.base.activity.BaseActivity;
+import asch.so.base.activity.BasePinCompatActivity;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.DappCenterContract;
 import asch.so.wallet.presenter.AssetsPresenter;
@@ -33,7 +42,7 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2017/9/21.
  */
 
-public class MainTabActivity extends BaseActivity {
+public class MainTabActivity extends BasePinCompatActivity {
 
     private ViewPager viewPager;
     private MenuItem menuItem;
@@ -45,6 +54,18 @@ public class MainTabActivity extends BaseActivity {
 
 //    @BindView(R.id.toolbar)
 //    Toolbar toolbar;
+//    private static LifeCycleInterface mLifeCycleListener;
+//    private final BroadcastReceiver mPinCancelledReceiver;
+
+//    public MainTabActivity() {
+//        super();
+//        mPinCancelledReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                finish();
+//            }
+//        };
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +131,9 @@ public class MainTabActivity extends BaseActivity {
         setupViewPager(viewPager);
 
         StatusBarUtil.immersive(this);
+
+//        IntentFilter filter = new IntentFilter(AppLockActivity.ACTION_CANCEL);
+//        LocalBroadcastManager.getInstance(this).registerReceiver(mPinCancelledReceiver, filter);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -176,4 +200,41 @@ public class MainTabActivity extends BaseActivity {
             e.printStackTrace();
         }
     }
+
+//    @Override
+//    protected void onResume() {
+//        if (mLifeCycleListener != null) {
+//            mLifeCycleListener.onActivityResumed(MainTabActivity.this);
+//        }
+//        super.onResume();
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        if (mLifeCycleListener != null) {
+//            mLifeCycleListener.onActivityPaused(MainTabActivity.this);
+//        }
+//        super.onPause();
+//    }
+//
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        LocalBroadcastManager.getInstance(this).unregisterReceiver(mPinCancelledReceiver);
+//    }
+//
+//    public static void setListener(LifeCycleInterface listener) {
+//        if (mLifeCycleListener != null) {
+//            mLifeCycleListener = null;
+//        }
+//        mLifeCycleListener = listener;
+//    }
+//
+//    public static void clearListeners() {
+//        mLifeCycleListener = null;
+//    }
+//
+//    public static boolean hasListeners() {
+//        return (mLifeCycleListener != null);
+//    }
 }

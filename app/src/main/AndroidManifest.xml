@@ -112,6 +112,10 @@
         <activity android:name=".activity.SecretBackupActivity">
 
         </activity>
+
+        <activity android:name=".activity.AppPinActivity">
+
+        </activity>
     </application>
 
 </manifest>

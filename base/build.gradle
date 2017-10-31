@@ -59,6 +59,10 @@ dependencies {
 
     compile rootProject.ext.dependencies["smart-refresh-layout"]
     compile rootProject.ext.dependencies["smart-refresh-header"]
+    compile (rootProject.ext.dependencies["lollipin"]){
+        transitive=true
+    }
+    compile rootProject.ext.dependencies["ldialogs"]
 
     compile 'org.glassfish:javax.annotation:10.0-b28'
 }

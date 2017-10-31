@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -13,6 +14,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import asch.so.wallet.activity.AppPinActivity;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -58,6 +60,7 @@ public class WalletApplication extends MultiDexApplication{
 
         AppConfig.init(this);
         initRealm();
+        initLockManager();
     }
 
     private void initRealm(){
@@ -69,6 +72,15 @@ public class WalletApplication extends MultiDexApplication{
         TestData.configAschSDK();
         TestData.testSDK();
        // TestData.testED25519();
+    }
+
+    private void initLockManager(){
+        LockManager<AppPinActivity> lockManager = LockManager.getInstance();
+        lockManager.enableAppLock(this, AppPinActivity.class);
+        lockManager.getAppLock().setFingerprintAuthEnabled(true);
+        lockManager.getAppLock().setOnlyBackgroundTimeout(true);
+        lockManager.getAppLock().setTimeout(5000);
+        lockManager.getAppLock().setLogoId(R.mipmap.ic_launcher);
     }
 
 
