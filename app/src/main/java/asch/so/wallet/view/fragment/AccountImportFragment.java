@@ -17,6 +17,7 @@ import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.db.dao.AccountsDao;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountImportPresenter;
+import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -94,10 +95,24 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
         String passwd2=passwdEt2.getText().toString();
         String hint=hintEt.getText().toString();
         String seed=seedEt.getText().toString();
-        if (seed.split(" ").length!=12){
-            Toast.makeText(getContext(),"secret格式不正确",Toast.LENGTH_SHORT).show();
+        if (!Validator.check(getContext(), Validator.Type.Secret,seed,"密码格式不符合BIP39规范"))
+        {
             return;
         }
+
+        if (!Validator.check(getContext(), Validator.Type.Name,name,"请输入1 ~ 12位钱包名称"))
+        {
+            return;
+        }
+
+        if (!Validator.check(getContext(), Validator.Type.Password,passwd,"请输入不少于8位字符的密码")){
+            return;
+        }
+        if (!passwd.equals(passwd2)){
+           Toast.makeText(getContext(),"密码不一致,请重新输入",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         presenter.importAccount(seed,name,passwd,hint);
         Toast.makeText(getContext(),"导入成功",Toast.LENGTH_SHORT).show();
         getActivity().finish();

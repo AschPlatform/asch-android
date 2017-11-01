@@ -10,6 +10,8 @@ import asch.so.wallet.view.validator.checkable.AccountNameCheckable;
 import asch.so.wallet.view.validator.checkable.AddressCheckable;
 import asch.so.wallet.view.validator.checkable.Checkable;
 import asch.so.wallet.view.validator.checkable.NodeURLCheckable;
+import asch.so.wallet.view.validator.checkable.PasswordCheckable;
+import asch.so.wallet.view.validator.checkable.SecretCheckable;
 import asch.so.wallet.view.validator.checkable.TextCheckable;
 
 /**
@@ -26,6 +28,7 @@ public class Validator {
         Address,
         Amount,
         URL,
+        Password,
         ;
     }
 
@@ -96,6 +99,10 @@ public class Validator {
                 return new AccountNameCheckable(value);
             case  URL:
                 return new NodeURLCheckable(value);
+            case Secret:
+                return new SecretCheckable(value);
+            case Password:
+                return new PasswordCheckable(value);
 //            case InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_DATE :
 //                return new DateValidator(value);
 //            case InputType.TYPE_CLASS_PHONE : return new PhoneValidator(value);

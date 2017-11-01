@@ -12,6 +12,6 @@ public class AccountNameCheckable extends BaseCheckable {
 
     @Override
     public boolean check() {
-        return isNotBlank();
+        return isNotBlank() && value.length()<12;
     }
 }

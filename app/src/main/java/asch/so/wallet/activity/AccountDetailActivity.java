@@ -141,6 +141,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                 {
                     this.presenter.changeAccountName(name);
                     Toast.makeText(this,"保存成功",Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
             break;

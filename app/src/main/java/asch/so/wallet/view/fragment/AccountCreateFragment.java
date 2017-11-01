@@ -21,6 +21,7 @@ import asch.so.wallet.activity.FirstStartActivity;
 import asch.so.wallet.activity.MainTabActivity;
 import asch.so.wallet.contract.AccountCreateContract;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -73,13 +74,6 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
              @Override
              public void onClick(View view) {
                     createAccount();
-                   if (getArguments()!=null && getArguments().getString("clazz").equals(FirstStartActivity.class.getName())){
-                       Intent intent =new Intent(getActivity(), MainTabActivity.class);
-                       startActivity(intent);
-                       ActivityStackManager.getInstance().finishAll();
-                   }else {
-                       getActivity().finish();
-                   }
              }
          });
 
@@ -97,8 +91,32 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         String passwd=passwdEt.getText().toString();
         String passwd2=passwdEt2.getText().toString();
         String hint=hintEt.getText().toString();
+//        if (!Validator.check(getContext(), Validator.Type.Secret,seed,"密码格式不符合BIP39规范"))
+//        {
+//            return;
+//        }
 
+        if (!Validator.check(getContext(), Validator.Type.Name,name,"请输入1 ~ 12位钱包名称"))
+        {
+            return;
+        }
+
+        if (!Validator.check(getContext(), Validator.Type.Password,passwd,"请输入不少于8位字符的密码")){
+            return;
+        }
+        if (!passwd.equals(passwd2)){
+            Toast.makeText(getContext(),"密码不一致,请重新输入",Toast.LENGTH_SHORT).show();
+            return;
+        }
         presenter.storeAccount(seed,name,passwd,hint);
+
+        if (getArguments()!=null && getArguments().getString("clazz").equals(FirstStartActivity.class.getName())){
+            Intent intent =new Intent(getActivity(), MainTabActivity.class);
+            startActivity(intent);
+            ActivityStackManager.getInstance().finishAll();
+        }else {
+            getActivity().finish();
+        }
     }
 
     @Override
@@ -108,24 +126,6 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
             unbinder.unbind();
         }
     }
-
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.menu_account_create,menu);
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.item_refresh:
-//            {
-//                this.presenter.generateSeed();
-//            }
-//            break;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     @Override
     public void setPresenter(AccountCreateContract.Presenter presenter) {
