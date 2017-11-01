@@ -31,6 +31,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class AccountImportActivity extends TitleToolbarActivity implements  EasyPermissions.PermissionCallbacks{
     private static final int REQUEST_CODE_QRCODE_PERMISSIONS = 1;
+    public static final int REQUEST_CODE_FROM_ACCOUNTS =2;
+    public static final int REQUEST_CODE_FROM_START =3;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;

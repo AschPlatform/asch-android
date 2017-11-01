@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.wallet.accounts.AccountsManager;
@@ -13,6 +14,8 @@ import asch.so.wallet.contract.AssetTransactionsContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.Transaction;
+import asch.so.wallet.model.entity.TransferAsset;
+import asch.so.wallet.model.entity.UIATransferAsset;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,12 +69,12 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
 
                 AschResult result=null;
                 if (isUIA){
-                    result = AschSDK.UIA.getTransactions(address,currency,10,0);
+                    result = AschSDK.UIA.getTransactions(address,currency,20,0);
                 }else {
                     TransactionQueryParameters params=new TransactionQueryParameters()
                             .setSenderId(address)
                             .setRecipientId(address)
-//                 .setTransactionType(TransactionType.Transfer)
+                   //.setTransactionType(isUIA?TransactionType.UIATransfer:TransactionType.Transfer)
                             .setUia(isUIA?1:0);
                     //.setCurrency("XAS");
                     result = AschSDK.Transaction.queryTransactions(params);
@@ -80,9 +83,23 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
                 if (result.isSuccessful()){
                     JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
                     JSONArray transactionsJsonArray=resultJSONObj.getJSONArray("transactions");
-                    List<Transaction> balances= JSON.parseArray(transactionsJsonArray.toJSONString(),Transaction.class);
-                   // list.addAll(balances);
-                    subscriber.onNext(balances);
+                    List<Transaction> transactions= JSON.parseArray(transactionsJsonArray.toJSONString(),Transaction.class);
+                    ArrayList<Transaction> filteredTransactions=new ArrayList<Transaction>();
+                    for (Transaction transaction:transactions){
+                        if (!isUIA  && transaction.getType()!=TransactionType.Transfer.getCode()){
+                            continue;
+                        }
+                        if (transaction.getType()==TransactionType.Transfer.getCode()){
+                            transaction.setAssetInfo(new TransferAsset());
+                        }else if (transaction.getType()==TransactionType.UIATransfer.getCode()){
+                            UIATransferAsset  asset= JSON.parseObject(transaction.getAsset(), UIATransferAsset.class);
+                            transaction.setAssetInfo(asset);
+
+                        }
+                        filteredTransactions.add(transaction);
+                    }
+
+                    subscriber.onNext(filteredTransactions);
                     subscriber.onCompleted();
                 }else{
                     subscriber.onError(result.getException());

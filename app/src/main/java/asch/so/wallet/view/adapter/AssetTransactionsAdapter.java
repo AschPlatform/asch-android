@@ -15,8 +15,10 @@ import java.util.List;
 import asch.so.base.adapter.BaseRecyclerViewAdapter;
 import asch.so.wallet.R;
 import asch.so.wallet.model.entity.Transaction;
+import asch.so.wallet.model.entity.UIATransferAsset;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import so.asch.sdk.TransactionType;
 import so.asch.sdk.impl.AschConst;
 
 /**
@@ -33,7 +35,15 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
     @Override
     protected void convert(ViewHolder viewHolder, Transaction transaction) {
         viewHolder.transactionTv.setText(transaction.getId());
-        viewHolder.amountTv.setText(String.format("%.3f",transaction.getAmount()/ (double)AschConst.COIN)+" XAS");
+       if ( TransactionType.Transfer.getCode()==transaction.getType()){
+           viewHolder.amountTv.setText(String.format("%.3f",transaction.getAmount()/ (double)AschConst.COIN)+" XAS");
+       }else if (TransactionType.UIATransfer.getCode()==transaction.getType()){
+           UIATransferAsset asset=(UIATransferAsset)transaction.getAssetInfo();
+           viewHolder.amountTv.setText(asset.getUiaTransfer().getAmountShow()+" "+asset.getUiaTransfer().getCurrency());
+
+//           viewHolder.amountTv.setText(String.format("%.3f",transaction.getAmount()/ (double)AschConst.COIN)+" "+asset.getUiaTransfer().getCurrency());
+       }
+
     }
 
     static class ViewHolder extends BaseViewHolder {

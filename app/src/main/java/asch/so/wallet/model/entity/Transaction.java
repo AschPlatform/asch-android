@@ -1,5 +1,9 @@
 package asch.so.wallet.model.entity;
 
+import com.alibaba.fastjson.JSONObject;
+
+import so.asch.sdk.transaction.asset.AssetInfo;
+
 /**
  * Created by kimziv on 2017/10/13.
  */
@@ -44,6 +48,8 @@ public class Transaction {
     private String confirmations;
     private String args;
     private String message;
+    private String asset;
+    private Asset assetInfo;
 
     public String getId() {
         return id;
@@ -171,5 +177,21 @@ public class Transaction {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getAsset() {
+        return asset;
+    }
+
+    public void setAsset(String asset) {
+        this.asset = asset;
+    }
+
+    public Asset getAssetInfo() {
+        return assetInfo;
+    }
+
+    public void setAssetInfo(Asset assetInfo) {
+        this.assetInfo = assetInfo;
     }
 }

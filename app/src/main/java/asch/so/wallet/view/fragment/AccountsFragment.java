@@ -142,9 +142,6 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
 //        accountsAdapter.notifyDataSetChanged();
     }
 
-    //public void refresh(){
-        //presenter.subscribe();
-    //}
 
     @Override
     public void gotoCreateAccount() {

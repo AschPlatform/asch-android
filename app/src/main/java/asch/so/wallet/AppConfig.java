@@ -11,8 +11,8 @@ import com.orhanobut.hawk.Hawk;
 
 public class AppConfig {
 
-    private static final String  LAST_ACCOUNT_ADDRESS_KEY="lastAccountAddress";
-    private static final String  LAST_ACCOUNT_PUBLIC_KEY_KEY="lastAccountPublicKey";
+    private static final String  LAST_ACCOUNT_ADDRESS_KEY="lastAccountAddressKey";
+    private static final String  LAST_ACCOUNT_PUBLIC_KEY_KEY="lastAccountPublicKeyKey";
     private static String lastAccountAddress=null;
     private static String lastAccountPublicKey=null;
     private  static  final  String LANGUAGE_KEY="languagekey";

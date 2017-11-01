@@ -76,41 +76,33 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
         importBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //presenter.subscribe();
-                String name = nameEt.getText().toString().trim();
-                String passwd = passwdEt.getText().toString();
-                String passwd2=passwdEt2.getText().toString();
-                String hint=hintEt.getText().toString();
-                String seed=seedEt.getText().toString();
-                if (seed.split(" ").length!=12){
-                    Toast.makeText(getContext(),"secret格式不正确",Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                try {
-                    String publicKey=AschSDK.Helper.getPublicKey(seed);
-                    String address=AschFactory.getInstance().getSecurity().getAddress(publicKey);
-                    Account account=new Account();
-                    account.setName(name);
-                    account.setPasswd(passwd);
-                    account.setPublicKey(publicKey);
-                    account.setAddress(address);
-                    account.setHint(hint);
-                    account.setSeed(seed);
-                    AccountSecurity.encryptAccount(account,passwd);
-                    new AccountsDao().addAccount(account);
-
-                    Toast.makeText(getContext(),"导入成功",Toast.LENGTH_SHORT).show();
-                    getActivity().finish();
-                } catch (SecurityException e) {
-                    e.printStackTrace();
-                }
-
+                importAccount();
             }
         });
+        this.presenter=new AccountImportPresenter(getContext(),this);
 
         return rootView;
     }
+
+    /**
+     * 创建账户
+     */
+    private void importAccount(){
+
+        String name = nameEt.getText().toString().trim();
+        String passwd = passwdEt.getText().toString();
+        String passwd2=passwdEt2.getText().toString();
+        String hint=hintEt.getText().toString();
+        String seed=seedEt.getText().toString();
+        if (seed.split(" ").length!=12){
+            Toast.makeText(getContext(),"secret格式不正确",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        presenter.importAccount(seed,name,passwd,hint);
+        Toast.makeText(getContext(),"导入成功",Toast.LENGTH_SHORT).show();
+        getActivity().finish();
+    }
+
 
     @Override
     public void onDestroyView() {

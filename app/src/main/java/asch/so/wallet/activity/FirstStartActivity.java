@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 
+import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.AccountImportContract;
@@ -53,6 +54,16 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
             start(this,AccountCreateActivity.class,bundle);
         }else if (view==importBtn){
             Intent intent=new Intent(this,AccountImportActivity.class);
+            startActivityForResult(intent,AccountImportActivity.REQUEST_CODE_FROM_START);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==AccountImportActivity.REQUEST_CODE_FROM_START){
+            ActivityStackManager.getInstance().finishAll();
+            Intent intent =new Intent(this, MainTabActivity.class);
             startActivity(intent);
         }
     }

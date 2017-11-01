@@ -16,5 +16,5 @@ import dagger.Component;
 public interface PresenterComponent {
     void inject(AccountsPresenter presenter);
 
-    void inject(AccountImportPresenter presenter);
+//    void inject(AccountImportPresenter presenter);
 }

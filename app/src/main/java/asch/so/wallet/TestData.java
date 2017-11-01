@@ -3,6 +3,7 @@ package asch.so.wallet;
 //import so.asch.sdk.AschSDK;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
@@ -114,7 +115,9 @@ public class TestData {
  }
 
  public static void configAschSDK(){
-  AschSDK.Config.setAschServer(root);
+
+  String url= AppConfig.getNodeURL();
+  AschSDK.Config.setAschServer(TextUtils.isEmpty(url)?AppConstants.DEFAULT_NODE_URL:url);
   AschSDK.Config.setMagic(magic);
   //String.join(" ", new String[]{"aaa", "bbb"});
  }
