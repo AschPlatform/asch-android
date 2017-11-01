@@ -64,6 +64,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/white"
         android:textSize="13sp"
+        android:checked="true"
         android:buttonTint="@color/white"
         android:text="默认阅读并同意阅读条款" />
 </LinearLayout>
