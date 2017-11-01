@@ -34,10 +34,6 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
     public AccountImportPresenter(Context ctx, AccountImportContract.View view) {
         this.view = view;
         this.subscriptions=new CompositeSubscription();
-
-//        DaggerPresenterComponent.builder()
-//                .applicationModule(new ApplicationModule(ctx))
-//                .build().inject(this);
     }
 
     @Override
