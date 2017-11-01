@@ -141,7 +141,7 @@
             android:hint="密码提示（可不填）"
             android:textSize="15sp"
             android:textColor="#333333"
-            android:inputType="text"
+            android:inputType="tew"
             android:maxLines="1" />
         <View
             android:layout_width="match_parent"
