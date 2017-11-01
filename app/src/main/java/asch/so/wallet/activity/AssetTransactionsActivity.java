@@ -43,7 +43,7 @@ public class AssetTransactionsActivity extends TitleToolbarActivity {
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 
         presenter=new AssetTransactionsPresenter(this,fragment);
-        presenter.loadTransactions(balance.getCurrency(), !AschConst.CORE_COIN_NAME.equals(balance.getCurrency()));
+//        presenter.loadTransactions(balance.getCurrency(), !AschConst.CORE_COIN_NAME.equals(balance.getCurrency()));
 
 
         StatusBarUtil.immersive(this);

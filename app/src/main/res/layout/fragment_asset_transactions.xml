@@ -17,11 +17,11 @@
         app:srlEnableHeaderTranslationContent="false"
         app:srlEnablePreviewInEditMode="false"
         app:srlEnableNestedScrolling="false">
-        <!--<com.scwang.smartrefresh.header.MaterialHeader-->
-            <!--android:id="@+id/header"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="?attr/actionBarSize"/>-->
+        <com.scwang.smartrefresh.header.MaterialHeader
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="?attr/actionBarSize"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/asset_transactions_rcv"
         android:layout_width="match_parent"

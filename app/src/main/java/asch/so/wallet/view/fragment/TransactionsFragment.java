@@ -73,7 +73,6 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh();
                 presenter.loadTransactions();
             }
         });
@@ -106,12 +105,14 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     @Override
     public void displayTranscations(List<Transaction> transactions) {
         adapter.replaceData(transactions);
+        //adapter.addData(transactions);
+        refreshLayout.finishRefresh(2000);
 
     }
 
     @Override
     public void displayMoreTranscations(List<Transaction> transactions) {
         adapter.addData(transactions);
-        refreshLayout.finishLoadmore();
+        refreshLayout.finishLoadmore(2000);
     }
 }

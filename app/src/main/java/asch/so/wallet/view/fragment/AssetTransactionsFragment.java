@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +35,7 @@ import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.view.adapter.AssetTransactionsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import so.asch.sdk.impl.AschConst;
 
 /**
  * Created by kimziv on 2017/9/27.
@@ -47,6 +51,8 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     RecyclerView txRcv;
     TextView amountTv;
     TextView assetTv;
+    @BindView(R.id.refreshLayout)
+    RefreshLayout refreshLayout;
 
     private Balance balance;
 
@@ -109,7 +115,24 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
                 startActivity(intent);
             }
         });
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                presenter.loadTransactions(balance.getCurrency(), !AschConst.CORE_COIN_NAME.equals(balance.getCurrency()));
+            }
+        });
+
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                refreshlayout.finishLoadmore(2000);
+            }
+        });
+        refreshLayout.autoRefresh();
+
         this.displayBalance(balance);
+
         return rootView;
     }
 
@@ -126,9 +149,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
     @Override
     public void displayTransactions(List<Transaction> transactions) {
-        //list.clear();
-        //list.addAll(transactions);
-        //adapter.notifyDataSetChanged();
         adapter.addData(transactions);
+        refreshLayout.finishRefresh(1000);
     }
 }
