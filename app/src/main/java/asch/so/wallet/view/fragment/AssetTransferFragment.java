@@ -130,16 +130,22 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 String message=memoEt.getText().toString();
                 String secret=account.getSeed(); //TestData.secret;
                 String secondSecret= null; //TestData.secondSecret;
-                if (Validator.check(getContext(), Validator.Type.Address,targetAddress,"地址输入错误")){
-                    showConfirmationDialog(targetAddress, ammountStr, currency, new TransferConfirmationDialog.OnConfirmListener() {
-                        @Override
-                        public void onConfirm(TransferConfirmationDialog dialog) {
-
-                            long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
-                            presenter.transfer(currency,targetAddress,amount,message,secret,secondSecret);
-                        }
-                    });
+                if (!Validator.check(getContext(), Validator.Type.Address,targetAddress,"无效地址，请重新输入")){
+                   return;
                 }
+                if (!Validator.check(getContext(), Validator.Type.Amount,ammountStr,"无效金额")){
+                    return;
+                }
+
+
+                showConfirmationDialog(targetAddress, ammountStr, currency, new TransferConfirmationDialog.OnConfirmListener() {
+                    @Override
+                    public void onConfirm(TransferConfirmationDialog dialog) {
+
+                        long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
+                        presenter.transfer(currency,targetAddress,amount,message,secret,secondSecret);
+                    }
+                });
             }
         });
 
