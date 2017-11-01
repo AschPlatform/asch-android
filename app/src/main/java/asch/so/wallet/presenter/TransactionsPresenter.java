@@ -91,6 +91,7 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
                 TransactionQueryParameters params=new TransactionQueryParameters()
                         .setSenderId(TestData.address)
                         .setRecipientId(TestData.address)
+                        .orderByDescending("t_timestamp")
                         .setOffset(0)
                         .setLimit(20);
                 AschResult result = AschSDK.Transaction.queryTransactions(params);

@@ -24,6 +24,7 @@ import rx.schedulers.Schedulers;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 import so.asch.sdk.TransactionType;
+import so.asch.sdk.dto.query.QueryParameters;
 import so.asch.sdk.dto.query.TransactionQueryParameters;
 
 /**
@@ -74,8 +75,9 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
                     TransactionQueryParameters params=new TransactionQueryParameters()
                             .setSenderId(address)
                             .setRecipientId(address)
-                   //.setTransactionType(isUIA?TransactionType.UIATransfer:TransactionType.Transfer)
-                            .setUia(isUIA?1:0);
+                            .setUia(isUIA?1:0)
+                            .orderByDescending("t_timestamp")
+                            ;
                     //.setCurrency("XAS");
                     result = AschSDK.Transaction.queryTransactions(params);
                 }
@@ -114,4 +116,11 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
                     }
                 });
     }
+
+    @Override
+    public void loadMoreTransactions(String currency, boolean isUIA) {
+
+    }
+
+
 }

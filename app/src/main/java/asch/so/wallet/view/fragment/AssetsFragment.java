@@ -155,8 +155,7 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
 
         setupRefreshLayout();
 
-        presenter.loadAccount();
-        presenter.loadAssets();
+
 
         return rootView;
     }
@@ -171,8 +170,8 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                // TODO: 2017/10/13
-                refreshlayout.finishRefresh(2000);
+                presenter.loadAccount();
+                presenter.loadAssets();
             }
         });
 
@@ -199,6 +198,7 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
                 }
             }
         });
+        refreshLayout.autoRefresh();
 
     }
 
@@ -276,6 +276,7 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
             this.assetList.clear();
             this.assetList.addAll(assetList);
             adapter.notifyDataSetChanged();
+        refreshLayout.finishRefresh(2000);
     }
 
     @Override
@@ -286,6 +287,5 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
     @Override
     public void displayAccount(Account account) {
         nameTv.setText(account.getName());
-        //addressTv.setText(account.getAddress());
     }
 }

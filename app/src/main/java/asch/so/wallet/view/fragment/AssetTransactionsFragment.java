@@ -149,7 +149,12 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
     @Override
     public void displayTransactions(List<Transaction> transactions) {
-        adapter.addData(transactions);
+        adapter.replaceData(transactions);
         refreshLayout.finishRefresh(1000);
+    }
+
+    @Override
+    public void displayMoreTransactions(List<Transaction> transactions) {
+
     }
 }
