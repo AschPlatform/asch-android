@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import java.util.Arrays;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.wallet.AppConfig;
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.view.adapter.BaseRecyclerAdapter;
 import asch.so.wallet.view.adapter.SmartViewHolder;
@@ -40,10 +42,20 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
         protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
             holder.text(R.id.language_tv, model.title);
             ImageView checmarkIv=holder.itemView.findViewById(R.id.checkmark_iv);
-            if (currentPostion==position){
-                checmarkIv.setVisibility(View.VISIBLE);
-            }else{
-                checmarkIv.setVisibility(View.INVISIBLE);
+            String code= AppConfig.getLanguage();
+            if (code!=null)
+            {
+                if (model.code.equals(code)){
+                    checmarkIv.setVisibility(View.VISIBLE);
+                }else{
+                    checmarkIv.setVisibility(View.INVISIBLE);
+                }
+            }else {
+                if (model.code.equals("zh_cn")){
+                    checmarkIv.setVisibility(View.VISIBLE);
+                }else {
+                    checmarkIv.setVisibility(View.INVISIBLE);
+                }
             }
         }
     };
@@ -53,6 +65,7 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
         Item item = Item.values()[position];
         item.selected=true;
         currentPostion=position;
+        AppConfig.putLanguage(item.code);
         switch (item){
             case Chinese:
             {
@@ -66,16 +79,19 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
         }
 
         adapter.notifyDataSetChanged();
+        getActivity().finish();
 
     }
 
     public enum Item{
-        Chinese("中文",false),
-        English("English",false);
+        Chinese("zh_cn","中文",false),
+        English("en", "English",false);
 
+        public String code;
         public String title;
         public boolean selected;
-        Item(String name, boolean selected) {
+        Item(String code,String name, boolean selected) {
+            this.code=code;
             this.title = name;
             this.selected = selected;
         }

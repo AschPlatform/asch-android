@@ -15,7 +15,10 @@ public class AppConfig {
     private static final String  LAST_ACCOUNT_PUBLIC_KEY_KEY="lastAccountPublicKey";
     private static String lastAccountAddress=null;
     private static String lastAccountPublicKey=null;
-
+    private  static  final  String LANGUAGE_KEY="languagekey";
+    private  static String language=null;
+    private  static  final  String NODE_URL_KEY="nodeURLKey";
+    private  static String nodeURL=null;
 
 
     public static void init(Context context){
@@ -73,9 +76,60 @@ public class AppConfig {
         lastAccountPublicKey=null;
     }
 
+    /**
+     *language get, put, delete
+     *
+     */
+
+    public static String getLanguage(){
+        if (language==null){
+            language= Hawk.get(LANGUAGE_KEY);
+        }
+        return language;
+    }
+
+    public static void putLanguage(String lang){
+        Hawk.put(LANGUAGE_KEY,lang);
+        language=lang;
+    }
+
+    public static void deleteLanguage(){
+        if (Hawk.contains(LANGUAGE_KEY))
+        {
+            Hawk.delete(LANGUAGE_KEY);
+        }
+        language=null;
+    }
+
+    /**
+     *node url get, put, delete
+     *
+     */
+
+    public static String getNodeURL(){
+        if (nodeURL==null){
+            nodeURL= Hawk.get(NODE_URL_KEY);
+        }
+        return nodeURL;
+    }
+
+    public static void putNodeURL(String url){
+        Hawk.put(NODE_URL_KEY,url);
+        nodeURL=url;
+    }
+
+    public static void deleteNodeURL(){
+        if (Hawk.contains(NODE_URL_KEY))
+        {
+            Hawk.delete(NODE_URL_KEY);
+        }
+        nodeURL=null;
+    }
+
     public static void clear(){
         Hawk.deleteAll();
         lastAccountAddress=null;
         lastAccountPublicKey=null;
+        language=null;
     }
 }

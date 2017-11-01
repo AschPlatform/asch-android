@@ -54,7 +54,7 @@ public class MinePresenter implements MineContract.Presenter {
         list.add(new MineSection(new MineItem(R.mipmap.my_settings,"设置")));
         list.add(new MineSection(true,"Section 2"));
         list.add(new MineSection(new MineItem(R.mipmap.my_user,"联系人")));
-        list.add(new MineSection(new MineItem(R.mipmap.my_block_info,"交易记录")));
+       // list.add(new MineSection(new MineItem(R.mipmap.my_block_info,"交易记录")));
         list.add(new MineSection(true,"Section 3"));
         list.add(new MineSection(new MineItem(R.mipmap.my_block_info,"区块详情")));
         list.add(new MineSection(new MineItem(R.mipmap.my_users,"关于我们")));

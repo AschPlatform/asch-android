@@ -116,11 +116,6 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                         BaseActivity.start(getActivity(),AppSettingActivity.class,null);
                     }
                     break;
-                    case 2:
-                    {
-
-                    }
-                    break;
                     case R.mipmap.my_users:
                     {
                         BaseActivity.start(getActivity(),AboutActivity.class,null);

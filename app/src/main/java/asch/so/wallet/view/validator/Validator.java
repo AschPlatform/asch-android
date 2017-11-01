@@ -9,6 +9,7 @@ import android.widget.Toast;
 import asch.so.wallet.view.validator.checkable.AccountNameCheckable;
 import asch.so.wallet.view.validator.checkable.AddressCheckable;
 import asch.so.wallet.view.validator.checkable.Checkable;
+import asch.so.wallet.view.validator.checkable.NodeURLCheckable;
 import asch.so.wallet.view.validator.checkable.TextCheckable;
 
 /**
@@ -23,7 +24,8 @@ public class Validator {
         Secret,
         Name,
         Address,
-        Ammount,
+        Amount,
+        URL,
         ;
     }
 
@@ -92,6 +94,8 @@ public class Validator {
                 return new AddressCheckable(value);
             case  Name:
                 return new AccountNameCheckable(value);
+            case  URL:
+                return new NodeURLCheckable(value);
 //            case InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_DATE :
 //                return new DateValidator(value);
 //            case InputType.TYPE_CLASS_PHONE : return new PhoneValidator(value);
