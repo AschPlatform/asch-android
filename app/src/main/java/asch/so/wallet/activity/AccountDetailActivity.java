@@ -19,6 +19,7 @@ import com.orhanobut.dialogplus.ViewHolder;
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountDetailContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountDetailPresenter;
@@ -98,14 +99,21 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                     .setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(DialogPlus dialogPlus, View view) {
+                            EditText editText = dialogPlus.getHolderView().findViewById(R.id.passwd_et);
+                            String inputPasswd=editText.getText().toString().trim();
                             switch (view.getId()){
                                 case R.id.ok_btn:
                                 {
                                     if (clickedView==backupBtn){
-                                        Bundle bundle=new Bundle();
-                                        bundle.putString("secret",account.getSeed());
-                                        BaseActivity.start(thiz,SecretBackupActivity.class,bundle);
-                                        dialogPlus.dismiss();
+                                       if ( AccountsManager.getInstance().getCurrentAccount().checKPassword(inputPasswd)){
+                                           Bundle bundle=new Bundle();
+                                           bundle.putString("secret",account.getSeed());
+                                           BaseActivity.start(thiz,SecretBackupActivity.class,bundle);
+                                           dialogPlus.dismiss();
+                                       }else {
+                                           Toast.makeText(thiz,"密码输入不正确,请重新输入",Toast.LENGTH_SHORT).show();
+                                       }
+
                                     }else if(clickedView==deleteBtn) {
 
                                     }

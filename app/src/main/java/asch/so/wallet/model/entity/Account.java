@@ -2,6 +2,7 @@ package asch.so.wallet.model.entity;
 
 import com.alibaba.fastjson.JSON;
 
+import asch.so.wallet.crypto.AccountSecurity;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -30,6 +31,8 @@ public class Account extends RealmObject{
     private  String hint;
 
     private String encryptSeed;
+
+    private String encryptPasswd;
 
     public String getPasswd() {
         return passwd;
@@ -87,7 +90,29 @@ public class Account extends RealmObject{
         this.encryptSeed = encryptSeed;
     }
 
+    public String getEncryptPasswd() {
+        return encryptPasswd;
+    }
+
+    public void setEncryptPasswd(String encryptPasswd) {
+        this.encryptPasswd = encryptPasswd;
+    }
+
     public String toJSON(){
       return  JSON.toJSONString(this);
+    }
+
+    public boolean checKPassword(String passwd){
+        if (passwd==null)
+            return false;
+        String decryptPasswd= AccountSecurity.decryptPassword(getEncryptPasswd(),passwd);
+        return passwd.equals(decryptPasswd);
+    }
+
+    public String decryptSecret(String passwd){
+        if (passwd==null)
+            return null;
+        String decryptSecret= AccountSecurity.decryptSecret(getEncryptSeed(),passwd);
+        return decryptSecret;
     }
 }

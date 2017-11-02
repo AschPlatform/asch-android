@@ -31,6 +31,9 @@ public class AccountSecurity {
             AesCbcWithIntegrity.CipherTextIvMac civ =encrypt(account.getSeed(), key);
             Log.i(TAG, "Encrypted: " + civ.toString());
             account.setEncryptSeed(civ.toString());
+            AesCbcWithIntegrity.CipherTextIvMac civ2 =encrypt(passwd, key);
+            account.setEncryptPasswd(civ2.toString());
+
 
             return account;
         } catch (GeneralSecurityException e) {
@@ -56,8 +59,42 @@ public class AccountSecurity {
             String decrytText = decryptString(civ, key);
             account.setSeed(decrytText);
 
+            CipherTextIvMac civ2 =new CipherTextIvMac(account.getEncryptPasswd());
+            String decrytText2 = decryptString(civ2, key);
+            account.setSeed(decrytText2);
+
             return account;
 
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String decryptPassword(String encryptPasswd, String passwd){
+
+        try {
+            SecretKeys key =generateKeyFromPassword(passwd,saltString(salt));
+            CipherTextIvMac civ =new CipherTextIvMac(encryptPasswd);
+            String decrytText = decryptString(civ, key);
+            return  decrytText;
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String decryptSecret(String encryptSecret, String passwd){
+
+        try {
+            SecretKeys key =generateKeyFromPassword(passwd,saltString(salt));
+            CipherTextIvMac civ =new CipherTextIvMac(encryptSecret);
+            String decrytText = decryptString(civ, key);
+            return  decrytText;
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {

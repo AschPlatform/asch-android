@@ -8,6 +8,7 @@ import java.io.InputStream;
 import asch.so.wallet.AppConfig;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountCreateContract;
+import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.db.dao.AccountsDao;
 import asch.so.wallet.model.entity.Account;
 import so.asch.sdk.AschHelper;
@@ -46,11 +47,8 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
             Log.i(TAG, "words:"+words);
             this.view.resetSeed(words);
         }catch (Exception ex){
-
+            // TODO: 2017/11/2
         }
-
-//
-//        AschFactory.getInstance().getSecurity().generateSecret();
     }
 
 
@@ -74,7 +72,7 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
             account.setName(name);
             account.setPasswd(passwd);
             account.setHint(hint);
-            //AccountsDao.getInstance().addAccount(account);
+            AccountSecurity.encryptAccount(account,passwd);
             AccountsManager.getInstance().addAccount(account);
             AppConfig.putLastAccountAddress(account.getAddress());
         } catch (SecurityException e) {
