@@ -5,7 +5,7 @@
     <dimen name="keyboard_button_ripple_padding">30dp</dimen>
     <dimen name="pin_code_round_size">25dp</dimen>
     <dimen name="pin_code_round_margin">10dp</dimen>
-    <dimen name="light_gray_bar_margin_top">20dp</dimen>
+    <dimen name="light_gray_bar_margin_top">10dp</dimen>
     <dimen name="light_gray_bar_margin_bottom">5dp</dimen>
     <dimen name="light_gray_bar_margin_sides">50dp</dimen>
     <dimen name="pin_code_forgot_text_size">16sp</dimen>

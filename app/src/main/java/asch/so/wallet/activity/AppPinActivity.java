@@ -57,7 +57,7 @@ public class AppPinActivity extends AppLockActivity {
             public void onOptionItemClick(View v) {
                 switch (v.getId()){
                     case R.id.back:
-                        onBackPressed();
+                        finish();
                         break;
                 }
             }
@@ -71,6 +71,8 @@ public class AppPinActivity extends AppLockActivity {
         }
 
         //setSupportActionBar(toolbar);
+        View forgetView=  findViewById(R.id.pin_code_forgot_textview);
+        forgetView.setVisibility(View.GONE);
     }
 
     @Override

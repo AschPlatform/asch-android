@@ -82,6 +82,7 @@ public class WalletApplication extends MultiDexApplication{
         lockManager.getAppLock().setTimeout(5000);
         lockManager.getAppLock().setLogoId(R.mipmap.ic_launcher);
         lockManager.getAppLock().setShouldShowForgot(false);
+        lockManager.getAppLock().setPinChallengeCancelled(true);
     }
 
 
