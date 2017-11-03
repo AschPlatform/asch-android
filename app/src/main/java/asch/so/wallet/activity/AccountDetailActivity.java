@@ -3,6 +3,7 @@ package asch.so.wallet.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import com.orhanobut.dialogplus.OnClickListener;
 import com.orhanobut.dialogplus.ViewHolder;
 
 import asch.so.base.activity.BaseActivity;
+import asch.so.base.fragment.BaseDialogFragment;
 import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
@@ -26,6 +28,8 @@ import asch.so.wallet.presenter.AccountDetailPresenter;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.fragment.AccountDetailFragment;
 import asch.so.wallet.view.validator.Validator;
+import asch.so.wallet.view.widget.InputPasswdDialog;
+import asch.so.wallet.view.widget.TransferConfirmationDialog;
 import asch.so.widget.toolbar.BaseToolbar;
 import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
@@ -85,51 +89,71 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
 
+        if (view==backupBtn){
+            backupAccount();
+        }else if(view==deleteBtn) {
+            deleteAccount();
+        }
+    }
+
+    private void backupAccount(){
+            FragmentManager fm = getSupportFragmentManager();
+            InputPasswdDialog dialog = InputPasswdDialog.newInstance();
+              AccountDetailActivity thiz=this;
+              Account account= presenter.getAccount();
+            dialog.setOnClickListener(new BaseDialogFragment.OnClickListener() {
+                @Override
+                public void onClick(BaseDialogFragment dialog, int which) {
+                    EditText editText = dialog.getDialog().findViewById(R.id.passwd_et);
+                    String inputPasswd=editText.getText().toString().trim();
+                    if ( AccountsManager.getInstance().getCurrentAccount().checKPassword(inputPasswd)){
+                        Bundle bundle=new Bundle();
+                        bundle.putString("secret",account.getSeed());
+                        BaseActivity.start(thiz,SecretBackupActivity.class,bundle);
+                        dialog.dismiss();
+                    }else {
+                        Toast.makeText(thiz,"密码输入不正确,请重新输入",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            dialog.setOnCancelListener(new BaseDialogFragment.OnCancelListener() {
+                @Override
+                public void onCancel(BaseDialogFragment dialog) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show(fm,"backup_account");
+    }
+
+    private void deleteAccount(){
+        FragmentManager fm = getSupportFragmentManager();
+        InputPasswdDialog dialog = InputPasswdDialog.newInstance();
         AccountDetailActivity thiz=this;
-        View clickedView=view;
         Account account= presenter.getAccount();
-//        if (view==backupBtn){
-//
-//        }else if(view==deleteBtn){
-            DialogPlus dialog = DialogPlus.newDialog(this)
-                    .setContentHolder(new ViewHolder(R.layout.dialog_input_passwd))
-                    .setGravity(Gravity.BOTTOM)
-                    .setCancelable(false)
-                    .setExpanded(true)  // This will enable the expand feature, (similar to android L share dialog)
-                    .setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(DialogPlus dialogPlus, View view) {
-                            EditText editText = dialogPlus.getHolderView().findViewById(R.id.passwd_et);
-                            String inputPasswd=editText.getText().toString().trim();
-                            switch (view.getId()){
-                                case R.id.ok_btn:
-                                {
-                                    if (clickedView==backupBtn){
-                                       if ( AccountsManager.getInstance().getCurrentAccount().checKPassword(inputPasswd)){
-                                           Bundle bundle=new Bundle();
-                                           bundle.putString("secret",account.getSeed());
-                                           BaseActivity.start(thiz,SecretBackupActivity.class,bundle);
-                                           dialogPlus.dismiss();
-                                       }else {
-                                           Toast.makeText(thiz,"密码输入不正确,请重新输入",Toast.LENGTH_SHORT).show();
-                                       }
-
-                                    }else if(clickedView==deleteBtn) {
-
-                                    }
-                                }
-                                    break;
-                                case R.id.cancel_btn:
-                                {
-                                    dialogPlus.dismiss();
-                                }
-                                break;
-                            }
-                        }
-                    })
-                    .create();
-            dialog.show();
-       // }
+        dialog.setOnClickListener(new BaseDialogFragment.OnClickListener() {
+            @Override
+            public void onClick(BaseDialogFragment dialog, int which) {
+                EditText editText = dialog.getDialog().findViewById(R.id.passwd_et);
+                String inputPasswd=editText.getText().toString().trim();
+                if ( AccountsManager.getInstance().getCurrentAccount().checKPassword(inputPasswd)){
+                    AccountsManager.getInstance().removeCurrentAccount();
+                    Toast.makeText(thiz,"删除成功",Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    Intent intent = new Intent(thiz, AccountsActivity.class);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    Toast.makeText(thiz,"密码输入不正确,请重新输入",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        dialog.setOnCancelListener(new BaseDialogFragment.OnCancelListener() {
+            @Override
+            public void onCancel(BaseDialogFragment dialog) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show(fm,"delete_account");
     }
 
 

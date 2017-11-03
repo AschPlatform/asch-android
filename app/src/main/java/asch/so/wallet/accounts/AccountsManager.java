@@ -109,6 +109,7 @@ public class AccountsManager {
                 currentAccount=null;
             }
         }
+        AccountsDao.getInstance().removeAccount(account);
     }
 
     /**
@@ -124,7 +125,7 @@ public class AccountsManager {
     /**
      * 删除当前用户
      */
-    public void removeAccount(){
+    public void removeCurrentAccount(){
         if (currentAccount!=null){
            removeAccount(currentAccount);
         }

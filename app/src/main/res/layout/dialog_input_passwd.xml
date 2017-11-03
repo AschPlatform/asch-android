@@ -25,6 +25,7 @@
         android:background="@drawable/dialog_input_bg"
         android:paddingLeft="8dp"
         android:hint="账户密码"
+        android:inputType="textPassword"
         android:layout_width="230dp"
         android:layout_height="43dp" />
 

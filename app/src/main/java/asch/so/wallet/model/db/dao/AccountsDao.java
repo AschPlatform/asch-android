@@ -103,6 +103,19 @@ public class AccountsDao {
      *
      * @param account
      */
+    public void  removeAccount(Account account){
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                account.deleteFromRealm();
+            }
+        });
+    }
+
+    /**
+     *
+     * @param account
+     */
    public void  updateAccount(Account account){
        getRealm().executeTransaction(new Realm.Transaction() {
            @Override

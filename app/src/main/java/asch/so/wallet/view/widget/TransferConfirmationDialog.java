@@ -116,5 +116,6 @@ public class TransferConfirmationDialog extends BaseDialogFragment implements Vi
     public void setConfirmInfo(String address, String ammount, String currency){
         this.addressTv.setText(address);
         this.ammountTv.setText(ammount+" "+currency);
+
     }
 }
