@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">ASCH钱包</string>
+
+    <string name="pin_code_fingerprint_not_recognized">指纹识别识别，请重试</string>
+    <string name="pin_code_fingerprint_success">指纹识别成功</string>
+    <string name="pin_code_fingerprint_text">指纹识别</string>
+    <string name="pin_code_forgot_text">忘记Pin码?</string>
+    <string name="pin_code_step_change">输入当前%d位数字Pin码</string>
+    <string name="pin_code_step_create">创建一个%d位数字Pin码</string>
+    <string name="pin_code_step_disable">禁用%d位数字Pin码</string>
+    <string name="pin_code_step_enable_confirm">确认你%d位数字Pin码</string>
+    <string name="pin_code_step_unlock">输入你的%d位数字Pin码</string>
 </resources>

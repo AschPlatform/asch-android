@@ -4,6 +4,9 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.widget.Toast;
 
 import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
@@ -17,6 +20,13 @@ import uk.me.lewisdeane.ldialogs.CustomDialog;
  */
 
 public class AppPinActivity extends AppLockActivity {
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        //super.onCreate(savedInstanceState, persistentState);
+        setContentView(R.layout.activity_apppin);
+    }
 
     @Override
     public void showForgotDialog() {
