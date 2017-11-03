@@ -44,15 +44,16 @@
         android:layout_marginBottom="56dp"
         />
 </LinearLayout>
+
     <Button
         android:id="@+id/transfer_btn"
-        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        style="@style/PrimaryButton.Style"
+        android:text="确定"
         android:textColor="#FFFFFF"
-        android:textSize="15sp"
-        android:text="确定" />
+        android:textSize="15sp" />
 </LinearLayout>

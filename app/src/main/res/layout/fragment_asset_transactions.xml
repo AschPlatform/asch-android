@@ -39,25 +39,27 @@
         android:layout_width="match_parent"
         android:layout_height="43dp"
         android:orientation="horizontal">
-        <TextView
+        <Button
             android:id="@+id/goto_transfer_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/button_transfer_bg"
             android:textColor="#333333"
             android:textSize="15sp"
             android:text="转账"
             tools:ignore="HardcodedText" />
-        <TextView
+        <Button
             android:id="@+id/goto_receive_btn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:background="@color/colorAccent"
+            android:background="@color/button_bg_nor"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
+            style="?android:attr/borderlessButtonStyle"
             android:text="接收"
             tools:ignore="HardcodedText" />
 

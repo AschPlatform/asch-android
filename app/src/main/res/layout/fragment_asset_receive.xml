@@ -120,10 +120,11 @@
         android:orientation="horizontal">
         <Button
             android:id="@+id/copy_btn"
-            style="@style/Widget.AppCompat.Button.Colored"
+            style="@style/PrimaryButton.Style"
             android:layout_width="wrap_content"
-            android:layout_height="42dp"
+            android:layout_height="44dp"
             android:layout_weight="1"
+            android:textColor="@color/white"
             android:text="复制收款地址"
             tools:ignore="HardcodedText" />
     </LinearLayout>
