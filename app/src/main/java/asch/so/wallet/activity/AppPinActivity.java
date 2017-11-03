@@ -7,11 +7,19 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
 
 import asch.so.wallet.R;
+import asch.so.wallet.util.StatusBarUtil;
+import asch.so.widget.toolbar.BaseToolbar;
+import asch.so.widget.toolbar.TitleToolbar;
+import butterknife.BindView;
 import uk.me.lewisdeane.ldialogs.BaseDialog;
 import uk.me.lewisdeane.ldialogs.CustomDialog;
 
@@ -21,11 +29,53 @@ import uk.me.lewisdeane.ldialogs.CustomDialog;
 
 public class AppPinActivity extends AppLockActivity {
 
+//    @BindView(R.id.toolbar)
+//    TitleToolbar toolbar;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        //super.onCreate(savedInstanceState, persistentState);
-        setContentView(R.layout.activity_apppin);
+    protected void onCreate(Bundle savedInstanceState) {
+        int type=getIntent().getIntExtra(AppLock.EXTRA_TYPE,-1);
+        if (type==AppLock.ENABLE_PINLOCK){
+            //取消标题栏
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
+            //取消状态栏
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+        super.onCreate(savedInstanceState);
+
+        initToolBar();
+        StatusBarUtil.immersive(this);
+
+    }
+
+    private void initToolBar(){
+        TitleToolbar toolbar = (TitleToolbar) findViewById(R.id.toolbar);
+        toolbar.setCloseVisible(false);
+        toolbar.setOnOptionItemClickListener(new BaseToolbar.OnOptionItemClickListener() {
+            @Override
+            public void onOptionItemClick(View v) {
+                switch (v.getId()){
+                    case R.id.back:
+                        onBackPressed();
+                        break;
+                }
+            }
+        });
+
+        int type=getIntent().getIntExtra(AppLock.EXTRA_TYPE,-1);
+        if (type==AppLock.ENABLE_PINLOCK){
+        toolbar.setTitle("设置Pin码");
+        }else{
+            toolbar.setVisibility(View.GONE);
+        }
+
+        //setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public int getContentView() {
+        return R.layout.activity_apppin;
     }
 
     @Override
