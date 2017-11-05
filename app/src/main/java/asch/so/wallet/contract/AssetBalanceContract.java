@@ -12,7 +12,7 @@ import asch.so.wallet.model.entity.BaseAsset;
  * Created by kimziv on 2017/9/27.
  */
 
-public interface AssetsContract {
+public interface AssetBalanceContract {
 
     interface View extends BaseView<Presenter>{
         //资产列表

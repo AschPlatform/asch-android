@@ -9,7 +9,7 @@ import asch.so.wallet.R;
 import asch.so.wallet.contract.TransactionsContract;
 import asch.so.wallet.presenter.TransactionsPresenter;
 import asch.so.wallet.util.StatusBarUtil;
-import asch.so.wallet.view.fragment.AssetsFragment;
+import asch.so.wallet.view.fragment.AssetBalanceFragment;
 import asch.so.wallet.view.fragment.TransactionsFragment;
 
 /**

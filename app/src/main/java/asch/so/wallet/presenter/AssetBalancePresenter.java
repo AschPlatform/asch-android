@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
@@ -15,15 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import asch.so.base.presenter.BasePresenter;
 import asch.so.wallet.accounts.AccountsManager;
-import asch.so.wallet.contract.AssetsContract;
-import asch.so.wallet.model.db.dao.AccountsDao;
+import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
-import asch.so.wallet.model.entity.BaseAsset;
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -31,21 +26,18 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
-import so.asch.sdk.dbc.Argument;
-import so.asch.sdk.impl.ParameterMap;
-import so.asch.sdk.impl.Validation;
 
 /**
  * Created by kimziv on 2017/9/20.
  */
 
-public class AssetBalancePresenter implements AssetsContract.Presenter {
+public class AssetBalancePresenter implements AssetBalanceContract.Presenter {
     private static  final  String TAG=AssetBalancePresenter.class.getSimpleName();
 
-    private final  AssetsContract.View view;
+    private final  AssetBalanceContract.View view;
     private Context context;
 
-    public AssetBalancePresenter(AssetsContract.View view) {
+    public AssetBalancePresenter(AssetBalanceContract.View view) {
         this.view = view;
         view.setPresenter(this);
     }

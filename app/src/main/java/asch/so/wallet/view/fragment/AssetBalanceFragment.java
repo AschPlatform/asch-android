@@ -2,13 +2,9 @@ package asch.so.wallet.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringDef;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.ButtonBarLayout;
@@ -18,11 +14,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,12 +26,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.scwang.smartrefresh.layout.listener.SimpleMultiPurposeListener;
-import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,20 +37,13 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AccountDetailActivity;
-import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransactionsActivity;
-import asch.so.wallet.activity.AssetTransferActivity;
-import asch.so.wallet.activity.BackupActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.activity.TransactionsActivity;
-import asch.so.wallet.contract.AssetReceiveContract;
-import asch.so.wallet.contract.AssetsContract;
+import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
-import asch.so.wallet.model.entity.BaseAsset;
-import asch.so.wallet.util.StatusBarUtil;
-import asch.so.wallet.view.adapter.AccountsAdapter;
 import asch.so.wallet.view.adapter.AssetsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,8 +56,8 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  * Created by kimziv on 2017/9/21.
  */
 
-public class AssetsFragment extends BaseFragment implements AssetsContract.View, View.OnClickListener{
-    private static final String TAG=AssetsFragment.class.getSimpleName();
+public class AssetBalanceFragment extends BaseFragment implements AssetBalanceContract.View, View.OnClickListener{
+    private static final String TAG=AssetBalanceFragment.class.getSimpleName();
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.assets_rcv)
@@ -112,13 +95,13 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
     private List<Balance> assetList=new ArrayList<>();
     private AssetsAdapter adapter=new AssetsAdapter(assetList);
 
-    private AssetsContract.Presenter presenter;
+    private AssetBalanceContract.Presenter presenter;
 
-    public static AssetsFragment newInstance() {
+    public static AssetBalanceFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        AssetsFragment fragment = new AssetsFragment();
+        AssetBalanceFragment fragment = new AssetBalanceFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -267,7 +250,7 @@ public class AssetsFragment extends BaseFragment implements AssetsContract.View,
     }
 
     @Override
-    public void setPresenter(AssetsContract.Presenter presenter) {
+    public void setPresenter(AssetBalanceContract.Presenter presenter) {
         this.presenter=presenter;
     }
 

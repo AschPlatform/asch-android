@@ -3,11 +3,8 @@ package asch.so.wallet.presenter;
 import android.content.Context;
 import android.util.Log;
 
-import asch.so.base.presenter.BasePresenter;
 import asch.so.wallet.AppConstants;
-import asch.so.wallet.TestData;
 import asch.so.wallet.contract.AssetTransferContract;
-import asch.so.wallet.contract.AssetsContract;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;

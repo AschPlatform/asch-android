@@ -30,7 +30,7 @@ import asch.so.wallet.presenter.DappCenterPresenter;
 import asch.so.wallet.presenter.MinePresenter;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
-import asch.so.wallet.view.fragment.AssetsFragment;
+import asch.so.wallet.view.fragment.AssetBalanceFragment;
 import asch.so.wallet.view.fragment.DappCenterFragment;
 import asch.so.wallet.view.fragment.DappFragment;
 import asch.so.wallet.view.fragment.MineFragment;
@@ -139,7 +139,7 @@ public class MainTabActivity extends BasePinCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
 
-        AssetsFragment  assetsFragment=AssetsFragment.newInstance();
+        AssetBalanceFragment assetsFragment=AssetBalanceFragment.newInstance();
         MineFragment mineFragment=MineFragment.newInstance();
         DappCenterFragment dappCenterFragment=DappCenterFragment.newInstance();
 

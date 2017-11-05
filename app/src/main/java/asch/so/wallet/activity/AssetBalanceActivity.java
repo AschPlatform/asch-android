@@ -9,7 +9,7 @@ import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.R;
 import asch.so.wallet.presenter.AssetBalancePresenter;
 import asch.so.wallet.presenter.AssetBalancePresenter;
-import asch.so.wallet.view.fragment.AssetsFragment;
+import asch.so.wallet.view.fragment.AssetBalanceFragment;
 
 /**
  * Created by kimziv on 2017/9/20.
@@ -26,7 +26,7 @@ public class AssetBalanceActivity extends BaseActivity {
 
        // AssetsFragment assetsFragment = (AssetsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
        // if (assetsFragment==null){
-        AssetsFragment  assetsFragment=AssetsFragment.newInstance();
+        AssetBalanceFragment assetsFragment=AssetBalanceFragment.newInstance();
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),assetsFragment, R.id.fragment_container);
         //}
 
