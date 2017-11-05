@@ -69,7 +69,7 @@
             android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginBottom="36dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
             <EditText
                 android:id="@+id/ammount_et"
@@ -92,8 +92,8 @@
                 android:layout_gravity="center"
                 android:background="#333333"
                 />
-            <TextView
-                android:id="@+id/save_btn"
+            <Spinner
+                android:id="@+id/assets_sp"
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -101,9 +101,31 @@
                 android:gravity="center"
                 android:textColor="#333333"
                 android:textSize="13sp"
-                android:text="保存二维码"
                 tools:ignore="HardcodedText" />
+            <!--<TextView-->
+                <!--android:id="@+id/save_btn"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:gravity="center"-->
+                <!--android:textColor="#333333"-->
+                <!--android:textSize="13sp"-->
+                <!--android:text="保存二维码"-->
+                <!--tools:ignore="HardcodedText" />-->
         </LinearLayout>
+        <TextView
+            android:id="@+id/save_btn"
+            android:layout_gravity="center"
+            android:layout_width="240dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/ammount_ll"
+            android:layout_centerHorizontal="true"
+            android:textColor="#333333"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:text="保存二维码"
+            tools:ignore="HardcodedText" />
     </RelativeLayout>
 
 

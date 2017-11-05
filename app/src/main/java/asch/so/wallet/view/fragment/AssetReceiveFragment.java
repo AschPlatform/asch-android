@@ -8,17 +8,24 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import junit.framework.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 import asch.so.wallet.R;
 import asch.so.base.fragment.BaseFragment;
@@ -26,15 +33,17 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.QRCodeURL;
+import asch.so.wallet.model.entity.UIAAsset;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import so.asch.sdk.impl.AschConst;
 
 /**
  * Created by kimziv on 2017/9/27.
  */
 
 public class AssetReceiveFragment extends BaseFragment implements AssetReceiveContract.View{
-
+    private  static  final String TAG=AssetReceiveFragment.class.getSimpleName();
     @BindView(R.id.address_tv)
     TextView addressTv;
     @BindView(R.id.qrcode_iv)
@@ -46,6 +55,9 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     EditText ammountEt;
     @BindView(R.id.save_btn)
      TextView saveTv;
+    @BindView(R.id.assets_sp)
+    Spinner assetsSp;
+
     String currency="XAS";
     private Account account;
 
@@ -107,6 +119,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
         });
 
         presenter.generateQrCode(account.getAddress(),"XAS","8");
+        presenter.loadAssets();
         return rootView;
     }
 
@@ -135,5 +148,21 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     @Override
     public void displayQrCode(Bitmap bitmap) {
         qrcodeIv.setImageBitmap(bitmap);
+    }
+
+    @Override
+    public void displayAssets(List<UIAAsset> assets) {
+        Log.d(TAG,"++++assets:"+assets.toString());
+        ArrayList<String> nameList=new ArrayList<String>();
+        nameList.add(AschConst.CORE_COIN_NAME);
+        assets.forEach(new Consumer<UIAAsset>() {
+            @Override
+            public void accept(UIAAsset uiaAsset) {
+                nameList.add(uiaAsset.getName());
+            }
+        });
+        ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        assetsSp.setAdapter(adapter);
     }
 }
