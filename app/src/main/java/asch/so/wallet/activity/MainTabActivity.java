@@ -25,7 +25,7 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.base.activity.BasePinCompatActivity;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.DappCenterContract;
-import asch.so.wallet.presenter.AssetsPresenter;
+import asch.so.wallet.presenter.AssetBalancePresenter;
 import asch.so.wallet.presenter.DappCenterPresenter;
 import asch.so.wallet.presenter.MinePresenter;
 import asch.so.wallet.util.StatusBarUtil;
@@ -48,7 +48,7 @@ public class MainTabActivity extends BasePinCompatActivity {
     private MenuItem menuItem;
     private BottomNavigationView bottomNavigationView;
 
-    private AssetsPresenter assetsPresenter;
+    private AssetBalancePresenter assetsPresenter;
     private DappCenterPresenter dappCenterPresenter;
     private MinePresenter minePresenter;
 
@@ -148,7 +148,7 @@ public class MainTabActivity extends BasePinCompatActivity {
         adapter.addFragment(mineFragment);
         viewPager.setAdapter(adapter);
 
-        assetsPresenter =new AssetsPresenter(assetsFragment);
+        assetsPresenter =new AssetBalancePresenter(assetsFragment);
         assetsFragment.setPresenter(assetsPresenter);
 //        assetsPresenter.loadAccount();
 //        assetsPresenter.loadAssets();

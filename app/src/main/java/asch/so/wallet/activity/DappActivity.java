@@ -5,8 +5,6 @@ import android.os.Bundle;
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.R;
-import asch.so.wallet.presenter.AssetsPresenter;
-import asch.so.wallet.view.fragment.AssetsFragment;
 import asch.so.wallet.view.fragment.DappFragment;
 
 /**

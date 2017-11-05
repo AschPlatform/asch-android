@@ -39,13 +39,13 @@ import so.asch.sdk.impl.Validation;
  * Created by kimziv on 2017/9/20.
  */
 
-public class AssetsPresenter implements AssetsContract.Presenter {
-    private static  final  String TAG=AssetsPresenter.class.getSimpleName();
+public class AssetBalancePresenter implements AssetsContract.Presenter {
+    private static  final  String TAG=AssetBalancePresenter.class.getSimpleName();
 
     private final  AssetsContract.View view;
     private Context context;
 
-    public AssetsPresenter(AssetsContract.View view) {
+    public AssetBalancePresenter(AssetsContract.View view) {
         this.view = view;
         view.setPresenter(this);
     }

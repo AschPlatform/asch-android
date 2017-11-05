@@ -12,7 +12,6 @@ import asch.so.wallet.contract.AccountImportContract;
 import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.db.dao.AccountsDao;
 import asch.so.wallet.model.entity.Account;
-import asch.so.wallet.presenter.component.DaggerPresenterComponent;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschSDK;
 import so.asch.sdk.impl.AschFactory;

@@ -15,7 +15,7 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.R;
 import asch.so.wallet.presenter.AssetTransferPresenter;
-import asch.so.wallet.presenter.AssetsPresenter;
+import asch.so.wallet.presenter.AssetBalancePresenter;
 import asch.so.wallet.view.fragment.AssetTransactionsFragment;
 import asch.so.wallet.view.fragment.AssetTransferFragment;
 import butterknife.BindView;
