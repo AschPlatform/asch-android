@@ -3,8 +3,18 @@ package asch.so.wallet.presenter;
 import android.content.Context;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import asch.so.wallet.AppConstants;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetTransferContract;
+import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.UIAAsset;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -38,6 +48,9 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
 
     }
 
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
+    }
 
     @Override
     public void transfer(String currency, String targetAddress, long amount, String message, String secret, String secondSecret) {
@@ -69,4 +82,42 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                         }
                     });
         }
+
+    @Override
+    public void loadAssets() {
+       // Account account = getAccount();
+        //String address=account.getAddress();
+        ArrayList<UIAAsset> list=new ArrayList<UIAAsset>();
+        Observable  uiaOervable =
+                Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){
+                    @Override
+                    public void call(Subscriber<? super List<UIAAsset>> subscriber) {
+                        AschResult result = AschSDK.UIA.getAssets(100,0);
+                        Log.i(TAG,result.getRawJson());
+                        if (result.isSuccessful()){
+                            JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
+                            JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
+                            List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
+                            list.addAll(assets);
+                            subscriber.onNext(list);
+                            subscriber.onCompleted();
+                        }else{
+                            subscriber.onError(result.getException());
+                        }
+                    }
+                });
+
+        uiaOervable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Action1<List<UIAAsset>>() {
+                    @Override
+                    public void call(List<UIAAsset> assets) {
+//                        if (balances!=null && balances.size()>0){
+//                            view.displayXASBalance(balances.get(0));
+//                        }
+                        view.displayAssets(assets);
+                    }
+                });
+    }
 }

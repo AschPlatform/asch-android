@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.text.method.DigitsKeyListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,13 +15,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.fragment.BaseFragment;
@@ -36,6 +41,7 @@ import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.QRCodeURL;
+import asch.so.wallet.model.entity.UIAAsset;
 import asch.so.wallet.view.validator.Validator;
 import asch.so.wallet.view.widget.DialogFactory;
 import asch.so.wallet.view.widget.TransferConfirmationDialog;
@@ -51,6 +57,7 @@ import so.asch.sdk.impl.Validation;
  */
 
 public class AssetTransferFragment extends BaseFragment implements AssetTransferContract.View{
+    private  static  final String TAG=AssetTransferFragment.class.getSimpleName();
 
     AssetTransferContract.Presenter presenter;
 
@@ -64,6 +71,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     EditText feeEt;
     @BindView(R.id.transfer_btn)
     Button transferBtn;
+    @BindView(R.id.assets_sp)
+    Spinner assetsSpinner;
 
     private Balance balance;
     private QRCodeURL qrCodeURL;
@@ -156,6 +165,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
             amountEt.setText(qrCodeURL.getAmount());
 
         }
+
+        presenter.loadAssets();
         return rootView;
     }
 
@@ -204,6 +215,22 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     public void displayToast(String toast) {
         Toast.makeText(getActivity(),toast,Toast.LENGTH_SHORT).show();
             getActivity().finish();
+    }
+
+    @Override
+    public void displayAssets(List<UIAAsset> assets) {
+        Log.d(TAG,"++++assets:"+assets.toString());
+        ArrayList<String> nameList=new ArrayList<String>();
+        nameList.add(AschConst.CORE_COIN_NAME);
+        assets.forEach(new Consumer<UIAAsset>() {
+            @Override
+            public void accept(UIAAsset uiaAsset) {
+                nameList.add(uiaAsset.getName());
+            }
+        });
+        ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        assetsSpinner.setAdapter(adapter);
     }
 
     public void setTargetAddress(String address){
