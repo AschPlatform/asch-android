@@ -21,6 +21,7 @@ import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AboutActivity;
 import asch.so.wallet.activity.AccountsActivity;
@@ -136,6 +137,11 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     @Override
     public void setPresenter(MineContract.Presenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+
     }
 
     @Override

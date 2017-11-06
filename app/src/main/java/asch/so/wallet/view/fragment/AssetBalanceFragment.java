@@ -36,6 +36,7 @@ import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AccountDetailActivity;
 import asch.so.wallet.activity.AssetReceiveActivity;
@@ -45,7 +46,6 @@ import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
-import asch.so.wallet.view.UIException;
 import asch.so.wallet.view.adapter.AssetsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;

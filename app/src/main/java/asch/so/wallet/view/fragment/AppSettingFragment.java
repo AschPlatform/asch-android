@@ -25,6 +25,7 @@ import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AppPinActivity;
 import asch.so.wallet.activity.LanguagesActivity;
@@ -151,6 +152,11 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
 
     @Override
     public void setPresenter(AppSettingContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void displayError(UIException exception) {
 
     }
 

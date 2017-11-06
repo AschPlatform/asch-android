@@ -14,15 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import asch.so.base.view.UIException;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
-import asch.so.wallet.view.UIException;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import so.asch.sdk.AschResult;

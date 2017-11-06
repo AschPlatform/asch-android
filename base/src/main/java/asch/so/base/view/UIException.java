@@ -1,4 +1,4 @@
-package asch.so.wallet.view;
+package asch.so.base.view;
 
 /**
  * Created by kimziv on 2017/11/6.

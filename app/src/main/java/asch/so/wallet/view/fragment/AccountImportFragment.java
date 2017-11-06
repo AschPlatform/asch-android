@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.AccountImportContract;
 import asch.so.wallet.crypto.AccountSecurity;
@@ -134,6 +135,11 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
     @Override
     public void setPresenter(AccountImportPresenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+
     }
 
     @Override

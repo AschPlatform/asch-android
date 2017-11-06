@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AccountCreateActivity;
 import asch.so.wallet.activity.AccountImportActivity;
@@ -131,6 +132,11 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
     @Override
     public void setPresenter(AccountsPresenter presenter) {
         this.presenter = presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+
     }
 
     @Override

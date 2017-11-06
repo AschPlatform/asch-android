@@ -20,6 +20,7 @@ import com.orhanobut.dialogplus.ViewHolder;
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseDialogFragment;
 import asch.so.base.util.ActivityUtils;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountDetailContract;
@@ -184,6 +185,11 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     public void setPresenter(AccountDetailContract.Presenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+        //// TODO: 2017/11/6
     }
 
     @Override

@@ -25,6 +25,7 @@ import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
@@ -139,6 +140,11 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     @Override
     public void setPresenter(AssetTransactionsContract.Presenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+
     }
 
     @Override

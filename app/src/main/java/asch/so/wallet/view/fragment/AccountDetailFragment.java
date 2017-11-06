@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.AccountDetailContract;
 import asch.so.wallet.model.entity.Account;
@@ -55,6 +56,11 @@ public class AccountDetailFragment extends BaseFragment implements AccountDetail
     @Override
     public void setPresenter(AccountDetailContract.Presenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+
     }
 
     @Override

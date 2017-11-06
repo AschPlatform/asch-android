@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.accounts.AccountsManager;
@@ -148,6 +149,11 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     @Override
     public void setPresenter(AssetReceiveContract.Presenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+        Toast.makeText(getContext(),"网络错误",Toast.LENGTH_SHORT).show();
     }
 
     @Override

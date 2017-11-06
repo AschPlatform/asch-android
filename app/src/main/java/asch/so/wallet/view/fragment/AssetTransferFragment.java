@@ -31,6 +31,7 @@ import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.presenter.BasePresenter;
 import asch.so.base.util.ActivityUtils;
+import asch.so.base.view.UIException;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.TestData;
@@ -209,6 +210,11 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @Override
     public void setPresenter(AssetTransferContract.Presenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+
     }
 
     @Override

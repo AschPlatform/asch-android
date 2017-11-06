@@ -29,6 +29,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
+import asch.so.base.view.UIException;
 import asch.so.wallet.TestData;
 import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.model.entity.QRCodeURL;
@@ -141,7 +142,7 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.displayError(new UIException("网络错误"));
                     }
 
                     @Override

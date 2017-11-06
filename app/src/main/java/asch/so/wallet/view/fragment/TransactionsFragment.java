@@ -19,6 +19,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.TransactionsContract;
@@ -100,6 +101,11 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     @Override
     public void setPresenter(TransactionsContract.Presenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+
     }
 
     @Override

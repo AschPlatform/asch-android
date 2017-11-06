@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.contract.DappCenterContract;
 import asch.so.wallet.contract.DappContainerContract;
 import asch.so.wallet.model.entity.Dapp;
@@ -33,6 +34,11 @@ public class DappContainerFragment extends BaseFragment implements DappContainer
     @Override
     public void setPresenter(DappContainerContract.Presenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+
     }
 
 

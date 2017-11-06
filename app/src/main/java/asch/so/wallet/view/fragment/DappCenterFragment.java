@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.TestData;
 import asch.so.wallet.activity.DappActivity;
@@ -143,6 +144,11 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
     @Override
     public void setPresenter(DappCenterContract.Presenter presenter) {
         this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+
     }
 
     @Override
