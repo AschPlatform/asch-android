@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import asch.so.base.view.UIException;
 import asch.so.wallet.TestData;
 import asch.so.wallet.contract.TransactionsContract;
 import asch.so.wallet.model.entity.Transaction;
@@ -83,7 +84,7 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.displayError(new UIException("网络错误"));
                     }
 
                     @Override
@@ -134,7 +135,7 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.displayError(new UIException("网络错误"));
                     }
 
                     @Override

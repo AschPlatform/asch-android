@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import asch.so.base.view.UIException;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetTransactionsContract;
 import asch.so.wallet.model.entity.Account;
@@ -118,7 +119,7 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.displayError(new UIException("网络错误"));
                     }
 
                     @Override
