@@ -37,7 +37,7 @@ public class AschHelper {
         Date beginEpoch =  AschConst.ASCH_BEGIN_EPOCH ;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(beginEpoch);
-        calendar.add(Calendar.MILLISECOND, timestamp);
+        calendar.add(Calendar.SECOND, timestamp);
         return calendar.getTime();
     }
 }

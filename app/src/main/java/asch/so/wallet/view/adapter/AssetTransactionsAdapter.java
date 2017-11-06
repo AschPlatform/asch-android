@@ -39,7 +39,7 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
            viewHolder.amountTv.setText(String.format("%.3f",transaction.getAmount()/ (double)AschConst.COIN)+" XAS");
        }else if (TransactionType.UIATransfer.getCode()==transaction.getType()){
            UIATransferAsset asset=(UIATransferAsset)transaction.getAssetInfo();
-           viewHolder.amountTv.setText(asset.getUiaTransfer().getAmountShow()+" "+asset.getUiaTransfer().getCurrency());
+           viewHolder.amountTv.setText(String.format("%.3f",Float.parseFloat(asset.getUiaTransfer().getAmountShow()))+" "+asset.getUiaTransfer().getCurrency());
 
 //           viewHolder.amountTv.setText(String.format("%.3f",transaction.getAmount()/ (double)AschConst.COIN)+" "+asset.getUiaTransfer().getCurrency());
        }

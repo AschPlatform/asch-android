@@ -215,6 +215,16 @@ public class TransactionInfo {
             case UIAIssue:
                 break;
             case UIATransfer:
+            {
+                buffer.put(getType().byteValue())
+                        .putInt(getTimestamp())
+                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                        .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
+                        .put(getRecipientIdBuffer())
+                        .putLong(getAmount())
+                        .put(getMessageBuffer())
+                        .put(getAsset().assetBytes());
+            }
                 break;
             case Lock:
                 break;

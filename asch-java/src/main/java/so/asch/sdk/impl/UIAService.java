@@ -131,7 +131,8 @@ public class UIAService extends AschRESTService implements UIA {
             Argument.require(Validation.isValidOffset(offset), "invalid offset");
             Argument.notNullOrEmpty(address, "invalid address");
 
-            ParameterMap parameters = createLimitAndOffsetParameters(limit, offset);
+            ParameterMap parameters = createLimitAndOffsetParameters(limit, offset)
+                    .put("orderBy","t_timestamp:desc");
 
             return get(transactionsUrl(AschServiceUrls.UIA.GET_ADDRESS_CURRENCY_TRANSACTIONS,address,currency), parameters);
         }
