@@ -153,7 +153,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
     @Override
     public void displayError(UIException exception) {
-        Toast.makeText(getContext(),"网络错误",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
     }
 
     @Override

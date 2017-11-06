@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.header.MaterialHeader;
@@ -105,7 +106,8 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
 
     @Override
     public void displayError(UIException exception) {
-
+        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+        refreshLayout.finishRefresh(2000);
     }
 
     @Override

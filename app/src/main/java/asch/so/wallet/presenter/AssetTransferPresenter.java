@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import asch.so.base.view.UIException;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetTransferContract;
@@ -83,7 +84,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
 
                         @Override
                         public void onError(Throwable e) {
-
+                            view.displayError(new UIException("转账失败"));
                         }
 
                         @Override
@@ -136,7 +137,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        view.displayError(new UIException("转账失败"));
                     }
 
                     @Override

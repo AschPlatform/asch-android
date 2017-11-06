@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -144,7 +145,8 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
     @Override
     public void displayError(UIException exception) {
-
+        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+        refreshLayout.finishRefresh(1000);
     }
 
     @Override

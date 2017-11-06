@@ -214,7 +214,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
     @Override
     public void displayError(UIException exception) {
-
+        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
     }
 
     @Override
