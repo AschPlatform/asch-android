@@ -57,6 +57,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
      TextView saveTv;
     @BindView(R.id.assets_sp)
     Spinner assetsSp;
+    private Bitmap qrcodeBmp;
 
     String currency="XAS";
     private Account account;
@@ -114,7 +115,9 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
         saveTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 2017/10/26  
+                if (qrcodeBmp!=null) {
+                    presenter.saveQrCode(qrcodeBmp);
+                }
             }
         });
 
@@ -132,6 +135,9 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (qrcodeBmp!=null){
+            qrcodeBmp.recycle();
+        }
     }
 
     @Override
@@ -148,7 +154,9 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     @Override
     public void displayQrCode(Bitmap bitmap) {
         qrcodeIv.setImageBitmap(bitmap);
+        qrcodeBmp=bitmap;
     }
+
 
     @Override
     public void displayAssets(List<UIAAsset> assets) {

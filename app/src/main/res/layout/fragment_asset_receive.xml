@@ -115,6 +115,7 @@
                 <!--tools:ignore="HardcodedText" />-->
         </LinearLayout>
         <TextView
+            android:background="@drawable/delete_account_btn_bg"
             android:id="@+id/save_btn"
             android:layout_gravity="center"
             android:layout_width="240dp"
