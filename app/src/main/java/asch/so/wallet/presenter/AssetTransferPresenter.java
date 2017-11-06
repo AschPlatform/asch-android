@@ -70,7 +70,8 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                         subscriber.onNext(result);
                         subscriber.onCompleted();
                     }else {
-                        subscriber.onError(result!=null?result.getException():new Exception("result is null"));
+                        subscriber.onError(new UIException("转账失败"));
+                       // subscriber.onError(result!=null?result.getException():new Exception("result is null"));
                     }
                 }
             }).subscribeOn(Schedulers.io())
