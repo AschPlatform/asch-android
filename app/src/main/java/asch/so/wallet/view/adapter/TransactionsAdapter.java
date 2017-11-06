@@ -44,7 +44,7 @@ public class TransactionsAdapter extends BaseQuickAdapter<Transaction, Transacti
     }
 
     public static class ViewHolder extends BaseViewHolder{
-        @BindView(R.id.transaction_id_tv)
+        @BindView(R.id.transactionid_tv)
         TextView transactionTv;
         @BindView(R.id.amount_tv)
         TextView amountTv;

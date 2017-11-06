@@ -47,15 +47,16 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
     }
 
     static class ViewHolder extends BaseViewHolder {
-        @BindView(R.id.transaction_id_tv)
+        @BindView(R.id.transactionid_tv)
         TextView transactionTv;
         @BindView(R.id.amount_tv)
         TextView amountTv;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
-           // itemView.setOnClickListener(view -> adapter.onItemHolderClick(this));
+//            ButterKnife.bind(this,itemView);
+            transactionTv=itemView.findViewById(R.id.transactionid_tv);
+            amountTv=itemView.findViewById(R.id.ammount_tv);
         }
     }
 }

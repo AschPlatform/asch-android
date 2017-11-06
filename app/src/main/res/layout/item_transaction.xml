@@ -20,7 +20,7 @@
         app:civ_border_width="0dp"
         />
     <TextView
-        android:id="@+id/transaction_id_tv"
+        android:id="@+id/transactionid_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

@@ -96,11 +96,11 @@ public class BasePinCompatActivity extends PinCompatActivity {
             ActivityStackManager.getInstance().push(this);
             hasInit = true;
         }
-        mFragmentClazz = getIntent().getStringExtra(EXTRA_FRAGMENT);
-        FrameLayout frameLayout = new FrameLayout(this);
-        frameLayout.setId(widget_frame);
-        setContentView(frameLayout);
-        replaceFragment();
+//        mFragmentClazz = getIntent().getStringExtra(EXTRA_FRAGMENT);
+//        FrameLayout frameLayout = new FrameLayout(this);
+//        frameLayout.setId(widget_frame);
+//        setContentView(frameLayout);
+//        replaceFragment();
     }
 
     protected void replaceFragment() {
