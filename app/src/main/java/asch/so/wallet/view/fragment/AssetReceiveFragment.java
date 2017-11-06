@@ -108,7 +108,6 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
             public void onClick(View view) {
 
                 copyAddress(account.getAddress());
-                //presenter.testDecodeQRCodeURL();
             }
         });
         
