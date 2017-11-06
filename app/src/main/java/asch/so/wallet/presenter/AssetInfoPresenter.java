@@ -112,14 +112,27 @@ public class AssetInfoPresenter implements AssetInfoContract.Presenter {
         uiaOervable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Action1<List<UIAAsset>>() {
+                .subscribe(new Subscriber<List<UIAAsset>>() {
                     @Override
-                    public void call(List<UIAAsset> balances) {
-//                        if (balances!=null && balances.size()>0){
-//                            view.displayXASBalance(balances.get(0));
-//                        }
-                        view.displayAssets(balances);
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<UIAAsset> assets) {
+                        view.displayAssets(assets);
                     }
                 });
+//                .subscribe(new Action1<List<UIAAsset>>() {
+//                    @Override
+//                    public void call(List<UIAAsset> balances) {
+//                        view.displayAssets(balances);
+//                    }
+//                });
     }
 }

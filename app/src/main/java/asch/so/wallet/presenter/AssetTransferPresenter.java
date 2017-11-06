@@ -74,13 +74,31 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                 }
             }).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<AschResult>() {
+                    .unsubscribeOn(Schedulers.io())
+                    .subscribe(new Subscriber<AschResult>() {
                         @Override
-                        public void call(AschResult aschResult) {
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(AschResult aschResult) {
                             Log.i(TAG, "+++++++"+aschResult.getRawJson());
                             view.displayToast("转账成功");
                         }
                     });
+//                    .subscribe(new Action1<AschResult>() {
+//                        @Override
+//                        public void call(AschResult aschResult) {
+//                            Log.i(TAG, "+++++++"+aschResult.getRawJson());
+//                            view.displayToast("转账成功");
+//                        }
+//                    });
         }
 
     @Override
@@ -110,14 +128,30 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
         uiaOervable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Action1<List<UIAAsset>>() {
+                .subscribe(new Subscriber<List<UIAAsset>>() {
                     @Override
-                    public void call(List<UIAAsset> assets) {
-//                        if (balances!=null && balances.size()>0){
-//                            view.displayXASBalance(balances.get(0));
-//                        }
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<UIAAsset> assets) {
                         view.displayAssets(assets);
                     }
                 });
+//                .subscribe(new Action1<List<UIAAsset>>() {
+//                    @Override
+//                    public void call(List<UIAAsset> assets) {
+////                        if (balances!=null && balances.size()>0){
+////                            view.displayXASBalance(balances.get(0));
+////                        }
+//                        view.displayAssets(assets);
+//                    }
+//                });
     }
 }

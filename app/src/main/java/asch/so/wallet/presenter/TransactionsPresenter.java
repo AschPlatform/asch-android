@@ -74,12 +74,29 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<Transaction>>() {
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<List<Transaction>>() {
                     @Override
-                    public void call(List<Transaction> transactions) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<Transaction> transactions) {
                         view.displayTranscations(transactions);
                     }
                 });
+//                .subscribe(new Action1<List<Transaction>>() {
+//                    @Override
+//                    public void call(List<Transaction> transactions) {
+//                        view.displayTranscations(transactions);
+//                    }
+//                });
     }
 
     @Override
@@ -108,12 +125,29 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<Transaction>>() {
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<List<Transaction>>() {
                     @Override
-                    public void call(List<Transaction> transactions) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<Transaction> transactions) {
                         view.displayMoreTranscations(transactions);
                     }
                 });
+//                .subscribe(new Action1<List<Transaction>>() {
+//                    @Override
+//                    public void call(List<Transaction> transactions) {
+//                        view.displayMoreTranscations(transactions);
+//                    }
+//                });
     }
 
     @Override
@@ -154,11 +188,28 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<Transaction>>() {
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<List<Transaction>>() {
                     @Override
-                    public void call(List<Transaction> transactions) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<Transaction> transactions) {
                         view.displayMoreTranscations(transactions);
                     }
                 });
+//                .subscribe(new Action1<List<Transaction>>() {
+//                    @Override
+//                    public void call(List<Transaction> transactions) {
+//                        view.displayMoreTranscations(transactions);
+//                    }
+//                });
     }
 }

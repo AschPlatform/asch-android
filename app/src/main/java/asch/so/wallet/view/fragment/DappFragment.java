@@ -141,16 +141,36 @@ public class DappFragment extends BaseFragment implements View.OnClickListener{
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<AschResult>() {
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<AschResult>() {
                     @Override
-                    public void call(AschResult aschResult) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(AschResult aschResult) {
                         String rawJson=aschResult.getRawJson();
                         Log.i(TAG, "+++++++"+rawJson);
                         callBack.onCallBack(rawJson);
                         Toast.makeText(getContext(),"充值成功", Toast.LENGTH_SHORT).show();
-                        //view.displayToast("转账成功");
                     }
                 });
+//                .subscribe(new Action1<AschResult>() {
+//                    @Override
+//                    public void call(AschResult aschResult) {
+//                        String rawJson=aschResult.getRawJson();
+//                        Log.i(TAG, "+++++++"+rawJson);
+//                        callBack.onCallBack(rawJson);
+//                        Toast.makeText(getContext(),"充值成功", Toast.LENGTH_SHORT).show();
+//                        //view.displayToast("转账成功");
+//                    }
+//                });
     }
 
 

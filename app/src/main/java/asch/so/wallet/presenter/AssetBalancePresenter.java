@@ -18,6 +18,7 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
+import asch.so.wallet.view.UIException;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -119,15 +120,36 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter {
                         .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Action1<List<Balance>>() {
+                .subscribe(new Subscriber<List<Balance>>() {
                     @Override
-                    public void call(List<Balance> balances) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("xasObservable error:",e.toString());
+                        view.displayError(new UIException("获取余额错误"));
+                    }
+
+                    @Override
+                    public void onNext(List<Balance> balances) {
                         if (balances!=null && balances.size()>0){
                             view.displayXASBalance(balances.get(0));
                         }
                         view.displayAssets(balances);
                     }
                 });
+//                .subscribe(new Action1<List<Balance>>() {
+//                    @Override
+//                    public void call(List<Balance> balances) {
+//                        if (balances!=null && balances.size()>0){
+//                            view.displayXASBalance(balances.get(0));
+//                        }
+//                        view.displayAssets(balances);
+//                    }
+//
+//                });
 
     }
 

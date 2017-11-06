@@ -133,12 +133,28 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
         uiaOervable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Action1<List<UIAAsset>>() {
+                .subscribe(new Subscriber<List<UIAAsset>>() {
                     @Override
-                    public void call(List<UIAAsset> assets) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<UIAAsset> assets) {
                         view.displayAssets(assets);
                     }
                 });
+//                .subscribe(new Action1<List<UIAAsset>>() {
+//                    @Override
+//                    public void call(List<UIAAsset> assets) {
+//                        view.displayAssets(assets);
+//                    }
+//                });
     }
 
     @Override

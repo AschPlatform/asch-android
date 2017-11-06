@@ -7,6 +7,7 @@ import asch.so.base.view.BaseView;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
+import asch.so.wallet.view.UIException;
 
 /**
  * Created by kimziv on 2017/9/27.
@@ -21,6 +22,8 @@ public interface AssetBalanceContract {
         void displayXASBalance(Balance balance);
         //用户信息
         void displayAccount(Account account);
+
+        void displayError(UIException ex);
     }
 
     interface Presenter extends BasePresenter{

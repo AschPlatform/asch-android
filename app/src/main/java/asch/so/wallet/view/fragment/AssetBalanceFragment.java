@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -44,6 +45,7 @@ import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
+import asch.so.wallet.view.UIException;
 import asch.so.wallet.view.adapter.AssetsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -154,7 +156,11 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 presenter.loadAccount();
-                presenter.loadAssets();
+                try {
+                    presenter.loadAssets();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -270,5 +276,11 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void displayAccount(Account account) {
         nameTv.setText(account.getName());
+    }
+
+    @Override
+    public void displayError(UIException ex) {
+        Toast.makeText(getContext(),ex.getMessage(),Toast.LENGTH_SHORT).show();
+        refreshLayout.finishRefresh(2000);
     }
 }

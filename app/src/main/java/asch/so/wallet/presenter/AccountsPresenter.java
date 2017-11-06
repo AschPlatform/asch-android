@@ -13,7 +13,9 @@ import asch.so.wallet.contract.AccountsContract;
 import asch.so.wallet.model.db.dao.AccountsDao;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.component.DaggerPresenterComponent;
+import io.realm.RealmResults;
 import rx.Observable;
+import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -75,7 +77,24 @@ public void loadSavedAccounts() {
     Subscription subscription = Observable.just(accountsDao.queryAllSavedAccounts())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(accounts -> view.displaySavedAccounts(accounts));
+            .unsubscribeOn(Schedulers.io())
+            .subscribe(new Subscriber<RealmResults<Account>>() {
+                @Override
+                public void onCompleted() {
+
+                }
+
+                @Override
+                public void onError(Throwable e) {
+
+                }
+
+                @Override
+                public void onNext(RealmResults<Account> accounts) {
+                    view.displaySavedAccounts(accounts);
+                }
+            });
+           // .subscribe(accounts -> view.displaySavedAccounts(accounts));
     subscriptions.add(subscription);
 }
 

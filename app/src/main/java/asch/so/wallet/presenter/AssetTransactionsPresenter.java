@@ -109,12 +109,29 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<Transaction>>() {
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<List<Transaction>>() {
                     @Override
-                    public void call(List<Transaction> transactions) {
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(List<Transaction> transactions) {
                         view.displayTransactions(transactions);
                     }
                 });
+//                .subscribe(new Action1<List<Transaction>>() {
+//                    @Override
+//                    public void call(List<Transaction> transactions) {
+//                        view.displayTransactions(transactions);
+//                    }
+//                });
     }
 
     @Override
