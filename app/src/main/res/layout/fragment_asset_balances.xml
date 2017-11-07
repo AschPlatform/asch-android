@@ -129,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolBarHeight"
                 android:paddingTop="@dimen/toolBarPaddingTop"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:layout_collapseMode="pin">
                 <!--?attr/actionBarSize-->
