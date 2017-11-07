@@ -158,9 +158,6 @@ public class MineFragment extends BaseFragment implements MineContract.View{
 
     @Override
     public void displayItems(List<MineSection> items) {
-        //this.itemList.clear();
-        //this.itemList.addAll(items);
         this.adapter.replaceData(items);
-        //this.adapter.notifyDataSetChanged();
     }
 }

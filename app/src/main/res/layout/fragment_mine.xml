@@ -27,6 +27,7 @@
                 android:layout_height="match_parent"
                 app:layout_collapseMode="parallax"
                 android:src="@mipmap/mine_header_bg"
+                android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 />
             <LinearLayout
@@ -77,7 +78,11 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/toolBarHeight"
+                android:background="@mipmap/toolbar"
+                android:paddingTop="@dimen/toolBarPaddingTop"
+                android:fitsSystemWindows="true"
+                android:visibility="invisible"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 

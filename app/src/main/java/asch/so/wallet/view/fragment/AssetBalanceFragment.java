@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -70,7 +71,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 //    @BindView(R.id.fab)
 //    FloatingActionButton floatingActionButton;
     @BindView(R.id.balance_bbl)
-    ButtonBarLayout blanceBll;
+    ButtonBarLayout balanceBbl;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.parallax)
@@ -88,6 +89,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @BindView(R.id.add_icon)
      ImageView addIconIv;
+    @BindView(R.id.top_balance_tv)
+     TextView topBalanceTv;
 
 
     Unbinder unbinder;
@@ -116,7 +119,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView=inflater.inflate(R.layout.fragment_assets,container,false);
+        View rootView=inflater.inflate(R.layout.fragment_asset_balances,container,false);
         unbinder = ButterKnife.bind(this,rootView);
         assetsRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         assetsRcv.setItemAnimator(new DefaultItemAnimator());
@@ -126,14 +129,10 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
                 Balance balance = assetList.get(position);
-               // Intent intent = new Intent(getActivity(), AssetTransactionsActivity.class);
-//                intent.putExtra("curreny",balance.getCurrency());
-//                intent.putExtra("precision",balance.getPrecision());
                 Bundle bundle=new Bundle();
                 String json = JSON.toJSONString(balance);
                 bundle.putString("balance",json);
                 BaseActivity.start(getActivity(),AssetTransactionsActivity.class, bundle);
-                //startActivity(intent);
             }
         });
         addIconIv.setOnClickListener(this);
@@ -149,11 +148,6 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
 
     private void setupRefreshLayout(){
-
-//        //状态栏透明和间距处理
-//        StatusBarUtil.immersive(getActivity());
-//        StatusBarUtil.setPaddingSmart(getActivity(), toolbar);
-
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -177,15 +171,22 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             boolean misAppbarExpand = true;
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
                 int scrollRange = appBarLayout.getTotalScrollRange();
+                Log.v(TAG,"verticalOffset:"+verticalOffset+", scrollRange:"+scrollRange);
                 float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
+                toolbar.setAlpha((1-fraction));
+                toolbar.setBackgroundResource(R.mipmap.toolbar);
+
                 if (fraction < 0.1 && misAppbarExpand) {
                     misAppbarExpand = false;
-                   // floatingActionButton.animate().scaleX(0).scaleY(0);
+                    //addIconIv.setAlpha(1.0f);
+                    topBalanceTv.setAlpha(1.0f);
                 }
                 if (fraction > 0.8 && !misAppbarExpand) {
                     misAppbarExpand = true;
-                    //floatingActionButton.animate().scaleX(1).scaleY(1);
+                   // addIconIv.setAlpha(0);
+                    topBalanceTv.setAlpha(0);
                 }
             }
         });
@@ -272,7 +273,9 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void displayXASBalance(Balance balance) {
-        xasBalanceTv.setText(String.valueOf(balance.getRealBalance()));
+        String amount=String.valueOf(balance.getRealBalance());
+        xasBalanceTv.setText(amount);
+        topBalanceTv.setText(amount+" XAS");
     }
 
     @Override
