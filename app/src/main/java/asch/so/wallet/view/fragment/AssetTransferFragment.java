@@ -118,22 +118,23 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         View rootView=inflater.inflate(R.layout.fragment_asset_transfer,container,false);
         ButterKnife.bind(this,rootView);
 
+        String currency;
+        int precision;
+        hideKeyboard();
+
+        if (balance!=null){
+            currency= balance.getCurrency(); //"KIM.KIM";
+            precision=balance.getPrecision();
+        }else {
+            currency= qrCodeURL.getCurrency();
+            precision=8;
+        }
 
         targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));
         transferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String currency;
-                int precision;
-                hideKeyboard();
 
-                if (balance!=null){
-                     currency= balance.getCurrency(); //"KIM.KIM";
-                     precision=balance.getPrecision();
-                }else {
-                    currency= qrCodeURL.getCurrency();
-                    precision=8;
-                }
                 String targetAddress= targetEt.getText().toString().trim();
                 String ammountStr=amountEt.getText().toString().trim();
                 Account account=getAccount();
@@ -164,10 +165,9 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         if (qrCodeURL!=null){
             targetEt.setText(qrCodeURL.getAddress());
             amountEt.setText(qrCodeURL.getAmount());
-
         }
 
-        presenter.loadAssets();
+        presenter.loadAssets(currency);
         return rootView;
     }
 
@@ -224,7 +224,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     }
 
     @Override
-    public void displayAssets(List<UIAAsset> assets) {
+    public void displayAssets(List<UIAAsset> assets, int selectIndex) {
         Log.d(TAG,"++++assets:"+assets.toString());
         ArrayList<String> nameList=new ArrayList<String>();
         nameList.add(AschConst.CORE_COIN_NAME);
@@ -237,7 +237,10 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         assetsSpinner.setAdapter(adapter);
+        assetsSpinner.setSelection(selectIndex,true);
+
     }
+    
 
     public void setTargetAddress(String address){
         this.targetEt.setText(address);

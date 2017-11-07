@@ -141,17 +141,6 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
                         view.displayAssets(balances);
                     }
                 });
-//                .subscribe(new Action1<List<Balance>>() {
-//                    @Override
-//                    public void call(List<Balance> balances) {
-//                        if (balances!=null && balances.size()>0){
-//                            view.displayXASBalance(balances.get(0));
-//                        }
-//                        view.displayAssets(balances);
-//                    }
-//
-//                });
-
     }
 
     private Handler handler = new Handler(Looper.getMainLooper()){

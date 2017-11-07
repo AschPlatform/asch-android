@@ -14,13 +14,13 @@ public interface AssetTransferContract {
 
     interface View extends BaseView<Presenter>{
         void displayToast(String toast);
-        void displayAssets(List<UIAAsset> assets);
+        void displayAssets(List<UIAAsset> assets, int selectIndex);
     }
 
     interface Presenter extends BasePresenter{
 
         void transfer(String currency, String targetAddress, long amount, String message, String secret, String secondSecret);
 
-        void loadAssets();
+        void loadAssets(String currency);
     }
 }

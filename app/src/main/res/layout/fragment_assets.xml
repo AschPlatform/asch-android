@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="asch.so.wallet.view.fragment.AssetsFragment">
+    tools:context="asch.so.wallet.view.fragment.AssetBalanceFragment">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -162,9 +162,13 @@
         app:srlPrimaryColor="@color/colorPrimary"
         app:srlAccentColor="@android:color/white"
         app:srlEnableLoadmore="false">
-        <com.scwang.smartrefresh.header.PhoenixHeader
+        <com.scwang.smartrefresh.header.MaterialHeader
+            android:id="@+id/header"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content" />
+        <!--<com.scwang.smartrefresh.header.PhoenixHeader-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"/>-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/assets_rcv"
             android:layout_width="match_parent"

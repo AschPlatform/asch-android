@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 import asch.so.base.view.UIException;
 import asch.so.wallet.AppConstants;
@@ -104,7 +105,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
         }
 
     @Override
-    public void loadAssets() {
+    public void loadAssets(String currency) {
        // Account account = getAccount();
         //String address=account.getAddress();
         ArrayList<UIAAsset> list=new ArrayList<UIAAsset>();
@@ -143,17 +144,23 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
 
                     @Override
                     public void onNext(List<UIAAsset> assets) {
-                        view.displayAssets(assets);
+
+                        view.displayAssets(assets,getSelectedIndex(assets,currency));
                     }
                 });
-//                .subscribe(new Action1<List<UIAAsset>>() {
-//                    @Override
-//                    public void call(List<UIAAsset> assets) {
-////                        if (balances!=null && balances.size()>0){
-////                            view.displayXASBalance(balances.get(0));
-////                        }
-//                        view.displayAssets(assets);
-//                    }
-//                });
+    }
+
+    private int getSelectedIndex(List<UIAAsset> assets, String currency){
+        int index=0;
+        if (currency!=null && assets!=null){
+            for (int i = 0; i < assets.size(); i++) {
+                if (currency.equals(assets.get(i).getName()))
+                {
+                    index=i+1;
+                    break;
+                }
+            }
+        }
+        return index;
     }
 }
