@@ -46,6 +46,7 @@ import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
+import asch.so.wallet.presenter.AssetBalancePresenter;
 import asch.so.wallet.view.adapter.AssetsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -137,6 +138,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         });
         addIconIv.setOnClickListener(this);
         backupBtn.setOnClickListener(this);
+        presenter=new AssetBalancePresenter(this);
 
         setupRefreshLayout();
 
@@ -155,8 +157,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                presenter.loadAccount();
                 try {
+                    presenter.loadAccount();
                     presenter.loadAssets();
                 }catch (Exception e){
                     e.printStackTrace();

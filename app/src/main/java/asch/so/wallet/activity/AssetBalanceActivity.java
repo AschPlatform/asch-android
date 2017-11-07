@@ -30,8 +30,8 @@ public class AssetBalanceActivity extends BaseActivity {
             ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),assetsFragment, R.id.fragment_container);
         //}
 
-        presenter=new AssetBalancePresenter(assetsFragment);
-        assetsFragment.setPresenter(presenter);
+//        presenter=new AssetBalancePresenter(assetsFragment);
+       // assetsFragment.setPresenter(presenter);
 
 
 

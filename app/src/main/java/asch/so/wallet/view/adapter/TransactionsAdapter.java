@@ -52,6 +52,8 @@ public class TransactionsAdapter extends BaseQuickAdapter<Transaction, Transacti
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
+//            transactionTv=itemView.findViewById(R.id.transactionid_tv);
+//            amountTv=itemView.findViewById(R.id.ammount_tv);
         }
     }
 

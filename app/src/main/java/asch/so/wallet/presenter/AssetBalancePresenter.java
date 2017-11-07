@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Observer;
 
 import asch.so.base.view.UIException;
 import asch.so.wallet.accounts.AccountsManager;
@@ -31,7 +32,7 @@ import so.asch.sdk.AschSDK;
  * Created by kimziv on 2017/9/20.
  */
 
-public class AssetBalancePresenter implements AssetBalanceContract.Presenter {
+public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Observer {
     private static  final  String TAG=AssetBalancePresenter.class.getSimpleName();
 
     private final  AssetBalanceContract.View view;
@@ -40,6 +41,7 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter {
     public AssetBalancePresenter(AssetBalanceContract.View view) {
         this.view = view;
         view.setPresenter(this);
+        AccountsManager.getInstance().addObserver(this);
     }
 
     @Override
@@ -160,4 +162,11 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter {
     };
 
 
+    @Override
+    public void update(java.util.Observable observable, Object o) {
+        if (observable instanceof AccountsManager){
+            loadAccount();
+            loadAssets();
+        }
+    }
 }

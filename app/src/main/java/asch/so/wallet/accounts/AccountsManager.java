@@ -8,6 +8,7 @@ import com.google.common.collect.Iterables;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
@@ -22,17 +23,15 @@ import asch.so.wallet.model.entity.Account;
  * 账户管理类
  */
 
-public class AccountsManager {
+public class AccountsManager extends Observable{
 
     private static AccountsManager accountsManager=null;
-
-
-   // private Context context;
 
     //当前账户
     private Account currentAccount=null;
     //所有账户
     private ArrayList<Account> accounts=null;
+
 
 
 
@@ -56,12 +55,12 @@ public class AccountsManager {
                 for (Account account :
                         accounts) {
                     if (account.getAddress().equals(lastAddress)) {
-                       currentAccount=account;
+                       setCurrentAccount(account);
                       }
                     }
             }
             if (currentAccount==null){
-                currentAccount=accounts.get(0);
+                setCurrentAccount(accounts.get(0));
             }
         }
     }
@@ -72,6 +71,8 @@ public class AccountsManager {
 
     public void setCurrentAccount(Account currentAccount) {
         this.currentAccount = currentAccount;
+        this.setChanged();
+        this.notifyObservers();
     }
 
     /**
@@ -92,7 +93,7 @@ public class AccountsManager {
     public void addAccount(Account account){
         accounts.add(account);
         AccountsDao.getInstance().addAccount(account);
-        currentAccount=account;
+        setCurrentAccount(account);
     }
 
     /**
@@ -104,9 +105,9 @@ public class AccountsManager {
         if (currentAccount==account){
             if (accounts.size()>0)
             {
-                currentAccount=accounts.get(0);
+                setCurrentAccount(accounts.get(0));
             }else {
-                currentAccount=null;
+                setCurrentAccount(null);
             }
         }
         AccountsDao.getInstance().removeAccount(account);
@@ -173,4 +174,8 @@ public class AccountsManager {
         }
     }
 
+//    @Override
+//    public synchronized boolean hasChanged() {
+//        return super.hasChanged();
+//    }
 }

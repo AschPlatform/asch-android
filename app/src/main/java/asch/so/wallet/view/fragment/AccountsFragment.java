@@ -86,6 +86,7 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
                 Account account = accountList.get(position);
                 presenter.setCurrentAccount(account);
                 accountsAdapter.notifyDataSetChanged();
+                getActivity().finish();
             }
         });
 

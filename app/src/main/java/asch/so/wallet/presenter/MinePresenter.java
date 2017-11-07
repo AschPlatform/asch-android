@@ -11,12 +11,14 @@ import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.view.entity.MineItem;
 import asch.so.wallet.view.entity.MineSection;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * Created by kimziv on 2017/9/28.
  */
 
-public class MinePresenter implements MineContract.Presenter {
+public class MinePresenter implements MineContract.Presenter, java.util.Observer {
 
     private MineContract.View view;
     private Context context;
@@ -25,6 +27,7 @@ public class MinePresenter implements MineContract.Presenter {
         this.context=context;
         this.view=view;
         view.setPresenter(this);
+        AccountsManager.getInstance().addObserver(this);
     }
 
     public void subscribe() {
@@ -61,5 +64,15 @@ public class MinePresenter implements MineContract.Presenter {
 
 
         view.displayItems(list);
+    }
+
+
+
+
+    @Override
+    public void update(java.util.Observable observable, Object obj) {
+        if (observable instanceof AccountsManager){
+            loadAccount();
+        }
     }
 }
