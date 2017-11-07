@@ -117,6 +117,9 @@
         <activity android:name=".activity.AppPinActivity">
 
         </activity>
+        <activity android:name=".activity.TodoActivity">
+
+        </activity>
     </application>
 
 </manifest>
