@@ -240,7 +240,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         assetsSpinner.setSelection(selectIndex,true);
 
     }
-    
+
 
     public void setTargetAddress(String address){
         this.targetEt.setText(address);
