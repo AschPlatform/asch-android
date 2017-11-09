@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -58,7 +59,7 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     @BindView(R.id.address_tv)
     TextView addressTv;
     @BindView(R.id.ident_icon)
-    CircleImageView identicon;
+    ImageView identicon;
     @BindView(R.id.app_bar_mine)
     AppBarLayout appBarLayout;
     @BindView(R.id.toolbar)
