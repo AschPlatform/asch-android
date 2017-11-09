@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatDelegate;
 
+import com.blankj.utilcode.util.Utils;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
@@ -63,6 +64,7 @@ public class WalletApplication extends MultiDexApplication{
         initRealm();
         initLockManager();
         IdenticonGenerator.init(this);
+        Utils.init(this);
     }
 
     private void initRealm(){

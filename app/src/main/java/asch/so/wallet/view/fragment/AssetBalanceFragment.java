@@ -145,7 +145,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         setupRefreshLayout();
 
         //StatusBarUtil.immersive(getActivity());
-
+        presenter.loadAccount();
         return rootView;
     }
 
@@ -155,7 +155,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 try {
-                    presenter.loadAccount();
+//                    presenter.loadAccount();
                     presenter.loadAssets();
                 }catch (Exception e){
                     e.printStackTrace();

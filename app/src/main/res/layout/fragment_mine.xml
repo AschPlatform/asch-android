@@ -54,7 +54,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="8dp"
-                    android:padding="2dp"
+                    android:padding="3dp"
                     android:scaleType="centerInside"
                     android:background="@drawable/square_bg"
                     android:src="@mipmap/default_avatar"

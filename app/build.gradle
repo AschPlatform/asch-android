@@ -133,6 +133,7 @@ dependencies {
         transitive=true
     }
     compile rootProject.ext.dependencies["ldialogs"]
+    compile rootProject.ext.dependencies["utilcode"]
    // compile files('libs/asch-android-0.1.2-SNAPSHOT-jar-with-dependencies.jar')
 
 }
