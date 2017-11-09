@@ -1,5 +1,6 @@
 package asch.so.wallet.view.adapter;
 
+import android.graphics.Bitmap;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import asch.so.base.adapter.BaseRecyclerViewAdapter;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.util.IdenticonGenerator;
 import asch.so.widget.itenticon.SymmetricIdenticon;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +36,7 @@ public class AccountsAdapter extends BaseQuickAdapter<Account, AccountsAdapter.V
 
     @Override
     protected void convert(ViewHolder viewHolder, Account account) {
-        viewHolder.identicon.show(account.getAddress());
+
         viewHolder.nameTv.setText(account.getName());
         viewHolder.addressTv.setText(account.getAddress());
         if (account.equals(AccountsManager.getInstance().getCurrentAccount())){
@@ -42,11 +44,18 @@ public class AccountsAdapter extends BaseQuickAdapter<Account, AccountsAdapter.V
         }else {
             viewHolder.checkmarkIv.setVisibility(View.INVISIBLE);
         }
+
+        IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
+            @Override
+            public void onIdenticonGenerated(Bitmap bmp) {
+                viewHolder.identicon.setImageBitmap(bmp);
+            }
+        });
     }
 
     static class ViewHolder extends BaseViewHolder {
         @BindView(R.id.ident_icon)
-        SymmetricIdenticon identicon;
+        ImageView identicon;
 
         @BindView(R.id.item_tv_name)
         TextView nameTv;
