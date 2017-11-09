@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import asch.so.base.fragment.BaseFragment;
@@ -18,8 +19,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class TransferConfirmationFragment extends BaseFragment implements View.OnClickListener{
-    @BindView(R.id.avatar_civ)
-    CircleImageView avatarCiv;
+    @BindView(R.id.ident_icon)
+    ImageView identicon;
     @BindView(R.id.address_tv)
     TextView addressTv;
     @BindView(R.id.ammount_tv)

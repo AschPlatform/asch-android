@@ -2,6 +2,7 @@ package asch.so.wallet.view.widget;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.Gravity;
@@ -11,10 +12,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import asch.so.base.fragment.BaseDialogFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.util.IdenticonGenerator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -25,8 +28,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TransferConfirmationDialog extends BaseDialogFragment implements View.OnClickListener{
 
-    @BindView(R.id.avatar_civ)
-    CircleImageView avatarCiv;
+    @BindView(R.id.ident_icon)
+    ImageView identicon;
     @BindView(R.id.address_tv)
     TextView addressTv;
     @BindView(R.id.ammount_tv)
@@ -116,6 +119,11 @@ public class TransferConfirmationDialog extends BaseDialogFragment implements Vi
     public void setConfirmInfo(String address, String ammount, String currency){
         this.addressTv.setText(address);
         this.ammountTv.setText(ammount+" "+currency);
-
+        IdenticonGenerator.getInstance().generateBitmap(address, new IdenticonGenerator.OnIdenticonGeneratorListener() {
+            @Override
+            public void onIdenticonGenerated(Bitmap bmp) {
+                identicon.setImageBitmap(bmp);
+            }
+        });
     }
 }

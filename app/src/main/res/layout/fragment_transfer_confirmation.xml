@@ -5,13 +5,24 @@
     android:layout_height="wrap_content">
 <LinearLayout
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/page_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/avatar_civ"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+    <!--<de.hdodenhof.circleimageview.CircleImageView-->
+        <!--android:id="@+id/avatar_civ"-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:src="@mipmap/default_avatar"-->
+        <!--/>-->
+    <ImageView
+        android:id="@+id/ident_icon"
+        android:padding="3dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/square_bg"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center_horizontal"
         android:src="@mipmap/default_avatar"
@@ -35,13 +46,13 @@
         />
     <TextView
         android:id="@+id/ammount_tv"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:textSize="26sp"
         android:text="878 XAS"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="30dp"
         />
 </LinearLayout>
 
@@ -51,7 +62,8 @@
         android:layout_height="44dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         style="@style/PrimaryButton.Style"
         android:text="确定"
         android:textColor="#FFFFFF"
