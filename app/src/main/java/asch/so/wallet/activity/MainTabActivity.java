@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -14,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 
 import com.github.omadahealth.lollipin.lib.PinCompatActivity;
 import com.github.omadahealth.lollipin.lib.interfaces.LifeCycleInterface;
@@ -71,9 +73,7 @@ public class MainTabActivity extends BasePinCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
-       // ButterKnife.bind(this);
-       // setSupportActionBar(toolbar);
-
+        StatusBarUtil.immersive(this);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -129,19 +129,16 @@ public class MainTabActivity extends BasePinCompatActivity {
 //        });
 
         setupViewPager(viewPager);
-
-        StatusBarUtil.immersive(this);
-
-//        IntentFilter filter = new IntentFilter(AppLockActivity.ACTION_CANCEL);
-//        LocalBroadcastManager.getInstance(this).registerReceiver(mPinCancelledReceiver, filter);
+//
     }
 
     private void setupViewPager(ViewPager viewPager) {
         TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
 
         AssetBalanceFragment assetsFragment=AssetBalanceFragment.newInstance();
-        MineFragment mineFragment=MineFragment.newInstance();
         DappCenterFragment dappCenterFragment=DappCenterFragment.newInstance();
+        MineFragment mineFragment=MineFragment.newInstance();
+
 
         adapter.addFragment(assetsFragment);
         adapter.addFragment(dappCenterFragment);
@@ -150,8 +147,6 @@ public class MainTabActivity extends BasePinCompatActivity {
 
         assetsPresenter =new AssetBalancePresenter(assetsFragment);
         assetsFragment.setPresenter(assetsPresenter);
-//        assetsPresenter.loadAccount();
-//        assetsPresenter.loadAssets();
 
         dappCenterPresenter=new DappCenterPresenter(this,dappCenterFragment);
         dappCenterPresenter.loadDappList();

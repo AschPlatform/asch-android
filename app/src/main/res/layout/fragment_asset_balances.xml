@@ -48,13 +48,16 @@
                 android:paddingTop="8dp"
                 android:gravity="left|center_vertical"
                 >
-                <de.hdodenhof.circleimageview.CircleImageView
+                <!--app:civ_border_color="@color/white"-->
+                <!--app:civ_border_width="2dp"-->
+                <ImageView
                     android:id="@+id/ident_icon"
+                    android:padding="1dp"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/square_bg"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_margin="8dp"
-                    app:civ_border_color="@color/white"
-                    app:civ_border_width="2dp"
                     android:src="@mipmap/default_avatar"
                     />
                 ​<LinearLayout

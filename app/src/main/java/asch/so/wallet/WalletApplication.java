@@ -15,6 +15,7 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import asch.so.wallet.activity.AppPinActivity;
+import asch.so.wallet.util.IdenticonGenerator;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -61,6 +62,7 @@ public class WalletApplication extends MultiDexApplication{
         AppConfig.init(this);
         initRealm();
         initLockManager();
+        IdenticonGenerator.init(this);
     }
 
     private void initRealm(){

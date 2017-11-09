@@ -1,0 +1,41 @@
+<html>
+<!--<canvas id="canvas_id"  width="128" height="128"></canvas>-->
+<script src="jdenticon-1.7.2.min.js"></script>
+<script src="require.min.js"></script>
+<script>
+        function connectWebViewJavascriptBridge(callback) {
+            if (window.WebViewJavascriptBridge) {
+                callback(WebViewJavascriptBridge)
+            } else {
+                document.addEventListener(
+                    'WebViewJavascriptBridgeReady'
+                    , function() {
+                        callback(WebViewJavascriptBridge)
+                    },
+                    false
+                );
+            }
+        }
+
+        connectWebViewJavascriptBridge(function(bridge) {
+           var canvas= canvas = document.createElement('canvas');
+           canvas.width=128;
+           canvas.height=128;
+
+            bridge.init(function(message, responseCallback) {
+                responseCallback(null);
+            });
+
+            bridge.registerHandler("functionInJs", function(value, responseCallback) {
+            //var canvas = document.getElementById("canvas_id");
+            // var ctx = canvas.getContext("2d");
+             var ctx = canvas.getContext("2d");
+             jdenticon.drawIcon(ctx, value , 128);
+             //var svg = jdenticon.toSvg("123234", 128);
+              var dataurl =  canvas.toDataURL("image/png");
+              responseCallback(dataurl);
+            });
+        });
+</script>
+</body>
+</html>

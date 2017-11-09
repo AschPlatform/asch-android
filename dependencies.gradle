@@ -21,6 +21,8 @@ def passcodeviewVersion="1.2.1"
 def dialogplusVersion="1.11"
 def lollipinVersion="2.1.0"
 def ldialogsVersion="1.2.0"
+def commonUtilsVersion="1.1.3"
+def androidsvgVersion="1.2.2-beta-1"
 
 project.ext {
     android = [
@@ -95,7 +97,9 @@ project.ext {
             "passcodeview"                            :"in.arjsna:passcodeview:${passcodeviewVersion}",
             "dialogplus"                    :"com.orhanobut:dialogplus:${dialogplusVersion}@aar",
             "lollipin"                      :"com.github.omadahealth:lollipin:${lollipinVersion}@aar",
-            "ldialogs"                      :"uk.me.lewisdeane.ldialogs:ldialogs:${ldialogsVersion}@aar"
+            "ldialogs"                      :"uk.me.lewisdeane.ldialogs:ldialogs:${ldialogsVersion}@aar",
+            "common-utils"                  :"com.luffykou:android-common-utils:${commonUtilsVersion}",
+            "androidsvg"                    :"com.caverock:androidsvg:${androidsvgVersion}"
 
     ]
 }

@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -56,8 +57,8 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 public class DappCenterFragment extends BaseFragment implements DappCenterContract.View{
     private static final String TAG = DappCenterFragment.class.getSimpleName();
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+//    @BindView(R.id.toolbar)
+//    Toolbar toolbar;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
     @BindView(R.id.dapp_list_rv)
@@ -86,7 +87,13 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
         dappListRv.setItemAnimator(new DefaultItemAnimator());
         dappListRv.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
         dappListRv.setAdapter(adapter);
-
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+                Intent intent=new Intent(getActivity(),DappActivity.class);
+                startActivity(intent);
+            }
+        });
 //        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
@@ -124,9 +131,9 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
     }
 
     public static List<BannerItem> BANNER_ITEMS = new ArrayList<BannerItem>(){{
-        add(new BannerItem("CCTime", R.mipmap.banner1));
-        add(new BannerItem("孔明屋", R.mipmap.banner2));
-        add(new BannerItem("受托人投票", R.mipmap.banner3));
+        add(new BannerItem("CCTime", R.mipmap.mine_header_bg));
+        add(new BannerItem("孔明屋", R.mipmap.mine_header_bg));
+        add(new BannerItem("受托人投票", R.mipmap.mine_header_bg));
     }};
 
     public class GlideImageLoader extends ImageLoader {

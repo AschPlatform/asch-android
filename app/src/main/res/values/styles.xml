@@ -87,5 +87,4 @@
         <item name="android:background">@drawable/primary_btn_selector</item>
         <item name="android:height">44dp</item>
     </style>
-
 </resources>

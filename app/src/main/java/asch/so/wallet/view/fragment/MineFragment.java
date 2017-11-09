@@ -1,12 +1,17 @@
 package asch.so.wallet.view.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +36,7 @@ import asch.so.wallet.activity.TodoActivity;
 import asch.so.wallet.contract.MineContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.MinePresenter;
+import asch.so.wallet.util.IdenticonGenerator;
 import asch.so.wallet.view.adapter.MineAdapter;
 import asch.so.wallet.view.entity.MineItem;
 import asch.so.wallet.view.entity.MineSection;
@@ -43,7 +49,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class MineFragment extends BaseFragment implements MineContract.View{
-
+    private  static final  String TAG=MineFragment.class.getSimpleName();
     MineContract.Presenter presenter;
     @BindView(R.id.mine_rcv)
     RecyclerView mineRcv;
@@ -53,6 +59,10 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     TextView addressTv;
     @BindView(R.id.ident_icon)
     CircleImageView identicon;
+    @BindView(R.id.app_bar_mine)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
 
 
@@ -97,6 +107,30 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_mine, container,false);
         ButterKnife.bind(this,rootView);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean misAppbarExpand = true;
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+
+                int scrollRange = appBarLayout.getTotalScrollRange();
+                Log.v(TAG,"verticalOffset:"+verticalOffset+", scrollRange:"+scrollRange);
+                float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
+                toolbar.setAlpha((1-fraction));
+                toolbar.setBackgroundResource(R.mipmap.toolbar);
+
+                if (fraction < 0.1 && misAppbarExpand) {
+                    misAppbarExpand = false;
+                    //addIconIv.setAlpha(1.0f);
+                    //topBalanceTv.setAlpha(1.0f);
+                }
+                if (fraction > 0.8 && !misAppbarExpand) {
+                    misAppbarExpand = true;
+                    // addIconIv.setAlpha(0);
+                    //topBalanceTv.setAlpha(0);
+                }
+            }
+        });
+
         mineRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         mineRcv.setItemAnimator(new DefaultItemAnimator());
         mineRcv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
@@ -154,6 +188,12 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     public void displayAccount(Account account) {
         nameTv.setText(account.getName());
         addressTv.setText(account.getAddress());
+        IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
+            @Override
+            public void onIdenticonGenerated(Bitmap bmp) {
+                identicon.setImageBitmap(bmp);
+            }
+        });
     }
 
     @Override

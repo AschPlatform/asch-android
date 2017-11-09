@@ -2,6 +2,7 @@ package asch.so.wallet.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -48,6 +49,8 @@ import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.presenter.AssetBalancePresenter;
+import asch.so.wallet.util.IdenticonGenerator;
+import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.adapter.AssetsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,7 +84,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     TextView xasBalanceTv;
 
     @BindView(R.id.ident_icon)
-    CircleImageView identicon;
+    ImageView identicon;
     @BindView(R.id.name_tv)
     TextView nameTv;
     @BindView(R.id.backup_btn)
@@ -141,7 +144,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
         setupRefreshLayout();
 
-
+        //StatusBarUtil.immersive(getActivity());
 
         return rootView;
     }
@@ -281,6 +284,12 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void displayAccount(Account account) {
         nameTv.setText(account.getName());
+        IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
+            @Override
+            public void onIdenticonGenerated(Bitmap bmp) {
+                identicon.setImageBitmap(bmp);
+            }
+        });
     }
 
     @Override

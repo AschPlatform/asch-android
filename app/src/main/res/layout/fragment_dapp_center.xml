@@ -15,36 +15,36 @@
         app:srlEnableHeaderTranslationContent="false"
         app:srlEnablePreviewInEditMode="false"
         app:srlEnableNestedScrolling="false">
+        <!--android:layout_marginTop="?attr/actionBarSize"-->
         <com.scwang.smartrefresh.header.MaterialHeader
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="?attr/actionBarSize"/>
+           />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/dapp_list_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingTop="?attr/actionBarSize"
             android:background="@android:color/white"
             tools:listitem="@layout/item_dapp_center"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <com.github.mmin18.widget.RealtimeBlurView
-        android:id="@+id/blurview"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:realtimeBlurRadius="10dp"
-        app:realtimeOverlayColor="#cc0094ff"/>
+    <!--<com.github.mmin18.widget.RealtimeBlurView-->
+        <!--android:id="@+id/blurview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--app:realtimeBlurRadius="10dp"-->
+        <!--app:realtimeOverlayColor="#cc0094ff"/>-->
 
-    <include layout="@layout/layout_app_bar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        />
-    <android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"
-        android:id="@+id/toolbar"
-        android:background="@android:color/transparent"
-        app:title="应用中心"/>
+    <!--<include layout="@layout/layout_app_bar"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--/>-->
+    <!--<android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--app:title="应用中心"/>-->
 
 </FrameLayout>
 
