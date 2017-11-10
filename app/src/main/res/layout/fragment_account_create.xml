@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
     android:layout_width="match_parent"
     android:background="@color/page_bg"
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-
     <EditText
         android:id="@+id/seed_et"
         android:layout_width="match_parent"
@@ -16,6 +20,7 @@
         android:visibility="gone"
         android:text="spatial slush action typical emerge feature confirm edge game desk orphan burst" />
 <LinearLayout
+    android:layout_marginTop="20dp"
     android:layout_width="match_parent"
     android:layout_height="57dp"
     android:orientation="vertical"
@@ -135,4 +140,10 @@
         android:textColor="#888888"
         android:text="注：请备份好你的密码，该账户不提供密码找回功能，密码用于加密保护私钥，强度非常重要。"
         />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+    </FrameLayout>
 </LinearLayout>
+</ScrollView>

@@ -23,8 +23,7 @@ import butterknife.ButterKnife;
 
 public class AccountCreateActivity extends TitleToolbarActivity {
 
-   // @BindView(R.id.toolbar)
-    //Toolbar toolbar;
+
 
     private AccountCreateContract.Presenter presenter;
 

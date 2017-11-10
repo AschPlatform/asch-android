@@ -57,10 +57,14 @@
         <activity android:name=".activity.AccountsActivity" >
         </activity>
 
-        <activity android:name=".activity.AccountImportActivity" >
+        <activity android:name=".activity.AccountImportActivity"
+            android:windowSoftInputMode="adjustPan"
+            >
         </activity>
 
-        <activity android:name=".activity.AccountCreateActivity" >
+        <activity android:name=".activity.AccountCreateActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            >
         </activity>
 
         <activity android:name=".activity.QRCodeScanActivity" >
@@ -70,10 +74,12 @@
             >
         </activity>
         <activity android:name=".activity.AssetTransferActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             >
         </activity>
-        <activity android:name=".activity.AssetReceiveActivity" >
+        <activity android:name=".activity.AssetReceiveActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            >
         </activity>
         <activity android:name=".activity.DappContainerActivity">
 
