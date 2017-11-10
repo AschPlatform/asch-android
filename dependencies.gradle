@@ -24,6 +24,8 @@ def ldialogsVersion="1.2.0"
 def commonUtilsVersion="1.1.3"
 def androidsvgVersion="1.2.2-beta-1"
 def utilcodeVersion="1.9.8"
+def easyPopupVersion="1.0.2"
+def bubbleLayoutVersion="1.2.0"
 
 project.ext {
     android = [
@@ -101,7 +103,9 @@ project.ext {
             "ldialogs"                      :"uk.me.lewisdeane.ldialogs:ldialogs:${ldialogsVersion}@aar",
             "common-utils"                  :"com.luffykou:android-common-utils:${commonUtilsVersion}",
             "androidsvg"                    :"com.caverock:androidsvg:${androidsvgVersion}",
-            "utilcode"                      :"com.blankj:utilcode:${utilcodeVersion}"
+            "utilcode"                      :"com.blankj:utilcode:${utilcodeVersion}",
+            "easy-popup"                     :"com.github.zyyoona7:EasyPopup:${easyPopupVersion}",
+            "bubbleLayout"                  :"com.daasuu:BubbleLayout:${bubbleLayoutVersion}"
 
     ]
 }

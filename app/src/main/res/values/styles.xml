@@ -87,4 +87,9 @@
         <item name="android:background">@drawable/primary_btn_selector</item>
         <item name="android:height">44dp</item>
     </style>
+
+    <style name="PopupMenuAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/right_top_in</item>
+        <item name="android:windowExitAnimation">@anim/right_top_out</item>
+    </style>
 </resources>

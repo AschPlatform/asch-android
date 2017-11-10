@@ -90,7 +90,7 @@
                     android:orientation="horizontal"
                     android:gravity="right"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
                     ​<ImageView
                     android:id="@+id/add_icon_below"
                     android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
                     android:padding="4dp"
                     android:visibility="visible"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical|right"
+                    android:layout_gravity="top|right"
                     android:src="@mipmap/more_menu_icon"
                     />
                 </LinearLayout>

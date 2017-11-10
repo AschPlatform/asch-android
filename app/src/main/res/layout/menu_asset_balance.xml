@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.daasuu.bl.BubbleLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    app:bl_arrowDirection="top"
+    app:bl_arrowHeight="8dp"
+    app:bl_arrowPosition="99dp"
+    app:bl_arrowWidth="12dp"
+    app:bl_strokeWidth="1dp"
+    app:bl_bubbleColor="#cc333333"
+    app:bl_cornersRadius="4dp"
+    >
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/divider_horizontal_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <TextView
+            android:id="@+id/scan_item"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/menu_item_selector"
+            android:clickable="true"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:text="扫一扫"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/receive_item"
+            android:background="@drawable/menu_item_selector"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:clickable="true"
+            android:text="收款"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/bill_item"
+            android:background="@drawable/menu_item_selector"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:textColor="@color/white"
+            android:text="账单"
+            android:textSize="14sp"/>
+    </LinearLayout>
+</com.daasuu.bl.BubbleLayout>

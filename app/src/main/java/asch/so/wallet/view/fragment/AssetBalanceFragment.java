@@ -28,10 +28,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.blankj.utilcode.util.SizeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.zyyoona7.lib.EasyPopup;
+import com.zyyoona7.lib.HorizontalGravity;
+import com.zyyoona7.lib.VerticalGravity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,15 +67,15 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  * Created by kimziv on 2017/9/21.
  */
 
-public class AssetBalanceFragment extends BaseFragment implements AssetBalanceContract.View, View.OnClickListener{
-    private static final String TAG=AssetBalanceFragment.class.getSimpleName();
+public class AssetBalanceFragment extends BaseFragment implements AssetBalanceContract.View, View.OnClickListener {
+    private static final String TAG = AssetBalanceFragment.class.getSimpleName();
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.assets_rcv)
     RecyclerView assetsRcv;
     @BindView(R.id.app_bar)
-   AppBarLayout appBarLayout;
-//    @BindView(R.id.fab)
+    AppBarLayout appBarLayout;
+    //    @BindView(R.id.fab)
 //    FloatingActionButton floatingActionButton;
     @BindView(R.id.balance_bbl)
     ButtonBarLayout balanceBbl;
@@ -91,9 +95,13 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     Button backupBtn;
 
     @BindView(R.id.add_icon)
-     ImageView addIconIv;
+    ImageView addIconIv;
+    @BindView(R.id.add_icon_below)
+    ImageView addIconBelowIv;
     @BindView(R.id.top_balance_tv)
-     TextView topBalanceTv;
+    TextView topBalanceTv;
+
+    EasyPopup moreEasyPopup;
 
 
     Unbinder unbinder;
@@ -101,8 +109,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     private int mOffset = 0;
     private int mScrollY = 0;
 
-    private List<Balance> assetList=new ArrayList<>();
-    private AssetsAdapter adapter=new AssetsAdapter(assetList);
+    private List<Balance> assetList = new ArrayList<>();
+    private AssetsAdapter adapter = new AssetsAdapter(assetList);
 
     private AssetBalanceContract.Presenter presenter;
 
@@ -122,8 +130,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView=inflater.inflate(R.layout.fragment_asset_balances,container,false);
-        unbinder = ButterKnife.bind(this,rootView);
+        View rootView = inflater.inflate(R.layout.fragment_asset_balances, container, false);
+        unbinder = ButterKnife.bind(this, rootView);
         assetsRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         assetsRcv.setItemAnimator(new DefaultItemAnimator());
         assetsRcv.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
@@ -132,17 +140,20 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
                 Balance balance = assetList.get(position);
-                Bundle bundle=new Bundle();
+                Bundle bundle = new Bundle();
                 String json = JSON.toJSONString(balance);
-                bundle.putString("balance",json);
-                BaseActivity.start(getActivity(),AssetTransactionsActivity.class, bundle);
+                bundle.putString("balance", json);
+                BaseActivity.start(getActivity(), AssetTransactionsActivity.class, bundle);
             }
         });
         addIconIv.setOnClickListener(this);
+        addIconBelowIv.setOnClickListener(this);
         backupBtn.setOnClickListener(this);
-        presenter=new AssetBalancePresenter(this);
+        presenter = new AssetBalancePresenter(this);
 
         setupRefreshLayout();
+
+        initPopupMenu();
 
         //StatusBarUtil.immersive(getActivity());
         presenter.loadAccount();
@@ -150,14 +161,14 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     }
 
 
-    private void setupRefreshLayout(){
+    private void setupRefreshLayout() {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 try {
 //                    presenter.loadAccount();
                     presenter.loadAssets();
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -172,13 +183,14 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean misAppbarExpand = true;
+
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
                 int scrollRange = appBarLayout.getTotalScrollRange();
-                Log.v(TAG,"verticalOffset:"+verticalOffset+", scrollRange:"+scrollRange);
+                Log.v(TAG, "verticalOffset:" + verticalOffset + ", scrollRange:" + scrollRange);
                 float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
-                toolbar.setAlpha((1-fraction));
+                toolbar.setAlpha((1 - fraction));
                 toolbar.setBackgroundResource(R.mipmap.toolbar);
 
                 if (fraction < 0.1 && misAppbarExpand) {
@@ -188,7 +200,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
                 }
                 if (fraction > 0.8 && !misAppbarExpand) {
                     misAppbarExpand = true;
-                   // addIconIv.setAlpha(0);
+                    // addIconIv.setAlpha(0);
                     topBalanceTv.setAlpha(0);
                 }
             }
@@ -199,46 +211,83 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void onClick(View view) {
-        if (view==addIconIv){
-            PopupMenu popupMenu =new PopupMenu(getActivity(),addIconIv, Gravity.END);
-            popupMenu.getMenuInflater().inflate(R.menu.menu_home, popupMenu.getMenu());
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()){
-                        case R.id.item_scan:
-                        {
-                            Bundle bundle=new Bundle();
-                            bundle.putInt("action", QRCodeScanActivity.Action.ScanAddressToPay.value);
-                            BaseActivity.start(getActivity(),QRCodeScanActivity.class,bundle);
-                        }
-                        break;
-                        case R.id.item_receive:
-                        {
-                            Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
-                            startActivity(intent);
-                        }
-                        break;
-                        case R.id.item_transactions:
-                        {
+        if (view == addIconIv) {
+            showPopupMenu(view);
+//            PopupMenu popupMenu =new PopupMenu(getActivity(),addIconIv, Gravity.END);
+//            popupMenu.getMenuInflater().inflate(R.menu.menu_home, popupMenu.getMenu());
+//            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem item) {
+//                    switch (item.getItemId()){
+//                        case R.id.item_scan:
+//                        {
+//                            Bundle bundle=new Bundle();
+//                            bundle.putInt("action", QRCodeScanActivity.Action.ScanAddressToPay.value);
+//                            BaseActivity.start(getActivity(),QRCodeScanActivity.class,bundle);
+//                        }
+//                        break;
+//                        case R.id.item_receive:
+//                        {
+//                            Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
+//                            startActivity(intent);
+//                        }
+//                        break;
+//                        case R.id.item_transactions:
+//                        {
+//
+//                            BaseActivity.start(getActivity(), TransactionsActivity.class ,new Bundle());
+//
+//                        }
+//                        break;
+//                    }
+//                    return false;
+//                }
+//            });
+//
+//            MenuPopupHelper menuHelper = new MenuPopupHelper(getContext(), (MenuBuilder)popupMenu.getMenu(), addIconIv);
+//            menuHelper.setForceShowIcon(true);
+//            menuHelper.show();
 
-                            BaseActivity.start(getActivity(), TransactionsActivity.class ,new Bundle());
-
-                        }
-                        break;
-                    }
-                    return false;
-                }
-            });
-
-            MenuPopupHelper menuHelper = new MenuPopupHelper(getContext(), (MenuBuilder)popupMenu.getMenu(), addIconIv);
-            menuHelper.setForceShowIcon(true);
-            menuHelper.show();
-
-            //popupMenu.show();
-        }else if (backupBtn==view){
-            BaseActivity.start(getActivity(), AccountDetailActivity.class,null);
+        } else if (addIconBelowIv == view) {
+            showPopupMenu(view);
+        } else if (backupBtn == view) {
+            BaseActivity.start(getActivity(), AccountDetailActivity.class, null);
+        } else if (view.getId() == R.id.scan_item) {
+            moreEasyPopup.dismiss();
+            Bundle bundle = new Bundle();
+            bundle.putInt("action", QRCodeScanActivity.Action.ScanAddressToPay.value);
+            BaseActivity.start(getActivity(), QRCodeScanActivity.class, bundle);
+        } else if (view.getId() == R.id.receive_item) {
+            moreEasyPopup.dismiss();
+            Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
+            startActivity(intent);
+        } else if (view.getId() == R.id.bill_item) {
+            moreEasyPopup.dismiss();
+            BaseActivity.start(getActivity(), TransactionsActivity.class, new Bundle());
         }
+    }
+
+    private void showPopupMenu(View view) {
+        moreEasyPopup.showAtAnchorView(view, VerticalGravity.BELOW, HorizontalGravity.LEFT, SizeUtils.dp2px(30), 0);
+    }
+
+    private void initPopupMenu() {
+        moreEasyPopup = new EasyPopup(getContext())
+                .setContentView(R.layout.menu_asset_balance)
+                .setAnimationStyle(R.style.PopupMenuAnimation)
+                .setFocusAndOutsideEnable(true)
+//
+//                .setDimValue(0.5f)
+//                .setDimColor(Color.RED)
+//                .setDimView(mTitleBar)
+                .createPopup();
+        View contentView = moreEasyPopup.getContentView();
+        View scanItem = contentView.findViewById(R.id.scan_item);
+        View receiveItem = contentView.findViewById(R.id.receive_item);
+        View billItem = contentView.findViewById(R.id.bill_item);
+        scanItem.setOnClickListener(this);
+        receiveItem.setOnClickListener(this);
+        billItem.setOnClickListener(this);
     }
 
     @Override
@@ -263,22 +312,22 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void setPresenter(AssetBalanceContract.Presenter presenter) {
-        this.presenter=presenter;
+        this.presenter = presenter;
     }
 
     @Override
     public void displayAssets(List<Balance> assetList) {
-            this.assetList.clear();
-            this.assetList.addAll(assetList);
-            adapter.notifyDataSetChanged();
+        this.assetList.clear();
+        this.assetList.addAll(assetList);
+        adapter.notifyDataSetChanged();
         refreshLayout.finishRefresh(2000);
     }
 
     @Override
     public void displayXASBalance(Balance balance) {
-        String amount=String.valueOf(balance.getRealBalance());
+        String amount = String.valueOf(balance.getRealBalance());
         xasBalanceTv.setText(amount);
-        topBalanceTv.setText(amount+" XAS");
+        topBalanceTv.setText(amount + " XAS");
     }
 
     @Override
@@ -294,7 +343,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void displayError(UIException ex) {
-        Toast.makeText(getContext(),ex.getMessage(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
         refreshLayout.finishRefresh(2000);
     }
 }

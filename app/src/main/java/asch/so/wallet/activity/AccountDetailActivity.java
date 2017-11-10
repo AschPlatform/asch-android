@@ -1,6 +1,7 @@
 package asch.so.wallet.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,7 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountDetailContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountDetailPresenter;
+import asch.so.wallet.util.IdenticonGenerator;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.fragment.AccountDetailFragment;
 import asch.so.wallet.view.validator.Validator;
@@ -52,6 +55,10 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
     EditText nameEt;
     @BindView(R.id.address_tv)
     TextView addressTv;
+    @BindView(R.id.balance_tv)
+    TextView balanceTv;
+    @BindView(R.id.ident_icon)
+    ImageView identiconIv;
 
     AccountDetailContract.Presenter presenter;
 
@@ -62,8 +69,6 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         ButterKnife.bind(this);
         backupBtn.setOnClickListener(this);
         deleteBtn.setOnClickListener(this);
-       // AccountDetailFragment fragment = AccountDetailFragment.newInstance();
-        //ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment, R.id.fragment_container);
         StatusBarUtil.immersive(this);
         initToolBar();
 
@@ -196,5 +201,12 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
     public void displayAccount(Account account) {
         this.addressTv.setText(account.getAddress());
         this.nameEt.setText(account.getName());
+        this.balanceTv.setText("666 XAS");
+        IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
+            @Override
+            public void onIdenticonGenerated(Bitmap bmp) {
+                identiconIv.setImageBitmap(bmp);
+            }
+        });
     }
 }

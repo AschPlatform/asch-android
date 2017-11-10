@@ -1,10 +1,12 @@
 package asch.so.wallet.view.fragment;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import asch.so.base.fragment.BaseFragment;
@@ -13,6 +15,7 @@ import asch.so.wallet.R;
 import asch.so.wallet.contract.AccountDetailContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountDetailPresenter;
+import asch.so.wallet.util.IdenticonGenerator;
 import asch.so.widget.toolbar.BaseToolbar;
 import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
@@ -30,6 +33,10 @@ public class AccountDetailFragment extends BaseFragment implements AccountDetail
     EditText nameEt;
     @BindView(R.id.address_tv)
     TextView addressTv;
+    @BindView(R.id.balance_tv)
+    TextView balanceTv;
+    @BindView(R.id.ident_icon)
+    ImageView identiconIv;
 
     AccountDetailContract.Presenter presenter;
 
@@ -67,5 +74,12 @@ public class AccountDetailFragment extends BaseFragment implements AccountDetail
     public void displayAccount(Account account) {
         this.addressTv.setText(account.getAddress());
         this.nameEt.setText(account.getName());
+        this.balanceTv.setText("666 XAS");
+        IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
+            @Override
+            public void onIdenticonGenerated(Bitmap bmp) {
+                identiconIv.setImageBitmap(bmp);
+            }
+        });
     }
 }
