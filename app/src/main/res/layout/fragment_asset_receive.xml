@@ -5,6 +5,10 @@
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -155,5 +159,15 @@
             android:text="复制收款地址"
             tools:ignore="HardcodedText" />
     </LinearLayout>
+
 </RelativeLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            >
+
+            <!-- footer -->
+
+        </FrameLayout>
+    </LinearLayout>
 </ScrollView>

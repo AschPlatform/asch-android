@@ -161,5 +161,14 @@
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:text="下一步" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            >
+
+            <!-- footer -->
+
+        </FrameLayout>
     </LinearLayout>
 </ScrollView>
