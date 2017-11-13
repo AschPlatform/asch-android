@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
     <TextView
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:id="@+id/title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,7 +43,7 @@
         <!--android:text=""-->
         <!--/>-->
 <Button
-    android:layout_marginTop="30dp"
+    android:layout_marginTop="20dp"
     android:id="@+id/default_url_btn"
     android:layout_gravity="center"
     android:background="@drawable/primary_btn_selector"

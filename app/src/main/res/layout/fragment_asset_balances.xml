@@ -58,7 +58,7 @@
                 <!--app:civ_border_width="2dp"-->
                 <ImageView
                     android:id="@+id/ident_icon"
-                    android:padding="3dp"
+                    android:padding="1dp"
                     android:scaleType="centerInside"
                     android:background="@drawable/square_bg"
                     android:layout_width="54dp"
