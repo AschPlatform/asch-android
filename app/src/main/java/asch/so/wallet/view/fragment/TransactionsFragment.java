@@ -74,8 +74,6 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
                 Bundle bundle=new Bundle();
                 bundle.putString("transaction",json);
                 BaseActivity.start(getActivity(), TransactionDetailActivity.class,bundle);
-//                Intent intent =new Intent(getContext(),WebActivity.class);
-//                startActivity(intent);
             }
         });
 
