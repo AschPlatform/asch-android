@@ -3,5 +3,5 @@
     <!-- 矩形的圆角弧度 -->
     <corners android:radius="1dp" />
     <!-- 矩形的填充色 -->
-    <solid android:color="#ff111111" />
+    <solid android:color="@color/button_bg_pre" />
 </shape>
