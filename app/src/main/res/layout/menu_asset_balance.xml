@@ -8,9 +8,9 @@
     app:bl_arrowHeight="8dp"
     app:bl_arrowPosition="99dp"
     app:bl_arrowWidth="12dp"
-    app:bl_strokeWidth="1dp"
-    app:bl_bubbleColor="#cc333333"
-    app:bl_cornersRadius="4dp"
+    app:bl_strokeWidth="0dp"
+    app:bl_bubbleColor="#2784F0"
+    app:bl_cornersRadius="1dp"
     >
 
     <LinearLayout

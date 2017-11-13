@@ -17,9 +17,11 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
+import asch.so.wallet.TestData;
 import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import so.asch.sdk.AschSDK;
 
 /**
  * Created by kimziv on 2017/10/23.
@@ -87,9 +89,11 @@ public class NodeURLSettingFragment extends BaseFragment implements View.OnClick
             case  R.id.item_save:
             {
                 String url =urltEt.getText().toString().trim();
-                if (Validator.check(getContext(), Validator.Type.Name,url,"节点URL格式不对"))
+                if (Validator.check(getContext(), Validator.Type.URL,url,"节点URL格式不对"))
                 {
                     AppConfig.putNodeURL(url);
+                    TestData.configAschSDK();
+                    getActivity().finish();
                     Toast.makeText(getContext(),"保存成功",Toast.LENGTH_SHORT).show();
                 }
             }

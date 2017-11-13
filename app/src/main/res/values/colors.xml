@@ -11,4 +11,5 @@
     <color name="page_bg">#F5F5F9</color>
     <color name="button_bg_nor">#2784F0</color>
     <color name="button_bg_pre">#0E4DA4</color>
+    <color name="menu_divider">#33FFFFFF</color>
 </resources>

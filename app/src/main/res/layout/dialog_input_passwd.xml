@@ -5,19 +5,27 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin">
+    <LinearLayout
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="36dp"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="请输入账户密码"
+            android:textColor="#333333"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+    </LinearLayout>
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_marginTop="36dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="请输入账户密码"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
 
-        android:layout_marginBottom="@dimen/activity_horizontal_margin"/>
 
     <EditText
         android:id="@+id/passwd_et"
@@ -30,7 +38,7 @@
         android:layout_height="43dp" />
 
     <LinearLayout
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -38,16 +46,20 @@
         <Button
             android:id="@+id/ok_btn"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:background="@drawable/primary_btn_selector"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
             android:layout_weight="1"
             android:text="确认"
-            android:textColor="#2784f0"
+            android:textColor="@color/white"
             android:textSize="13sp"/>
 
         <Button
             android:id="@+id/cancel_btn"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/delete_account_btn_bg"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:text="取消"
             android:textColor="#333333"
