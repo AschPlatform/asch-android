@@ -56,15 +56,37 @@
             tools:ignore="HardcodedText" />
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/checkBox"
+    <LinearLayout
         android:layout_marginTop="30dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        android:checked="true"
-        android:buttonTint="@color/white"
-        android:text="默认阅读并同意阅读条款" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:id="@+id/checkBox"
+
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="1dp"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:clickable="false"
+            android:checked="true"
+            android:buttonTint="@color/white"
+            android:text="" />
+        <TextView
+            android:id="@+id/term_tv"
+            android:clickable="true"
+            android:layout_marginLeft="1dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            android:text="默认阅读并同意阅读条款"
+            />
+    </LinearLayout>
+
+
 </LinearLayout>

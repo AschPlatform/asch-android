@@ -14,6 +14,15 @@ import asch.so.wallet.R;
 
 public class TermServiceFragment extends BaseFragment {
 
+    public static TermServiceFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        TermServiceFragment fragment = new TermServiceFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_term_service,container,false);
