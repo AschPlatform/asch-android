@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -19,9 +20,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.List;
 
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.UIException;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.TransactionDetailActivity;
 import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.TransactionsContract;
 import asch.so.wallet.model.entity.Transaction;
@@ -66,8 +69,13 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
-                Intent intent =new Intent(getContext(),WebActivity.class);
-                startActivity(intent);
+                Transaction transaction = adapter.getItem(position);
+                String json = JSON.toJSONString(transaction);
+                Bundle bundle=new Bundle();
+                bundle.putString("transaction",json);
+                BaseActivity.start(getActivity(), TransactionDetailActivity.class,bundle);
+//                Intent intent =new Intent(getContext(),WebActivity.class);
+//                startActivity(intent);
             }
         });
 

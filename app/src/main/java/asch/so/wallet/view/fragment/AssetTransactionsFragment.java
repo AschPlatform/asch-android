@@ -103,8 +103,6 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
                 Bundle bundle=new Bundle();
                 bundle.putString("transaction",json);
                 BaseActivity.start(getActivity(), TransactionDetailActivity.class,bundle);
-               // Intent intent =new Intent(getContext(),TransactionDetailActivity.class);
-                //startActivity(intent);
             }
         });
         transferBtn.setOnClickListener(new View.OnClickListener() {
