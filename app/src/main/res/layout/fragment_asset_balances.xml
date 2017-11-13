@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f2f2f2">
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -127,56 +133,7 @@
                         />
                 </LinearLayout>
             </LinearLayout>
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/toolBarHeight"
-                android:paddingTop="@dimen/toolBarPaddingTop"
-                android:visibility="visible"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:layout_collapseMode="pin">
-                <!--?attr/actionBarSize-->
-                <android.support.v7.widget.ButtonBarLayout
-                    android:id="@+id/balance_bbl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingTop="0dp"
-                    android:gravity="left|center_vertical"
-                    android:visibility="visible">
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/currency_icon"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_margin="8dp"
-                        app:civ_border_color="@color/white"
-                        app:civ_border_width="2dp"
-                        android:layout_gravity="center_vertical"
-                        android:visibility="gone"
-                        />
-                    <TextView
-                        android:id="@+id/top_balance_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:visibility="visible"
-                        android:gravity="center_vertical"
-                        android:textSize="15sp"
-                        android:text=""
-                        android:layout_gravity="center_vertical"
-                        />
-                </android.support.v7.widget.ButtonBarLayout>
-                <ImageView
-                    android:id="@+id/add_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
-                    android:padding="4dp"
-                    android:visibility="visible"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical|right"
-                    android:src="@mipmap/more_menu_icon"
-                    />
-                </android.support.v7.widget.Toolbar>
+
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -202,4 +159,59 @@
             />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>
+    <asch.so.widget.toolbar.TitleToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolBarHeight"
+        android:background="@mipmap/toolbar"
+        android:paddingTop="@dimen/toolBarPaddingTop"
+        app:backIcon="@mipmap/back"
+        app:backText="返回"
+        app:backTextAppearance="?attr/actionMenuTextAppearance"
+        app:backTextColor="@android:color/white"
+        app:backVisible="false"
+        app:closeText="关闭"
+        app:closeTextAppearance="?attr/actionMenuTextAppearance"
+        app:closeTextColor="@android:color/white"
+        app:closeVisible="false"
+        app:subtitle=""
+        app:subtitleTextAppearance="@style/Subtitle_Appearance"
+        app:subtitleVisible="false"
+        app:title=""
+        app:titleTextAppearance="@style/Title_Appearance"
+        app:titleTextColor="@android:color/white"
+        app:title_gravity="center" >
+        <android.support.v7.widget.ButtonBarLayout
+            android:id="@+id/balance_bbl"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingTop="0dp"
+            android:gravity="left|center_vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/top_balance_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:visibility="visible"
+                android:gravity="center_vertical"
+                android:textSize="15sp"
+                android:text=""
+                android:layout_gravity="center_vertical"
+                />
+        </android.support.v7.widget.ButtonBarLayout>
+        <ImageView
+            android:id="@+id/add_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:padding="4dp"
+            android:visibility="visible"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical|right"
+            android:src="@mipmap/more_menu_icon"
+            />
+    </asch.so.widget.toolbar.TitleToolbar>
+</FrameLayout>
 

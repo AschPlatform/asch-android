@@ -213,55 +213,20 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     public void onClick(View view) {
         if (view == addIconIv) {
             showPopupMenu(view);
-//            PopupMenu popupMenu =new PopupMenu(getActivity(),addIconIv, Gravity.END);
-//            popupMenu.getMenuInflater().inflate(R.menu.menu_home, popupMenu.getMenu());
-//            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                @Override
-//                public boolean onMenuItemClick(MenuItem item) {
-//                    switch (item.getItemId()){
-//                        case R.id.item_scan:
-//                        {
-//                            Bundle bundle=new Bundle();
-//                            bundle.putInt("action", QRCodeScanActivity.Action.ScanAddressToPay.value);
-//                            BaseActivity.start(getActivity(),QRCodeScanActivity.class,bundle);
-//                        }
-//                        break;
-//                        case R.id.item_receive:
-//                        {
-//                            Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
-//                            startActivity(intent);
-//                        }
-//                        break;
-//                        case R.id.item_transactions:
-//                        {
-//
-//                            BaseActivity.start(getActivity(), TransactionsActivity.class ,new Bundle());
-//
-//                        }
-//                        break;
-//                    }
-//                    return false;
-//                }
-//            });
-//
-//            MenuPopupHelper menuHelper = new MenuPopupHelper(getContext(), (MenuBuilder)popupMenu.getMenu(), addIconIv);
-//            menuHelper.setForceShowIcon(true);
-//            menuHelper.show();
-
         } else if (addIconBelowIv == view) {
             showPopupMenu(view);
         } else if (backupBtn == view) {
             BaseActivity.start(getActivity(), AccountDetailActivity.class, null);
-        } else if (view.getId() == R.id.scan_item) {
+        } else if (view.getId() == R.id.scan_ll) {
             moreEasyPopup.dismiss();
             Bundle bundle = new Bundle();
             bundle.putInt("action", QRCodeScanActivity.Action.ScanAddressToPay.value);
             BaseActivity.start(getActivity(), QRCodeScanActivity.class, bundle);
-        } else if (view.getId() == R.id.receive_item) {
+        } else if (view.getId() == R.id.receive_ll) {
             moreEasyPopup.dismiss();
             Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
             startActivity(intent);
-        } else if (view.getId() == R.id.bill_item) {
+        } else if (view.getId() == R.id.transactions_ll) {
             moreEasyPopup.dismiss();
             BaseActivity.start(getActivity(), TransactionsActivity.class, new Bundle());
         }
@@ -276,15 +241,14 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
                 .setContentView(R.layout.menu_asset_balance)
                 .setAnimationStyle(R.style.PopupMenuAnimation)
                 .setFocusAndOutsideEnable(true)
-//
 //                .setDimValue(0.5f)
 //                .setDimColor(Color.RED)
 //                .setDimView(mTitleBar)
                 .createPopup();
         View contentView = moreEasyPopup.getContentView();
-        View scanItem = contentView.findViewById(R.id.scan_item);
-        View receiveItem = contentView.findViewById(R.id.receive_item);
-        View billItem = contentView.findViewById(R.id.bill_item);
+        View scanItem = contentView.findViewById(R.id.scan_ll);
+        View receiveItem = contentView.findViewById(R.id.receive_ll);
+        View billItem = contentView.findViewById(R.id.transactions_ll);
         scanItem.setOnClickListener(this);
         receiveItem.setOnClickListener(this);
         billItem.setOnClickListener(this);

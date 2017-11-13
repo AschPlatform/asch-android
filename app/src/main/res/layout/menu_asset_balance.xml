@@ -21,37 +21,81 @@
         android:orientation="vertical"
         android:showDividers="middle">
 
-        <TextView
-            android:id="@+id/scan_item"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+        <LinearLayout
+            android:id="@+id/scan_ll"
             android:background="@drawable/menu_item_selector"
             android:clickable="true"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:text="扫一扫"
-            android:textSize="14sp"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/property_pull_down_scan"
+                />
+            <TextView
+                android:id="@+id/scan_item"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:clickable="false"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:text="扫一扫"
+                android:textSize="14sp"/>
+        </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/receive_ll"
+        android:background="@drawable/menu_item_selector"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/property_pull_down_incept"
+            />
         <TextView
             android:id="@+id/receive_item"
-            android:background="@drawable/menu_item_selector"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center"
             android:textColor="@color/white"
-            android:clickable="true"
+            android:clickable="false"
             android:text="收款"
             android:textSize="14sp"/>
-
+        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/transactions_ll"
+        android:background="@drawable/menu_item_selector"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/property_pull_down_bill"
+            />
         <TextView
             android:id="@+id/bill_item"
-            android:background="@drawable/menu_item_selector"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:gravity="center"
-            android:clickable="true"
+            android:clickable="false"
             android:textColor="@color/white"
             android:text="账单"
             android:textSize="14sp"/>
+        </LinearLayout>
     </LinearLayout>
 </com.daasuu.bl.BubbleLayout>
