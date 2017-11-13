@@ -2,6 +2,10 @@ package asch.so.wallet.model.entity;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import so.asch.sdk.TransactionType;
 import so.asch.sdk.transaction.asset.AssetInfo;
 
 /**
@@ -50,6 +54,67 @@ public class Transaction {
     private String message;
     private String asset;
     private Asset assetInfo;
+
+
+
+    public enum Type{
+        Transfer(0,"普通转账"),
+        Signature(1, "设置二级密码"),
+        Delegate(2, "注册受托人"),
+        Vote(3, "投票"),
+        MultiSignature(4, "多重签名"),
+        Dapp(5, "DApp"),
+        InTransfer(6,"Dapp充值"),
+        OutTransfer(7,"Dapp提现"),
+        Store(8, "小文件存储"),
+
+        UIAIssuer(9, "发行商注册"),
+        UIAAsset(10, "资产注册"),
+        UIAFlags(11, "设置ACL模式"),
+        UIA_ACL(12, "更新ACL访问控制列表"),
+        UIAIssue(13, "资发行产"),
+        UIATransfer(14, "主链UIA转账"),
+
+        //new in V1.3
+        Lock(100, "锁仓");
+
+        private static final Map<Integer, Type> allTransactionTypes = new HashMap<>();
+        static{
+            for( Type type : Type.values()){
+                allTransactionTypes.put(type.getCode(), type);
+            }
+        }
+
+        private int code;
+        private String name;
+
+
+
+        Type(int code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public static Type fromCode(int code) {
+            return allTransactionTypes.get(code);
+        }
+    }
 
     public String getId() {
         return id;

@@ -30,6 +30,8 @@ import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
+import asch.so.wallet.activity.TransactionDetailActivity;
+import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.AssetTransactionsContract;
 import asch.so.wallet.model.entity.Balance;
@@ -95,9 +97,14 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
-                Intent intent =new Intent(getContext(),WebActivity.class);
-                startActivity(intent);
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+                Transaction transaction = adapter.getItem(position);
+                String json = JSON.toJSONString(transaction);
+                Bundle bundle=new Bundle();
+                bundle.putString("transaction",json);
+                BaseActivity.start(getActivity(), TransactionDetailActivity.class,bundle);
+               // Intent intent =new Intent(getContext(),TransactionDetailActivity.class);
+                //startActivity(intent);
             }
         });
         transferBtn.setOnClickListener(new View.OnClickListener() {

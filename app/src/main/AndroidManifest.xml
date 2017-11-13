@@ -131,6 +131,9 @@
         <activity android:name=".activity.TermServiceActivity">
 
         </activity>
+        <activity android:name=".activity.TransactionDetailActivity">
+
+        </activity>
     </application>
 
 </manifest>
