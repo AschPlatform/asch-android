@@ -116,6 +116,7 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
 
         presenter.importAccount(seed,name,passwd,hint);
         Toast.makeText(getContext(),"导入成功",Toast.LENGTH_SHORT).show();
+        getActivity().setResult(1);
         getActivity().finish();
     }
 

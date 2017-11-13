@@ -12,12 +12,7 @@ import android.widget.Toast;
 import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
-import asch.so.wallet.contract.AccountImportContract;
-import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.util.StatusBarUtil;
-import asch.so.wallet.view.fragment.AccountCreateFragment;
-import asch.so.wallet.view.fragment.TermServiceFragment;
-import asch.so.wallet.view.validator.checkable.Checkable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -82,7 +77,7 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==AccountImportActivity.REQUEST_CODE_FROM_START){
+        if (requestCode==AccountImportActivity.REQUEST_CODE_FROM_START && resultCode==1){
             ActivityStackManager.getInstance().finishAll();
             Intent intent =new Intent(this, MainTabActivity.class);
             startActivity(intent);
