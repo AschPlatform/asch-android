@@ -64,6 +64,10 @@ public class AccountsDao {
 
    }
 
+   public boolean hasAccountForName(String name){
+       return getRealm().where(Account.class).equalTo("name",name).count()>0;
+   }
+
     /**
      * 获取当前账户
      * @return

@@ -17,6 +17,7 @@ import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.UIException;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.activity.FirstStartActivity;
 import asch.so.wallet.activity.MainTabActivity;
 import asch.so.wallet.contract.AccountCreateContract;
@@ -91,13 +92,14 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         String passwd=passwdEt.getText().toString();
         String passwd2=passwdEt2.getText().toString();
         String hint=hintEt.getText().toString();
-//        if (!Validator.check(getContext(), Validator.Type.Secret,seed,"密码格式不符合BIP39规范"))
-//        {
-//            return;
-//        }
 
         if (!Validator.check(getContext(), Validator.Type.Name,name,"请输入1 ~ 12位钱包名称"))
         {
+            return;
+        }
+
+        if (AccountsManager.getInstance().hasAccountForName(name)){
+            Toast.makeText(getContext(),"此钱包别名已存在",Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -108,6 +110,8 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
             Toast.makeText(getContext(),"密码不一致,请重新输入",Toast.LENGTH_SHORT).show();
             return;
         }
+
+
         presenter.storeAccount(seed,name,passwd,hint);
 
         if (getArguments()!=null && getArguments().getString("clazz").equals(FirstStartActivity.class.getName())){

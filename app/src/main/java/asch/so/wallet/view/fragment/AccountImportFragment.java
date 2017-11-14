@@ -13,6 +13,7 @@ import android.widget.Toast;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.UIException;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountImportContract;
 import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.db.dao.AccountsDao;
@@ -106,6 +107,11 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
             return;
         }
 
+        if (AccountsManager.getInstance().hasAccountForName(name)){
+            Toast.makeText(getContext(),"此钱包别名已存在",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (!Validator.check(getContext(), Validator.Type.Password,passwd,"请输入不少于8位字符的密码")){
             return;
         }
@@ -113,6 +119,7 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
            Toast.makeText(getContext(),"密码不一致,请重新输入",Toast.LENGTH_SHORT).show();
             return;
         }
+
 
         presenter.importAccount(seed,name,passwd,hint);
         Toast.makeText(getContext(),"导入成功",Toast.LENGTH_SHORT).show();

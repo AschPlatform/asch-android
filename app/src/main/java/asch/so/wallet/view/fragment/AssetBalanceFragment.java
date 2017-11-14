@@ -314,7 +314,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void displayError(UIException ex) {
-        Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),ex==null?"网络错误":ex.getMessage(), Toast.LENGTH_SHORT).show();
         refreshLayout.finishRefresh(2000);
     }
 }

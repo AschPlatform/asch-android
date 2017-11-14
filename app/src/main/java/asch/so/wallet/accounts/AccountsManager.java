@@ -176,8 +176,8 @@ public class AccountsManager extends Observable{
         }
     }
 
-//    @Override
-//    public synchronized boolean hasChanged() {
-//        return super.hasChanged();
-//    }
+    public boolean hasAccountForName(String name){
+        return AccountsDao.getInstance().hasAccountForName(name);
+    }
+
 }

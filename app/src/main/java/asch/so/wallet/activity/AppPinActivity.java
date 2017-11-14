@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
 
+import asch.so.base.activity.ActivityStackManager;
 import asch.so.wallet.R;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.widget.toolbar.BaseToolbar;
@@ -126,7 +127,13 @@ public class AppPinActivity extends AppLockActivity {
 
     @Override
     public void onBackPressed() {
-        finish();
+        int type=getIntent().getIntExtra(AppLock.EXTRA_TYPE,-1);
+        if (type==AppLock.ENABLE_PINLOCK){
+            finish();
+        }else{
+            ActivityStackManager.getInstance().finishAll();
+            finish();
+        }
     }
 
     @Override
