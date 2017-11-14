@@ -125,6 +125,11 @@ public class AppPinActivity extends AppLockActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    @Override
     public void onPinFailure(int attempts) {
 
     }
