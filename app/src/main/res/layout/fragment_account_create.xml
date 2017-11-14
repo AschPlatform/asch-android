@@ -33,7 +33,7 @@
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"
         android:background="@null"
-        android:hint="钱包别名"
+        android:hint="钱包名称（只能是字母、数字、下划线）"
         android:textSize="15sp"
         android:textColor="#333333"
         android:inputType="textPersonName"

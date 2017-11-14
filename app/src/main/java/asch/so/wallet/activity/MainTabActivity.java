@@ -1,5 +1,6 @@
 package asch.so.wallet.activity;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import com.github.omadahealth.lollipin.lib.interfaces.LifeCycleInterface;
 import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.activity.BasePinCompatActivity;
@@ -43,13 +45,15 @@ import asch.so.wallet.view.fragment.MineFragment;
 import asch.so.wallet.view.fragment.TestFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * Created by kimziv on 2017/9/21.
  */
 
-public class MainTabActivity extends BasePinCompatActivity {
-
+public class MainTabActivity extends BasePinCompatActivity implements  EasyPermissions.PermissionCallbacks{
+    private static final int REQUEST_CODE_QRCODE_PERMISSIONS = 1;
     private ViewPager viewPager;
     private MenuItem menuItem;
     private BottomNavigationView bottomNavigationView;
@@ -232,6 +236,39 @@ public class MainTabActivity extends BasePinCompatActivity {
             intent.addCategory(Intent.CATEGORY_HOME);
             startActivity(intent);
             System.exit(0);
+        }
+    }
+
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        requestCodeQRCodePermissions();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, List<String> perms) {
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, List<String> perms) {
+    }
+
+
+    /**
+     * 请求相机和闪光灯权限
+     */
+    @AfterPermissionGranted(REQUEST_CODE_QRCODE_PERMISSIONS)
+    private void requestCodeQRCodePermissions() {
+        String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (!EasyPermissions.hasPermissions(this, perms)) {
+            EasyPermissions.requestPermissions(this, "扫描二维码需要打开相机和散光灯的权限", REQUEST_CODE_QRCODE_PERMISSIONS, perms);
         }
     }
 

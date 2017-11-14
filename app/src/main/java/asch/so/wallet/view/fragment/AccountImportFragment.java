@@ -102,13 +102,13 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
             return;
         }
 
-        if (!Validator.check(getContext(), Validator.Type.Name,name,"请输入1 ~ 12位钱包名称"))
+        if (!Validator.check(getContext(), Validator.Type.Name,name,"钱包名称不符合要求"))
         {
             return;
         }
 
         if (AccountsManager.getInstance().hasAccountForName(name)){
-            Toast.makeText(getContext(),"此钱包别名已存在",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"此钱包名称已存在",Toast.LENGTH_SHORT).show();
             return;
         }
 

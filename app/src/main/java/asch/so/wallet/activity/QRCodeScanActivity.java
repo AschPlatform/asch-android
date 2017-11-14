@@ -151,6 +151,12 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
         }
     }
 
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        finish();
+//    }
+
     @Override
     public void onScanQRCodeOpenCameraError() {
         Log.e(TAG, "打开相机出错");

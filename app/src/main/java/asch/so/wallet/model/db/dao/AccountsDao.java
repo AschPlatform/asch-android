@@ -139,6 +139,23 @@ public class AccountsDao {
         });
     }
 
+    public void  updateAccount(Account account, String name, OnUpdateNameListener listener){
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                account.setName(name);
+                if (listener!=null){
+                    listener.onUpdateName(account,name);
+                }
+            }
+        });
+    }
+
+    public interface OnUpdateNameListener{
+
+        void onUpdateName(Account account, String name);
+    }
+
     /**
      *
      * @param name

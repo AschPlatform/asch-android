@@ -170,9 +170,13 @@ public class AccountsManager extends Observable{
         if (currentAccount!=null){
            // currentAccount.setName(name);
             //updateAccount(currentAccount.getAddress(),name);
-            AccountsDao.getInstance().updateAccount(currentAccount,name);
-            this.setChanged();
-            this.notifyObservers();
+            AccountsDao.getInstance().updateAccount(currentAccount, name, new AccountsDao.OnUpdateNameListener() {
+                @Override
+                public void onUpdateName(Account account, String name) {
+                   setChanged();
+                    notifyObservers();
+                }
+            });
         }
     }
 

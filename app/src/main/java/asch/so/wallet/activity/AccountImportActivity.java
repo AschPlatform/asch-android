@@ -38,8 +38,6 @@ public class AccountImportActivity extends TitleToolbarActivity implements  Easy
     Toolbar toolbar;
 
     AccountImportFragment fragment;
-//    @Inject
-//    AccountImportPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -93,10 +91,11 @@ public class AccountImportActivity extends TitleToolbarActivity implements  Easy
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String qrDecodeString=data.getStringExtra("QRDecodeString");
-       // Toast.makeText(this,"qrxxxx",Toast.LENGTH_SHORT).show();
-        if (fragment!=null){
-            fragment.setSeed(qrDecodeString);
+        if (requestCode==1 && resultCode==RESULT_OK){
+            String qrDecodeString=data.getStringExtra("QRDecodeString");
+            if (fragment!=null){
+                fragment.setSeed(qrDecodeString);
+            }
         }
     }
 
