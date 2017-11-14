@@ -103,6 +103,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     EasyPopup moreEasyPopup;
 
+    private Balance accountBalance=null;
+
 
     Unbinder unbinder;
 
@@ -216,7 +218,11 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         } else if (addIconBelowIv == view) {
             showPopupMenu(view);
         } else if (backupBtn == view) {
-            BaseActivity.start(getActivity(), AccountDetailActivity.class, null);
+            if (accountBalance!=null){
+                Bundle bundle =new Bundle();
+                bundle.putFloat("balance",accountBalance.getRealBalance());
+                BaseActivity.start(getActivity(), AccountDetailActivity.class,bundle);
+            }
         } else if (view.getId() == R.id.scan_ll) {
             moreEasyPopup.dismiss();
             Bundle bundle = new Bundle();
@@ -292,6 +298,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         String amount = String.valueOf(balance.getRealBalance());
         xasBalanceTv.setText(amount);
         topBalanceTv.setText(amount + " XAS");
+        accountBalance=balance;
     }
 
     @Override

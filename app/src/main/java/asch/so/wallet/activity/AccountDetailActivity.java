@@ -72,6 +72,9 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         StatusBarUtil.immersive(this);
         initToolBar();
 
+        float balance=getBundle().getFloat("balance");
+        this.balanceTv.setText(String.format("%.3f XAS",balance));
+
         presenter=new AccountDetailPresenter(this,this);
         presenter.loadAccount(null);
     }
@@ -201,7 +204,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
     public void displayAccount(Account account) {
         this.addressTv.setText(account.getAddress());
         this.nameEt.setText(account.getName());
-        this.balanceTv.setText("666 XAS");
+//        this.balanceTv.setText("666 XAS");
         IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {

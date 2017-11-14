@@ -171,6 +171,8 @@ public class AccountsManager extends Observable{
            // currentAccount.setName(name);
             //updateAccount(currentAccount.getAddress(),name);
             AccountsDao.getInstance().updateAccount(currentAccount,name);
+            this.setChanged();
+            this.notifyObservers();
         }
     }
 
