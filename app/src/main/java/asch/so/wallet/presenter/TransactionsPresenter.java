@@ -211,13 +211,9 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
                         view.displayMoreTranscations(transactions);
                     }
                 });
-//                .subscribe(new Action1<List<Transaction>>() {
-//                    @Override
-//                    public void call(List<Transaction> transactions) {
-//                        view.displayMoreTranscations(transactions);
-//                    }
-//                });
     }
+
+    //private List<Transaction> filterTransactions
 
     private Account getAccount(){
         return AccountsManager.getInstance().getCurrentAccount();
