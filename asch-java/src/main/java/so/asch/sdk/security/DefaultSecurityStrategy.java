@@ -114,12 +114,12 @@ public class DefaultSecurityStrategy implements SecurityStrategy{
     public String generateSecret(){
         String uuid = UUID.randomUUID().toString()
                 .replace("-","");
-        return Bip39.generateMnemonicCode(Decoding.unsafeDecodeHex(uuid));
+        return Bip39.getInstance().generateMnemonicCode(Decoding.unsafeDecodeHex(uuid));
     }
 
     @Override
     public boolean isValidSecret(String secret) {
-        return Bip39.isValidMnemonicCode(secret);
+        return Bip39.getInstance().isValidMnemonicCode(secret);
     }
 
     @Override

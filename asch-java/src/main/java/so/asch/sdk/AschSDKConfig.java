@@ -3,6 +3,10 @@ package so.asch.sdk;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
+import org.bitcoinj.crypto.MnemonicCode;
+
+import so.asch.sdk.security.Bip39;
+
 /**
  * SDK配置类，包括接口版本号、服务地址等信息
  * @author eagle
@@ -12,6 +16,7 @@ public final class AschSDKConfig {
     private final static AschSDKConfig instance = new AschSDKConfig();
     public static AschSDKConfig getInstance(){ return instance; }
     private AschSDKConfig(){}
+
 
 
     private final static String sdkVersion = "1.3";
@@ -66,6 +71,7 @@ public final class AschSDKConfig {
     private boolean debugMode = true;
     private int platform=1; //0 PC, 1 android
 
+
     public boolean tryLoadFromJson(String jsonString){
         try{
             loadFromJson(jsonString);
@@ -87,6 +93,10 @@ public final class AschSDKConfig {
         another.aschServer = this.aschServer;
         another.longTransactionIdEnabled = this.longTransactionIdEnabled;
         another.platform=this.platform;
+    }
+
+    public void initBIP39(MnemonicCode mn){
+        Bip39.init(mn);
     }
 
 }

@@ -42,8 +42,8 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
     @Override
     public void generateSeed() {
         try {
-            InputStream wis = context.getResources().getAssets().open(Bip39.BIP39_WORDLIST_FILENAME);
-            String words = Bip39.generateMnemonic(wis,12);
+            //InputStream wis = context.getResources().getAssets().open(Bip39.BIP39_WORDLIST_FILENAME);
+            String words = Bip39.getInstance().generateMnemonic(12);
             Log.i(TAG, "words:"+words);
             this.view.resetSeed(words);
         }catch (Exception ex){
@@ -63,6 +63,8 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
 
         try {
             String pubKey = AschSDK.Helper.getPublicKey(seed);
+            Log.d(TAG,"seed:"+seed);
+            Log.d(TAG,"pubKey:"+pubKey);
             String address = AschFactory.getInstance().getSecurity().getAddress(pubKey);
 
             Account account =new Account();

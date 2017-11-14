@@ -34,7 +34,6 @@ import asch.so.base.util.ActivityUtils;
 import asch.so.base.view.UIException;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
-import asch.so.wallet.TestData;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.activity.AssetTransferActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;

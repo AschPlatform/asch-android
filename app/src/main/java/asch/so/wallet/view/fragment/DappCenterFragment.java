@@ -30,7 +30,6 @@ import java.util.List;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.UIException;
 import asch.so.wallet.R;
-import asch.so.wallet.TestData;
 import asch.so.wallet.activity.DappActivity;
 import asch.so.wallet.contract.DappCenterContract;
 import asch.so.wallet.model.entity.Balance;

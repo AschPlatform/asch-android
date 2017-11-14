@@ -34,7 +34,7 @@ public class Validation {
 
     public static boolean isValidSecret(String secret) {
         return secret != null &&
-                Bip39.isValidMnemonicCode(secret);
+                Bip39.getInstance().isValidMnemonicCode(secret);
     }
 
     public static boolean isValidSecondSecret(String secure) {

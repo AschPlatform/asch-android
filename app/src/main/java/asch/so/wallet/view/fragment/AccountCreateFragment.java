@@ -17,7 +17,6 @@ import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.UIException;
 import asch.so.wallet.R;
-import asch.so.wallet.TestData;
 import asch.so.wallet.activity.FirstStartActivity;
 import asch.so.wallet.activity.MainTabActivity;
 import asch.so.wallet.contract.AccountCreateContract;

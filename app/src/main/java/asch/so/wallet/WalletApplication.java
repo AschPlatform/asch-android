@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatDelegate;
+import android.text.TextUtils;
 
 import com.blankj.utilcode.util.Utils;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
@@ -15,17 +16,19 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
+import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.activity.AppPinActivity;
 import asch.so.wallet.util.IdenticonGenerator;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import so.asch.sdk.AschSDK;
 
 /**
  * Created by kimziv on 2017/9/12.
  */
 
-public class WalletApplication extends MultiDexApplication{
-    private  static final String TAG = WalletApplication.class.getSimpleName();
+public class WalletApplication extends MultiDexApplication {
+    private static final String TAG = WalletApplication.class.getSimpleName();
     private ApplicationComponent applicationComponent;
     private static WalletApplication walletApplication;
 
@@ -42,7 +45,7 @@ public class WalletApplication extends MultiDexApplication{
         });
     }
 
-    public static WalletApplication getInstance(){
+    public static WalletApplication getInstance() {
         return walletApplication;
     }
 
@@ -55,28 +58,38 @@ public class WalletApplication extends MultiDexApplication{
     public void onCreate() {
         super.onCreate();
 
-        applicationComponent=DaggerApplicationComponent.builder()
+        applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
-        walletApplication=this;
+        walletApplication = this;
 
         AppConfig.init(this);
+        Wallet.init(this);
+        initAschSDK();
+        //TestData.configAschSDK();
         initRealm();
         initLockManager();
         IdenticonGenerator.init(this);
         Utils.init(this);
+
     }
 
-    private void initRealm(){
+    private void initAschSDK() {
+        String url = AppConfig.getNodeURL();
+        AschSDK.Config.initBIP39(Wallet.getInstance().getMnemonicCode());
+        AschSDK.Config.setAschServer(TextUtils.isEmpty(url) ? AppConstants.DEFAULT_NODE_URL : url);
+        AschSDK.Config.setMagic(TestData.magic);
+    }
+
+    private void initRealm() {
         Realm.init(this);
-        RealmConfiguration configuration=new RealmConfiguration.Builder().build();
+        RealmConfiguration configuration = new RealmConfiguration.Builder().build();
         //Realm.deleteRealm(configuration);
         Realm.setDefaultConfiguration(configuration);
-       // TestData.createTestAccountsData();
-        TestData.configAschSDK();
+        // TestData.createTestAccountsData();
     }
 
-    private void initLockManager(){
+    private void initLockManager() {
         LockManager<AppPinActivity> lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, AppPinActivity.class);
         lockManager.getAppLock().setFingerprintAuthEnabled(true);
@@ -85,7 +98,7 @@ public class WalletApplication extends MultiDexApplication{
         lockManager.getAppLock().setLogoId(R.mipmap.ic_launcher);
         lockManager.getAppLock().setShouldShowForgot(false);
 
-       // lockManager.getAppLock().setPinChallengeCancelled(true);
+        // lockManager.getAppLock().setPinChallengeCancelled(true);
     }
 
 

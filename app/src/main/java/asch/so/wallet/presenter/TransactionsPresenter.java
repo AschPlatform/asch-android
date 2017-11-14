@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.base.view.UIException;
-import asch.so.wallet.TestData;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.TransactionsContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.model.entity.TransferAsset;
 import asch.so.wallet.model.entity.UIATransferAsset;
@@ -51,14 +52,14 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
 
     @Override
     public void loadTransactions() {
-
+        String address=getAccount().getAddress();
         Observable.create(new Observable.OnSubscribe<List<Transaction>>() {
 
             @Override
             public void call(Subscriber<? super List<Transaction>> subscriber) {
                 TransactionQueryParameters params=new TransactionQueryParameters()
-                        .setSenderId(TestData.address)
-                        .setRecipientId(TestData.address)
+                        .setSenderId(address)
+                        .setRecipientId(address)
                         .setOffset(0)
                         .setLimit(20);
                 AschResult result = AschSDK.Transaction.queryTransactions(params);
@@ -102,13 +103,14 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
 
     @Override
     public void refreshTransactions() {
+        String address=getAccount().getAddress();
         Observable.create(new Observable.OnSubscribe<List<Transaction>>() {
 
             @Override
             public void call(Subscriber<? super List<Transaction>> subscriber) {
                 TransactionQueryParameters params=new TransactionQueryParameters()
-                        .setSenderId(TestData.address)
-                        .setRecipientId(TestData.address)
+                        .setSenderId(address)
+                        .setRecipientId(address)
                         .orderByDescending("t_timestamp")
                         .setOffset(0)
                         .setLimit(20);
@@ -153,13 +155,16 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
 
     @Override
     public void loadMoreTransactions() {
+
+        String address=getAccount().getAddress();
+
         Observable.create(new Observable.OnSubscribe<List<Transaction>>() {
 
             @Override
             public void call(Subscriber<? super List<Transaction>> subscriber) {
                 TransactionQueryParameters params=new TransactionQueryParameters()
-                        .setSenderId(TestData.address)
-                        .setRecipientId(TestData.address)
+                        .setSenderId(address)
+                        .setRecipientId(address)
                         .setOffset(0)
                         .setLimit(10);
                 AschResult result = AschSDK.Transaction.queryTransactions(params);
@@ -212,5 +217,9 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
 //                        view.displayMoreTranscations(transactions);
 //                    }
 //                });
+    }
+
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
     }
 }

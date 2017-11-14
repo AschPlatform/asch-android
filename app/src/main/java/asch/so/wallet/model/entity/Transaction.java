@@ -2,9 +2,12 @@ package asch.so.wallet.model.entity;
 
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import so.asch.sdk.AschHelper;
+import so.asch.sdk.AschSDK;
 import so.asch.sdk.TransactionType;
 import so.asch.sdk.transaction.asset.AssetInfo;
 
@@ -150,6 +153,10 @@ public class Transaction {
 
     public int getTimestamp() {
         return timestamp;
+    }
+
+    public Date dateFromAschTimestamp(){
+      return   AschSDK.Helper.dateFromAschTimestamp(timestamp);
     }
 
     public void setTimestamp(int timestamp) {

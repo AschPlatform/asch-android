@@ -59,9 +59,8 @@ public class TransactionDetailFragment extends BaseFragment {
 
         Transaction transaction = getTransaction();
         txIDTv.setText(transaction.getId());
-        //TransactionType.valueOf()
         txTypeTv.setText(Transaction.Type.fromCode(transaction.getType()).getName());
-        txDateTv.setText(String.valueOf(transaction.getTimestamp()));
+        txDateTv.setText(String.valueOf(transaction.dateFromAschTimestamp().toString()));
         txSenderTv.setText(transaction.getSenderId());
         txReceiveTv.setText(transaction.getRecipientId());
         txAmountTv.setText(transaction.getAmount()+"");
