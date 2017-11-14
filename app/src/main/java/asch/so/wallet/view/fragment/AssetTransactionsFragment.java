@@ -150,7 +150,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
     @Override
     public void displayError(UIException exception) {
-        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),exception==null?"网络错误":exception.getMessage(),Toast.LENGTH_SHORT).show();
         refreshLayout.finishRefresh(1000);
     }
 

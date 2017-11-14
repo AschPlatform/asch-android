@@ -92,10 +92,10 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
     private void importAccount(){
 
         String name = nameEt.getText().toString().trim();
-        String passwd = passwdEt.getText().toString();
-        String passwd2=passwdEt2.getText().toString();
-        String hint=hintEt.getText().toString();
-        String seed=seedEt.getText().toString();
+        String passwd = passwdEt.getText().toString().trim();
+        String passwd2=passwdEt2.getText().toString().trim();
+        String hint=hintEt.getText().toString().trim();
+        String seed=seedEt.getText().toString().trim();
         if (!Validator.check(getContext(), Validator.Type.Secret,seed,"密码格式不符合BIP39规范"))
         {
             return;
