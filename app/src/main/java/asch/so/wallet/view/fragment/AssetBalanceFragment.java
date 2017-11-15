@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -96,8 +97,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @BindView(R.id.add_icon)
     ImageView addIconIv;
-    @BindView(R.id.add_icon_below)
-    ImageView addIconBelowIv;
+    @BindView(R.id.add_btn)
+    ImageView addBtn;
     @BindView(R.id.top_balance_tv)
     TextView topBalanceTv;
 
@@ -108,8 +109,6 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     Unbinder unbinder;
 
-    private int mOffset = 0;
-    private int mScrollY = 0;
 
     private List<Balance> assetList = new ArrayList<>();
     private AssetsAdapter adapter = new AssetsAdapter(assetList);
@@ -148,8 +147,9 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
                 BaseActivity.start(getActivity(), AssetTransactionsActivity.class, bundle);
             }
         });
+
         addIconIv.setOnClickListener(this);
-        addIconBelowIv.setOnClickListener(this);
+        addBtn.setOnClickListener(this);
         backupBtn.setOnClickListener(this);
         presenter = new AssetBalancePresenter(this);
 
@@ -193,17 +193,21 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
                 Log.v(TAG, "verticalOffset:" + verticalOffset + ", scrollRange:" + scrollRange);
                 float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
                 toolbar.setAlpha((1 - fraction));
-                toolbar.setBackgroundResource(R.mipmap.toolbar);
 
                 if (fraction < 0.1 && misAppbarExpand) {
                     misAppbarExpand = false;
                     //addIconIv.setAlpha(1.0f);
                     topBalanceTv.setAlpha(1.0f);
+                    addIconIv.setClickable(true);
+                   // toolbar.setVisibility(View.VISIBLE);
                 }
+
                 if (fraction > 0.8 && !misAppbarExpand) {
                     misAppbarExpand = true;
                     // addIconIv.setAlpha(0);
                     topBalanceTv.setAlpha(0);
+                    addIconIv.setClickable(false);
+                   // toolbar.setVisibility(View.GONE);
                 }
             }
         });
@@ -214,9 +218,9 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void onClick(View view) {
         if (view == addIconIv) {
-            showPopupMenu(view);
-        } else if (addIconBelowIv == view) {
-            showPopupMenu(view);
+            showPopupMenu(view,SizeUtils.dp2px(30), SizeUtils.dp2px(-2));
+        } else if (addBtn == view) {
+            showPopupMenu(view,SizeUtils.dp2px(30), SizeUtils.dp2px(-12));
         } else if (backupBtn == view) {
             if (accountBalance!=null){
                 Bundle bundle =new Bundle();
@@ -238,8 +242,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         }
     }
 
-    private void showPopupMenu(View view) {
-        moreEasyPopup.showAtAnchorView(view, VerticalGravity.BELOW, HorizontalGravity.LEFT, SizeUtils.dp2px(30), 0);
+    private void showPopupMenu(View view, int offsetX, int offsetY) {
+        moreEasyPopup.showAtAnchorView(view, VerticalGravity.BELOW, HorizontalGravity.LEFT, offsetX,offsetY);
     }
 
     private void initPopupMenu() {

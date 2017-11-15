@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:text="Kimziv"
+                    android:text=""
                     android:textSize="18sp"
                     />
                 ​
@@ -98,14 +98,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     ​<ImageView
-                    android:id="@+id/add_icon_below"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/add_btn"
+                    android:cropToPadding="false"
+                    android:layout_width="36dp"
+                    android:layout_height="56dp"
                     android:layout_marginRight="20dp"
-                    android:padding="4dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:paddingLeft="6dp"
+                    android:paddingRight="6dp"
+                    android:clickable="true"
                     android:visibility="visible"
                     android:layout_centerVertical="true"
-                    android:layout_gravity="top|right"
+                    android:layout_gravity="center|right"
                     android:src="@mipmap/more_menu_icon"
                     />
                 </LinearLayout>
@@ -133,7 +138,29 @@
                         />
                 </LinearLayout>
             </LinearLayout>
-
+            <asch.so.widget.toolbar.TitleToolbar
+                android:id="@+id/toolbar_in"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/toolBarHeight"
+                android:background="@android:color/transparent"
+                android:paddingTop="@dimen/toolBarPaddingTop"
+                app:backIcon="@mipmap/back"
+                app:backText="返回"
+                app:backTextAppearance="?attr/actionMenuTextAppearance"
+                app:backTextColor="@android:color/white"
+                app:backVisible="false"
+                app:closeText="关闭"
+                app:closeTextAppearance="?attr/actionMenuTextAppearance"
+                app:closeTextColor="@android:color/white"
+                app:closeVisible="false"
+                app:subtitle=""
+                app:subtitleTextAppearance="@style/Subtitle_Appearance"
+                app:subtitleVisible="false"
+                app:title=""
+                app:titleTextAppearance="@style/Title_Appearance"
+                app:titleTextColor="@android:color/white"
+                app:title_gravity="center" >
+            </asch.so.widget.toolbar.TitleToolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -165,6 +192,7 @@
         android:layout_height="@dimen/toolBarHeight"
         android:background="@mipmap/toolbar"
         android:paddingTop="@dimen/toolBarPaddingTop"
+        android:visibility="visible"
         app:backIcon="@mipmap/back"
         app:backText="返回"
         app:backTextAppearance="?attr/actionMenuTextAppearance"
@@ -203,10 +231,11 @@
         </android.support.v7.widget.ButtonBarLayout>
         <ImageView
             android:id="@+id/add_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:cropToPadding="false"
             android:layout_marginRight="20dp"
-            android:padding="4dp"
+            android:padding="6dp"
             android:visibility="visible"
             android:layout_centerVertical="true"
             android:layout_gravity="center_vertical|right"
