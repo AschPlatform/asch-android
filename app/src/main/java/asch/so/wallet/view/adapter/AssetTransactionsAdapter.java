@@ -1,5 +1,6 @@
 package asch.so.wallet.view.adapter;
 
+import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,12 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.TimeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import asch.so.base.adapter.BaseRecyclerViewAdapter;
+import asch.so.base.util.TimeAgo;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.model.entity.Account;
@@ -29,9 +33,13 @@ import so.asch.sdk.impl.AschConst;
 
 public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, AssetTransactionsAdapter.ViewHolder> {
 
+    private TimeAgo timeAgo=null;
+    private Context context;
 
-    public AssetTransactionsAdapter() {
+    public AssetTransactionsAdapter(Context ctx) {
         super(R.layout.item_transaction);
+        context=ctx;
+        timeAgo=new TimeAgo().locale(ctx).with(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
     }
 
     @Override
@@ -40,13 +48,15 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
         boolean isSender=getAccount().getAddress().equals(transaction.getSenderId());
        if ( TransactionType.Transfer.getCode()==transaction.getType()){
            viewHolder.amountTv.setText(String.format("%s%.3f", isSender?"-":"+",transaction.getAmount()/ (double)AschConst.COIN)+" XAS");
+
        }else if (TransactionType.UIATransfer.getCode()==transaction.getType()){
            UIATransferAsset asset=(UIATransferAsset)transaction.getAssetInfo();
            viewHolder.amountTv.setText(String.format("%s%.3f", isSender?"-":"+",Float.parseFloat(asset.getUiaTransfer().getAmountShow()))+" "+asset.getUiaTransfer().getCurrency());
 
-//           viewHolder.amountTv.setText(String.format("%.3f",transaction.getAmount()/ (double)AschConst.COIN)+" "+asset.getUiaTransfer().getCurrency());
        }
 
+        String ago=timeAgo.getTimeAgo(transaction.dateFromAschTimestamp());
+        viewHolder.dateTv.setText(ago);
     }
 
     private Account getAccount(){
@@ -58,7 +68,8 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
         TextView transactionTv;
         @BindView(R.id.amount_tv)
         TextView amountTv;
-
+        @BindView(R.id.date_tv)
+        TextView dateTv;
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

@@ -105,16 +105,7 @@ public class Validator {
             case Password:
                 return new PasswordCheckable(value);
             case Amount:
-                return new AccountNameCheckable(value);
-//            case InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_DATE :
-//                return new DateValidator(value);
-//            case InputType.TYPE_CLASS_PHONE : return new PhoneValidator(value);
-//            case InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS:
-//                return new EmailValidator(value);
-//            case (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES):
-//                return new TextValidator(value);
-//            case (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD):
-//                return new TextValidator(value);
+                return new AmountCheckable(value);
             default : return new TextCheckable(value);
         }
 

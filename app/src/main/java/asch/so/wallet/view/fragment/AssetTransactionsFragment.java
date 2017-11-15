@@ -62,7 +62,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
     private AssetTransactionsContract.Presenter presenter;
     private List<Transaction> list=new ArrayList<>();
-    private AssetTransactionsAdapter adapter=new AssetTransactionsAdapter();
+    private AssetTransactionsAdapter adapter=null;
 
 
     public static AssetTransactionsFragment newInstance() {
@@ -77,6 +77,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        adapter=new AssetTransactionsAdapter(getContext());
         balance= (Balance) JSON.parseObject(getArguments().getString("balance"),Balance.class);
     }
 
