@@ -47,6 +47,7 @@ import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.model.entity.UIAAsset;
 import asch.so.wallet.view.validator.Validator;
 import asch.so.wallet.view.widget.DialogFactory;
+import asch.so.wallet.view.widget.SecondPasswdDialog;
 import asch.so.wallet.view.widget.TransferConfirmationDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -79,7 +80,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
     private Balance balance;
     private QRCodeURL qrCodeURL;
-
+    private SecondPasswdDialog secondPasswdDialog;
 
     public static AssetTransferFragment newInstance() {
         
@@ -154,12 +155,22 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 showConfirmationDialog(targetAddress, ammountStr, currency, new TransferConfirmationDialog.OnConfirmListener() {
                     @Override
                     public void onConfirm(TransferConfirmationDialog dialog) {
+                        long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
                         if (AccountsManager.getInstance().getCurrentAccount().getFullAccount().getAccount().isSecondSignature())
                         {
-                            showSecondSecretInputDialog();
+                            showSecondSecretInputDialog(new SecondPasswdDialog.PasswordCallback() {
+                                @Override
+                                public void callback(SecondPasswdDialog dialog, String secSecret) {
+                                    if (Validator.check(getContext(), Validator.Type.SecondSecret,secSecret,"二级密码不正确"))
+                                    {
+                                        presenter.transfer(currency,targetAddress,amount,message,secret,secSecret);
+
+                                    }
+                                }
+                            });
                             return;
                         }
-                        long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
+                        //long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
                         presenter.transfer(currency,targetAddress,amount,message,secret,secondSecret);
                     }
                 });
@@ -184,20 +195,11 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         dialog.show(fm,"confirmation");
     }
 
-    private void showSecondSecretInputDialog(){
-        final EditText editText = new EditText(getActivity());
-        AlertDialog.Builder inputDialog =
-                new AlertDialog.Builder(getActivity());
-        inputDialog.setTitle("请输入二级密码").setView(editText);
-        inputDialog.setPositiveButton("确定",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(getActivity(),
-                                    editText.getText().toString(),
-                                    Toast.LENGTH_SHORT).show();
-                    }
-                }).show();
+    private void showSecondSecretInputDialog(SecondPasswdDialog.PasswordCallback callback){
+        secondPasswdDialog = new SecondPasswdDialog(getActivity());
+        secondPasswdDialog.setPasswordCallback(callback);
+        secondPasswdDialog.clearPasswordText();
+        secondPasswdDialog.show();
     }
 
 
@@ -243,6 +245,9 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @Override
     public void displayToast(String toast) {
         Toast.makeText(getActivity(),toast,Toast.LENGTH_SHORT).show();
+        if (secondPasswdDialog!=null){
+            secondPasswdDialog.dismiss();
+        }
             getActivity().finish();
     }
 
