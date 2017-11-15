@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">base</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--Time Ago-->
     <string name="just_now">just now</string>

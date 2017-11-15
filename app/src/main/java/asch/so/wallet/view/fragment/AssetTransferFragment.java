@@ -270,8 +270,29 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     }
 
 
-    public void setTargetAddress(String address){
-        this.targetEt.setText(address);
+    public void setTargetAddress(String uri){
+
+        try {
+            if (uri.startsWith("A")){
+                qrCodeURL=new QRCodeURL();
+                qrCodeURL.setAmount("0");
+                qrCodeURL.setCurrency("XAS");
+                qrCodeURL.setAddress(uri);
+            }else {
+                qrCodeURL=QRCodeURL.decodeQRCodeURL(uri);
+            }
+
+        }catch (Exception e){
+            //
+        }
+        if (qrCodeURL!=null){
+            targetEt.setText(qrCodeURL.getAddress());
+            amountEt.setText(qrCodeURL.getAmount());
+            String currency = qrCodeURL.getCurrency();
+            if (currency!=null){
+                presenter.loadAssets(currency);
+            }
+        }
     }
 
 }

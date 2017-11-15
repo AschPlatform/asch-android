@@ -28,15 +28,11 @@ public class AssetReceiveActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
         setTitle("二维码收款");
         fragment=AssetReceiveFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
         presenter=new AssetReceivePresenter(this,fragment);
         fragment.setPresenter(presenter);
-//        presenter.generateQrCode(TestData.address,"XAS","88");
-
-
     }
 }
