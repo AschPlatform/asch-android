@@ -31,10 +31,14 @@ import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.activity.BasePinCompatActivity;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.DappCenterContract;
+import asch.so.wallet.contract.MainContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AssetBalancePresenter;
 import asch.so.wallet.presenter.DappCenterPresenter;
+import asch.so.wallet.presenter.MainPresenter;
 import asch.so.wallet.presenter.MinePresenter;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
@@ -52,7 +56,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * Created by kimziv on 2017/9/21.
  */
 
-public class MainTabActivity extends BasePinCompatActivity implements  EasyPermissions.PermissionCallbacks{
+public class MainTabActivity extends BasePinCompatActivity implements MainContract.View, EasyPermissions.PermissionCallbacks{
     private static final int REQUEST_CODE_QRCODE_PERMISSIONS = 1;
     private ViewPager viewPager;
     private MenuItem menuItem;
@@ -60,7 +64,8 @@ public class MainTabActivity extends BasePinCompatActivity implements  EasyPermi
 
     private AssetBalancePresenter assetsPresenter;
     private DappCenterPresenter dappCenterPresenter;
-    private MinePresenter minePresenter;
+    //private MinePresenter minePresenter;
+    private MainPresenter mainPresenter;
     private boolean isExit;
 
 //    @BindView(R.id.toolbar)
@@ -138,6 +143,8 @@ public class MainTabActivity extends BasePinCompatActivity implements  EasyPermi
 //        });
 
         setupViewPager(viewPager);
+        mainPresenter=new MainPresenter(this,this);
+        mainPresenter.loadFullAccount();
 //
     }
 
@@ -270,6 +277,21 @@ public class MainTabActivity extends BasePinCompatActivity implements  EasyPermi
         if (!EasyPermissions.hasPermissions(this, perms)) {
             EasyPermissions.requestPermissions(this, "扫描二维码需要打开相机和散光灯的权限", REQUEST_CODE_QRCODE_PERMISSIONS, perms);
         }
+    }
+
+    @Override
+    public void setPresenter(MainContract.Presenter presenter) {
+
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+
+    }
+
+    @Override
+    public void displayAccount(Account account) {
+
     }
 
 //    @Override

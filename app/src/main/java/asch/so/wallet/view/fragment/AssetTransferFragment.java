@@ -1,7 +1,10 @@
 package asch.so.wallet.view.fragment;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -151,7 +154,11 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 showConfirmationDialog(targetAddress, ammountStr, currency, new TransferConfirmationDialog.OnConfirmListener() {
                     @Override
                     public void onConfirm(TransferConfirmationDialog dialog) {
-
+                        if (AccountsManager.getInstance().getCurrentAccount().getFullAccount().getAccount().isSecondSignature())
+                        {
+                            showSecondSecretInputDialog();
+                            return;
+                        }
                         long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
                         presenter.transfer(currency,targetAddress,amount,message,secret,secondSecret);
                     }
@@ -176,6 +183,23 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         dialog.setOnClickListener(onConfirmListener);
         dialog.show(fm,"confirmation");
     }
+
+    private void showSecondSecretInputDialog(){
+        final EditText editText = new EditText(getActivity());
+        AlertDialog.Builder inputDialog =
+                new AlertDialog.Builder(getActivity());
+        inputDialog.setTitle("请输入二级密码").setView(editText);
+        inputDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                            Toast.makeText(getActivity(),
+                                    editText.getText().toString(),
+                                    Toast.LENGTH_SHORT).show();
+                    }
+                }).show();
+    }
+
 
     private void hideKeyboard(){
         InputMethodManager imm =  (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

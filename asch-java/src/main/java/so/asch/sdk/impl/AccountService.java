@@ -21,12 +21,19 @@ public class AccountService extends so.asch.sdk.impl.AschRESTService implements 
     }
 
     @Override
-    public AschResult secureLogin(String secret){
+    public AschResult secureLogin(String secretOrPublicKey){
         try{
-            Argument.require(Validation.isValidSecret(secret), "invalid secret");
+            boolean isSecret = Validation.isValidSecret(secretOrPublicKey);
+            boolean isPublicKey= Validation.isValidPublicKey(secretOrPublicKey);
 
-            KeyPair keyPair = getSecurity().generateKeyPair(secret);
-            String publicKey = getSecurity().encodePublicKey(keyPair.getPublic());
+            Argument.require(isSecret||isPublicKey, "invalid secret or PublicKey");
+            String publicKey=null;
+            if (isSecret){
+                KeyPair keyPair = getSecurity().generateKeyPair(secretOrPublicKey);
+                publicKey = getSecurity().encodePublicKey(keyPair.getPublic());
+            }else {
+                publicKey=secretOrPublicKey;
+            }
             ParameterMap parameters = parametersWithPublicKeyField(publicKey);
 
             return post(AschServiceUrls.Account.SECURE_LOGIN, parameters);

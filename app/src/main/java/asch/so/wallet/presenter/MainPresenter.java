@@ -1,0 +1,101 @@
+package asch.so.wallet.presenter;
+
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.alibaba.fastjson.JSON;
+
+import asch.so.base.view.UIException;
+import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.contract.MainContract;
+import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.FullAccount;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import so.asch.sdk.AschResult;
+import so.asch.sdk.AschSDK;
+
+/**
+ * Created by kimziv on 2017/11/15.
+ */
+
+public class MainPresenter implements MainContract.Presenter {
+
+    private static final String TAG=MainPresenter.class.getSimpleName();
+
+    private MainContract.View view;
+    private Context context;
+
+    public MainPresenter(Context context, MainContract.View view){
+        this.context=context;
+        this.view=view;
+        view.setPresenter(this);
+    }
+    @Override
+    public void subscribe() {
+
+    }
+
+    @Override
+    public void unSubscribe() {
+
+    }
+
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
+    }
+
+    @Override
+    public void loadFullAccount() {
+        String publicKey=getAccount().getPublicKey();
+
+        rx.Observable loginObservable = rx.Observable.create(new rx.Observable.OnSubscribe<FullAccount>() {
+            @Override
+            public void call(Subscriber<? super FullAccount> subscriber) {
+                try {
+                    AschResult result = AschSDK.Account.secureLogin(publicKey);
+                    if (result!=null && result.isSuccessful()){
+                        Log.i(TAG,result.getRawJson());
+//                        Map<String, Object> map =result.parseMap();
+                        FullAccount account= JSON.parseObject(result.getRawJson(),FullAccount.class);
+                        subscriber.onNext(account);
+                        subscriber.onCompleted();
+                    }else {
+                        subscriber.onError(result.getException());
+                    }
+                }
+                catch (Exception ex){
+                    subscriber.onError(ex);
+                }
+            }
+        });
+        loginObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<FullAccount>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("loginObservable error:",e.toString());
+                        view.displayError(new UIException("登录接口网络错误"));
+                    }
+
+                    @Override
+                    public void onNext(FullAccount account) {
+                        getAccount().setFullAccount(account);
+                       long blockHeight = getAccount().getFullAccount().getLatestBlock().getHeight();
+                        Toast.makeText(context,"blockHeight:"+blockHeight, Toast.LENGTH_SHORT).show();
+//                        if (balances!=null && balances.size()>0){
+//                            view.displayXASBalance(balances.get(0));
+//                        }
+//                        view.displayAssets(balances);
+                    }
+                });
+    }
+}

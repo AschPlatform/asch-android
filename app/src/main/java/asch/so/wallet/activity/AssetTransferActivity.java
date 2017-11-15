@@ -41,8 +41,6 @@ public class AssetTransferActivity extends TitleToolbarActivity implements EasyP
         super.onCreate(savedInstanceState);
 //        ButterKnife.bind(this);
         setTitle("资产转账");
-        //sIntent intent=getIntent();
-
         fragment=AssetTransferFragment.newInstance();
 
         Bundle bundle=getIntent().getExtras();

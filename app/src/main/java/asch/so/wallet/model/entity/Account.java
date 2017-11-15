@@ -1,10 +1,12 @@
 package asch.so.wallet.model.entity;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONField;
 
 import asch.so.wallet.crypto.AccountSecurity;
 import io.realm.Realm;
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -33,6 +35,18 @@ public class Account extends RealmObject{
     private String encryptSeed;
 
     private String encryptPasswd;
+
+    @Ignore
+    @JSONField(serialize=false)
+    private FullAccount fullAccount;
+
+    public FullAccount getFullAccount() {
+        return fullAccount;
+    }
+
+    public void setFullAccount(FullAccount fullAccount) {
+        this.fullAccount = fullAccount;
+    }
 
     public String getPasswd() {
         return passwd;
