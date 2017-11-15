@@ -7,16 +7,14 @@
     android:layout_height="48dp"
     android:layout_margin="4dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/currency_icon"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:src="@mipmap/cctime_logo"
+        android:src="@mipmap/other_coin_icon"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
-        app:civ_border_width="0dp"
-        app:civ_border_color="@color/black_shade"
         />
     <TextView
         android:id="@+id/asset_name_tv"

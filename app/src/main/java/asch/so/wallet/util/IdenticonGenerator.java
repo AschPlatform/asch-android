@@ -28,9 +28,9 @@ public class IdenticonGenerator {
 
     public static void init(Context ctx){
         context=ctx;
-//        webView=new BridgeWebView(context);
-//        webView.setDefaultHandler(new DefaultHandler());
-//        webView.loadUrl("file:///android_asset/jdenticontest.html");
+        webView=new BridgeWebView(context);
+        webView.setDefaultHandler(new DefaultHandler());
+        webView.loadUrl("file:///android_asset/jdenticontest.html");
     }
 
     public static IdenticonGenerator getInstance() {
