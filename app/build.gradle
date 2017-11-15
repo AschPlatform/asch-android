@@ -136,6 +136,7 @@ dependencies {
     compile rootProject.ext.dependencies["utilcode"]
     compile rootProject.ext.dependencies["easy-popup"]
     compile rootProject.ext.dependencies["bubbleLayout"]
+    compile rootProject.ext.dependencies["bugly"]
    // compile files('libs/asch-android-0.1.2-SNAPSHOT-jar-with-dependencies.jar')
 
 }

@@ -15,6 +15,11 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.bugly.crashreport.CrashReport;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.activity.AppPinActivity;
@@ -63,6 +68,7 @@ public class WalletApplication extends MultiDexApplication {
                 .build();
         walletApplication = this;
 
+        initBuglySDK();
         AppConfig.init(this);
         Wallet.init(this);
         initAschSDK();
@@ -71,7 +77,51 @@ public class WalletApplication extends MultiDexApplication {
         initLockManager();
         IdenticonGenerator.init(this);
         Utils.init(this);
+        //CrashReport.testJavaCrash();
+    }
 
+    private void initBuglySDK() {
+//        Context context = getApplicationContext();
+//// 获取当前包名
+//        String packageName = context.getPackageName();
+//// 获取当前进程名
+//        String processName = getProcessName(android.os.Process.myPid());
+//// 设置是否为上报进程
+//        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
+//        strategy.setUploadProcess(processName == null || processName.equals(packageName));
+//// 初始化Bugly
+//        CrashReport.initCrashReport(context, AppConstants.BUGLY_APP_ID, false, strategy);
+        CrashReport.initCrashReport(getApplicationContext(), AppConstants.BUGLY_APP_ID, true);
+        CrashReport.setAppChannel(this, "TEST");
+    }
+
+    /**
+     * 获取进程号对应的进程名
+     *
+     * @param pid 进程号
+     * @return 进程名
+     */
+    private static String getProcessName(int pid) {
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
+            String processName = reader.readLine();
+            if (!TextUtils.isEmpty(processName)) {
+                processName = processName.trim();
+            }
+            return processName;
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+        return null;
     }
 
     private void initAschSDK() {
