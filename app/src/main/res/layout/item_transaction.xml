@@ -25,6 +25,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@id/currency_icon"
         android:maxLines="1"
+        android:ellipsize="middle"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
         android:textAppearance="?attr/textAppearanceListItem"
