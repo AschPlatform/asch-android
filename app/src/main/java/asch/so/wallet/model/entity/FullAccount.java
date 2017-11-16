@@ -4,6 +4,10 @@ package asch.so.wallet.model.entity;
  * Created by kimziv on 2017/11/15.
  */
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+import java.util.List;
+
 /**
  *
  {
@@ -85,6 +89,9 @@ public class FullAccount {
     private BlockInfo latestBlock;
     private VersionInfo version;
 
+    @JSONField(serialize=false)
+    private List<Balance> balances;
+
     public AccountInfo getAccount() {
         return account;
     }
@@ -107,6 +114,14 @@ public class FullAccount {
 
     public void setVersion(VersionInfo version) {
         this.version = version;
+    }
+
+    public List<Balance> getBalances() {
+        return balances;
+    }
+
+    public void setBalances(List<Balance> balances) {
+        this.balances = balances;
     }
 
     public static class AccountInfo{

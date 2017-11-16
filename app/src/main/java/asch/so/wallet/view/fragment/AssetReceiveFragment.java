@@ -132,8 +132,10 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
     private void copyAddress(String content){
        ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clipData = ClipData.newPlainText(null, content);
         clipboardManager.setText(content);
-        Toast.makeText(getContext(),"复制成功",Toast.LENGTH_SHORT).show();
+        //clipboardManager.setPrimaryClip(clipData);
+        Toast.makeText(getContext(),clipboardManager.getText(),Toast.LENGTH_SHORT).show();
     }
 
     @Override

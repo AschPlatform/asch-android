@@ -1,5 +1,6 @@
 package asch.so.wallet.presenter;
 
+import android.accounts.AccountManager;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,6 +21,7 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
+import asch.so.wallet.model.entity.FullAccount;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -66,62 +68,11 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
     @Override
     public void loadAssets(){
 
-        Account account = getAccount();
-        String address=account.getAddress();
-        ArrayList<Balance> list=new ArrayList<>();
-        Observable  xasObservable = Observable.create(new Observable.OnSubscribe<List<Balance>>() {
-            @Override
-            public void call(Subscriber<? super List<Balance>> subscriber) {
-                try {
-                    AschResult result = AschSDK.Account.getBalance(address);
-                    if (result!=null && result.isSuccessful()){
-                        Log.i(TAG,result.getRawJson());
-                        Map<String, Object> map =result.parseMap();
-                        Balance xasBalance=new Balance();
-                        xasBalance.setCurrency("XAS");
-                        xasBalance.setBalance(String.valueOf(map.getOrDefault("balance","0")));
-                        xasBalance.setPrecision(8);
-                        list.add(xasBalance);
-                        subscriber.onNext(list);
-                        subscriber.onCompleted();
-                    }else {
-                        subscriber.onError(result.getException());
-                    }
-                }
-                catch (Exception ex){
-                    subscriber.onError(ex);
-                }
-            }
-        });
-        Observable  uiaOervable =
-                Observable.create(new Observable.OnSubscribe<List<Balance>>(){
-            @Override
-            public void call(Subscriber<? super List<Balance>> subscriber) {
-                AschResult result = AschSDK.UIA.getAddressBalances(address,100,0);
-                Log.i(TAG,result.getRawJson());
-                if (result.isSuccessful()){
-                    JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
-                    JSONArray balanceJsonArray=resultJSONObj.getJSONArray("balances");
-                    List<Balance> balances=JSON.parseArray(balanceJsonArray.toJSONString(),Balance.class);
-                    list.addAll(balances);
-                    subscriber.onNext(list);
-                    subscriber.onCompleted();
-                }else{
-                    subscriber.onError(result.getException());
-                }
-            }
-        });
-
-        xasObservable.flatMap(new Func1<List<Balance>, Observable<List<Balance>>>() {
-                    @Override
-                    public Observable<List<Balance>> call(List<Balance> balances) {
-                        return uiaOervable;
-                    }
-                })
-                        .subscribeOn(Schedulers.io())
+       Observable<FullAccount> observable = AccountsManager.getInstance().createLoadFullAccountObservable();
+        observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<Balance>>() {
+                .subscribe(new Subscriber<FullAccount>() {
                     @Override
                     public void onCompleted() {
 
@@ -134,21 +85,93 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
                     }
 
                     @Override
-                    public void onNext(List<Balance> balances) {
-                        if (balances!=null && balances.size()>0){
-                            view.displayXASBalance(balances.get(0));
+                    public void onNext(FullAccount fullAccount) {
+                        Log.d(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getBalances().toString());
+                        getAccount().setFullAccount(fullAccount);
+
+                        if (fullAccount!=null){
+                            view.displayXASBalance(fullAccount.getBalances().get(0));
                         }
-                        view.displayAssets(balances);
+                        view.displayAssets(fullAccount.getBalances());
                     }
                 });
-    }
 
-    private Handler handler = new Handler(Looper.getMainLooper()){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-        }
-    };
+//        Account account = getAccount();
+//        String address=account.getAddress();
+//        ArrayList<Balance> list=new ArrayList<>();
+//        Observable  xasObservable = Observable.create(new Observable.OnSubscribe<List<Balance>>() {
+//            @Override
+//            public void call(Subscriber<? super List<Balance>> subscriber) {
+//                try {
+//                    AschResult result = AschSDK.Account.getBalance(address);
+//                    if (result!=null && result.isSuccessful()){
+//                        Log.i(TAG,result.getRawJson());
+//                        Map<String, Object> map =result.parseMap();
+//                        Balance xasBalance=new Balance();
+//                        xasBalance.setCurrency("XAS");
+//                        xasBalance.setBalance(String.valueOf(map.getOrDefault("balance","0")));
+//                        xasBalance.setPrecision(8);
+//                        list.add(xasBalance);
+//                        subscriber.onNext(list);
+//                        subscriber.onCompleted();
+//                    }else {
+//                        subscriber.onError(result.getException());
+//                    }
+//                }
+//                catch (Exception ex){
+//                    subscriber.onError(ex);
+//                }
+//            }
+//        });
+//        Observable  uiaOervable =
+//                Observable.create(new Observable.OnSubscribe<List<Balance>>(){
+//            @Override
+//            public void call(Subscriber<? super List<Balance>> subscriber) {
+//                AschResult result = AschSDK.UIA.getAddressBalances(address,100,0);
+//                Log.i(TAG,result.getRawJson());
+//                if (result.isSuccessful()){
+//                    JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
+//                    JSONArray balanceJsonArray=resultJSONObj.getJSONArray("balances");
+//                    List<Balance> balances=JSON.parseArray(balanceJsonArray.toJSONString(),Balance.class);
+//                    list.addAll(balances);
+//                    subscriber.onNext(list);
+//                    subscriber.onCompleted();
+//                }else{
+//                    subscriber.onError(result.getException());
+//                }
+//            }
+//        });
+//
+//        xasObservable.flatMap(new Func1<List<Balance>, Observable<List<Balance>>>() {
+//                    @Override
+//                    public Observable<List<Balance>> call(List<Balance> balances) {
+//                        return uiaOervable;
+//                    }
+//                })
+//                        .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .unsubscribeOn(Schedulers.io())
+//                .subscribe(new Subscriber<List<Balance>>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        Log.d("xasObservable error:",e.toString());
+//                        view.displayError(new UIException("获取余额错误"));
+//                    }
+//
+//                    @Override
+//                    public void onNext(List<Balance> balances) {
+//                        if (balances!=null && balances.size()>0){
+//                            view.displayXASBalance(balances.get(0));
+//                        }
+//                        view.displayAssets(balances);
+//                    }
+//                });
+    }
 
 
     @Override

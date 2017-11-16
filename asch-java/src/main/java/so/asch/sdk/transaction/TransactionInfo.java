@@ -240,7 +240,7 @@ public class TransactionInfo {
         buffer.flip();
         byte[] result = new byte[buffer.remaining()];
         buffer.get(result);
-        System.out.println("InTransfer bytes:"+ Encoding.hex(result));
+        System.out.println("TransactionInfo bytes:"+ Encoding.hex(result));
         return result;
     }
 

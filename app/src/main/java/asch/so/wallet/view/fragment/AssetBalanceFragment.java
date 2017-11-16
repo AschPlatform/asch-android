@@ -294,7 +294,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         this.assetList.clear();
         this.assetList.addAll(assetList);
         adapter.notifyDataSetChanged();
-        refreshLayout.finishRefresh(2000);
+        refreshLayout.finishRefresh(1000);
     }
 
     @Override
@@ -319,6 +319,6 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void displayError(UIException ex) {
         Toast.makeText(getContext(),ex==null?"网络错误":ex.getMessage(), Toast.LENGTH_SHORT).show();
-        refreshLayout.finishRefresh(2000);
+        refreshLayout.finishRefresh(1000);
     }
 }

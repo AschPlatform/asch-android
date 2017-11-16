@@ -131,7 +131,7 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
 
         setupViewPager(viewPager);
         mainPresenter=new MainPresenter(this,this);
-        mainPresenter.loadFullAccount();
+       // mainPresenter.loadFullAccount();
 //
     }
 

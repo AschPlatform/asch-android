@@ -143,7 +143,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 Account account=getAccount();
                 String message=memoEt.getText().toString();
                 String secret=account.getSeed(); //TestData.secret;
-                String secondSecret= null; //TestData.secondSecret;
+                //String secondSecret= null; //TestData.secondSecret;
                 if (!Validator.check(getContext(), Validator.Type.Address,targetAddress,"无效地址，请重新输入")){
                    return;
                 }
@@ -171,8 +171,12 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                             });
                             return;
                         }
-                        //long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
-                        presenter.transfer(currency,targetAddress,amount,message,secret,secondSecret);
+//                        Log.d(TAG,"currency: "+currency);
+//                        Log.d(TAG,"targetAddress: "+targetAddress);
+//                        Log.d(TAG,"amount: "+amount);
+//                        Log.d(TAG,"message: "+message+"");
+//                        Log.d(TAG,"secret: "+secret);
+                        presenter.transfer(currency,targetAddress,amount,message,secret,null);
                     }
                 });
             }
