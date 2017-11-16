@@ -178,7 +178,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
             case  R.id.item_save:
             {
                 String name =nameEt.getText().toString().trim();
-                if (Validator.check(this, Validator.Type.Name,name,"账户名称不能为空"))
+                if (Validator.check(this, Validator.Type.Name,name,"账户名称只能是字母数组或者下划线"))
                 {
                     this.presenter.changeAccountName(name);
                     Toast.makeText(this,"保存成功",Toast.LENGTH_SHORT).show();
