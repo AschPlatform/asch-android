@@ -68,20 +68,6 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     private MainPresenter mainPresenter;
     private boolean isExit;
 
-//    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
-//    private static LifeCycleInterface mLifeCycleListener;
-//    private final BroadcastReceiver mPinCancelledReceiver;
-
-//    public MainTabActivity() {
-//        super();
-//        mPinCancelledReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                finish();
-//            }
-//        };
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +76,7 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
         StatusBarUtil.immersive(this);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager.setOffscreenPageLimit(3);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         //默认 >3 的选中效果会影响ViewPager的滑动切换时的效果，故利用反射去掉
         disableShiftMode(bottomNavigationView);
