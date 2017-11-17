@@ -41,15 +41,9 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
 
     @BindView(R.id.accounts_rcv)
     RecyclerView accountsRecycleView;
-
-
-
-
     private AccountsAdapter accountsAdapter;
 
     private Unbinder unbinder;
-    private List<Account> accountList;
-
     private AccountsContract.Presenter presenter;
 
 
@@ -77,13 +71,12 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         accountsRecycleView.setLayoutManager(new LinearLayoutManager(ctx));
         accountsRecycleView.setItemAnimator(new DefaultItemAnimator());
         accountsRecycleView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-        accountList=new ArrayList<>();
         accountsAdapter=new AccountsAdapter();
         accountsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
 
-                Account account = accountList.get(position);
+                Account account = (Account) baseQuickAdapter.getItem(position);
                 presenter.setCurrentAccount(account);
                 accountsAdapter.notifyDataSetChanged();
                 getActivity().finish();
@@ -143,10 +136,6 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
     @Override
     public void displaySavedAccounts(List<Account> accountList) {
         this.accountsAdapter.replaceData(accountList);
-        this.accountList.clear();
-        this.accountList.addAll(accountList);
-        accountsAdapter.replaceData(accountList);
-//        accountsAdapter.notifyDataSetChanged();
     }
 
 

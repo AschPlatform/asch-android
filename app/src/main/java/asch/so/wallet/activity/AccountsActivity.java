@@ -28,30 +28,12 @@ public class AccountsActivity extends TitleToolbarActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
-//    @Inject
-//    AccountsPresenter accountsPresenter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_accounts);
         ButterKnife.bind(this);
         setTitle("所有账户");
-       // setSupportActionBar(toolbar);
-//        if (getSupportActionBar() !=null){
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//            getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        }
-
         AccountsFragment accountsFragment=AccountsFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), accountsFragment, R.id.fragment_container);
-
-
-//        DaggerAccountsManagerComponent.builder()
-//                .applicationComponent(WalletApplication.getInstance().getApplicationComponent())
-//                .accountsModule(new AccountsModule(accountsFragment))
-//                .build().inject(this);
-
-
     }
 }
