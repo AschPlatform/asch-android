@@ -72,9 +72,21 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
             if (result.isSuccessful()) {
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                 JSONArray transactionsJsonArray = resultJSONObj.getJSONArray("transactions");
-                List<Transaction> balances = JSON.parseArray(transactionsJsonArray.toJSONString(), Transaction.class);
-                // list.addAll(balances);
-                subscriber.onNext(balances);
+                List<Transaction> transactions = JSON.parseArray(transactionsJsonArray.toJSONString(), Transaction.class);
+                ArrayList<Transaction> filteredTransactions = new ArrayList<Transaction>();
+                for (Transaction transaction : transactions) {
+//                    if (!isUIA() && transaction.getType() != TransactionType.Transfer.getCode()) {
+//                        continue;
+//                    }
+                    if (transaction.getType() == TransactionType.Transfer.getCode()) {
+                        transaction.setAssetInfo(new TransferAsset());
+                    } else if (transaction.getType() == TransactionType.UIATransfer.getCode()) {
+                        UIATransferAsset asset = JSON.parseObject(transaction.getAsset(), UIATransferAsset.class);
+                        transaction.setAssetInfo(asset);
+                    }
+                    filteredTransactions.add(transaction);
+                }
+                subscriber.onNext(filteredTransactions);
                 subscriber.onCompleted();
             } else {
                 subscriber.onError(result.getException());

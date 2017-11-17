@@ -108,7 +108,9 @@ public class TransactionDetailFragment extends BaseFragment {
             case UIATransfer:
             {
                 UIATransferAsset asset=(UIATransferAsset)transaction.getAssetInfo();
-                return String.format("%s %s",asset.getUiaTransfer().getAmountShow(),asset.getUiaTransfer().getCurrency());
+                if (asset!=null && asset.getUiaTransfer() !=null){
+                    return String.format("%s %s",asset.getUiaTransfer().getAmountShow(),asset.getUiaTransfer().getCurrency());
+                }
             }
             case Lock:
                 break;
@@ -153,8 +155,10 @@ public class TransactionDetailFragment extends BaseFragment {
                 break;
             case UIATransfer:
             {
-                UIATransferAsset asset=JSON.parseObject(transaction.getAsset(),UIATransferAsset.class);
-                transaction.setAssetInfo(asset);
+                if (transaction.getAsset()!=null){
+                    UIATransferAsset asset=JSON.parseObject(transaction.getAsset(),UIATransferAsset.class);
+                    transaction.setAssetInfo(asset);
+                }
             }
                 break;
             case Lock:
