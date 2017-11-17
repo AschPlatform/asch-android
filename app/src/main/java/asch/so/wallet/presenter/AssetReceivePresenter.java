@@ -99,35 +99,32 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
        return qrCodeURL.encodeQRCodeURL();
     }
 
-    @Override
-    public  void testDecodeQRCodeURL(){
-        try {
-            QRCodeURL url =  QRCodeURL.decodeQRCodeURL(qrCodeURL.encodeQRCodeURL());
-            Toast.makeText(context,url.toString(),Toast.LENGTH_SHORT).show();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Override
+//    public  void testDecodeQRCodeURL(){
+//        try {
+//            QRCodeURL url =  QRCodeURL.decodeQRCodeURL(qrCodeURL.encodeQRCodeURL());
+//            Toast.makeText(context,url.toString(),Toast.LENGTH_SHORT).show();
+//        } catch (UnsupportedEncodingException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Override
     public void loadAssets() {
         ArrayList<UIAAsset> list=new ArrayList<UIAAsset>();
         Observable uiaOervable =
-                Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){
-                    @Override
-                    public void call(Subscriber<? super List<UIAAsset>> subscriber) {
-                        AschResult result = AschSDK.UIA.getAssets(100,0);
-                        Log.i(TAG,result.getRawJson());
-                        if (result.isSuccessful()){
-                            JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
-                            JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
-                            List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
-                            list.addAll(assets);
-                            subscriber.onNext(list);
-                            subscriber.onCompleted();
-                        }else{
-                            subscriber.onError(result.getException());
-                        }
+                Observable.create((Observable.OnSubscribe<List<UIAAsset>>) subscriber -> {
+                    AschResult result = AschSDK.UIA.getAssets(100,0);
+                    Log.i(TAG,result.getRawJson());
+                    if (result.isSuccessful()){
+                        JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
+                        JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
+                        List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
+                        list.addAll(assets);
+                        subscriber.onNext(list);
+                        subscriber.onCompleted();
+                    }else{
+                        subscriber.onError(result.getException());
                     }
                 });
 

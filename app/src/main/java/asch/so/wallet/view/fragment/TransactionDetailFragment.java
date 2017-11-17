@@ -9,8 +9,11 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.model.entity.Transaction;
+import asch.so.wallet.model.entity.UIATransferAsset;
+import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import so.asch.sdk.TransactionType;
@@ -63,8 +66,8 @@ public class TransactionDetailFragment extends BaseFragment {
         txDateTv.setText(String.valueOf(transaction.dateFromAschTimestamp().toString()));
         txSenderTv.setText(transaction.getSenderId());
         txReceiveTv.setText(transaction.getRecipientId());
-        txAmountTv.setText(transaction.getAmount()+"");
-        txFeeTv.setText(transaction.getFee()+"XAS");
+        txAmountTv.setText(amountFroTransaction(transaction));
+        txFeeTv.setText(AppUtil.decimalFromBigint(transaction.getFee(), AppConstants.PRECISION).floatValue()+" XAS");
         txConfirmationsTv.setText(transaction.getConfirmations()+"");
         txBlockIdTv.setText(transaction.getBlockId());
 
@@ -72,10 +75,94 @@ public class TransactionDetailFragment extends BaseFragment {
         return rootView;
     }
 
+    private String amountFroTransaction(Transaction transaction){
+        switch (Transaction.Type.fromCode(transaction.getType())){
+            case Transfer:
+                return AppUtil.decimalFromBigint(transaction.getAmount(), AppConstants.PRECISION).floatValue()+" XAS";
+            case Signature:
+                break;
+            case Delegate:
+                break;
+            case Vote:
+                break;
+            case MultiSignature:
+                break;
+            case Dapp:
+                break;
+            case InTransfer:
+                break;
+            case OutTransfer:
+                break;
+            case Store:
+                break;
+            case UIAIssuer:
+                break;
+            case UIAAsset:
+                break;
+            case UIAFlags:
+                break;
+            case UIA_ACL:
+                break;
+            case UIAIssue:
+                break;
+            case UIATransfer:
+            {
+                UIATransferAsset asset=(UIATransferAsset)transaction.getAssetInfo();
+                return String.format("%s %s",asset.getUiaTransfer().getAmountShow(),asset.getUiaTransfer().getCurrency());
+            }
+            case Lock:
+                break;
+            default:
+                return "0";
+        }
+        return "0";
+    }
+
     private Transaction getTransaction(){
         Bundle bundle=getArguments();
         String json=bundle.getString("transaction");
-         return JSON.parseObject(json,Transaction.class);
+        Transaction transaction = JSON.parseObject(json,Transaction.class);
+        switch (Transaction.Type.fromCode(transaction.getType())){
+            case Transfer:
+                break;
+            case Signature:
+                break;
+            case Delegate:
+                break;
+            case Vote:
+                break;
+            case MultiSignature:
+                break;
+            case Dapp:
+                break;
+            case InTransfer:
+                break;
+            case OutTransfer:
+                break;
+            case Store:
+                break;
+            case UIAIssuer:
+                break;
+            case UIAAsset:
+                break;
+            case UIAFlags:
+                break;
+            case UIA_ACL:
+                break;
+            case UIAIssue:
+                break;
+            case UIATransfer:
+            {
+                UIATransferAsset asset=JSON.parseObject(transaction.getAsset(),UIATransferAsset.class);
+                transaction.setAssetInfo(asset);
+            }
+                break;
+            case Lock:
+                break;
+            default:
+        }
+
+        return transaction;
     }
 
 }

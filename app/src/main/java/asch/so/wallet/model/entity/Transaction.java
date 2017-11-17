@@ -266,4 +266,7 @@ public class Transaction {
     public void setAssetInfo(Asset assetInfo) {
         this.assetInfo = assetInfo;
     }
+
+
+
 }

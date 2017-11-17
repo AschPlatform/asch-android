@@ -17,15 +17,10 @@ public interface AssetTransactionsContract {
         void displayBalance(Balance balance);
         void displayFirstPageTransactions(List<Transaction> transactions);
         void displayMorePageTransactions(List<Transaction> transactions);
-//        void displayTransactions(List<Transaction> transactions);
-//        void displayMoreTransactions(List<Transaction> transactions);
     }
 
     interface Presenter extends BasePresenter{
         void loadFirstPageTransactions();
         void loadMorePageTransactions();
-
-//        void loadTransactions(String currency, boolean isUIA);
-//        void loadMoreTransactions(String currency, boolean isUIA);
     }
 }
