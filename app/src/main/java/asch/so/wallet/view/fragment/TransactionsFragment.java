@@ -2,6 +2,7 @@ package asch.so.wallet.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,7 +45,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
     //MaterialHeader materialHeader;
-    TransactionsAdapter adapter =new TransactionsAdapter();
+    TransactionsAdapter adapter;
     TransactionsContract.Presenter presenter;
 
 
@@ -56,6 +57,12 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
         TransactionsFragment fragment = new TransactionsFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        adapter =new TransactionsAdapter(getContext());
     }
 
     @Override
