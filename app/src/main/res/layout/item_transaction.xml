@@ -5,6 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="44dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     >
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -40,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/currency_icon"
         android:layout_below="@+id/transactionid_tv"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="3dp"
         android:layout_marginLeft="10dp"
         android:textColor="#333333"
         android:maxLines="1"
@@ -54,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/transactionid_tv"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="3dp"
         android:layout_marginRight="10dp"
         android:textColor="#333333"
         android:maxLines="1"
