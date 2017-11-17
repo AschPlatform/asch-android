@@ -38,14 +38,6 @@ public class TransactionsAdapter extends BaseQuickAdapter<Transaction, Transacti
     @Override
     protected void convert(TransactionsAdapter.ViewHolder viewHolder, Transaction transaction) {
         viewHolder.transactionTv.setText(transaction.getId());
-//        if ( TransactionType.Transfer.getCode()==transaction.getType()){
-//            viewHolder.amountTv.setText("普通转账");
-//            //viewHolder.amountTv.setText(String.format("%.3f",transaction.getAmount()/ (double) AschConst.COIN)+" XAS");
-//        }else if (TransactionType.UIATransfer.getCode()==transaction.getType()){
-//            viewHolder.amountTv.setText("自定义资产转账");
-//        }else {
-//            viewHolder.amountTv.setText("其他转账类型");
-//        }
         viewHolder.amountTv.setText(Transaction.Type.fromCode(transaction.getType()).getName());
         String ago=timeAgo.getTimeAgo(transaction.dateFromAschTimestamp());
         viewHolder.dateTv.setText(ago);
