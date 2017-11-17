@@ -37,12 +37,10 @@ public class AssetTransactionsActivity extends TitleToolbarActivity {
         setTitle(balance.getCurrency());
 
         fragment=AssetTransactionsFragment.newInstance();
-//        Bundle bundle=new Bundle();
-//        bundle.putString("balance", json);
         fragment.setArguments(intent.getExtras());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 
-        presenter=new AssetTransactionsPresenter(this,fragment);
+        presenter=new AssetTransactionsPresenter(this,fragment, balance.getCurrency());
 //        presenter.loadTransactions(balance.getCurrency(), !AschConst.CORE_COIN_NAME.equals(balance.getCurrency()));
 
 

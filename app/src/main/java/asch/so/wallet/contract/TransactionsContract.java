@@ -11,17 +11,16 @@ import asch.so.wallet.model.entity.Transaction;
  */
 
 public interface TransactionsContract {
-    interface View extends BaseView<Presenter>{
-       void displayTransactions(List<Transaction> transactions);
-        void displayMoreTransactions(List<Transaction> transactions);
+    interface View extends BaseView<Presenter> {
+        void displayFirstPageTransactions(List<Transaction> transactions);
+
+        void displayMorePageTransactions(List<Transaction> transactions);
     }
 
-    interface Presenter extends BasePresenter{
+    interface Presenter extends BasePresenter {
 
         void loadFirstPageTransactions();
+
         void loadMorePageTransactions();
-//       void loadTransactions();
-//        void  refreshTransactions();
-//        void loadMoreTransactions();
     }
 }

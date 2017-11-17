@@ -117,14 +117,14 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     }
 
     @Override
-    public void displayTransactions(List<Transaction> transactions) {
+    public void displayFirstPageTransactions(List<Transaction> transactions) {
         adapter.replaceData(transactions);
         refreshLayout.finishRefresh(1000);
 
     }
 
     @Override
-    public void displayMoreTransactions(List<Transaction> transactions) {
+    public void displayMorePageTransactions(List<Transaction> transactions) {
         adapter.addData(transactions);
         refreshLayout.finishLoadmore(1000);
     }

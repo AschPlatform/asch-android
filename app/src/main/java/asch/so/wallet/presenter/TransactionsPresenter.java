@@ -97,9 +97,9 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
                     @Override
                     public void onNext(List<Transaction> transactions) {
                         if (pager.isFirstPage()) {
-                            view.displayTransactions(transactions);
+                            view.displayFirstPageTransactions(transactions);
                         } else {
-                            view.displayMoreTransactions(transactions);
+                            view.displayMorePageTransactions(transactions);
                         }
                         pager.finishLoad(true);
                     }
@@ -125,153 +125,6 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
     public void unSubscribe() {
 
     }
-
-//    @Override
-//    public void loadTransactions() {
-//        String address=getAccount().getAddress();
-//        Observable.create(new Observable.OnSubscribe<List<Transaction>>() {
-//
-//            @Override
-//            public void call(Subscriber<? super List<Transaction>> subscriber) {
-//                TransactionQueryParameters params=new TransactionQueryParameters()
-//                        .setSenderId(address)
-//                        .setRecipientId(address)
-//                        .setOffset(0)
-//                        .setLimit(20);
-//                AschResult result = AschSDK.Transaction.queryTransactions(params);
-//                if (result.isSuccessful()){
-//                    JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
-//                    JSONArray transactionsJsonArray=resultJSONObj.getJSONArray("transactions");
-//                    List<Transaction> balances= JSON.parseArray(transactionsJsonArray.toJSONString(),Transaction.class);
-//                    // list.addAll(balances);
-//                    subscriber.onNext(balances);
-//                    subscriber.onCompleted();
-//                }else{
-//                    subscriber.onError(result.getException());
-//                }
-//            }
-//        }).subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribe(new Subscriber<List<Transaction>>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        view.displayError(new UIException("网络错误"));
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<Transaction> transactions) {
-//                        view.displayTranscations(transactions);
-//                    }
-//                });
-////                .subscribe(new Action1<List<Transaction>>() {
-////                    @Override
-////                    public void call(List<Transaction> transactions) {
-////                        view.displayTranscations(transactions);
-////                    }
-////                });
-//    }
-
-//
-//    @Override
-//    public void refreshTransactions() {
-//        String address=getAccount().getAddress();
-//        Observable.create(new Observable.OnSubscribe<List<Transaction>>() {
-//
-//            @Override
-//            public void call(Subscriber<? super List<Transaction>> subscriber) {
-//                TransactionQueryParameters params=new TransactionQueryParameters()
-//                        .setSenderId(address)
-//                        .setRecipientId(address)
-//                        .orderByDescending("t_timestamp")
-//                        .setOffset(0)
-//                        .setLimit(20);
-//                AschResult result = AschSDK.Transaction.queryTransactions(params);
-//                if (result.isSuccessful()){
-//                    JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
-//                    JSONArray transactionsJsonArray=resultJSONObj.getJSONArray("transactions");
-//                    List<Transaction> balances= JSON.parseArray(transactionsJsonArray.toJSONString(),Transaction.class);
-//                    // list.addAll(balances);
-//                    subscriber.onNext(balances);
-//                    subscriber.onCompleted();
-//                }else{
-//                    subscriber.onError(result.getException());
-//                }
-//            }
-//        }).subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribe(new Subscriber<List<Transaction>>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        view.displayError(new UIException("网络错误"));
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<Transaction> transactions) {
-//                        view.displayMoreTranscations(transactions);
-//                    }
-//                });
-//    }
-//
-//    @Override
-//    public void loadMoreTransactions() {
-//
-//
-//        String address=getAccount().getAddress();
-//
-//        Observable.create(new Observable.OnSubscribe<List<Transaction>>() {
-//
-//            @Override
-//            public void call(Subscriber<? super List<Transaction>> subscriber) {
-//                TransactionQueryParameters params=new TransactionQueryParameters()
-//                        .setSenderId(address)
-//                        .setRecipientId(address)
-//                        .setOffset(0)
-//                        .setLimit(10);
-//                AschResult result = AschSDK.Transaction.queryTransactions(params);
-//                if (result.isSuccessful()){
-//                    JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
-//                    JSONArray transactionsJsonArray=resultJSONObj.getJSONArray("transactions");
-//                    List<Transaction> transactions= JSON.parseArray(transactionsJsonArray.toJSONString(),Transaction.class);
-//                    subscriber.onNext(transactions);
-//                    subscriber.onCompleted();
-//                }else{
-//                    subscriber.onError(result.getException());
-//                }
-//            }
-//        }).subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribe(new Subscriber<List<Transaction>>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<Transaction> transactions) {
-//                        view.displayMoreTranscations(transactions);
-//                    }
-//                });
-//    }
-
-    //private List<Transaction> filterTransactions
 
     private Account getAccount() {
         return AccountsManager.getInstance().getCurrentAccount();

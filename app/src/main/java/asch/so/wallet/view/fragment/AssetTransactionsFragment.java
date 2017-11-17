@@ -127,14 +127,16 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                presenter.loadTransactions(balance.getCurrency(), !AschConst.CORE_COIN_NAME.equals(balance.getCurrency()));
+                presenter.loadFirstPageTransactions();
+               // presenter.loadTransactions(balance.getCurrency(), !AschConst.CORE_COIN_NAME.equals(balance.getCurrency()));
             }
         });
 
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore(2000);
+                presenter.loadMorePageTransactions();
+                //refreshlayout.finishLoadmore(2000);
             }
         });
         refreshLayout.autoRefresh();
@@ -162,13 +164,14 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     }
 
     @Override
-    public void displayTransactions(List<Transaction> transactions) {
+    public void displayFirstPageTransactions(List<Transaction> transactions) {
         adapter.replaceData(transactions);
         refreshLayout.finishRefresh(1000);
     }
 
     @Override
-    public void displayMoreTransactions(List<Transaction> transactions) {
-
+    public void displayMorePageTransactions(List<Transaction> transactions) {
+        adapter.addData(transactions);
+        refreshLayout.finishLoadmore(1000);
     }
 }
