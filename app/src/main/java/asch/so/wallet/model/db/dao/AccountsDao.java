@@ -53,7 +53,7 @@ public class AccountsDao {
      */
    public RealmResults<Account> queryAllSavedAccounts(){
 
-    RealmResults<Account> results = getRealm().where(Account.class).findAllAsync();
+    RealmResults<Account> results = getRealm().where(Account.class).findAll();
        
     return results;
    }

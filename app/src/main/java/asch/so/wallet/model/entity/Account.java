@@ -129,4 +129,17 @@ public class Account extends RealmObject{
         String decryptSecret= AccountSecurity.decryptSecret(getEncryptSeed(),passwd);
         return decryptSecret;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj==this)
+        {
+            return true;
+        }
+        else if (obj instanceof Account) {
+            Account accountObj = (Account) obj;
+            return (accountObj.getAddress().equals(this.getAddress()));
+        }
+        return false;
+    }
 }

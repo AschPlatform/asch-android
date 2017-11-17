@@ -42,16 +42,8 @@ public class AccountImportActivity extends TitleToolbarActivity implements  Easy
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //setContentView(R.layout.activity_base);
         ButterKnife.bind(this);
         setTitle("导入账户");
-//        setSupportActionBar(toolbar);
-//        if (getSupportActionBar() !=null){
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//            getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        }
-
         fragment = AccountImportFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 
