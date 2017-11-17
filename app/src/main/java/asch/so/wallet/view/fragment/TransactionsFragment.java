@@ -81,13 +81,13 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                presenter.loadTransactions();
+                presenter.loadFirstPageTransactions();
             }
         });
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                presenter.loadMoreTransactions();
+                presenter.loadMorePageTransactions();
             }
         });
         //refreshLayout.setEnableAutoLoadmore(true);
@@ -117,15 +117,15 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     }
 
     @Override
-    public void displayTranscations(List<Transaction> transactions) {
+    public void displayTransactions(List<Transaction> transactions) {
         adapter.replaceData(transactions);
-        refreshLayout.finishRefresh(2000);
+        refreshLayout.finishRefresh(1000);
 
     }
 
     @Override
-    public void displayMoreTranscations(List<Transaction> transactions) {
+    public void displayMoreTransactions(List<Transaction> transactions) {
         adapter.addData(transactions);
-        refreshLayout.finishLoadmore(2000);
+        refreshLayout.finishLoadmore(1000);
     }
 }

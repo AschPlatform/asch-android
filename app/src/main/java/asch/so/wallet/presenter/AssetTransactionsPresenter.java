@@ -79,7 +79,6 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
                             .setUia(isUIA?1:0)
                             .orderByDescending("t_timestamp")
                             ;
-                    //.setCurrency("XAS");
                     result = AschSDK.Transaction.queryTransactions(params);
                 }
 

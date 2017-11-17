@@ -1,6 +1,14 @@
 <resources>
 
-
+    <!--Time Ago-->
+    <!--<string name="just_now">just now</string>-->
+    <!--<string name="a_min_ago">a min ago</string>-->
+    <!--<string name="mins_ago">" mins ago"</string>-->
+    <!--<string name="a_hour_ago">a hour ago</string>-->
+    <!--<string name="yesterday">yesterday</string>-->
+    <!--<string name="days_ago">" days ago"</string>-->
+    <!--<string name="week_ago">" week ago"</string>-->
+    <!--<string name="weeks_ago">" weeks ago"</string>-->
     <!--Time Ago-->
     <string name="just_now">刚刚</string>
     <string name="a_min_ago">一分钟前</string>
