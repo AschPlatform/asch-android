@@ -168,7 +168,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                     public void onConfirm(TransferConfirmationDialog dialog) {
                         long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
                         Account currentAccount =AccountsManager.getInstance().getCurrentAccount();
-                        if (currentAccount.getFullAccount()!=null && currentAccount.getFullAccount().getAccount().isSecondSignature())
+                        if (currentAccount!=null && currentAccount.getFullAccount()!=null && currentAccount.getFullAccount().getAccount().isSecondSignature())
                         {
                             showSecondSecretInputDialog(new SecondPasswdDialog.PasswordCallback() {
                                 @Override

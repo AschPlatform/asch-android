@@ -36,6 +36,7 @@ import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.AssetTransactionsContract;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.Transaction;
+import asch.so.wallet.presenter.AssetTransactionsPresenter;
 import asch.so.wallet.view.adapter.AssetTransactionsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,6 +87,8 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         View rootView=inflater.inflate(R.layout.fragment_asset_transactions,container,false);
         ButterKnife.bind(this,rootView);
 
+        presenter=new AssetTransactionsPresenter(getActivity(),this, balance.getCurrency());
+
         txRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         txRcv.setItemAnimator(new DefaultItemAnimator());
         txRcv.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
@@ -127,16 +130,18 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                presenter.loadFirstPageTransactions();
-               // presenter.loadTransactions(balance.getCurrency(), !AschConst.CORE_COIN_NAME.equals(balance.getCurrency()));
+                if (presenter!=null) {
+                    presenter.loadFirstPageTransactions();
+                }
             }
         });
 
         refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                presenter.loadMorePageTransactions();
-                //refreshlayout.finishLoadmore(2000);
+                if (presenter!=null) {
+                    presenter.loadMorePageTransactions();
+                }
             }
         });
         refreshLayout.autoRefresh();
