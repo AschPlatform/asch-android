@@ -2,6 +2,7 @@ package asch.so.wallet;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatDelegate;
@@ -68,7 +69,7 @@ public class WalletApplication extends MultiDexApplication {
                 .applicationModule(new ApplicationModule(this))
                 .build();
         walletApplication = this;
-
+        Utils.init(this);
         initBuglySDK();
         AppConfig.init(this);
         Wallet.init(this);
@@ -77,14 +78,14 @@ public class WalletApplication extends MultiDexApplication {
         initRealm();
         initLockManager();
         IdenticonGenerator.init(this);
-        Utils.init(this);
-        //CrashReport.testJavaCrash();
     }
 
     private void initBuglySDK() {
         CrashReport.initCrashReport(getApplicationContext(), AppConstants.BUGLY_APP_ID, true);
         CrashReport.setAppChannel(this, "TEST");
-        CrashReport.setAppVersion(getApplicationContext(), String.format("%s(%d)",AppUtils.getAppVersionName(),AppUtils.getAppVersionCode()));
+        String verName =AppUtils.getAppVersionName();
+        int verCode= AppUtils.getAppVersionCode();
+        CrashReport.setAppVersion(getApplicationContext(), String.format("%s(%d)",verName,verCode));
     }
 
 
