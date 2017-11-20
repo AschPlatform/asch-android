@@ -101,9 +101,9 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         String uri = getArguments().getString("qrcode_uri");
 
         try {
-            if (uri.startsWith("A")){
+            if (Validation.isValidAddress(uri)){
                 qrCodeURL=new QRCodeURL();
-                qrCodeURL.setAmount("0");
+                qrCodeURL.setAmount("");
                 qrCodeURL.setCurrency("XAS");
                 qrCodeURL.setAddress(uri);
             }else {

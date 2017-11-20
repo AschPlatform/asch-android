@@ -14,6 +14,6 @@ public class AddressCheckable extends BaseCheckable {
 
     @Override
     public boolean check() {
-        return isNotBlank()&&value.startsWith("A")&& Validation.isValidAddress(value);
+        return isNotBlank()&& Validation.isValidAddress(value);
     }
 }

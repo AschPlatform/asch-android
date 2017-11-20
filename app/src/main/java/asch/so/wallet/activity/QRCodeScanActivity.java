@@ -13,6 +13,7 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
 import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.util.StatusBarUtil;
+import asch.so.wallet.view.validator.Validator;
 import asch.so.widget.toolbar.BaseToolbar;
 import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
@@ -129,6 +130,11 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                 break;
             case ScanAddressToPaste:
             {
+                if (!Validator.check(this, Validator.Type.Address,result,"无效地址"))
+                {
+                    zbarView.startSpot();
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.putExtra("QRDecodeString", result);
                 setResult(RESULT_OK, intent);
@@ -137,6 +143,11 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                 break;
             case ScanAddressToPay:
             {
+                if (!Validator.check(this, Validator.Type.Address,result,"无效地址"))
+                {
+                    zbarView.startSpot();
+                    return;
+                }
                 Bundle bundle =new Bundle();
                 try {
                     //QRCodeURL uri = QRCodeURL.decodeQRCodeURL(result);
