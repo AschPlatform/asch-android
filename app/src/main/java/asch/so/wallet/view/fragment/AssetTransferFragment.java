@@ -82,6 +82,9 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     private QRCodeURL qrCodeURL;
     private SecondPasswdDialog secondPasswdDialog;
 
+    String currency=null;
+    int precision = 0;
+
     public static AssetTransferFragment newInstance() {
         
         Bundle args = new Bundle();
@@ -121,8 +124,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         View rootView=inflater.inflate(R.layout.fragment_asset_transfer,container,false);
         ButterKnife.bind(this,rootView);
 
-        String currency;
-        int precision = 0;
+//        String currency;
+//        int precision = 0;
         hideKeyboard();
 
         if (balance!=null){
@@ -144,12 +147,20 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 String message=memoEt.getText().toString();
                 String secret=account.getSeed(); //TestData.secret;
                 //String secondSecret= null; //TestData.secondSecret;
+
+                if (currency==null)
+                {
+                    Toast.makeText(getContext(),"请选择币种",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (!Validator.check(getContext(), Validator.Type.Address,targetAddress,"无效地址，请重新输入")){
                    return;
                 }
                 if (!Validator.check(getContext(), Validator.Type.Amount,ammountStr,"无效金额")){
                     return;
                 }
+
 
 
                 showConfirmationDialog(targetAddress, ammountStr, currency, new TransferConfirmationDialog.OnConfirmListener() {
@@ -171,11 +182,6 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                             });
                             return;
                         }
-//                        Log.d(TAG,"currency: "+currency);
-//                        Log.d(TAG,"targetAddress: "+targetAddress);
-//                        Log.d(TAG,"amount: "+amount);
-//                        Log.d(TAG,"message: "+message+"");
-//                        Log.d(TAG,"secret: "+secret);
                         presenter.transfer(currency,targetAddress,amount,message,secret,null);
                     }
                 });
