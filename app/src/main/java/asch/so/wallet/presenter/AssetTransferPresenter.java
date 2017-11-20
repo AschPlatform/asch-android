@@ -95,13 +95,6 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                             view.displayToast("转账成功");
                         }
                     });
-//                    .subscribe(new Action1<AschResult>() {
-//                        @Override
-//                        public void call(AschResult aschResult) {
-//                            Log.i(TAG, "+++++++"+aschResult.getRawJson());
-//                            view.displayToast("转账成功");
-//                        }
-//                    });
         }
 
     @Override

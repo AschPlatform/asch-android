@@ -210,55 +210,6 @@ public class AccountsManager extends Observable {
         return AccountsDao.getInstance().hasAccountForName(name);
     }
 
-
-//    public void fetchFullAccount(String publicKey){
-//        rx.Observable loginObservable = rx.Observable.create(new rx.Observable.OnSubscribe<FullAccount>() {
-//            @Override
-//            public void call(Subscriber<? super FullAccount> subscriber) {
-//                try {
-//                    AschResult result = AschSDK.Account.secureLogin(publicKey);
-//                    if (result!=null && result.isSuccessful()){
-//                        Log.i(TAG,result.getRawJson());
-////                        Map<String, Object> map =result.parseMap();
-//                        FullAccount account= JSON.parseObject(result.getRawJson(),FullAccount.class);
-//                        subscriber.onNext(account);
-//                        subscriber.onCompleted();
-//                    }else {
-//                        subscriber.onError(result.getException());
-//                    }
-//                }
-//                catch (Exception ex){
-//                    subscriber.onError(ex);
-//                }
-//            }
-//        });
-//        loginObservable.subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribe(new Subscriber<FullAccount>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.d("loginObservable error:",e.toString());
-//                       // view.displayError(new UIException("获取余额错误"));
-//                    }
-//
-//                    @Override
-//                    public void onNext(FullAccount account) {
-//                        getCurrentAccount().setFullAccount(account);
-////                        if (balances!=null && balances.size()>0){
-////                            view.displayXASBalance(balances.get(0));
-////                        }
-////                        view.displayAssets(balances);
-//                    }
-//                });
-//
-//    }
-
     public  rx.Observable<FullAccount> createLoadFullAccountObservable(){
         return createLoadFullAccountObservable(getCurrentAccount());
     }
@@ -269,34 +220,40 @@ public class AccountsManager extends Observable {
         ArrayList<Balance> list = new ArrayList<>();
         String publicKey = account.getPublicKey();
         String address = account.getAddress();
-        rx.Observable loginObservable = rx.Observable.create((rx.Observable.OnSubscribe<FullAccount>) subscriber -> {
-            try {
-                AschResult result = AschSDK.Account.secureLogin(publicKey);
-                if (result != null && result.isSuccessful()) {
-                    Log.i(TAG, result.getRawJson());
-                    FullAccount fullAccount = JSON.parseObject(result.getRawJson(), FullAccount.class);
-                    subscriber.onNext(fullAccount);
-                    subscriber.onCompleted();
-                } else {
-                    subscriber.onError(result.getException());
+        rx.Observable loginObservable = rx.Observable.create(new rx.Observable.OnSubscribe<FullAccount>() {
+            @Override
+            public void call(Subscriber<? super FullAccount> subscriber) {
+                try {
+                    AschResult result = AschSDK.Account.secureLogin(publicKey);
+                    if (result != null && result.isSuccessful()) {
+                        Log.i(TAG, result.getRawJson());
+                        FullAccount fullAccount = JSON.parseObject(result.getRawJson(), FullAccount.class);
+                        subscriber.onNext(fullAccount);
+                        subscriber.onCompleted();
+                    } else {
+                        subscriber.onError(result.getException());
+                    }
+                } catch (Exception ex) {
+                    subscriber.onError(ex);
                 }
-            } catch (Exception ex) {
-                subscriber.onError(ex);
             }
         });
 
         rx.Observable uiaObservable =
-                rx.Observable.create((rx.Observable.OnSubscribe<List<Balance>>) subscriber -> {
-                    AschResult result = AschSDK.UIA.getAddressBalances(address, 100, 0);
-                    Log.i(TAG, result.getRawJson());
-                    if (result.isSuccessful()) {
-                        JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
-                        JSONArray balanceJsonArray = resultJSONObj.getJSONArray("balances");
-                        List<Balance> balances = JSON.parseArray(balanceJsonArray.toJSONString(), Balance.class);
-                        subscriber.onNext(balances);
-                        subscriber.onCompleted();
-                    } else {
-                        subscriber.onError(result.getException());
+                rx.Observable.create(new rx.Observable.OnSubscribe<List<Balance>>(){
+                    @Override
+                    public void call(Subscriber<? super List<Balance>> subscriber) {
+                        AschResult result = AschSDK.UIA.getAddressBalances(address, 100, 0);
+                        Log.i(TAG, result.getRawJson());
+                        if (result.isSuccessful()) {
+                            JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
+                            JSONArray balanceJsonArray = resultJSONObj.getJSONArray("balances");
+                            List<Balance> balances = JSON.parseArray(balanceJsonArray.toJSONString(), Balance.class);
+                            subscriber.onNext(balances);
+                            subscriber.onCompleted();
+                        } else {
+                            subscriber.onError(result.getException());
+                        }
                     }
                 });
 
@@ -317,53 +274,6 @@ public class AccountsManager extends Observable {
     }
 
     public void loadFullAccount(Account account) {
-//        ArrayList<Balance> list = new ArrayList<>();
-//        String publicKey = account.getPublicKey();
-//        String address = account.getAddress();
-//        rx.Observable loginObservable = rx.Observable.create((rx.Observable.OnSubscribe<FullAccount>) subscriber -> {
-//            try {
-//                AschResult result = AschSDK.Account.secureLogin(publicKey);
-//                if (result != null && result.isSuccessful()) {
-//                    Log.i(TAG, result.getRawJson());
-//                    FullAccount fullAccount = JSON.parseObject(result.getRawJson(), FullAccount.class);
-//                    subscriber.onNext(fullAccount);
-//                    subscriber.onCompleted();
-//                } else {
-//                    subscriber.onError(result.getException());
-//                }
-//            } catch (Exception ex) {
-//                subscriber.onError(ex);
-//            }
-//        });
-//
-//        rx.Observable uiaObservable =
-//                rx.Observable.create((rx.Observable.OnSubscribe<List<Balance>>) subscriber -> {
-//                    AschResult result = AschSDK.UIA.getAddressBalances(address, 100, 0);
-//                    Log.i(TAG, result.getRawJson());
-//                    if (result.isSuccessful()) {
-//                        JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
-//                        JSONArray balanceJsonArray = resultJSONObj.getJSONArray("balances");
-//                        List<Balance> balances = JSON.parseArray(balanceJsonArray.toJSONString(), Balance.class);
-//                        subscriber.onNext(balances);
-//                        subscriber.onCompleted();
-//                    } else {
-//                        subscriber.onError(result.getException());
-//                    }
-//                });
-//
-//        rx.Observable.combineLatest(loginObservable, uiaObservable, new Func2<FullAccount, List<Balance>, FullAccount>() {
-//            @Override
-//            public FullAccount call(FullAccount fullAccount, List<Balance> balances) {
-//                Balance xasBalance = new Balance();
-//                xasBalance.setCurrency(AppConstants.XAS_NAME);
-//                xasBalance.setBalance(String.valueOf(fullAccount.getAccount().getBalance()));
-//                xasBalance.setPrecision(AppConstants.PRECISION);
-//                list.add(xasBalance);
-//                list.addAll(balances);
-//                fullAccount.setBalances(list);
-//                return fullAccount;
-//            }
-//        })
         createLoadFullAccountObservable(account)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -387,81 +297,5 @@ public class AccountsManager extends Observable {
             }
         });
     }
-
-
-//    public void loadAssets(String address) {
-//        ArrayList<Balance> list = new ArrayList<>();
-//        rx.Observable xasObservable = rx.Observable.create(new rx.Observable.OnSubscribe<List<Balance>>() {
-//            @Override
-//            public void call(Subscriber<? super List<Balance>> subscriber) {
-//                try {
-//                    AschResult result = AschSDK.Account.getBalance(address);
-//                    if (result != null && result.isSuccessful()) {
-//                        Log.i(TAG, result.getRawJson());
-//                        Map<String, Object> map = result.parseMap();
-//                        Balance xasBalance = new Balance();
-//                        xasBalance.setCurrency("XAS");
-//                        xasBalance.setBalance(String.valueOf(map.getOrDefault("balance", "0")));
-//                        xasBalance.setPrecision(8);
-//                        list.add(xasBalance);
-//                        subscriber.onNext(list);
-//                        subscriber.onCompleted();
-//                    } else {
-//                        subscriber.onError(result.getException());
-//                    }
-//                } catch (Exception ex) {
-//                    subscriber.onError(ex);
-//                }
-//            }
-//        });
-//        rx.Observable uiaOervable =
-//                rx.Observable.create(new rx.Observable.OnSubscribe<List<Balance>>() {
-//                    @Override
-//                    public void call(Subscriber<? super List<Balance>> subscriber) {
-//                        AschResult result = AschSDK.UIA.getAddressBalances(address, 100, 0);
-//                        Log.i(TAG, result.getRawJson());
-//                        if (result.isSuccessful()) {
-//                            JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
-//                            JSONArray balanceJsonArray = resultJSONObj.getJSONArray("balances");
-//                            List<Balance> balances = JSON.parseArray(balanceJsonArray.toJSONString(), Balance.class);
-//                            list.addAll(balances);
-//                            subscriber.onNext(list);
-//                            subscriber.onCompleted();
-//                        } else {
-//                            subscriber.onError(result.getException());
-//                        }
-//                    }
-//                });
-//
-//        xasObservable.flatMap(new Func1<List<Balance>, rx.Observable<List<Balance>>>() {
-//            @Override
-//            public rx.Observable<List<Balance>> call(List<Balance> balances) {
-//                return uiaOervable;
-//            }
-//        })
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribe(new Subscriber<List<Balance>>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.d("xasObservable error:", e.toString());
-//                        view.displayError(new UIException("获取余额错误"));
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<Balance> balances) {
-//                        if (balances != null && balances.size() > 0) {
-//                            view.displayXASBalance(balances.get(0));
-//                        }
-//                        view.displayAssets(balances);
-//                    }
-//                });
-//    }
 
 }
