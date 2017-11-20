@@ -68,6 +68,14 @@ public class AccountsDao {
        return getRealm().where(Account.class).equalTo("name",name).count()>0;
    }
 
+    public boolean hasAccountForAddress(String address){
+        return getRealm().where(Account.class).equalTo("address",address).count()>0;
+    }
+
+    public boolean hasAccountForPublicKey(String pubkey){
+        return getRealm().where(Account.class).equalTo("publicKey",pubkey).count()>0;
+    }
+
     /**
      * 获取当前账户
      * @return

@@ -98,8 +98,13 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
             return;
         }
 
+        if (AccountsManager.getInstance().hasAccountForSeed(seed)){
+            Toast.makeText(getContext(),"此账户以及存在",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (AccountsManager.getInstance().hasAccountForName(name)){
-            Toast.makeText(getContext(),"此钱包名称已存在",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"此账户名称已存在",Toast.LENGTH_SHORT).show();
             return;
         }
 

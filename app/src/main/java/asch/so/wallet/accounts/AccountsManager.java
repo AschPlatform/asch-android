@@ -210,6 +210,15 @@ public class AccountsManager extends Observable {
         return AccountsDao.getInstance().hasAccountForName(name);
     }
 
+    public boolean hasAccountForAddress(String address) {
+        return AccountsDao.getInstance().hasAccountForAddress(address);
+    }
+
+    public boolean hasAccountForSeed(String seed) {
+        String publicKey=AschSDK.Helper.getPublicKey(seed);
+        return AccountsDao.getInstance().hasAccountForPublicKey(publicKey);
+    }
+
     public  rx.Observable<FullAccount> createLoadFullAccountObservable(){
         return createLoadFullAccountObservable(getCurrentAccount());
     }

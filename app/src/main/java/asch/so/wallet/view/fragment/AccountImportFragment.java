@@ -102,13 +102,19 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
             return;
         }
 
+        if (AccountsManager.getInstance().hasAccountForSeed(seed)){
+            Toast.makeText(getContext(),"此账户以及存在",Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
         if (!Validator.check(getContext(), Validator.Type.Name,name,"钱包名称不符合要求"))
         {
             return;
         }
 
         if (AccountsManager.getInstance().hasAccountForName(name)){
-            Toast.makeText(getContext(),"此钱包名称已存在",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"此账户名称已存在",Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -119,7 +125,6 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
            Toast.makeText(getContext(),"密码不一致,请重新输入",Toast.LENGTH_SHORT).show();
             return;
         }
-
 
         presenter.importAccount(seed,name,passwd,hint);
         Toast.makeText(getContext(),"导入成功",Toast.LENGTH_SHORT).show();
