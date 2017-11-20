@@ -122,13 +122,13 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         ButterKnife.bind(this,rootView);
 
         String currency;
-        int precision;
+        int precision = 0;
         hideKeyboard();
 
         if (balance!=null){
             currency= balance.getCurrency(); //"KIM.KIM";
             precision=balance.getPrecision();
-        }else {
+        } else if(qrCodeURL!=null) {
             currency= qrCodeURL.getCurrency();
             precision=8;
         }
