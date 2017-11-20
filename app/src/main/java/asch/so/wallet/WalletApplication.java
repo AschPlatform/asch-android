@@ -7,6 +7,7 @@ import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
 
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.Utils;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -81,48 +82,11 @@ public class WalletApplication extends MultiDexApplication {
     }
 
     private void initBuglySDK() {
-//        Context context = getApplicationContext();
-//// 获取当前包名
-//        String packageName = context.getPackageName();
-//// 获取当前进程名
-//        String processName = getProcessName(android.os.Process.myPid());
-//// 设置是否为上报进程
-//        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(context);
-//        strategy.setUploadProcess(processName == null || processName.equals(packageName));
-//// 初始化Bugly
-//        CrashReport.initCrashReport(context, AppConstants.BUGLY_APP_ID, false, strategy);
         CrashReport.initCrashReport(getApplicationContext(), AppConstants.BUGLY_APP_ID, true);
         CrashReport.setAppChannel(this, "TEST");
+        CrashReport.setAppVersion(getApplicationContext(), String.format("%s(%d)",AppUtils.getAppVersionName(),AppUtils.getAppVersionCode()));
     }
 
-    /**
-     * 获取进程号对应的进程名
-     *
-     * @param pid 进程号
-     * @return 进程名
-     */
-    private static String getProcessName(int pid) {
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader("/proc/" + pid + "/cmdline"));
-            String processName = reader.readLine();
-            if (!TextUtils.isEmpty(processName)) {
-                processName = processName.trim();
-            }
-            return processName;
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
-        } finally {
-            try {
-                if (reader != null) {
-                    reader.close();
-                }
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
-        }
-        return null;
-    }
 
     private void initAschSDK() {
         String url = AppConfig.getNodeURL();
