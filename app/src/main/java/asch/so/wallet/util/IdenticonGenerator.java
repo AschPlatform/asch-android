@@ -31,9 +31,9 @@ public class IdenticonGenerator {
 
     public static void init(Context ctx) {
         context = ctx;
-//        webView = new BridgeWebView(context);
-//        webView.setDefaultHandler(new DefaultHandler());
-//        webView.loadUrl("file:///android_asset/jdenticontest.html");
+        webView = new BridgeWebView(context);
+        webView.setDefaultHandler(new DefaultHandler());
+        webView.loadUrl("file:///android_asset/jdenticontest.html");
     }
 
     public static IdenticonGenerator getInstance() {
@@ -44,31 +44,31 @@ public class IdenticonGenerator {
     }
 
     public void generateBitmap(String value, OnIdenticonGeneratorListener listener) {
-       Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.mipmap.default_avatar);
-        if (listener != null) {
-            listener.onIdenticonGenerated(bmp);
-        }
-        return;
-//        Bitmap bitmap = value == null ? null : CacheUtils.getInstance().getBitmap(value);
-//        Log.d(TAG, "bitmap info:" + (bitmap != null ? bitmap.toString() : "null"));
-//        if (bitmap != null) {
-//            if (listener != null) {
-//                listener.onIdenticonGenerated(bitmap);
-//            }
-//            return;
+//       Bitmap bmp = BitmapFactory.decodeResource(context.getResources(), R.mipmap.default_avatar);
+//        if (listener != null) {
+//            listener.onIdenticonGenerated(bmp);
 //        }
-//        webView.callHandler("functionInJs", value, new CallBackFunction() {
-//            @Override
-//            public void onCallBack(String data) {
-//                final String pureBase64Encoded = data.substring(data.indexOf(",") + 1);
-//                byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
-//                Bitmap bmp = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-//                if (listener != null) {
-//                    listener.onIdenticonGenerated(bmp);
-//                }
-//                CacheUtils.getInstance().put(value, bmp);
-//            }
-//        });
+//        return;
+        Bitmap bitmap = value == null ? null : CacheUtils.getInstance().getBitmap(value);
+        Log.d(TAG, "bitmap info:" + (bitmap != null ? bitmap.toString() : "null"));
+        if (bitmap != null) {
+            if (listener != null) {
+                listener.onIdenticonGenerated(bitmap);
+            }
+            return;
+        }
+        webView.callHandler("functionInJs", value, new CallBackFunction() {
+            @Override
+            public void onCallBack(String data) {
+                final String pureBase64Encoded = data.substring(data.indexOf(",") + 1);
+                byte[] decodedBytes = Base64.decode(pureBase64Encoded, Base64.DEFAULT);
+                Bitmap bmp = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
+                if (listener != null) {
+                    listener.onIdenticonGenerated(bmp);
+                }
+                CacheUtils.getInstance().put(value, bmp);
+            }
+        });
     }
 
     public interface OnIdenticonGeneratorListener {
