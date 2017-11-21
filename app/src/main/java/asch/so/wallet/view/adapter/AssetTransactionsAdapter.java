@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.TimeUtils;
@@ -46,9 +47,9 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
     protected void convert(ViewHolder viewHolder, Transaction transaction) {
         viewHolder.transactionTv.setText(transaction.getId());
         boolean isSender=getAccount().getAddress().equals(transaction.getSenderId());
+        setTransferIcon(viewHolder.transferIcon,transaction.getType(),isSender);
        if ( TransactionType.Transfer.getCode()==transaction.getType()){
            viewHolder.amountTv.setText(String.format("%s%.3f", isSender?"-":"+",transaction.getAmount()/ (double)AschConst.COIN)+" XAS");
-
        }else if (TransactionType.UIATransfer.getCode()==transaction.getType()){
            UIATransferAsset asset=(UIATransferAsset)transaction.getAssetInfo();
            viewHolder.amountTv.setText(String.format("%s%.3f", isSender?"-":"+",Float.parseFloat(asset.getUiaTransfer().getAmountShow()))+" "+asset.getUiaTransfer().getCurrency());
@@ -59,11 +60,21 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
         viewHolder.dateTv.setText(ago);
     }
 
+    private void setTransferIcon(ImageView imageView, int type, boolean isSender){
+        if ( TransactionType.Transfer.getCode()==type || TransactionType.UIATransfer.getCode()==type){
+            imageView.setImageResource(isSender?R.mipmap.transfer_out_icon:R.mipmap.transfer_in_icon);
+            return;
+        }
+        imageView.setImageResource(R.mipmap.transfer_other_icon);
+    }
+
     private Account getAccount(){
         return AccountsManager.getInstance().getCurrentAccount();
     }
 
     static class ViewHolder extends BaseViewHolder {
+        @BindView(R.id.transfer_icon)
+        ImageView transferIcon;
         @BindView(R.id.transactionid_tv)
         TextView transactionTv;
         @BindView(R.id.amount_tv)
