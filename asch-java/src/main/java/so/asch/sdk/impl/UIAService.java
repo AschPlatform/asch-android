@@ -167,7 +167,7 @@ public class UIAService extends AschRESTService implements UIA {
             Argument.notNullOrEmpty(currency, "invalid currency");
             Argument.require(Validation.isValidAddress(recipientId), "invalid recipientId");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            Argument.optional(secondSecret, Validation::isValidSecret, "invalid second secret");
+            Argument.optional(secondSecret, Validation::isValidSecondSecret, "invalid second secret");
 
             TransactionInfo transaction = getTransactionBuilder()
                     .buildUIATransfer(currency, amount, recipientId, message, secret, secondSecret);

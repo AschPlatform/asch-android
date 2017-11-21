@@ -67,6 +67,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                     }else {
                         result = AschSDK.UIA.transfer(currency,targetAddress,amount,message,secret,secondSecret);
                     }
+                    Log.d(TAG,"transfer result:"+result==null?"null":result.getRawJson());
                     if (result!=null && result.isSuccessful()){
                         subscriber.onNext(result);
                         subscriber.onCompleted();
