@@ -109,6 +109,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
                 BaseActivity.start(getActivity(), TransactionDetailActivity.class,bundle);
             }
         });
+
         transferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

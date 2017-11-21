@@ -148,6 +148,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             }
         });
 
+        identicon.setOnClickListener(this);
+        nameTv.setOnClickListener(this);
         addIconIv.setOnClickListener(this);
         addBtn.setOnClickListener(this);
         backupBtn.setOnClickListener(this);
@@ -221,7 +223,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             showPopupMenu(view,SizeUtils.dp2px(30), SizeUtils.dp2px(-2));
         } else if (addBtn == view) {
             showPopupMenu(view,SizeUtils.dp2px(30), SizeUtils.dp2px(-12));
-        } else if (backupBtn == view) {
+        } else if (backupBtn == view || identicon==view || nameTv==view) {
             if (accountBalance!=null){
                 Bundle bundle =new Bundle();
                 bundle.putFloat("balance",accountBalance.getRealBalance());
