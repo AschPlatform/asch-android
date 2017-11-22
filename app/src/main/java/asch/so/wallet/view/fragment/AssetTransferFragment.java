@@ -262,6 +262,10 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
             getActivity().finish();
     }
 
+//    private boolean hasAsset(String currency){
+//       return (getAccount()!=null && getAccount().getFullAccount()!=null && getAccount().getFullAccount().hasAsset(currency));
+//    }
+
     @Override
     public void displayAssets(List<UIAAsset> assets, int selectIndex) {
         Log.d(TAG,"++++assets:"+assets.toString());
@@ -270,7 +274,9 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         assets.forEach(new Consumer<UIAAsset>() {
             @Override
             public void accept(UIAAsset uiaAsset) {
-                nameList.add(uiaAsset.getName());
+                //if (hasAsset(uiaAsset.getName())) {
+                    nameList.add(uiaAsset.getName());
+               // }
             }
         });
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);

@@ -16,6 +16,7 @@ import asch.so.wallet.AppConstants;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.UIAAsset;
 import rx.Observable;
 import rx.Subscriber;
@@ -138,8 +139,16 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
 
                     @Override
                     public void onNext(List<UIAAsset> assets) {
-
-                        view.displayAssets(assets,getSelectedIndex(assets,currency));
+                        ArrayList<UIAAsset> filterdAssets=new ArrayList<>();
+                        assets.forEach(new Consumer<UIAAsset>() {
+                            @Override
+                            public void accept(UIAAsset uiaAsset) {
+                                if (hasAsset(uiaAsset.getName())){
+                                    filterdAssets.add(uiaAsset);
+                                }
+                            }
+                        });
+                        view.displayAssets(filterdAssets,getSelectedIndex(filterdAssets,currency));
                     }
                 });
     }
@@ -156,5 +165,9 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
             }
         }
         return index;
+    }
+
+    private boolean hasAsset(String currency){
+        return (getAccount()!=null && getAccount().getFullAccount()!=null && getAccount().getFullAccount().hasAsset(currency));
     }
 }

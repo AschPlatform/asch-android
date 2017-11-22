@@ -6,7 +6,9 @@ package asch.so.wallet.model.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  *
@@ -91,6 +93,8 @@ public class FullAccount {
 
     @JSONField(serialize=false)
     private List<Balance> balances;
+    @JSONField(serialize=false)
+    private HashMap<String,Balance> balancesMap =new HashMap<>();
 
     public AccountInfo getAccount() {
         return account;
@@ -120,8 +124,29 @@ public class FullAccount {
         return balances;
     }
 
+    public HashMap<String, Balance> getBalancesMap() {
+        return balancesMap;
+    }
+
+    public void setBalancesMap(HashMap<String, Balance> balancesMap) {
+        this.balancesMap = balancesMap;
+    }
+
+    public  boolean hasAsset(String currency){
+       return  (balancesMap!=null && balancesMap.containsKey(currency));
+    }
+
     public void setBalances(List<Balance> balances) {
         this.balances = balances;
+        balancesMap.clear();
+        if (balances!=null) {
+            balances.forEach(new Consumer<Balance>() {
+                @Override
+                public void accept(Balance balance) {
+                    balancesMap.put(balance.getCurrency(), balance);
+                }
+            });
+        }
     }
 
     public static class AccountInfo{
