@@ -40,6 +40,7 @@ import asch.so.wallet.presenter.AssetTransactionsPresenter;
 import asch.so.wallet.view.adapter.AssetTransactionsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ezy.ui.layout.LoadingLayout;
 import so.asch.sdk.impl.AschConst;
 
 /**
@@ -58,11 +59,11 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     TextView assetTv;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
-
+    @BindView(R.id.loading_ll)
+    LoadingLayout loadingLayout;
     private Balance balance;
 
     private AssetTransactionsContract.Presenter presenter;
-    private List<Transaction> list=new ArrayList<>();
     private AssetTransactionsAdapter adapter=null;
 
 
@@ -159,8 +160,16 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
     @Override
     public void displayError(UIException exception) {
-        Toast.makeText(getContext(),exception==null?"网络错误":exception.getMessage(),Toast.LENGTH_SHORT).show();
-        refreshLayout.finishRefresh(1000);
+        if (adapter.getData().isEmpty()){
+            loadingLayout.showError();
+        }else {
+            Toast.makeText(getContext(),exception==null?"网络错误":exception.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+        if (refreshLayout.isRefreshing()){
+            refreshLayout.finishRefresh(500);
+        }else {
+            refreshLayout.finishLoadmore(500);
+        }
     }
 
     @Override
@@ -171,13 +180,18 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
     @Override
     public void displayFirstPageTransactions(List<Transaction> transactions) {
+        if (transactions.isEmpty()) {
+            loadingLayout.showEmpty();
+        }else {
+            loadingLayout.showContent();
+        }
         adapter.replaceData(transactions);
-        refreshLayout.finishRefresh(1000);
+        refreshLayout.finishRefresh(500);
     }
 
     @Override
     public void displayMorePageTransactions(List<Transaction> transactions) {
         adapter.addData(transactions);
-        refreshLayout.finishLoadmore(1000);
+        refreshLayout.finishLoadmore(500);
     }
 }

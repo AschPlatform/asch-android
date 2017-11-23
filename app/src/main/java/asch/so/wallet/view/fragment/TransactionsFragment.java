@@ -99,9 +99,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
                 presenter.loadMorePageTransactions();
             }
         });
-        //refreshLayout.setEnableAutoLoadmore(true);
         refreshLayout.autoRefresh();
-        //loadingLayout.showLoading();
         return rootView;
     }
 
@@ -122,12 +120,10 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
 
     @Override
     public void displayError(UIException exception) {
-        //
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {
-            Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
-            //loadingLayout.showLoading();
+            Toast.makeText(getContext(),exception==null?"网络错误":exception.getMessage(), Toast.LENGTH_SHORT).show();
         }
         if (refreshLayout.isRefreshing()){
             refreshLayout.finishRefresh(500);

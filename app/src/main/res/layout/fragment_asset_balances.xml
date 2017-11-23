@@ -175,10 +175,14 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <ezy.ui.layout.LoadingLayout
-            android:id="@+id/loading_ll"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <!--<ezy.ui.layout.LoadingLayout-->
+            <!--android:id="@+id/loading_ll"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:llLoadingResId="@layout/common_loading"-->
+            <!--app:llEmptyImage="@drawable/ic_empty"-->
+            <!--app:llErrorImage="@drawable/ic_error"-->
+            <!--&gt;-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/assets_rcv"
             android:layout_width="match_parent"
@@ -188,7 +192,7 @@
             android:dividerHeight="0dp"
             android:layout_alignParentTop="true"
             />
-        </ezy.ui.layout.LoadingLayout>
+        <!--</ezy.ui.layout.LoadingLayout>-->
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>
     <asch.so.widget.toolbar.TitleToolbar

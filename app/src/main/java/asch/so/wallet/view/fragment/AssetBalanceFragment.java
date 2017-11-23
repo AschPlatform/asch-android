@@ -100,8 +100,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     ImageView addBtn;
     @BindView(R.id.top_balance_tv)
     TextView topBalanceTv;
-    @BindView(R.id.loading_ll)
-    LoadingLayout loadingLayout;
+//    @BindView(R.id.loading_ll)
+//    LoadingLayout loadingLayout;
 
     EasyPopup moreEasyPopup;
 
@@ -159,7 +159,6 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         setupRefreshLayout();
         initPopupMenu();
         presenter.loadAccount();
-        loadingLayout.showEmpty();
         return rootView;
     }
 
@@ -170,7 +169,6 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             public void onRefresh(RefreshLayout refreshlayout) {
                 try {
                     presenter.loadAssets();
-                    loadingLayout.showLoading();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -291,16 +289,16 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     }
 
     @Override
-    public void displayAssets(List<Balance> assetList) {
+    public void displayAssets(List<Balance> balances) {
+//        if (this.assetList.isEmpty()) {
+//            loadingLayout.showEmpty();
+//        }else {
+//            loadingLayout.showContent();
+//        }
         this.assetList.clear();
-        this.assetList.addAll(assetList);
+        this.assetList.addAll(balances);
         adapter.notifyDataSetChanged();
         refreshLayout.finishRefresh(1000);
-        if (this.assetList.isEmpty()){
-            loadingLayout.showEmpty();
-        }else{
-            loadingLayout.showContent();
-        }
     }
 
     @Override
@@ -324,8 +322,11 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void displayError(UIException ex) {
-        Toast.makeText(getContext(),ex==null?"网络错误":ex.getMessage(), Toast.LENGTH_SHORT).show();
+//        if (assetList.isEmpty()){
+//            loadingLayout.showError();
+//        }else {
+            Toast.makeText(getContext(),ex==null?"网络错误":ex.getMessage(), Toast.LENGTH_SHORT).show();
+        //}
         refreshLayout.finishRefresh(1000);
-        loadingLayout.showError();
     }
 }

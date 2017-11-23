@@ -11,7 +11,7 @@
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:actionMenuTextColor">#ccffffff</item>
-        <item name="styleLoadingLayout">@style/LoadingLayoutStyle</item>
+        <!--<item name="styleLoadingLayout">@style/LoadingLayoutStyle</item>-->
         <!--<item name="android:actionMenuTextAppearance">@style/ActionMenuTextAppearance</item>-->
         <!--<item name="android:popupMenuStyle">@style/OverflowMenuStyle</item>-->
     </style>
