@@ -175,6 +175,10 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+        <ezy.ui.layout.LoadingLayout
+            android:id="@+id/loading_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <android.support.v7.widget.RecyclerView
             android:id="@+id/assets_rcv"
             android:layout_width="match_parent"
@@ -184,6 +188,7 @@
             android:dividerHeight="0dp"
             android:layout_alignParentTop="true"
             />
+        </ezy.ui.layout.LoadingLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>
     <asch.so.widget.toolbar.TitleToolbar

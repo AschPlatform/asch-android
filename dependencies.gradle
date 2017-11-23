@@ -27,14 +27,15 @@ def utilcodeVersion="1.9.8"
 def easyPopupVersion="1.0.2"
 def bubbleLayoutVersion="1.2.0"
 def buglyVersion="2.6.6"
+def loadinglayoutVersion="1.0.1"
 project.ext {
     android = [
             compileSdkVersion: 26,
             buildToolsVersion: "26.0.2",
             applicationId    : "asch.so.wallet",
-            minSdkVersion    : 15,
+            minSdkVersion    : 16,
             targetSdkVersion : 26,
-            versionCode      : 6,
+            versionCode      : 7,
             versionName      : "1.0.0"
     ]
 
@@ -106,7 +107,8 @@ project.ext {
             "utilcode"                      :"com.blankj:utilcode:${utilcodeVersion}",
             "easy-popup"                     :"com.github.zyyoona7:EasyPopup:${easyPopupVersion}",
             "bubbleLayout"                  :"com.daasuu:BubbleLayout:${bubbleLayoutVersion}",
-            "bugly"                              :"com.tencent.bugly:crashreport:${buglyVersion}"
+            "bugly"                         :"com.tencent.bugly:crashreport:${buglyVersion}",
+            "loadinglayout"                 :"com.github.czy1121:loadinglayout:${loadinglayoutVersion}"
 
     ]
 }

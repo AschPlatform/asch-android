@@ -18,20 +18,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="?attr/actionBarSize"/>
-        <!--<com.scwang.smartrefresh.layout.header.ClassicsHeader-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:srlClassicsSpinnerStyle="FixedBehind"/>-->
+        <ezy.ui.layout.LoadingLayout
+            android:id="@+id/loading_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white"
         tools:listitem="@layout/item_transaction"/>
-        <!--<com.scwang.smartrefresh.layout.footer.ClassicsFooter-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--app:srlClassicsSpinnerStyle="FixedBehind"/>-->
+        </ezy.ui.layout.LoadingLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

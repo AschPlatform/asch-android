@@ -137,5 +137,6 @@ dependencies {
     compile rootProject.ext.dependencies["easy-popup"]
     compile rootProject.ext.dependencies["bubbleLayout"]
     compile rootProject.ext.dependencies["bugly"]
+    compile rootProject.ext.dependencies["loadinglayout"]
 
 }

@@ -11,8 +11,15 @@
         <item name="colorPrimaryDark">@android:color/transparent</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:actionMenuTextColor">#ccffffff</item>
+        <item name="styleLoadingLayout">@style/LoadingLayoutStyle</item>
         <!--<item name="android:actionMenuTextAppearance">@style/ActionMenuTextAppearance</item>-->
         <!--<item name="android:popupMenuStyle">@style/OverflowMenuStyle</item>-->
+    </style>
+
+    <style name="LoadingLayoutStyle" parent="LoadingLayout.Style">
+        <item name="llEmptyImage">@drawable/ic_empty</item>
+        <item name="llErrorImage">@drawable/ic_error</item>
+        <item name="llLoadingResId">@layout/common_loading</item>
     </style>
 
     <style name="ActionMenuTextAppearance" parent="@android:style/TextAppearance.Holo.Large">

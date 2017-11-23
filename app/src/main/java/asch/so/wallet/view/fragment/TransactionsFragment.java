@@ -33,6 +33,7 @@ import asch.so.wallet.presenter.TransactionsPresenter;
 import asch.so.wallet.view.adapter.TransactionsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ezy.ui.layout.LoadingLayout;
 
 /**
  * Created by kimziv on 2017/10/18.
@@ -44,7 +45,8 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     RecyclerView recyclerView;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
-    //MaterialHeader materialHeader;
+    @BindView(R.id.loading_ll)
+    LoadingLayout loadingLayout;
     TransactionsAdapter adapter;
     TransactionsContract.Presenter presenter;
 
@@ -99,6 +101,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
         });
         //refreshLayout.setEnableAutoLoadmore(true);
         refreshLayout.autoRefresh();
+        //loadingLayout.showLoading();
         return rootView;
     }
 
@@ -119,20 +122,38 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
 
     @Override
     public void displayError(UIException exception) {
-        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
-        refreshLayout.finishRefresh(2000);
+        //
+        if (adapter.getData().isEmpty()){
+            loadingLayout.showError();
+        }else {
+            Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+            //loadingLayout.showLoading();
+        }
+        if (refreshLayout.isRefreshing()){
+            refreshLayout.finishRefresh(500);
+        }else {
+            refreshLayout.finishLoadmore(500);
+        }
+
     }
 
     @Override
     public void displayFirstPageTransactions(List<Transaction> transactions) {
+        if (transactions.isEmpty()) {
+            loadingLayout.showEmpty();
+        }else {
+            loadingLayout.showContent();
+        }
         adapter.replaceData(transactions);
-        refreshLayout.finishRefresh(1000);
+        refreshLayout.finishRefresh(500);
+
+
 
     }
 
     @Override
     public void displayMorePageTransactions(List<Transaction> transactions) {
         adapter.addData(transactions);
-        refreshLayout.finishLoadmore(1000);
+        refreshLayout.finishLoadmore(500);
     }
 }

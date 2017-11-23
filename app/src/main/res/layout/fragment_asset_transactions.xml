@@ -22,6 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="?attr/actionBarSize"/>
+        <ezy.ui.layout.LoadingLayout
+            android:id="@+id/loading_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/asset_transactions_rcv"
         android:layout_width="match_parent"
@@ -30,6 +34,7 @@
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
         />
+        </ezy.ui.layout.LoadingLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <LinearLayout

@@ -61,6 +61,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
+import ezy.ui.layout.LoadingLayout;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
@@ -76,8 +77,6 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     RecyclerView assetsRcv;
     @BindView(R.id.app_bar)
     AppBarLayout appBarLayout;
-    //    @BindView(R.id.fab)
-//    FloatingActionButton floatingActionButton;
     @BindView(R.id.balance_bbl)
     ButtonBarLayout balanceBbl;
     @BindView(R.id.toolbar)
@@ -101,6 +100,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     ImageView addBtn;
     @BindView(R.id.top_balance_tv)
     TextView topBalanceTv;
+    @BindView(R.id.loading_ll)
+    LoadingLayout loadingLayout;
 
     EasyPopup moreEasyPopup;
 
@@ -156,11 +157,9 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         presenter = new AssetBalancePresenter(this);
 
         setupRefreshLayout();
-
         initPopupMenu();
-
-        //StatusBarUtil.immersive(getActivity());
         presenter.loadAccount();
+        loadingLayout.showEmpty();
         return rootView;
     }
 
@@ -170,8 +169,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 try {
-//                    presenter.loadAccount();
                     presenter.loadAssets();
+                    loadingLayout.showLoading();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -297,6 +296,11 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         this.assetList.addAll(assetList);
         adapter.notifyDataSetChanged();
         refreshLayout.finishRefresh(1000);
+        if (this.assetList.isEmpty()){
+            loadingLayout.showEmpty();
+        }else{
+            loadingLayout.showContent();
+        }
     }
 
     @Override
@@ -322,5 +326,6 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     public void displayError(UIException ex) {
         Toast.makeText(getContext(),ex==null?"网络错误":ex.getMessage(), Toast.LENGTH_SHORT).show();
         refreshLayout.finishRefresh(1000);
+        loadingLayout.showError();
     }
 }
