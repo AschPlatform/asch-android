@@ -12,6 +12,7 @@
     android:src="@mipmap/ic_launcher"
     />
     <TextView
+        android:id="@+id/version_tv"
         android:layout_below="@id/logo"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"

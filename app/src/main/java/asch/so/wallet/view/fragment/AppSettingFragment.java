@@ -93,7 +93,7 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
     public enum Item {
         Language("语言选择", true),
         NodeURL("节点URL", true),
-        Pincode("钱包密码", true),
+        Pincode("设置Pin码", true),
         MineProfile("个人信息", true),
         ;
         public String title;
@@ -168,10 +168,10 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            case REQUEST_CODE_ENABLE:
-                Toast.makeText(getContext(), "PinCode enabled", Toast.LENGTH_SHORT).show();
-                break;
-        }
+//        switch (requestCode){
+//            case REQUEST_CODE_ENABLE:
+//                Toast.makeText(getContext(), "PinCode enabled", Toast.LENGTH_SHORT).show();
+//                break;
+//        }
     }
 }

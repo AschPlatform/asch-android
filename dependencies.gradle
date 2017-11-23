@@ -34,8 +34,8 @@ project.ext {
             applicationId    : "asch.so.wallet",
             minSdkVersion    : 15,
             targetSdkVersion : 26,
-            versionCode      : 5,
-            versionName      : "1.0"
+            versionCode      : 6,
+            versionName      : "1.0.0"
     ]
 
     dependencies = [

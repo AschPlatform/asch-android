@@ -4,9 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.blankj.utilcode.util.AppUtils;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by kimziv on 2017/10/23.
@@ -14,6 +19,9 @@ import asch.so.wallet.R;
 
 public class AboutFragment extends BaseFragment {
 
+
+    @BindView(R.id.version_tv)
+    TextView versionTv;
 
     public static AboutFragment newInstance() {
         
@@ -27,7 +35,13 @@ public class AboutFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_about,container,false);
+        ButterKnife.bind(this,rootView);
+        setVersion();
         return rootView;
+    }
+
+    private void setVersion(){
+        versionTv.setText(String.format("ASCH移动钱包V%s(%d)", AppUtils.getAppVersionName(),AppUtils.getAppVersionCode()));
     }
 
 

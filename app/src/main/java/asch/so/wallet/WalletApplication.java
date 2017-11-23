@@ -109,7 +109,7 @@ public class WalletApplication extends MultiDexApplication {
         lockManager.enableAppLock(this, AppPinActivity.class);
         lockManager.getAppLock().setFingerprintAuthEnabled(true);
         lockManager.getAppLock().setOnlyBackgroundTimeout(true);
-        lockManager.getAppLock().setTimeout(5000);
+        lockManager.getAppLock().setTimeout(1000);
         lockManager.getAppLock().setLogoId(R.mipmap.ic_launcher);
         lockManager.getAppLock().setShouldShowForgot(false);
 

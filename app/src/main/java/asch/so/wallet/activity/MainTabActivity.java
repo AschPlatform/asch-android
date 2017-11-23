@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.github.omadahealth.lollipin.lib.PinCompatActivity;
 import com.github.omadahealth.lollipin.lib.interfaces.LifeCycleInterface;
 import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -131,8 +132,18 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
 
         setupViewPager(viewPager);
         mainPresenter=new MainPresenter(this,this);
-       // mainPresenter.loadFullAccount();
-//
+    }
+
+
+    private void configLockManager(){
+        LockManager<AppPinActivity> lockManager = LockManager.getInstance();
+        lockManager.getAppLock().setTimeout(60*60*1000);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        configLockManager();
     }
 
     private void setupViewPager(ViewPager viewPager) {
