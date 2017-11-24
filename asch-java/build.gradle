@@ -1,11 +1,40 @@
-apply plugin: 'java'
-apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'com.android.library'
+
+android {
+
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
 dependencies {
+//    implement fileTree(dir: 'libs', include: ['*.jar'])
+
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
-   // compile 'com.alibaba:fastjson:1.1.63.android'
+    // compile 'com.alibaba:fastjson:1.1.63.android'
     //compile 'com.alibaba:fastjson:1.2.38'
     compile rootProject.ext.dependencies["fastjson"]
-   // compile group: 'net.i2p.crypto', name: 'eddsa', version: '0.2.0'
+    // compile group: 'net.i2p.crypto', name: 'eddsa', version: '0.2.0'
     compile 'net.i2p.crypto:eddsa:0.2.0'
     compile 'com.squareup.okhttp3:okhttp:3.9.0'
     compile 'commons-codec:commons-codec:1.10'
@@ -14,9 +43,10 @@ dependencies {
 
     compile('com.squareup.okhttp3:logging-interceptor:3.9.0')
 
+    //compile 'com.android.support:appcompat-v7:26.1.0'
+    compile rootProject.ext.dependencies["appcompat-v7"]
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
 
-//sourceCompatibility JavaVersion.VERSION_1_8
-//targetCompatibility JavaVersion.VERSION_1_8
-sourceCompatibility = "1.8"
-targetCompatibility = "1.8"
