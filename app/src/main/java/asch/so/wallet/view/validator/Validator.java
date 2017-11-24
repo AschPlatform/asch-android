@@ -12,6 +12,7 @@ import asch.so.wallet.view.validator.checkable.AmountCheckable;
 import asch.so.wallet.view.validator.checkable.Checkable;
 import asch.so.wallet.view.validator.checkable.NodeURLCheckable;
 import asch.so.wallet.view.validator.checkable.PasswordCheckable;
+import asch.so.wallet.view.validator.checkable.QRCodeURLCheckable;
 import asch.so.wallet.view.validator.checkable.SecondSecretCheckable;
 import asch.so.wallet.view.validator.checkable.SecretCheckable;
 import asch.so.wallet.view.validator.checkable.TextCheckable;
@@ -32,6 +33,7 @@ public class Validator {
         URL,
         Password,
         SecondSecret,
+        QRCodeUrl,
         ;
     }
 
@@ -110,6 +112,8 @@ public class Validator {
                 return new AmountCheckable(value);
             case SecondSecret:
                 return new SecondSecretCheckable(value);
+            case QRCodeUrl:
+                return new QRCodeURLCheckable(value);
             default : return new TextCheckable(value);
         }
 

@@ -130,7 +130,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                 break;
             case ScanAddressToPaste:
             {
-                if (!Validator.check(this, Validator.Type.Address,result,"无效地址"))
+                if (!Validator.check(this, Validator.Type.QRCodeUrl,result,"无效地址"))
                 {
                     zbarView.startSpot();
                     return;
@@ -143,7 +143,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                 break;
             case ScanAddressToPay:
             {
-                if (!Validator.check(this, Validator.Type.Address,result,"无效地址"))
+                if (!Validator.check(this, Validator.Type.QRCodeUrl,result,"无效地址"))
                 {
                     zbarView.startSpot();
                     return;
