@@ -35,7 +35,17 @@ project.ext {
             applicationId    : "asch.so.wallet",
             minSdkVersion    : 16,
             targetSdkVersion : 26,
-            versionCode      : 7,
+            versionCode      : 8,
+            versionName      : "1.0.0"
+    ]
+
+    aschsdk = [
+            compileSdkVersion: 26,
+            buildToolsVersion: "26.0.2",
+            applicationId    : "asch.so.wallet",
+            minSdkVersion    : 16,
+            targetSdkVersion : 26,
+            versionCode      : 2,
             versionName      : "1.0.0"
     ]
 
