@@ -48,7 +48,7 @@ public final class AschServiceUrls {
 
     final static class Peer{
         static final String BROADCAST_TRANSACTION = "/peer/transactions";
-        static final String QUERY_PEERS = "/api/peer/getPeers";
+        static final String QUERY_PEERS = "/api/peers";
         static final String GET_PEER = "/api/peer/get";
         static final String GET_VERSION = "/api/peer/version";
     }

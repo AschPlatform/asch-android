@@ -133,6 +133,9 @@
         <activity android:name=".activity.BlockInfoActivity">
 
         </activity>
+        <activity android:name=".activity.PeersActivity">
+
+        </activity>
     </application>
 
 </manifest>
