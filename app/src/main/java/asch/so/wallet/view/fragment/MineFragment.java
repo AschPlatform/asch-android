@@ -140,30 +140,33 @@ public class MineFragment extends BaseFragment implements MineContract.View{
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
                 MineSection section =(MineSection) baseQuickAdapter.getItem(position);
-                MineItem item=section.t;
-                switch (item.getIcon()){
-                    case R.mipmap.my_account_managment:
-                    {
-                        Intent intent = new Intent(getActivity(), AccountsActivity.class);
-                        startActivity(intent);
-                    }
-                    break;
-                    case R.mipmap.my_settings:
-                    {
-                        BaseActivity.start(getActivity(),AppSettingActivity.class,null);
-                    }
-                    break;
-                    case R.mipmap.my_users:
-                    {
-                        BaseActivity.start(getActivity(),AboutActivity.class,null);
-                    }
-                    break;
-                    default:
-                    {
-                        BaseActivity.start(getActivity(), TodoActivity.class,null);
-                    }
+                if (!section.isHeader){
+                    MineItem item=section.t;
+                    switch (item.getIcon()){
+                        case R.mipmap.my_account_managment:
+                        {
+                            Intent intent = new Intent(getActivity(), AccountsActivity.class);
+                            startActivity(intent);
+                        }
                         break;
+                        case R.mipmap.my_settings:
+                        {
+                            BaseActivity.start(getActivity(),AppSettingActivity.class,null);
+                        }
+                        break;
+                        case R.mipmap.my_users:
+                        {
+                            BaseActivity.start(getActivity(),AboutActivity.class,null);
+                        }
+                        break;
+                        default:
+                        {
+                            BaseActivity.start(getActivity(), TodoActivity.class,null);
+                        }
+                        break;
+                    }
                 }
+
             }
         });
         if (presenter==null){
