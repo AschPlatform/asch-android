@@ -129,6 +129,10 @@
         <activity android:name=".activity.TransactionDetailActivity">
 
         </activity>
+
+        <activity android:name=".activity.BlockInfoActivity">
+
+        </activity>
     </application>
 
 </manifest>
