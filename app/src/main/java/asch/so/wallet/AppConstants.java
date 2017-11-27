@@ -19,4 +19,6 @@ public class AppConstants {
 
     public static final  int DEFAULT_PAGE_SIZE=20;
 
+    public static  final int DB_SCHEME_VERSION=2;
+
 }

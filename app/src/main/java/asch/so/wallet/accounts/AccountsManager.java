@@ -206,6 +206,18 @@ public class AccountsManager extends Observable {
         }
     }
 
+    public void setAccountBackup(boolean isBackup) {
+        if (currentAccount != null) {
+            AccountsDao.getInstance().updateAccountBackup(currentAccount, isBackup, new AccountsDao.OnUpdateBackupListener() {
+                @Override
+                public void onUpdateBackup(Account account, boolean backup) {
+                    setChanged();
+                    notifyObservers();
+                }
+            });
+        }
+    }
+
     public boolean hasAccountForName(String name) {
         return AccountsDao.getInstance().hasAccountForName(name);
     }

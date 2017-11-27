@@ -105,7 +105,15 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    private boolean hasBackup(){
+       return  (AccountsManager.getInstance().getCurrentAccount()!=null) && AccountsManager.getInstance().getCurrentAccount().isBackup();
+    }
+
     private void backupAccount(){
+        if (hasBackup()){
+            Toast.makeText(this,"该账户已经备份过",Toast.LENGTH_SHORT).show();
+            return;
+        }
             FragmentManager fm = getSupportFragmentManager();
             InputPasswdDialog dialog = InputPasswdDialog.newInstance();
               AccountDetailActivity thiz=this;

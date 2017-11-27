@@ -64,6 +64,10 @@ public class AccountsDao {
 
    }
 
+//    public boolean hasAccountBackup{
+//        return getRealm().where(Account.class).equalTo("backup",true).count()>0;
+//    }
+
    public boolean hasAccountForName(String name){
        return getRealm().where(Account.class).equalTo("name",name).count()>0;
    }
@@ -159,19 +163,27 @@ public class AccountsDao {
         });
     }
 
+    public void  updateAccountBackup(Account account, boolean isBackup, OnUpdateBackupListener listener){
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                account.setBackup(isBackup);
+                if (listener!=null){
+                    listener.onUpdateBackup(account,isBackup);
+                }
+            }
+        });
+    }
+
     public interface OnUpdateNameListener{
 
         void onUpdateName(Account account, String name);
     }
 
-    /**
-     *
-     * @param name
-     */
-    public void  updateAccountName(String name){
+    public interface OnUpdateBackupListener{
 
+        void onUpdateBackup(Account account, boolean backup);
     }
-
 
 
 }

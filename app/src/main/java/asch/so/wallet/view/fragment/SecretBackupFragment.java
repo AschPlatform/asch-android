@@ -11,7 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
+import asch.so.wallet.contract.SecretBackupContract;
+import asch.so.wallet.presenter.SecretBackupPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -19,13 +22,15 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2017/10/17.
  */
 
-public class SecretBackupFragment extends BaseFragment implements View.OnClickListener{
+public class SecretBackupFragment extends BaseFragment implements SecretBackupContract.View, View.OnClickListener{
 
 
     @BindView(R.id.copy_btn)
     Button copyBtn;
     @BindView(R.id.secret_tv)
     TextView secretTv;
+
+    SecretBackupContract.Presenter presenter;
 
     public static SecretBackupFragment newInstance() {
         
@@ -43,6 +48,8 @@ public class SecretBackupFragment extends BaseFragment implements View.OnClickLi
         copyBtn.setOnClickListener(this);
        String secret=getArguments().getString("secret");
         secretTv.setText(secret);
+
+        presenter=new SecretBackupPresenter(getContext(),this);
         return rootView;
     }
 
@@ -56,6 +63,22 @@ public class SecretBackupFragment extends BaseFragment implements View.OnClickLi
     private void copySecret(String secret){
         ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
         clipboardManager.setText(secret);
+        presenter.backupSecret(secret);
         Toast.makeText(getContext(),"复制成功",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setPresenter(SecretBackupContract.Presenter presenter) {
+        this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+
+    }
+
+    @Override
+    public void displaySecret(String secret) {
+
     }
 }

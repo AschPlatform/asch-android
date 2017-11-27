@@ -290,11 +290,6 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void displayAssets(List<Balance> balances) {
-//        if (this.assetList.isEmpty()) {
-//            loadingLayout.showEmpty();
-//        }else {
-//            loadingLayout.showContent();
-//        }
         this.assetList.clear();
         this.assetList.addAll(balances);
         adapter.notifyDataSetChanged();
@@ -312,6 +307,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void displayAccount(Account account) {
         nameTv.setText(account.getName());
+        backupBtn.setText(account.isBackup()?"已备份":"请备份");
         IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {

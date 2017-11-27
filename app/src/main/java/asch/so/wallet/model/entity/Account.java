@@ -35,6 +35,8 @@ public class Account extends RealmObject{
     private String encryptSeed;
 
     private String encryptPasswd;
+    //是否已备份
+    private boolean backup;
 
     @Ignore
     @JSONField(serialize=false)
@@ -128,6 +130,14 @@ public class Account extends RealmObject{
             return null;
         String decryptSecret= AccountSecurity.decryptSecret(getEncryptSeed(),passwd);
         return decryptSecret;
+    }
+
+    public boolean isBackup() {
+        return backup;
+    }
+
+    public void setBackup(boolean backup) {
+        this.backup = backup;
     }
 
     @Override

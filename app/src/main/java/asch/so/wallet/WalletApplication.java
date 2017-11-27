@@ -26,8 +26,10 @@ import java.io.IOException;
 import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.activity.AppPinActivity;
 import asch.so.wallet.util.IdenticonGenerator;
+import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmMigration;
 import so.asch.sdk.AschSDK;
 
 /**
@@ -98,7 +100,11 @@ public class WalletApplication extends MultiDexApplication {
 
     private void initRealm() {
         Realm.init(this);
-        RealmConfiguration configuration = new RealmConfiguration.Builder().build();
+        RealmConfiguration configuration = new RealmConfiguration.Builder()
+                .name("wallet.db")
+                .schemaVersion(AppConstants.DB_SCHEME_VERSION)
+                .deleteRealmIfMigrationNeeded()
+                .build();
         //Realm.deleteRealm(configuration);
         Realm.setDefaultConfiguration(configuration);
         // TestData.createTestAccountsData();
