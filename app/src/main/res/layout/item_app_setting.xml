@@ -45,6 +45,7 @@
             android:visibility="gone"
             />
         <Switch
+            android:padding="4dp"
             android:id="@+id/pin_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

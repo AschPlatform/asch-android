@@ -1,6 +1,7 @@
 package asch.so.wallet.view.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -50,6 +51,7 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
     private AppSettingContract.Presenter presenter;
     private BaseRecyclerAdapter<Item> adapter;
     private static final int REQUEST_CODE_ENABLE = 11;
+    private   Switch pinSwith=null;
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -115,12 +117,14 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
                 holder.text(R.id.item_title_tv,model.title);
-              Switch pinSwith = ButterKnife.findById(holder.itemView,R.id.pin_switch);
+                Switch sw = ButterKnife.findById(holder.itemView,R.id.pin_switch);
                 ImageView arrowIv=ButterKnife.findById(holder.itemView,R.id.arrow_iv);
 
                 if (model==Item.Pincode){
-                    pinSwith.setChecked(LockManager.getInstance().getAppLock().isPasscodeSet());
-                    pinSwith.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    pinSwith=sw;
+                    holder.itemView.setClickable(false);
+                    sw.setChecked(LockManager.getInstance().getAppLock().isPasscodeSet());
+                    sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
                             if (checked){
@@ -132,10 +136,11 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
                             }
                         }
                     });
-                    pinSwith.setVisibility(View.VISIBLE);
+                    sw.setVisibility(View.VISIBLE);
                     arrowIv.setVisibility(View.GONE);
                 }else {
-                    pinSwith.setVisibility(View.GONE);
+                    holder.itemView.setClickable(true);
+                    sw.setVisibility(View.GONE);
                     arrowIv.setVisibility(View.VISIBLE);
                 }
 
@@ -168,10 +173,17 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        switch (requestCode){
-//            case REQUEST_CODE_ENABLE:
-//                Toast.makeText(getContext(), "PinCode enabled", Toast.LENGTH_SHORT).show();
-//                break;
-//        }
+        if (REQUEST_CODE_ENABLE==requestCode){
+            if (Activity.RESULT_OK==resultCode){
+                if (pinSwith!=null){
+                    pinSwith.setChecked(true);
+                }
+            }
+            else {
+                if (pinSwith!=null){
+                    pinSwith.setChecked(false);
+                }
+            }
+        }
     }
 }
