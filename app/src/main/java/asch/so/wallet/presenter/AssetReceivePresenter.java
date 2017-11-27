@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -56,10 +57,24 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
 
     private QRCodeURL qrCodeURL;
 
+    Handler handler;
+
     public AssetReceivePresenter(Context context, AssetReceiveContract.View view) {
         this.context=context;
         this.view=view;
         this.qrCodeURL=new QRCodeURL();
+        this.handler=new Handler(context.getMainLooper()){
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (msg.what==1){
+                    Toast.makeText(context,"已保存到相册",Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(context,"保存失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
     }
 
     @Override
@@ -155,21 +170,10 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
 //                });
     }
 
+
+
     @Override
     public void saveQrCode(Bitmap bmp) {
-        Handler handler=new Handler(context.getMainLooper()){
-
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-                if (msg.what==1){
-                    Toast.makeText(context,"已保存到相册",Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(context,"保存失败",Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -180,23 +184,24 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
     }
 
     //保存文件到指定路径
-    public static boolean saveImageToGallery(Context context, Bitmap bmp) {
+    public  boolean saveImageToGallery(Context context, Bitmap bmp) {
         // 首先保存图片
 
-        String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "asch";
+        //String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "asch";
+        String storePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + File.separator + "asch";
         File appDir = new File(storePath);
         if (!appDir.exists()) {
             appDir.mkdir();
         }
-//        String fileName = System.currentTimeMillis() + ".jpg";
+         boolean isSuccess=false;
         Calendar now = new GregorianCalendar();
         SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault());
-        String fileName = simpleDate.format(now.getTime());
+        String fileName = simpleDate.format(now.getTime())+".jpg";
         File file = new File(appDir, fileName);
         try {
             FileOutputStream fos = new FileOutputStream(file);
             //通过io流的方式来压缩保存图片
-            boolean isSuccess = bmp.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+            isSuccess = bmp.compress(Bitmap.CompressFormat.JPEG, 80, fos);
             fos.flush();
             fos.close();
 
@@ -206,15 +211,10 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
             //保存图片后发送广播通知更新数据库
             Uri uri = Uri.fromFile(file);
             context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-            if (isSuccess) {
-                return true;
-            } else {
-                return false;
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return false;
+        return isSuccess;
     }
 
 }
