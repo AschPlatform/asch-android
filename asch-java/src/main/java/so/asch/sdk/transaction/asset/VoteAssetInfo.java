@@ -2,16 +2,17 @@ package so.asch.sdk.transaction.asset;
 
 import so.asch.sdk.codec.Decoding;
 
-import java.beans.Transient;
+//import java.beans.Transient;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class VoteAssetInfo extends AssetInfo {
 
     public static class VoteInfo {
-        private List<String> upvoteKeys = new ArrayList<>();
-        private List<String> downvoteKeys = new ArrayList<>();
+        private transient List<String> upvoteKeys = new ArrayList<>();
+        private transient List<String> downvoteKeys = new ArrayList<>();
 
         public void upvote(String... keys) {
             if (keys == null) return;
@@ -29,12 +30,12 @@ public class VoteAssetInfo extends AssetInfo {
             }
         }
 
-        @Transient
+        //@Transient
         public List<String> getUpvoteKeys() {
             return this.upvoteKeys;
         }
 
-        @Transient
+        //@Transient
         public List<String> getDownvoteKeys() {
             return this.downvoteKeys;
         }
@@ -49,8 +50,21 @@ public class VoteAssetInfo extends AssetInfo {
                 return null;
 
             ArrayList<String> votes = new ArrayList<>();
-            upvoteKeys.forEach(key -> votes.add("+" + key));
-            downvoteKeys.forEach(key -> votes.add("-" + key));
+            upvoteKeys.forEach(new Consumer<String>() {
+                @Override
+                public void accept(String key) {
+                    votes.add("+" + key);
+                }
+            });
+
+            downvoteKeys.forEach(new Consumer<String>() {
+                @Override
+                public void accept(String key) {
+                    votes.add("-" + key);
+                }
+            });
+//            upvoteKeys.forEach(key -> votes.add("+" + key));
+//            downvoteKeys.forEach(key -> votes.add("-" + key));
 
             return votes.toArray(new String[0]);
         }

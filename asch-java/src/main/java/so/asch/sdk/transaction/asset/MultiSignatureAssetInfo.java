@@ -3,10 +3,10 @@ package so.asch.sdk.transaction.asset;
 import com.alibaba.fastjson.annotation.JSONField;
 import so.asch.sdk.codec.Decoding;
 
-import java.beans.Transient;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MultiSignatureAssetInfo extends AssetInfo{
 
@@ -52,12 +52,12 @@ public class MultiSignatureAssetInfo extends AssetInfo{
             }
         }
 
-        @Transient
+        //@Transient
         public List<String> getAddKeys() {
             return this.addKeys;
         }
 
-        @Transient
+       // @Transient
         public List<String> getRemoveKeys() {
             return this.removeKeys;
         }
@@ -69,16 +69,31 @@ public class MultiSignatureAssetInfo extends AssetInfo{
                 return null;
 
             ArrayList<String> keys = new ArrayList<>();
-            addKeys.forEach(key -> keys.add("+" + key));
-            removeKeys.forEach(key -> keys.add("-" + key));
+
+            addKeys.forEach(new Consumer<String>() {
+                @Override
+                public void accept(String key) {
+                    keys.add("+" + key);
+                }
+            });
+
+            removeKeys.forEach(new Consumer<String>() {
+                @Override
+                public void accept(String key) {
+                    keys.add("-" + key);
+                }
+            });
+
+//            addKeys.forEach(key -> keys.add("+" + key));
+//            removeKeys.forEach(key -> keys.add("-" + key));
 
             return keys.toArray(new String[0]);
         }
 
         private Integer minAccount = null;
         private Integer lifetime = null;
-        private List<String> addKeys = new ArrayList<>();
-        private List<String> removeKeys = new ArrayList<>();
+        private transient List<String> addKeys = new ArrayList<>();
+        private transient List<String> removeKeys = new ArrayList<>();
     }
 
     public MultiSignatureInfo getMultiSignature() {
