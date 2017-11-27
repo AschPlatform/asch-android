@@ -23,6 +23,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.ImageUtils;
+
 import junit.framework.Test;
 
 import java.util.ArrayList;
@@ -60,6 +62,9 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
      TextView saveTv;
     @BindView(R.id.assets_sp)
     Spinner assetsSp;
+    @BindView(R.id.center_ll)
+    View centerLl;
+
     private Bitmap qrcodeBmp;
 
     String currency="XAS";
@@ -119,6 +124,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
         saveTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                qrcodeBmp  = ImageUtils.view2Bitmap(centerLl);
                 if (qrcodeBmp!=null) {
                     presenter.saveQrCode(qrcodeBmp);
                 }
@@ -165,7 +171,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     @Override
     public void displayQrCode(Bitmap bitmap) {
         qrcodeIv.setImageBitmap(bitmap);
-        qrcodeBmp=bitmap;
+       // qrcodeBmp=bitmap;
     }
 
 
