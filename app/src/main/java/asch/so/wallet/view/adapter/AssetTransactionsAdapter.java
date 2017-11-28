@@ -16,6 +16,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import asch.so.base.adapter.BaseRecyclerViewAdapter;
 import asch.so.base.util.TimeAgo;
 import asch.so.wallet.R;
@@ -73,6 +75,7 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
     }
 
     static class ViewHolder extends BaseViewHolder {
+       // @Nullable
         @BindView(R.id.transfer_icon)
         ImageView transferIcon;
         @BindView(R.id.transactionid_tv)
@@ -81,6 +84,7 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
         TextView amountTv;
         @BindView(R.id.date_tv)
         TextView dateTv;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

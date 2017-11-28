@@ -12,8 +12,10 @@ import asch.so.wallet.contract.MainContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.FullAccount;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 
@@ -27,10 +29,12 @@ public class MainPresenter implements MainContract.Presenter {
 
     private MainContract.View view;
     private Context context;
+    private CompositeSubscription subscriptions;
 
     public MainPresenter(Context context, MainContract.View view){
         this.context=context;
         this.view=view;
+        subscriptions=new CompositeSubscription();
         view.setPresenter(this);
     }
     @Override
@@ -40,7 +44,7 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void unSubscribe() {
-
+        this.subscriptions.clear();
     }
 
     private Account getAccount(){
@@ -71,7 +75,7 @@ public class MainPresenter implements MainContract.Presenter {
                 }
             }
         });
-        loginObservable.subscribeOn(Schedulers.io())
+       Subscription subscription= loginObservable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<FullAccount>() {
@@ -91,11 +95,8 @@ public class MainPresenter implements MainContract.Presenter {
                         getAccount().setFullAccount(account);
                        long blockHeight = getAccount().getFullAccount().getLatestBlock().getHeight();
                         Toast.makeText(context,"blockHeight:"+blockHeight, Toast.LENGTH_SHORT).show();
-//                        if (balances!=null && balances.size()>0){
-//                            view.displayXASBalance(balances.get(0));
-//                        }
-//                        view.displayAssets(balances);
                     }
                 });
+       subscriptions.add(subscription);
     }
 }

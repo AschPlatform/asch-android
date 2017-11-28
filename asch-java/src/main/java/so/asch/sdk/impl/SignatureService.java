@@ -10,9 +10,9 @@ public class SignatureService extends AschRESTService implements Signature {
     public AschResult setSignature(String secret, String secondSecret, String publicKey, String multiSignAccountPublicKey) {
         try{
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            Argument.optional(publicKey, Validation::isValidPublicKey, "invalid publicKey");
+            Argument.optional(publicKey, Validation.isValidPublicKey(publicKey), "invalid publicKey");
             Argument.require(Validation.isValidSecondSecret(secondSecret), "invalid secondSecret");
-            Argument.optional(multiSignAccountPublicKey, Validation::isValidPublicKey, "invalid multiSignAccountPublicKey");
+            Argument.optional(multiSignAccountPublicKey, Validation.isValidPublicKey(publicKey), "invalid multiSignAccountPublicKey");
 
 //            AschResult parameters = new AschResult()
 //                    .fluentPut("secret", secret)
@@ -44,8 +44,8 @@ public class SignatureService extends AschRESTService implements Signature {
             Argument.require(Validation.isValidMultiSignatureKeys(addKeys, removeKeys), "invalid addKeys or removeKeys");
             Argument.require(Validation.isValidMultiSignatureLifetime(lifetime), "invalid lifetime");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            Argument.optional(publicKey, Validation::isValidPublicKey, "invalid publicKey");
-            Argument.optional(secondSecret, Validation::isValidSecondSecret, "invalid secondSecret");
+            Argument.optional(publicKey, Validation.isValidPublicKey(publicKey), "invalid publicKey");
+            Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid secondSecret");
 
 //            List<String> keysGroup = new ArrayList<>();
 //            if (addKeys != null)
@@ -78,8 +78,8 @@ public class SignatureService extends AschRESTService implements Signature {
         try {
             Argument.require(Validation.isValidTransactionId(transactionId), "invalid transactionId");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            Argument.optional(secondSecret, Validation::isValidSecondSecret, "invalid secondSecret");
-            Argument.optional(publicKey, Validation::isValidPublicKey, "invalid publicKey");
+            Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid secondSecret");
+            Argument.optional(publicKey, Validation.isValidPublicKey(publicKey), "invalid publicKey");
 
             ParameterMap parameters = new ParameterMap()
                     .put("secret", secret)

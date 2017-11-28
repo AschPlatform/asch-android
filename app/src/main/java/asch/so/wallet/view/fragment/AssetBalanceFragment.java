@@ -266,6 +266,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        presenter.unSubscribe();
     }
 
     @Override

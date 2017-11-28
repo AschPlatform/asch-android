@@ -20,9 +20,11 @@ import asch.so.wallet.model.entity.TransferAsset;
 import asch.so.wallet.model.entity.UIATransferAsset;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 import so.asch.sdk.TransactionType;
@@ -36,13 +38,14 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
 
     private Context context;
     private TransactionsContract.View view;
-
+    private CompositeSubscription subscriptions;
     IPage pager;
 
     public TransactionsPresenter(Context context, TransactionsContract.View view) {
         this.context = context;
         this.view = view;
         initPager();
+        subscriptions=new CompositeSubscription();
         view.setPresenter(this);
     }
 
@@ -62,7 +65,7 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
         int offset = pageIndex * pageSize;
         int limit = pageSize;
         String address = getAccount().getAddress();
-        Observable.create((Observable.OnSubscribe<List<Transaction>>) subscriber -> {
+     Subscription subscription = Observable.create((Observable.OnSubscribe<List<Transaction>>) subscriber -> {
             TransactionQueryParameters params = new TransactionQueryParameters()
                     .setSenderId(address)
                     .setRecipientId(address)
@@ -117,6 +120,7 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
                         pager.finishLoad(true);
                     }
                 });
+       subscriptions.add(subscription);
     }
 
     @Override
@@ -136,7 +140,7 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
 
     @Override
     public void unSubscribe() {
-
+        subscriptions.clear();
     }
 
     private Account getAccount() {

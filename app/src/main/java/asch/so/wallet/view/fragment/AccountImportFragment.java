@@ -137,6 +137,7 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        presenter.unSubscribe();
 
     }
 

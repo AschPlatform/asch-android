@@ -134,6 +134,7 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         if (unbinder!=null){
             unbinder.unbind();
         }
+        presenter.unSubscribe();
     }
 
     @Override

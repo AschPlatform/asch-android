@@ -20,9 +20,11 @@ import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.UIAAsset;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 
@@ -35,10 +37,12 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
     private static final String TAG=AssetTransferPresenter.class.getSimpleName();
     private AssetTransferContract.View view;
     private Context context;
+    private CompositeSubscription subscriptions;
 
     public AssetTransferPresenter(Context context, AssetTransferContract.View view) {
         this.view = view;
         this.context = context;
+        this.subscriptions=new CompositeSubscription();
     }
 
     @Override
@@ -48,7 +52,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
 
     @Override
     public void unSubscribe() {
-
+        this.subscriptions.clear();
     }
 
     private Account getAccount(){
@@ -58,7 +62,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
     @Override
     public void transfer(String currency, String targetAddress, long amount, String message, String secret, String secondSecret) {
 
-            Observable.create(new Observable.OnSubscribe<AschResult>(){
+         Subscription subscription= Observable.create(new Observable.OnSubscribe<AschResult>(){
 
                 @Override
                 public void call(Subscriber<? super AschResult> subscriber) {
@@ -97,6 +101,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                             view.displayToast("转账成功");
                         }
                     });
+         subscriptions.add(subscription);
         }
 
     @Override
@@ -123,7 +128,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                     }
                 });
 
-        uiaOervable.subscribeOn(Schedulers.io())
+       Subscription subscription= uiaOervable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<List<UIAAsset>>() {
@@ -140,17 +145,16 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                     @Override
                     public void onNext(List<UIAAsset> assets) {
                         ArrayList<UIAAsset> filterdAssets=new ArrayList<>();
-                        assets.forEach(new Consumer<UIAAsset>() {
-                            @Override
-                            public void accept(UIAAsset uiaAsset) {
-                                if (hasAsset(uiaAsset.getName())){
-                                    filterdAssets.add(uiaAsset);
-                                }
+                        for (UIAAsset uiaAsset :
+                                assets) {
+                            if (hasAsset(uiaAsset.getName())){
+                                filterdAssets.add(uiaAsset);
                             }
-                        });
+                        }
                         view.displayAssets(filterdAssets,getSelectedIndex(filterdAssets,currency));
                     }
                 });
+       subscriptions.add(subscription);
     }
 
     private int getSelectedIndex(List<UIAAsset> assets, String currency){

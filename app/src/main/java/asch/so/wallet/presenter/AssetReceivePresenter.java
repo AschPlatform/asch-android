@@ -39,9 +39,11 @@ import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 
@@ -54,8 +56,8 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
     private  static  final  String TAG=AssetReceivePresenter.class.getSimpleName();
     private  AssetReceiveContract.View view;
     private Context context;
-
     private QRCodeURL qrCodeURL;
+    private CompositeSubscription subscriptions;
 
     Handler handler;
 
@@ -63,6 +65,8 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
         this.context=context;
         this.view=view;
         this.qrCodeURL=new QRCodeURL();
+        view.setPresenter(this);
+        subscriptions=new CompositeSubscription();
         this.handler=new Handler(context.getMainLooper()){
 
             @Override
@@ -75,6 +79,7 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
                 }
             }
         };
+
     }
 
     @Override
@@ -84,7 +89,7 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
 
     @Override
     public void unSubscribe() {
-
+        subscriptions.clear();
     }
 
     @Override
@@ -143,7 +148,7 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
                     }
                 });
 
-        uiaOervable.subscribeOn(Schedulers.io())
+        Subscription subscription= uiaOervable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<List<UIAAsset>>() {
@@ -162,12 +167,7 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
                         view.displayAssets(assets);
                     }
                 });
-//                .subscribe(new Action1<List<UIAAsset>>() {
-//                    @Override
-//                    public void call(List<UIAAsset> assets) {
-//                        view.displayAssets(assets);
-//                    }
-//                });
+        subscriptions.add(subscription);
     }
 
 

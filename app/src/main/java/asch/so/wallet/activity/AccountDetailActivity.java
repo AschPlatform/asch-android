@@ -199,6 +199,12 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.unSubscribe();
+    }
+
+    @Override
     public void setPresenter(AccountDetailContract.Presenter presenter) {
         this.presenter=presenter;
     }

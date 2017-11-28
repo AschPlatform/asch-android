@@ -10,6 +10,11 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.aschsdk.versionCode
         versionName rootProject.ext.aschsdk.versionName
+
+//        jackOptions {
+//            enabled true
+//        }
+//        useJack(true)
     }
 
     buildTypes {
@@ -18,6 +23,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8

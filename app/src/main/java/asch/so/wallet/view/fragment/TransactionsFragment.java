@@ -106,6 +106,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        presenter.unSubscribe();
     }
 
     @Override

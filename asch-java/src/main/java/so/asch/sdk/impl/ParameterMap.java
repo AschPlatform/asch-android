@@ -57,12 +57,16 @@ public class ParameterMap implements Iterable<Map.Entry<String, Object>> {
 
     public String toQueryString(){
         List<String> parameterList = new ArrayList<>();
-        map.forEach(new BiConsumer<String, Object>() {
-            @Override
-            public void accept(String key, Object value) {
-                parameterList.add(key + "=" + (value == null ? "" : value.toString()));
-            }
-        });
+        for (Map.Entry<String, Object> entry :
+                map.entrySet()) {
+            parameterList.add(entry.getKey() + "=" + (entry.getValue() == null ? "" : entry.getValue().toString()));
+        }
+//        map.forEach(new BiConsumer<String, Object>() {
+//            @Override
+//            public void accept(String key, Object value) {
+//                parameterList.add(key + "=" + (value == null ? "" : value.toString()));
+//            }
+//        });
         //map.forEach((key,value) -> parameterList.add(key + "=" + (value == null ? "" : value.toString())));
         return  Utils.join("&", parameterList);
     }

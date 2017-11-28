@@ -39,7 +39,7 @@ public class TransactionsAdapter extends BaseQuickAdapter<Transaction, Transacti
     }
 
     @Override
-    protected void convert(TransactionsAdapter.ViewHolder viewHolder, Transaction transaction) {
+    protected void convert(ViewHolder viewHolder, Transaction transaction) {
         boolean isSender=getAccount().getAddress().equals(transaction.getSenderId());
         setTransferIcon(viewHolder.transferIcon,transaction.getType(),isSender);
         viewHolder.transactionTv.setText(transaction.getId());

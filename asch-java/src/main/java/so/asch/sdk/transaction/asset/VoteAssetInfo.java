@@ -50,19 +50,27 @@ public class VoteAssetInfo extends AssetInfo {
                 return null;
 
             ArrayList<String> votes = new ArrayList<>();
-            upvoteKeys.forEach(new Consumer<String>() {
-                @Override
-                public void accept(String key) {
+            for (String key :
+                    upvoteKeys) {
                     votes.add("+" + key);
-                }
-            });
+            }
+//            upvoteKeys.forEach(new Consumer<String>() {
+//                @Override
+//                public void accept(String key) {
+//                    votes.add("+" + key);
+//                }
+//            });
 
-            downvoteKeys.forEach(new Consumer<String>() {
-                @Override
-                public void accept(String key) {
-                    votes.add("-" + key);
-                }
-            });
+            for (String key :
+                    downvoteKeys) {
+                votes.add("-" + key);
+            }
+//            downvoteKeys.forEach(new Consumer<String>() {
+//                @Override
+//                public void accept(String key) {
+//                    votes.add("-" + key);
+//                }
+//            });
 //            upvoteKeys.forEach(key -> votes.add("+" + key));
 //            downvoteKeys.forEach(key -> votes.add("-" + key));
 

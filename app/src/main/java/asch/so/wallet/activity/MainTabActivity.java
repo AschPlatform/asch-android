@@ -146,6 +146,14 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
         configLockManager();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mainPresenter!=null){
+            mainPresenter.unSubscribe();
+        }
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
 

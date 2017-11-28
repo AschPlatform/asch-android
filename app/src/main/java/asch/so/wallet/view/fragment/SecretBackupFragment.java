@@ -54,6 +54,12 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.unSubscribe();
+    }
+
+    @Override
     public void onClick(View view) {
         if (view==copyBtn){
             copySecret(secretTv.getText().toString().trim());

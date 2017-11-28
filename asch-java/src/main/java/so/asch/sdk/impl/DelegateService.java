@@ -64,7 +64,7 @@ public class DelegateService extends AschRESTService implements Delegate {
         try {
             Argument.notNull(userName, "invalid username");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            Argument.optional(secondSecret, Validation::isValidSecondSecret, "invalid secondSecret");
+            Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid secondSecret");
 
             TransactionInfo transaction = getTransactionBuilder().buildDelegate(userName, secret, secondSecret);
             return broadcastTransaction(transaction);

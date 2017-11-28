@@ -69,20 +69,27 @@ public class MultiSignatureAssetInfo extends AssetInfo{
                 return null;
 
             ArrayList<String> keys = new ArrayList<>();
+            for (String key :
+                    addKeys) {
+                keys.add("+" + key);
+            }
 
-            addKeys.forEach(new Consumer<String>() {
-                @Override
-                public void accept(String key) {
-                    keys.add("+" + key);
-                }
-            });
-
-            removeKeys.forEach(new Consumer<String>() {
-                @Override
-                public void accept(String key) {
-                    keys.add("-" + key);
-                }
-            });
+//            addKeys.forEach(new Consumer<String>() {
+//                @Override
+//                public void accept(String key) {
+//                    keys.add("+" + key);
+//                }
+//            });
+            for (String key :
+                    removeKeys) {
+                keys.add("-" + key);
+            }
+//            removeKeys.forEach(new Consumer<String>() {
+//                @Override
+//                public void accept(String key) {
+//                    keys.add("-" + key);
+//                }
+//            });
 
 //            addKeys.forEach(key -> keys.add("+" + key));
 //            removeKeys.forEach(key -> keys.add("-" + key));

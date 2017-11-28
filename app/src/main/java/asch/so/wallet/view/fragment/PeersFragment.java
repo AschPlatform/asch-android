@@ -100,6 +100,7 @@ public class PeersFragment extends BaseFragment implements PeesContact.View{
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        presenter.unSubscribe();
     }
 
     @Override

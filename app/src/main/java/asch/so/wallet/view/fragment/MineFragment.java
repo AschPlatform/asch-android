@@ -189,6 +189,11 @@ public class MineFragment extends BaseFragment implements MineContract.View{
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.unSubscribe();
+    }
 
     @Override
     public void setPresenter(MineContract.Presenter presenter) {

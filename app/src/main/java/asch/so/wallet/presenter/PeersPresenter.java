@@ -20,8 +20,10 @@ import asch.so.wallet.model.entity.TransferAsset;
 import asch.so.wallet.model.entity.UIATransferAsset;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 import so.asch.sdk.TransactionType;
@@ -37,10 +39,11 @@ public class PeersPresenter implements PeesContact.Presenter {
     private Context context;
     private PeesContact.View view;
     private IPage pager;
-
+    private CompositeSubscription subscriptions;
     public PeersPresenter(Context context, PeesContact.View view) {
         this.context = context;
         this.view = view;
+        this.subscriptions=new CompositeSubscription();
         view.setPresenter(this);
         initPager();
     }
@@ -61,7 +64,7 @@ public class PeersPresenter implements PeesContact.Presenter {
         int offset = pageIndex * pageSize;
         int limit = pageSize;
         //String address = getAccount().getAddress();
-        Observable.create((Observable.OnSubscribe<List<PeerNode>>) subscriber -> {
+      Subscription subscription = Observable.create((Observable.OnSubscribe<List<PeerNode>>) subscriber -> {
             PeerQueryParameters params = new PeerQueryParameters()
                     //.orderByDescending("t_timestamp")
                     .setOffset(offset)
@@ -101,6 +104,7 @@ public class PeersPresenter implements PeesContact.Presenter {
                         pager.finishLoad(true);
                     }
                 });
+      subscriptions.add(subscription);
     }
 
     @Override
@@ -110,7 +114,7 @@ public class PeersPresenter implements PeesContact.Presenter {
 
     @Override
     public void unSubscribe() {
-
+        subscriptions.clear();
     }
 
     @Override

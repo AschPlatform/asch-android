@@ -22,9 +22,11 @@ import asch.so.wallet.model.entity.TransferAsset;
 import asch.so.wallet.model.entity.UIATransferAsset;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 import so.asch.sdk.TransactionType;
@@ -40,12 +42,14 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
     private AssetTransactionsContract.View view;
     private Context context;
     private String currency;
+    private CompositeSubscription subscriptions;
     IPage pager;
 
     public AssetTransactionsPresenter(Context ctx, AssetTransactionsContract.View view, String currency) {
         this.view = view;
         this.context = ctx;
         this.currency = currency;
+        this.subscriptions=new CompositeSubscription();
         initPager();
         view.setPresenter(this);
     }
@@ -71,7 +75,7 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
         int offset = pageIndex * pageSize;
         int limit = pageSize;
         String address = getAccount().getAddress();
-        Observable.create((Observable.OnSubscribe<List<Transaction>>) subscriber -> {
+      Subscription subscription = Observable.create((Observable.OnSubscribe<List<Transaction>>) subscriber -> {
             AschResult result;
             if (isUIA()) {
                 result = AschSDK.UIA.getTransactions(address, currency, limit, offset);
@@ -135,6 +139,7 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
                         pager.finishLoad(true);
                     }
                 });
+      subscriptions.add(subscription);
     }
 
     @Override
@@ -144,7 +149,7 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
 
     @Override
     public void unSubscribe() {
-
+        subscriptions.clear();
     }
 
     private Account getAccount() {

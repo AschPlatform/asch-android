@@ -86,7 +86,7 @@ public class AccountService extends so.asch.sdk.impl.AschRESTService implements 
     public AschResult vote(String[] upvotePublicKeys, String[] downvotePublicKeys, String secret, String secondSecret){
         try {
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            Argument.optional(secondSecret, Validation::isValidSecondSecret, "invalid secondSecret");
+            Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid secondSecret");
             Argument.require(Validation.isValidVoteKeys(upvotePublicKeys, downvotePublicKeys), "invalid upvoteKeys or downvoteKeys");
 
             TransactionInfo transaction = getTransactionBuilder()
@@ -103,8 +103,8 @@ public class AccountService extends so.asch.sdk.impl.AschRESTService implements 
         try {
             Argument.require(Validation.isValidAddress(targetAddress), "invalid target address");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            Argument.optional(secondSecret, Validation::isValidSecondSecret, "invalid second secret");
-
+           // Argument.optional(secondSecret, Validation::isValidSecondSecret, "invalid second secret");
+            Argument.optional(secondSecret,Validation.isValidSecondSecret(secondSecret),"invalid second secret");
             TransactionInfo transaction = getTransactionBuilder()
                     .buildTransfer(targetAddress, amount, message, secret, secondSecret);
             return broadcastTransaction(transaction);

@@ -24,9 +24,11 @@ import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.FullAccount;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 
@@ -39,10 +41,12 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
 
     private final  AssetBalanceContract.View view;
     private Context context;
+    private CompositeSubscription subscriptions;
 
     public AssetBalancePresenter(AssetBalanceContract.View view) {
         this.view = view;
         view.setPresenter(this);
+        this.subscriptions=new CompositeSubscription();
         AccountsManager.getInstance().addObserver(this);
     }
 
@@ -53,7 +57,7 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
 
     @Override
     public void unSubscribe() {
-
+        this.subscriptions.clear();
     }
 
     private Account getAccount(){
@@ -69,7 +73,7 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
     public void loadAssets(){
 
        Observable<FullAccount> observable = AccountsManager.getInstance().createLoadFullAccountObservable();
-        observable.subscribeOn(Schedulers.io())
+      Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<FullAccount>() {
@@ -95,6 +99,7 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
                         view.displayAssets(fullAccount.getBalances());
                     }
                 });
+      subscriptions.add(subscription);
     }
 
 

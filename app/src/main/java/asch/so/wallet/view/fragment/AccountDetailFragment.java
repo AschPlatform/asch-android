@@ -61,6 +61,12 @@ public class AccountDetailFragment extends BaseFragment implements AccountDetail
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.unSubscribe();
+    }
+
+    @Override
     public void setPresenter(AccountDetailContract.Presenter presenter) {
         this.presenter=presenter;
     }

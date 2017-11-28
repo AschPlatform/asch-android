@@ -14,8 +14,13 @@ public class Argument {
             throw new ContractException(errorInfo);
     }
 
-    public static <T>void optional(T object, Predicate<T> validation, String errorInfo) throws ContractException {
-        if (object != null && !validation.test(object))
+//    public static <T>void optional(T object, Predicate<T> validation, String errorInfo) throws ContractException {
+//        if (object != null && !validation.test(object))
+//            throw new ContractException(errorInfo);
+//    }
+
+    public static <T>void optional(T object, boolean condition, String errorInfo) throws ContractException {
+        if (object != null && !condition)
             throw new ContractException(errorInfo);
     }
 

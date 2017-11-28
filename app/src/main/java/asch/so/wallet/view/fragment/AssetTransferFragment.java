@@ -199,6 +199,12 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.unSubscribe();
+    }
+
     private void showConfirmationDialog(String address, String amount, String currency, TransferConfirmationDialog.OnConfirmListener onConfirmListener){
         FragmentManager fm = getActivity().getSupportFragmentManager();
         TransferConfirmationDialog dialog =TransferConfirmationDialog.newInstance(address,amount,currency);
@@ -250,12 +256,12 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
     @Override
     public void displayError(UIException exception) {
-        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(),exception!=null?exception.getMessage():"网络错误",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void displayToast(String toast) {
-        Toast.makeText(getActivity(),toast,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(),toast!=null?toast:"转账成功",Toast.LENGTH_SHORT).show();
         if (secondPasswdDialog!=null){
             secondPasswdDialog.dismiss();
         }
@@ -271,14 +277,10 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         Log.d(TAG,"++++assets:"+assets.toString());
         ArrayList<String> nameList=new ArrayList<String>();
         nameList.add(AschConst.CORE_COIN_NAME);
-        assets.forEach(new Consumer<UIAAsset>() {
-            @Override
-            public void accept(UIAAsset uiaAsset) {
-                //if (hasAsset(uiaAsset.getName())) {
-                    nameList.add(uiaAsset.getName());
-               // }
-            }
-        });
+        for (UIAAsset uiaAsset :
+                assets) {
+            nameList.add(uiaAsset.getName());
+        }
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         assetsSpinner.setAdapter(adapter);

@@ -27,6 +27,7 @@ import com.blankj.utilcode.util.ImageUtils;
 
 import junit.framework.Test;
 
+import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -39,6 +40,7 @@ import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.model.entity.UIAAsset;
+import asch.so.wallet.presenter.AssetReceivePresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import so.asch.sdk.impl.AschConst;
@@ -110,6 +112,10 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_asset_receive,container,false);
         ButterKnife.bind(this,rootView);
+
+        presenter=new AssetReceivePresenter(getActivity(),this);
+        //fragment.setPresenter(presenter);
+
         addressTv.setText(account.getAddress());
         ammountEt.addTextChangedListener(textWatcher);
 
@@ -156,6 +162,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     public void onDestroyView() {
         super.onDestroyView();
         ammountEt.removeTextChangedListener(textWatcher);
+        presenter.unSubscribe();
     }
 
     @Override
@@ -165,7 +172,10 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
     @Override
     public void displayError(UIException exception) {
-        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+        if (getContext()!=null){
+            Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -180,12 +190,16 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
         Log.d(TAG,"++++assets:"+assets.toString());
         ArrayList<String> nameList=new ArrayList<String>();
         nameList.add(AschConst.CORE_COIN_NAME);
-        assets.forEach(new Consumer<UIAAsset>() {
-            @Override
-            public void accept(UIAAsset uiaAsset) {
-                nameList.add(uiaAsset.getName());
-            }
-        });
+        for (UIAAsset uiaAsset:
+                assets) {
+            nameList.add(uiaAsset.getName());
+        }
+//        assets.forEach(new Consumer<UIAAsset>() {
+//            @Override
+//            public void accept(UIAAsset uiaAsset) {
+//                nameList.add(uiaAsset.getName());
+//            }
+//        });
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         assetsSp.setAdapter(adapter);

@@ -32,7 +32,7 @@ public class DappService extends AschRESTService implements Dapp {
            Argument.notNull(currency, "invalid currency");
            Argument.require(Validation.isValidInTransferAmount(currency, amount), "invalid ammount");
            Argument.require(Validation.isValidSecret(secret),"invalid secret");
-           Argument.optional(secondSecret, Validation::isValidSecondSecret,"invalid secondSecret");
+           Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret),"invalid secondSecret");
 
             TransactionInfo transaction=getTransactionBuilder()
                     .buildInTransfer(dappID,currency,amount,secret,secondSecret);
@@ -51,7 +51,7 @@ public class DappService extends AschRESTService implements Dapp {
             Argument.notNullOrEmpty(dappID, "invalid dappID");
             Argument.require(Validation.isValidFee(fee), "invalid fee");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            Argument.optional(secondSecret, Validation::isValidSecret, "invalid second secret");
+            Argument.optional(secondSecret, Validation.isValidSecret(secondSecret), "invalid second secret");
 
             TransactionInfo transaction = getTransactionBuilder()
                     .buildInnerTransaction(fee, TransactionType.InTransfer,args,secret);

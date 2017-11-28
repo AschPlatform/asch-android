@@ -18,10 +18,12 @@ import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.UIAAsset;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 
@@ -33,11 +35,12 @@ public class AssetInfoPresenter implements AssetInfoContract.Presenter {
 
     private Context context;
     private AssetInfoContract.View view;
-
+    private CompositeSubscription subscriptions;
     public AssetInfoPresenter(Context context, AssetInfoContract.View view) {
         this.context=context;
         this.view = view;
         this.view.setPresenter(this);
+        this.subscriptions=new CompositeSubscription();
     }
 
     private static  final  String TAG=AssetInfoContract.class.getSimpleName();
@@ -48,7 +51,7 @@ public class AssetInfoPresenter implements AssetInfoContract.Presenter {
 
     @Override
     public void unSubscribe() {
-
+        this.subscriptions.clear();
     }
 
     private Account getAccount(){
@@ -60,30 +63,6 @@ public class AssetInfoPresenter implements AssetInfoContract.Presenter {
         Account account = getAccount();
         String address=account.getAddress();
         ArrayList<UIAAsset> list=new ArrayList<UIAAsset>();
-//        Observable xasObservable = Observable.create(new Observable.OnSubscribe<List<Balance>>() {
-//            @Override
-//            public void call(Subscriber<? super List<Balance>> subscriber) {
-//                try {
-//                    AschResult result = AschSDK.Account.getBalance(address);
-//                    if (result!=null && result.isSuccessful()){
-//                        Log.i(TAG,result.getRawJson());
-//                        Map<String, Object> map =result.parseMap();
-//                        Balance xasBalance=new Balance();
-//                        xasBalance.setCurrency("XAS");
-//                        xasBalance.setBalance(String.valueOf(map.getOrDefault("balance","0")));
-//                        xasBalance.setPrecision(8);
-//                        list.add(xasBalance);
-//                        subscriber.onNext(list);
-//                        subscriber.onCompleted();
-//                    }else {
-//                        subscriber.onError(result.getException());
-//                    }
-//                }
-//                catch (Exception ex){
-//                    subscriber.onError(ex);
-//                }
-//            }
-//        });
         Observable  uiaOervable =
                 Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){
                     @Override
@@ -102,14 +81,7 @@ public class AssetInfoPresenter implements AssetInfoContract.Presenter {
                         }
                     }
                 });
-//
-//        xasObservable.flatMap(new Func1<List<Balance>, Observable<List<Balance>>>() {
-//            @Override
-//            public Observable<List<Balance>> call(List<Balance> balances) {
-//                return uiaOervable;
-//            }
-//        })
-        uiaOervable.subscribeOn(Schedulers.io())
+      Subscription subscription = uiaOervable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<List<UIAAsset>>() {
@@ -128,11 +100,6 @@ public class AssetInfoPresenter implements AssetInfoContract.Presenter {
                         view.displayAssets(assets);
                     }
                 });
-//                .subscribe(new Action1<List<UIAAsset>>() {
-//                    @Override
-//                    public void call(List<UIAAsset> balances) {
-//                        view.displayAssets(balances);
-//                    }
-//                });
+      subscriptions.add(subscription);
     }
 }

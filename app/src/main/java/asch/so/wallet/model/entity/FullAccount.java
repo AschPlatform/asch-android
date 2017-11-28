@@ -140,12 +140,16 @@ public class FullAccount {
         this.balances = balances;
         balancesMap.clear();
         if (balances!=null) {
-            balances.forEach(new Consumer<Balance>() {
-                @Override
-                public void accept(Balance balance) {
-                    balancesMap.put(balance.getCurrency(), balance);
-                }
-            });
+            for (Balance balance :
+                    balances) {
+                balancesMap.put(balance.getCurrency(), balance);
+            }
+//            balances.forEach(new Consumer<Balance>() {
+//                @Override
+//                public void accept(Balance balance) {
+//                    balancesMap.put(balance.getCurrency(), balance);
+//                }
+//            });
         }
     }
 

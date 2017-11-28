@@ -26,7 +26,7 @@ public class MiscService extends AschRESTService implements Misc {
             Argument.require(Validation.isValidContent(content, encoding), "invalid content");
             Argument.require(Validation.isValidWait(wait), "invalid wait");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            Argument.optional(secondSecret, Validation::isValidSecondSecret, "invalid second secret");
+            Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
 
             TransactionInfo transaction = getTransactionBuilder()
                     .buildStore(getContentBuffer(content, encoding), wait, secret, secondSecret);

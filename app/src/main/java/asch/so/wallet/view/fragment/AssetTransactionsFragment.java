@@ -154,6 +154,12 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.unSubscribe();
+    }
+
+    @Override
     public void setPresenter(AssetTransactionsContract.Presenter presenter) {
         this.presenter=presenter;
     }
@@ -163,7 +169,9 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {
-            Toast.makeText(getContext(),exception==null?"网络错误":exception.getMessage(),Toast.LENGTH_SHORT).show();
+            if (getContext()!=null) {
+                Toast.makeText(getContext(), exception == null ? "网络错误" : exception.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
         if (refreshLayout.isRefreshing()){
             refreshLayout.finishRefresh(500);
