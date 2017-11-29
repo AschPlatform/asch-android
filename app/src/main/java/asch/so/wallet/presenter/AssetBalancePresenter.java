@@ -66,7 +66,10 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
 
     @Override
     public void loadAccount() {
-        view.displayAccount(getAccount());
+        Account account =getAccount();
+        if (account!=null) {
+            view.displayAccount(account);
+        }
     }
 
     @Override
