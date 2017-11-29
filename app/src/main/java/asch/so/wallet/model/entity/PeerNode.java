@@ -1,5 +1,7 @@
 package asch.so.wallet.model.entity;
 
+import android.text.TextUtils;
+
 /**
  * Created by kimziv on 2017/11/24.
  */
@@ -59,5 +61,12 @@ public class PeerNode {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getStaredIp(){
+        if (TextUtils.isEmpty(ip))
+            return "*.*.*.*";
+       String[] parts= ip.split("\\.");
+       return  String.format("*.*.%s.%s",parts[2],parts[3]);
     }
 }

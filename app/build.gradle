@@ -13,7 +13,7 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+       // testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
         externalNativeBuild {
@@ -29,7 +29,7 @@ android {
     }
 
     dexOptions {
-        incremental true
+        //incremental true
         javaMaxHeapSize "4g"
     }
 
@@ -43,7 +43,7 @@ android {
             buildConfigField("boolean", "LOG_DEBUG", "false")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-           // buildConfigField 'com.baronzhang.android.library.util.StethoHelper', 'STETHO', 'new com.baronzhang.android.weather.util.stetho.ReleaseStethoHelper()'
+            // buildConfigField 'com.baronzhang.android.library.util.StethoHelper', 'STETHO', 'new com.baronzhang.android.weather.util.stetho.ReleaseStethoHelper()'
         }
 //        release {
 //            minifyEnabled false
@@ -83,13 +83,14 @@ android {
 }
 
 dependencies {
+//    implementation 'com.android.support:support-v4:26.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestCompile 'com.google.code.findbugs:jsr305:3.0.2'
-    compile  rootProject.ext.dependencies["appcompat-v7"]
-    compile rootProject.ext.dependencies["design"]
+    //compile rootProject.ext.dependencies["appcompat-v7"]
+    //compile rootProject.ext.dependencies["design"]
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:multidex:1.0.1'
@@ -129,8 +130,8 @@ dependencies {
     compile rootProject.ext.dependencies["baseRecyclerViewAdapterHelper"]
     compile rootProject.ext.dependencies["passcodeview"]
     compile rootProject.ext.dependencies["dialogplus"]
-    compile (rootProject.ext.dependencies["lollipin"]){
-        transitive=true
+    compile(rootProject.ext.dependencies["lollipin"]) {
+        transitive = true
     }
     compile rootProject.ext.dependencies["ldialogs"]
     compile rootProject.ext.dependencies["utilcode"]

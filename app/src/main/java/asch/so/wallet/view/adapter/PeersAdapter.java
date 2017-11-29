@@ -32,7 +32,7 @@ public class PeersAdapter extends BaseQuickAdapter<PeerNode, PeersAdapter.ViewHo
 
     @Override
     protected void convert(ViewHolder viewHolder, PeerNode peerNode) {
-        viewHolder.ipTv.setText(peerNode.getIp());
+        viewHolder.ipTv.setText(peerNode.getStaredIp());
         viewHolder.versionTv.setText(peerNode.getVersion());
         viewHolder.osTv.setText(peerNode.getOs());
         viewHolder.statusTv.setText(peerNode.getState()==0?"正常":"异常");

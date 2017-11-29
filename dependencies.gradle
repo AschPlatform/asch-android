@@ -1,4 +1,4 @@
-def supportVersion = "26.0.0-alpha1"
+def supportVersion = "26.1.0"
 def rxBindingVersion = "0.4.0"
 def retrofitVersion = "2.2.0"
 def okHttpVersion = "3.7.0"
@@ -31,7 +31,7 @@ def loadinglayoutVersion="1.0.1"
 project.ext {
     android = [
             compileSdkVersion: 26,
-            buildToolsVersion: "26.0.2",
+            buildToolsVersion: "26.0.3",
             applicationId    : "asch.so.wallet",
             minSdkVersion    : 16,
             targetSdkVersion : 26,
@@ -41,7 +41,7 @@ project.ext {
 
     aschsdk = [
             compileSdkVersion: 26,
-            buildToolsVersion: "26.0.2",
+            buildToolsVersion: "26.0.3",
             applicationId    : "asch.so.wallet",
             minSdkVersion    : 16,
             targetSdkVersion : 26,
@@ -53,6 +53,7 @@ project.ext {
             //android-support
             "support-v4"                  : "com.android.support:support-v4:${supportVersion}",
             "appcompat-v7"                : "com.android.support:appcompat-v7:${supportVersion}",
+            "support-v13"                 : "com.android.support:support-v13:${supportVersion}",
             "design"                      : "com.android.support:design:${supportVersion}",
             "recyclerview"                : "com.android.support:recyclerview-v7:${supportVersion}",
             "cardview"                    : "com.android.support:cardview-v7:${supportVersion}",
