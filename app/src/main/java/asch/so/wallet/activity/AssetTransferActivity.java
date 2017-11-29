@@ -46,8 +46,8 @@ public class AssetTransferActivity extends TitleToolbarActivity implements EasyP
         Bundle bundle=getIntent().getExtras();
         fragment.setArguments(bundle);
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
-        presenter =new AssetTransferPresenter(this,fragment);
-        fragment.setPresenter(presenter);
+//        presenter =new AssetTransferPresenter(this,fragment);
+//        fragment.setPresenter(presenter);
     }
 
 

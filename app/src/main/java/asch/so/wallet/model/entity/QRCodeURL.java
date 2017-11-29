@@ -70,8 +70,8 @@ public class QRCodeURL {
                         queryPairs.put(key, value);
                     }
                 }
-                String  currency=queryPairs.getOrDefault("currency","");
-                String  amount=queryPairs.getOrDefault("amount","");
+                String  currency=queryPairs.get("currency");
+                String  amount=queryPairs.get("amount");
                 QRCodeURL codeURL= new QRCodeURL();
                 codeURL.setAddress(address);
                 codeURL.setCurrency(currency);

@@ -45,6 +45,7 @@ import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.model.entity.UIAAsset;
+import asch.so.wallet.presenter.AssetTransferPresenter;
 import asch.so.wallet.view.validator.Validator;
 import asch.so.wallet.view.widget.DialogFactory;
 import asch.so.wallet.view.widget.SecondPasswdDialog;
@@ -99,7 +100,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         super.onCreate(savedInstanceState);
         balance= JSON.parseObject(getArguments().getString("balance"),Balance.class);
         String uri = getArguments().getString("qrcode_uri");
-
+        presenter =new AssetTransferPresenter(getContext(),this);
         try {
             if (Validation.isValidAddress(uri)){
                 qrCodeURL=new QRCodeURL();

@@ -43,6 +43,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
         this.view = view;
         this.context = context;
         this.subscriptions=new CompositeSubscription();
+        this.view.setPresenter(this);
     }
 
     @Override
