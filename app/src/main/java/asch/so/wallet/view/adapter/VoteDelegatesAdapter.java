@@ -12,7 +12,7 @@ import java.util.List;
 
 import asch.so.wallet.R;
 import asch.so.wallet.model.entity.Delegate;
-import asch.so.wallet.view.fragment.VoteFragment.OnListFragmentInteractionListener;
+import asch.so.wallet.view.fragment.VoteDelegatesFragment.OnListFragmentInteractionListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,16 +21,16 @@ import butterknife.ButterKnife;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class VoteAdapter extends BaseQuickAdapter<Delegate, VoteAdapter.ViewHolder> {
+public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegatesAdapter.ViewHolder> {
    // private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public VoteAdapter(@Nullable List<Delegate> data, OnListFragmentInteractionListener mListener) {
-        super(R.layout.item_vote, data);
+    public VoteDelegatesAdapter(@Nullable List<Delegate> data, OnListFragmentInteractionListener mListener) {
+        super(R.layout.item_vote_delegates, data);
         this.mListener = mListener;
     }
 
-    public VoteAdapter() {
+    public VoteDelegatesAdapter() {
         this(null,null);
     }
 

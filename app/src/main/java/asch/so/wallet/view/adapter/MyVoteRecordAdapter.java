@@ -28,7 +28,7 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
     private final MyVoteRecordFragment.OnListFragmentInteractionListener mListener;
 
     public MyVoteRecordAdapter(@Nullable List<Delegate> data, MyVoteRecordFragment.OnListFragmentInteractionListener mListener) {
-        super(R.layout.item_vote, data);
+        super(R.layout.item_vote_delegates, data);
         this.mListener = mListener;
     }
 

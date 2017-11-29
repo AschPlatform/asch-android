@@ -6,20 +6,21 @@ package asch.so.wallet.model.entity;
 
 /*
 {
-    "username": "thinker",
-    "address": "18264520677606703363",
-    "publicKey": "4e56eb22bb57fe42967521217d5006101ee6a507c4af3c9c1be94de87997f4bb",
-    "balance": 14356896750405,
-    "vote": 2229566597656595,
-    "producedblocks": 40024,
-    "missedblocks": 151,
-    "fees": 71587346348,
-    "rewards": 11686800000000,
-    "rate": 1,
-    "approval": 19.87,
-    "productivity": 99.62,
-    "forged": "11758387346348"
-}
+            "username": "thinker",
+            "address": "18264520677606703363",
+            "publicKey": "4e56eb22bb57fe42967521217d5006101ee6a507c4af3c9c1be94de87997f4bb",
+            "balance": 14358418572184,
+            "vote": 2229461030725921,
+            "producedblocks": 40030,
+            "missedblocks": 151,
+            "fees": 71669168127,
+            "rewards": 11688240000000,
+            "rate": 1,
+            "approval": 19.87,
+            "productivity": 99.62,
+            "forged": "11759909168127",
+            "voted": true
+        }
  */
 public class Delegate {
     private String username;
@@ -35,6 +36,7 @@ public class Delegate {
     private float approval;
     private float productivity;
     private long forged;
+    private boolean voted;
 
     public String getUsername() {
         return username;
@@ -138,5 +140,13 @@ public class Delegate {
 
     public void setForged(long forged) {
         this.forged = forged;
+    }
+
+    public boolean isVoted() {
+        return voted;
+    }
+
+    public void setVoted(boolean voted) {
+        this.voted = voted;
     }
 }

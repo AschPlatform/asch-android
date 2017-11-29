@@ -2,7 +2,6 @@ package asch.so.wallet.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +11,8 @@ import android.view.ViewGroup;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
-import asch.so.wallet.view.adapter.VoteAdapter;
-import asch.so.wallet.view.fragment.dummy.DummyContent;
+import asch.so.wallet.view.adapter.VoteDelegatesAdapter;
 import asch.so.wallet.view.fragment.dummy.DummyContent.DummyItem;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -24,7 +20,7 @@ import java.util.List;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class VoteFragment extends BaseFragment {
+public class VoteDelegatesFragment extends BaseFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -36,13 +32,13 @@ public class VoteFragment extends BaseFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public VoteFragment() {
+    public VoteDelegatesFragment() {
     }
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
-    public static VoteFragment newInstance(int columnCount) {
-        VoteFragment fragment = new VoteFragment();
+    public static VoteDelegatesFragment newInstance(int columnCount) {
+        VoteDelegatesFragment fragment = new VoteDelegatesFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
@@ -61,7 +57,7 @@ public class VoteFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_vote_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_vote_delegates, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -73,7 +69,7 @@ public class VoteFragment extends BaseFragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 //            recyclerView.setAdapter(new MyVoteRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-            recyclerView.setAdapter(new VoteAdapter());
+            recyclerView.setAdapter(new VoteDelegatesAdapter());
         }
         return view;
     }
