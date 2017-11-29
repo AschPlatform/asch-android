@@ -85,10 +85,10 @@
         <activity android:name=".activity.TransactionDetailActivity"></activity>
         <activity android:name=".activity.BlockInfoActivity"></activity>
         <activity android:name=".activity.PeersActivity"></activity>
-        <!--<activity-->
-            <!--android:name=".activity.VoteActivity"-->
-            <!--android:label="@string/title_activity_vote"-->
-            <!--android:theme="@style/AppTheme"></activity>-->
+        <activity
+            android:name=".activity.VoteActivity"
+            android:label="@string/title_activity_vote"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -141,5 +141,5 @@ dependencies {
     compile rootProject.ext.dependencies["bubbleLayout"]
     compile rootProject.ext.dependencies["bugly"]
     compile rootProject.ext.dependencies["loadinglayout"]
-
+    compile rootProject.ext.dependencies["flycoTabLayout"]
 }

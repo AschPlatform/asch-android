@@ -36,6 +36,7 @@ import asch.so.wallet.activity.BlockInfoActivity;
 import asch.so.wallet.activity.PeersActivity;
 import asch.so.wallet.activity.PincodeSettingActivity;
 import asch.so.wallet.activity.TodoActivity;
+import asch.so.wallet.activity.VoteActivity;
 import asch.so.wallet.contract.MineContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.MinePresenter;
@@ -164,6 +165,11 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                         case  R.mipmap.my_user:
                         {
                             BaseActivity.start(getActivity(),PeersActivity.class,null);
+                        }
+                        break;
+                        case  R.mipmap.my_bell:
+                        {
+                            BaseActivity.start(getActivity(),VoteActivity.class,null);
                         }
                         break;
                         case  R.mipmap.my_block_info:
