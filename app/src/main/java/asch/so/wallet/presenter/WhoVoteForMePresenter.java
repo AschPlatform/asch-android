@@ -59,7 +59,7 @@ public class WhoVoteForMePresenter implements WhoVoteForMeContract.Presenter {
     private void loadVoters(int pageIndex, int pageSize) {
         int offset = pageIndex * pageSize;
         int limit = pageSize;
-        String address = getAccount().getAddress();
+        String publicKey = getAccount().getPublicKey();
         Subscription subscription = Observable.create((Observable.OnSubscribe<List<Voter>>) subscriber -> {
 //            DelegateQueryParameters params =new DelegateQueryParameters()
 //                    .setAddress(address)
@@ -67,7 +67,7 @@ public class WhoVoteForMePresenter implements WhoVoteForMeContract.Presenter {
 //                    .setOffset(offset)
 //                    .setLimit(limit);
 
-            AschResult result = AschSDK.Account.getVotedDelegates(address);
+            AschResult result = AschSDK.Delegate.getVoters(publicKey);
             if (result.isSuccessful()) {
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                 JSONArray votersJsonArray = resultJSONObj.getJSONArray("accounts");

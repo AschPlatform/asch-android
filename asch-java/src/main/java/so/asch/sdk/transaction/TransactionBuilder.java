@@ -165,7 +165,12 @@ public class TransactionBuilder {
             case Delegate:
                 break;
             case Vote:
-                break;
+                return new TransactionInfo()
+                        .setTransactionType(type)
+                        .setAmount(amount)
+                        .setFee(fee)
+                        .setTimestamp(getSecurity().getTransactionTimestamp())
+                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
             case MultiSignature:
                 break;
             case Dapp:

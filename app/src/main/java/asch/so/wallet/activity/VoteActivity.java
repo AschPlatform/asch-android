@@ -16,8 +16,11 @@ import com.flyco.tablayout.SlidingTabLayout;
 import java.util.ArrayList;
 
 import asch.so.wallet.R;
+import asch.so.wallet.model.entity.Delegate;
+import asch.so.wallet.view.fragment.MyVoteRecordFragment;
 import asch.so.wallet.view.fragment.TestFragment;
 import asch.so.wallet.view.fragment.VoteDelegatesFragment;
+import asch.so.wallet.view.fragment.WhoVoteForMeFragment;
 import asch.so.wallet.view.fragment.dummy.DummyContent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,9 +62,11 @@ public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesF
     }
 
     private void initView() {
-        for (String s : mTitles) {
+        //for (String s : mTitles) {
             mFagments.add(VoteDelegatesFragment.newInstance(1));
-        }
+           mFagments.add(MyVoteRecordFragment.newInstance(1));
+          mFagments.add(WhoVoteForMeFragment.newInstance(1));
+        //}
         //getChildFragmentManager() 如果是嵌套在fragment中就要用这个
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
@@ -69,8 +74,8 @@ public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesF
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        
+    public void onListFragmentInteraction(Delegate item) {
+
     }
 
 

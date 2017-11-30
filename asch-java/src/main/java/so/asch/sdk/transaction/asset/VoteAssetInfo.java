@@ -1,5 +1,6 @@
 package so.asch.sdk.transaction.asset;
 
+import so.asch.sdk.Utils;
 import so.asch.sdk.codec.Decoding;
 
 //import java.beans.Transient;
@@ -90,7 +91,7 @@ public class VoteAssetInfo extends AssetInfo {
 
     @Override
     public void addBytes(ByteBuffer buffer){
-        String votes = String.join("", vote.getVotes());
+        String votes = Utils.join("", vote.getVotes());
         buffer.put(Decoding.unsafeDecodeUTF8(votes));
     }
 }

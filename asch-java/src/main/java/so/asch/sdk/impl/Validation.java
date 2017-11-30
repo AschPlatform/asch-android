@@ -109,8 +109,8 @@ public class Validation {
                 (!isIntersected(upvotes, downvotes)) &&
                 (!(isDuplicate(upvotes) || isDuplicate(downvotes)))&&
                 ((upvotes == null ? 0 : upvotes.length) + (downvotes == null ? 0 : downvotes.length) <= 33)&&
-                (all(upvotes, Validation::isValidPublicKey)) &&
-                (all(downvotes, Validation::isValidPublicKey));
+                (allIsValidPublicKey(upvotes)) ||
+                (allIsValidPublicKey(downvotes));
     }
 
     public static boolean isValidMultiSignatureKeys(String[] addKeys, String[]removeKeys){
@@ -118,8 +118,8 @@ public class Validation {
                 (!isIntersected(addKeys, removeKeys)) &&
                 (!(isDuplicate(addKeys) || isDuplicate(removeKeys)))&&
                 ((addKeys == null ? 0 : addKeys.length) + (removeKeys == null ? 0 : removeKeys.length) <= 10)&&
-                (all(addKeys, Validation::isValidPublicKey)) &&
-                (all(removeKeys,Validation::isValidPublicKey));
+                (allIsValidPublicKey(addKeys)) &&
+                (allIsValidPublicKey(removeKeys));
 
     }
 
@@ -174,6 +174,17 @@ public class Validation {
 
         for(T o : items){
             if (!predicate.test(o))
+                return false;
+        }
+        return true;
+    }
+
+    public static  boolean allIsValidPublicKey(String[] items){
+        if (items == null || items.length ==0)
+            throw new IllegalArgumentException("items must not null or empty");
+
+        for(String o : items){
+            if (!Validation.isValidPublicKey(o))
                 return false;
         }
         return true;

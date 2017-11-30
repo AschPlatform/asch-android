@@ -10,13 +10,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.UIException;
@@ -36,7 +43,7 @@ import ezy.ui.layout.LoadingLayout;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class VoteDelegatesFragment extends BaseFragment implements VoteDelegatesContract.View{
+public class VoteDelegatesFragment extends BaseFragment implements VoteDelegatesAdapter.OnSelectedDelegatesListener, View.OnClickListener, VoteDelegatesContract.View{
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -50,6 +57,11 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     RefreshLayout refreshLayout;
     @BindView(R.id.loading_ll)
     LoadingLayout loadingLayout;
+
+    @BindView(R.id.vote_btn)
+    Button voteBtn;
+    @BindView(R.id.status_tv)
+    TextView statusTv;
 
     private VoteDelegatesContract.Presenter presenter;
     private VoteDelegatesAdapter adapter;
@@ -86,10 +98,10 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         View view = inflater.inflate(R.layout.fragment_vote_delegates, container, false);
         ButterKnife.bind(this,view);
         presenter=new VoteDelegatesPresenter(getContext(),this);
-        adapter=new VoteDelegatesAdapter();
+        adapter=new VoteDelegatesAdapter(this);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
 
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -117,6 +129,8 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
             }
         });
         refreshLayout.autoRefresh();
+
+        voteBtn.setOnClickListener(this);
 
         return view;
     }
@@ -183,6 +197,44 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         refreshLayout.finishLoadmore(500);
     }
 
+    @Override
+    public void displayVoteResult(String result) {
+        Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v==voteBtn){
+          LinkedHashMap<String,Delegate> delegatesMap= adapter.getSelectedDelegatesMap();
+          Iterator<Map.Entry<String,Delegate>> it=delegatesMap.entrySet().iterator();
+            ArrayList<Delegate> delegates=new ArrayList<>();
+          while (it.hasNext()){
+              Map.Entry<String,Delegate> entry =it.next();
+              delegates.add(entry.getValue());
+          }
+          if (delegates.size()==0){
+              Toast.makeText(getContext(),"请选择受托人",Toast.LENGTH_SHORT).show();
+              return;
+          }
+          presenter.voteForDelegates(delegates);
+        }
+    }
+
+    private void showSelectedDelegatesCount(){
+        int count=  adapter.getSelectedDelegatesMap().size();
+        statusTv.setText(String.format("已选择%d位受托人",count));
+    }
+
+    @Override
+    public void selectDelegate(Delegate delegate) {
+        showSelectedDelegatesCount();
+    }
+
+    @Override
+    public void deselectDelegate(Delegate delegate) {
+        showSelectedDelegatesCount();
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -195,6 +247,10 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Delegate item);
+
+//        void selectDelegate(Delegate delegate);
+//
+//        void deselectDelegate(Delegate delegate);
     }
 }

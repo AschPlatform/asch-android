@@ -3,17 +3,39 @@ package asch.so.wallet.view.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import java.util.List;
+
+import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
+import asch.so.wallet.contract.MyVoteRecordContract;
+import asch.so.wallet.contract.TransactionsContract;
+import asch.so.wallet.model.entity.Delegate;
+import asch.so.wallet.presenter.MyVoteRecordPresenter;
+import asch.so.wallet.presenter.VoteDelegatesPresenter;
 import asch.so.wallet.view.adapter.MyVoteRecordAdapter;
+import asch.so.wallet.view.adapter.TransactionsAdapter;
+import asch.so.wallet.view.adapter.VoteDelegatesAdapter;
 import asch.so.wallet.view.fragment.dummy.DummyContent;
 import asch.so.wallet.view.fragment.dummy.DummyContent.DummyItem;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import ezy.ui.layout.LoadingLayout;
 
 /**
  * A fragment representing a list of Items.
@@ -21,14 +43,21 @@ import asch.so.wallet.view.fragment.dummy.DummyContent.DummyItem;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class MyVoteRecordFragment extends Fragment {
+public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordContract.View {
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
-
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.refreshLayout)
+    RefreshLayout refreshLayout;
+    @BindView(R.id.loading_ll)
+    LoadingLayout loadingLayout;
+    MyVoteRecordAdapter adapter;
+    MyVoteRecordContract.Presenter presenter;
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -59,18 +88,40 @@ public class MyVoteRecordFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myvoterecord_list, container, false);
+        ButterKnife.bind(this,view);
+        presenter=new MyVoteRecordPresenter(getContext(),this);
+        adapter=new MyVoteRecordAdapter();
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(adapter);
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+//                Delegate delegate = adapter.getItem(position);
+//                String json = JSON.toJSONString(delegate);
+//                Bundle bundle=new Bundle();
+//                bundle.putString("transaction",json);
+//                BaseActivity.start(getActivity(), TransactionDetailActivity.class,bundle);
             }
-            recyclerView.setAdapter(new MyVoteRecordAdapter());
-        }
+        });
+
+        // materialHeader = (MaterialHeader)refreshLayout.getRefreshHeader();
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                presenter.loadFirstPageDelegates();
+            }
+        });
+//        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+//            @Override
+//            public void onLoadmore(RefreshLayout refreshlayout) {
+//                presenter.loadMorePageDelegates();
+//            }
+//        });
+        refreshLayout.setEnableLoadmore(false);
+        refreshLayout.autoRefresh();
         return view;
     }
 
@@ -78,18 +129,54 @@ public class MyVoteRecordFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
+//        if (context instanceof OnListFragmentInteractionListener) {
+//            mListener = (OnListFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnListFragmentInteractionListener");
+//        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void setPresenter(MyVoteRecordContract.Presenter presenter) {
+        this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+        if (adapter.getData().isEmpty()){
+            loadingLayout.showError();
+        }else {
+            Toast.makeText(getContext(),exception==null?"网络错误":exception.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        if (refreshLayout.isRefreshing()){
+            refreshLayout.finishRefresh(500);
+        }else {
+            refreshLayout.finishLoadmore(500);
+        }
+    }
+
+    @Override
+    public void displayFirstPageDelegates(List<Delegate> delegates) {
+        if (delegates.isEmpty()) {
+            loadingLayout.showEmpty();
+        }else {
+            loadingLayout.showContent();
+        }
+        adapter.replaceData(delegates);
+        refreshLayout.finishRefresh(500);
+    }
+
+    @Override
+    public void displayMorePageDelegates(List<Delegate> delegates) {
+        adapter.addData(delegates);
+        refreshLayout.finishLoadmore(500);
     }
 
     /**

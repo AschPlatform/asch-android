@@ -8,7 +8,6 @@ import so.asch.sdk.codec.Encoding;
 import so.asch.sdk.transaction.asset.AssetInfo;
 import so.asch.sdk.transaction.asset.DappAssetInfo;
 
-import java.beans.Transient;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -89,7 +88,6 @@ public class TransactionInfo {
         return this;
     }
 
-    @Transient
     public TransactionType getTransactionType() {
         return transactionType;
     }
@@ -141,7 +139,7 @@ public class TransactionInfo {
     }
 
     private String transactionId = null;
-    private TransactionType transactionType = null;
+    private transient TransactionType transactionType = null;
     private String recipientId = null;
 
     private String requesterPublicKey = null;
@@ -182,6 +180,16 @@ public class TransactionInfo {
             case Delegate:
                 break;
             case Vote:
+            {
+                buffer.put(getType().byteValue())
+                        .putInt(getTimestamp())
+                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                        .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
+                        .put(getRecipientIdBuffer())
+                        .putLong(getAmount())
+                        .put(getMessageBuffer())
+                        .put(getAsset().assetBytes());
+            }
                 break;
             case MultiSignature:
                 break;

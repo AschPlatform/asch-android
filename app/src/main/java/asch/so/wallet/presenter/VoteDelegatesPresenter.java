@@ -1,11 +1,13 @@
 package asch.so.wallet.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.base.adapter.page.IPage;
@@ -24,6 +26,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
+import so.asch.sdk.Transaction;
 import so.asch.sdk.dto.query.DelegateQueryParameters;
 
 /**
@@ -31,6 +34,7 @@ import so.asch.sdk.dto.query.DelegateQueryParameters;
  */
 
 public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
+    private static final String TAG=VoteDelegatesPresenter.class.getSimpleName();
     private Context context;
     private VoteDelegatesContract.View view;
     private CompositeSubscription subscriptions;
@@ -128,5 +132,60 @@ public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
     @Override
     public void loadMorePageDelegates() {
         pager.loadPage(false);
+    }
+
+    //Vote
+    @Override
+    public void voteForDelegates(List<Delegate> delegates){
+        //ArrayList<String> pubKeys=new ArrayList<>();
+        String[] pubKeys =new String[delegates.size()];
+        int i =0;
+        for (Delegate delegate : delegates) {
+            pubKeys[i++]=delegate.getPublicKey();
+        }
+        String secret = getAccount().getSeed();
+        String secondSecret = null;
+        if (pubKeys.length==0)
+            return;
+
+        Subscription subscription = Observable.create((Observable.OnSubscribe<AschResult>) subscriber -> {
+           AschResult result = AschSDK.Account.vote(pubKeys,null,secret,secondSecret);
+            if (result.isSuccessful()) {
+//                JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
+//                JSONArray delegatesJsonArray = resultJSONObj.getJSONArray("delegates");
+//                List<Delegate> delegates = JSON.parseArray(delegatesJsonArray.toJSONString(), Delegate.class);
+                subscriber.onNext(result);
+                subscriber.onCompleted();
+            } else {
+                subscriber.onError(result.getException());
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<AschResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG,"vote result:"+e==null?"vote result error":e.toString());
+//                        view.displayError(new UIException("网络错误"));
+//                        pager.finishLoad(true);
+                    }
+
+                    @Override
+                    public void onNext(AschResult result) {
+                        Log.d(TAG,"vote result:"+result.getRawJson());
+//                        if (pager.isFirstPage()) {
+//                            view.displayFirstPageDelegates(delegates);
+//                        } else {
+//                            view.displayMorePageDelegates(delegates);
+//                        }
+//                        pager.finishLoad(true);
+                    }
+                });
+        subscriptions.add(subscription);
     }
 }

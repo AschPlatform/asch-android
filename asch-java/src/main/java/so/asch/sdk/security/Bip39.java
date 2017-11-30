@@ -10,6 +10,8 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 import java.util.List;
 
+import so.asch.sdk.Utils;
+
 public class Bip39 {
     private   MnemonicCode mnInstance;
     private static Bip39 instance;
@@ -30,7 +32,7 @@ public class Bip39 {
         try {
             String[] words =mnInstance.toMnemonic(entropy).toArray(new String[0]);
 
-            return String.join(" ", words);
+            return Utils.join(" ", words);
         }
         catch (Exception ex){
             throw new SecurityException("generate mnemonic code failed", ex);

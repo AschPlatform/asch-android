@@ -12,6 +12,18 @@
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="10dp">
     <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <CheckBox
+            android:id="@+id/checkBox"
+           android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            />
+
+    <LinearLayout
         android:layout_marginTop="0dp"
         android:background="@android:color/white"
         android:layout_width="match_parent"
@@ -85,6 +97,14 @@
             android:visibility="gone"
             android:background="@color/divider_color"
             />
+        <!--<com.github.aakira.expandablelayout.ExpandableLinearLayout-->
+            <!--android:id="@+id/expandableLayout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--app:ael_duration="400"-->
+            <!--app:ael_expanded="false"-->
+            <!--&gt;-->
         <LinearLayout
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -284,6 +304,8 @@
                 android:textColor="#333333"
                 android:maxLines="1" />
         </LinearLayout>
+        <!--</com.github.aakira.expandablelayout.ExpandableLinearLayout>-->
+    </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
     <!--</android.support.constraint.ConstraintLayout>-->
