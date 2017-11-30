@@ -40,4 +40,9 @@ public class AschHelper {
         calendar.add(Calendar.SECOND, timestamp);
         return calendar.getTime();
     }
+
+    public  long timestampFromAschTimestamp(int timestamp){
+        Date beginEpoch =  AschConst.ASCH_BEGIN_EPOCH ;
+        return (beginEpoch.getTime()+timestamp);
+    }
 }

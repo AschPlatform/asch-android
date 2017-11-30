@@ -157,6 +157,8 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        txRcv.setAdapter(null);
+
     }
 
     @Override

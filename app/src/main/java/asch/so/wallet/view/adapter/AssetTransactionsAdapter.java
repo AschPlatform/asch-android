@@ -25,6 +25,7 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.model.entity.UIATransferAsset;
+import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import so.asch.sdk.TransactionType;
@@ -36,13 +37,13 @@ import so.asch.sdk.impl.AschConst;
 
 public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, AssetTransactionsAdapter.ViewHolder> {
 
-    private TimeAgo timeAgo=null;
+    //private TimeAgo timeAgo=null;
     private Context context;
 
     public AssetTransactionsAdapter(Context ctx) {
         super(R.layout.item_transaction);
         context=ctx;
-        timeAgo=new TimeAgo().locale(ctx).with(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        //timeAgo=new TimeAgo().locale(ctx).with(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
     }
 
     @Override
@@ -57,9 +58,10 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
            viewHolder.amountTv.setText(String.format("%s%.3f", isSender?"-":"+",Float.parseFloat(asset.getUiaTransfer().getAmountShow()))+" "+asset.getUiaTransfer().getCurrency());
 
        }
-
-        String ago=timeAgo.getTimeAgo(transaction.dateFromAschTimestamp());
+        CharSequence ago= AppUtil.getRelativeTimeSpanString(context, transaction.dateFromAschTimestamp().getTime());
         viewHolder.dateTv.setText(ago);
+//        String ago=timeAgo.getTimeAgo(transaction.dateFromAschTimestamp());
+//        viewHolder.dateTv.setText(ago);
     }
 
     private void setTransferIcon(ImageView imageView, int type, boolean isSender){

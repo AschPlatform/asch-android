@@ -159,6 +159,10 @@ public class Transaction {
       return   AschSDK.Helper.dateFromAschTimestamp(timestamp);
     }
 
+    public long timestampFromAschTimestamp(){
+        return   AschSDK.Helper.timestampFromAschTimestamp(timestamp);
+    }
+
     public void setTimestamp(int timestamp) {
         this.timestamp = timestamp;
     }
