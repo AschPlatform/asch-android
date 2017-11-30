@@ -18,10 +18,11 @@ import java.util.ArrayList;
 import asch.so.wallet.R;
 import asch.so.wallet.view.fragment.TestFragment;
 import asch.so.wallet.view.fragment.VoteDelegatesFragment;
+import asch.so.wallet.view.fragment.dummy.DummyContent;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VoteActivity extends TitleToolbarActivity {
+public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesFragment.OnListFragmentInteractionListener {
     @BindView(R.id.tablayout)
     SlidingTabLayout tablayout;
     @BindView(R.id.view_pager)
@@ -65,6 +66,11 @@ public class VoteActivity extends TitleToolbarActivity {
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tablayout.setViewPager(viewPager, mTitles);
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+        
     }
 
 
