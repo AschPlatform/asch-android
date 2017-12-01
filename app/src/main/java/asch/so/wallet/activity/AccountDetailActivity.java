@@ -147,6 +147,10 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     private void deleteAccount(){
+        if (AccountsManager.getInstance().getAccountsCount()<2){
+            Toast.makeText(this,"当前钱包只有一只账户，不能删除",Toast.LENGTH_SHORT).show();
+            return;
+        }
         FragmentManager fm = getSupportFragmentManager();
         InputPasswdDialog dialog = InputPasswdDialog.newInstance();
         AccountDetailActivity thiz=this;

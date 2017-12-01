@@ -96,6 +96,11 @@ public class AccountsManager extends Observable {
         return accounts;
     }
 
+    public int getAccountsCount(){
+        List<Account> accounts=queryAccounts();
+        return accounts==null?0:accounts.size();
+    }
+
     /**
      * 添加账户
      *

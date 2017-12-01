@@ -123,7 +123,11 @@ public class AccountsDao {
         getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                account.deleteFromRealm();
+//                try {
+                    account.deleteFromRealm();
+//                }catch (Exception e){
+//
+//                }
             }
         });
     }
