@@ -12,6 +12,7 @@ import android.widget.Toast;
 import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
 import asch.so.wallet.model.entity.QRCodeURL;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.validator.Validator;
 import asch.so.widget.toolbar.BaseToolbar;
@@ -116,7 +117,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     @Override
     public void onScanQRCodeSuccess(String result) {
         Log.i(TAG, "result:" + result);
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+        AppUtil.toastSuccess(this, result);
         vibrate();
        // zbarView.startSpot();
         switch (action){
@@ -155,7 +156,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                     BaseActivity.start(this,AssetTransferActivity.class,bundle);
                     finish();
                 }catch (Exception e){
-                    Toast.makeText(this,"二维码格式无效",Toast.LENGTH_SHORT).show();
+                    AppUtil.toastError(this,"二维码格式无效");
                 }
             }
                 break;

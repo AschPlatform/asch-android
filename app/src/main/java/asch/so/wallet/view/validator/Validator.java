@@ -6,6 +6,7 @@ import android.text.InputType;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.checkable.AccountNameCheckable;
 import asch.so.wallet.view.validator.checkable.AddressCheckable;
 import asch.so.wallet.view.validator.checkable.AmountCheckable;
@@ -77,8 +78,8 @@ public class Validator {
         if (isValid) {
            // editText.setError(null);
         } else {
-           // editText.setError(error);
-            Toast.makeText(context,error, Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(context,error);
+            //Toast.makeText(context,error, Toast.LENGTH_SHORT).show();
         }
     }
 

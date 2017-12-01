@@ -31,6 +31,8 @@ def loadinglayoutVersion="1.0.1"
 def flycoTabLayoutVersion="2.0.2"
 def expandableLayoutVersion="1.6.0"
 def kprogresshudVersion="1.1.0"
+def toastyVersion="1.2.5"
+
 project.ext {
     android = [
             compileSdkVersion: 26,
@@ -125,7 +127,8 @@ project.ext {
             "loadinglayout"                 :"com.github.czy1121:loadinglayout:${loadinglayoutVersion}",
             "flycoTabLayout"                :"com.flyco.tablayout:FlycoTabLayout_Lib:${flycoTabLayoutVersion}@aar",
             "expandableLayout"             :"com.github.aakira:expandable-layout:${expandableLayoutVersion}@aar",
-            "kprogresshud"                  :"com.kaopiz:kprogresshud:${kprogresshudVersion}"
+            "kprogresshud"                  :"com.kaopiz:kprogresshud:${kprogresshudVersion}",
+            "toasty"                 :"com.github.GrenderG:Toasty:${toastyVersion}"
 
     ]
 }

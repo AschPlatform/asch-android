@@ -22,6 +22,7 @@ import asch.so.wallet.activity.FirstStartActivity;
 import asch.so.wallet.activity.MainTabActivity;
 import asch.so.wallet.contract.AccountCreateContract;
 import asch.so.wallet.presenter.AccountCreatePresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -105,7 +106,7 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
 //        }
 
         if (AccountsManager.getInstance().hasAccountForName(name)){
-            Toast.makeText(getContext(),"此账户名称已存在",Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(getContext(),"此账户名称已存在");
             return;
         }
 
@@ -113,7 +114,7 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
             return;
         }
         if (!passwd.equals(passwd2)){
-            Toast.makeText(getContext(),"密码不一致,请重新输入",Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(getContext(),"密码不一致,请重新输入");
             return;
         }
 
@@ -154,13 +155,13 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
     @Override
     public void displayError(java.lang.Throwable exception) {
         dismissHUD();
-        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+        AppUtil.toastError(getContext(),exception.getMessage());
     }
 
     @Override
     public void displayCheckMessage(String msg) {
         dismissHUD();
-        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+        AppUtil.toastError(getContext(),msg);
     }
 
 
@@ -170,7 +171,11 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         if (getActivity()==null)
             return;
         dismissHUD();
-        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+        if (res) {
+            AppUtil.toastSuccess(getContext(), msg);
+        }else {
+            AppUtil.toastError(getContext(),msg);
+        }
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

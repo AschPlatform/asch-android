@@ -27,6 +27,7 @@ import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AssetBalancePresenter;
 import asch.so.wallet.presenter.DappCenterPresenter;
 import asch.so.wallet.presenter.MainPresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
 import asch.so.wallet.view.fragment.AssetBalanceFragment;
@@ -224,7 +225,7 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     private void exit(){
         if (!isExit) {
             isExit = true;
-            Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            AppUtil.toastWarning(getApplicationContext(), "再按一次退出程序");
             mHandler.sendEmptyMessageDelayed(0, 2000);
         } else {
             Intent intent = new Intent(Intent.ACTION_MAIN);

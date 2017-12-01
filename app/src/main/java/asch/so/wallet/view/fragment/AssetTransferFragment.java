@@ -39,6 +39,7 @@ import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.model.entity.UIAAsset;
 import asch.so.wallet.presenter.AssetTransferPresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
 import asch.so.wallet.view.widget.SecondPasswdDialog;
 import asch.so.wallet.view.widget.TransferConfirmationDialog;
@@ -142,7 +143,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
                 if (currency==null)
                 {
-                    Toast.makeText(getContext(),"请选择币种",Toast.LENGTH_SHORT).show();
+                    AppUtil.toastError(getContext(),"请选择币种");
                     return;
                 }
 
@@ -250,7 +251,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @Override
     public void displayError(java.lang.Throwable exception) {
         dismissHUD();
-        Toast.makeText(getContext(),exception!=null?exception.getMessage():"网络错误",Toast.LENGTH_SHORT).show();
+        AppUtil.toastError(getContext(),exception!=null?exception.getMessage():"网络错误");
     }
 
 //    @Override
@@ -284,7 +285,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
     @Override
     public void displayTransferResult(boolean res, String msg) {
-            Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+        AppUtil.toastSuccess(getContext(),msg);
             scheduleHUDDismiss();
     }
 

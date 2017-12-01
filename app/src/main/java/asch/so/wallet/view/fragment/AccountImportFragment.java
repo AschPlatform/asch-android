@@ -24,6 +24,7 @@ import asch.so.wallet.activity.FirstStartActivity;
 import asch.so.wallet.activity.MainTabActivity;
 import asch.so.wallet.contract.AccountImportContract;
 import asch.so.wallet.presenter.AccountImportPresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,7 +102,7 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
         String hint=hintEt.getText().toString().trim();
         String seed=seedEt.getText().toString().trim();
         if (TextUtils.isEmpty(seed)){
-            Toast.makeText(getContext(),"私钥不能为空",Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(getContext(),"私钥不能为空");
             return;
         }
         if (!Validator.check(getContext(), Validator.Type.Secret,seed,"私钥格式不符合BIP39规范"))
@@ -121,7 +122,7 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
         }
 
         if (AccountsManager.getInstance().hasAccountForName(name)){
-            Toast.makeText(getContext(),"此账户名称已存在",Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(getContext(),"此账户名称已存在");
             return;
         }
 
@@ -129,7 +130,7 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
             return;
         }
         if (!passwd.equals(passwd2)){
-           Toast.makeText(getContext(),"密码不一致,请重新输入",Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(getContext(),"密码不一致,请重新输入");
             return;
         }
 
@@ -162,7 +163,7 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
     @Override
     public void displayError(java.lang.Throwable exception) {
         dismissHUD();
-        Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+        AppUtil.toastError(getContext(),exception.getMessage());
     }
 
 
@@ -184,7 +185,7 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
     @Override
     public void displayCheckMessage(String msg) {
         dismissHUD();
-        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+        AppUtil.toastError(getContext(),msg);
     }
 
     @Override
@@ -192,7 +193,11 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
         if (getActivity()==null)
             return;
         dismissHUD();
-        Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+        if (res) {
+            AppUtil.toastSuccess(getContext(), msg);
+        }else {
+            AppUtil.toastError(getContext(),msg);
+        }
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

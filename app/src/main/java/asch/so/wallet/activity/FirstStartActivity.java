@@ -12,6 +12,7 @@ import android.widget.Toast;
 import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.R;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.StatusBarUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,7 +63,7 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
                 bundle.putString("clazz",FirstStartActivity.class.getName());
                 start(this,AccountCreateActivity.class,bundle);
             }else {
-                Toast.makeText(this,"请仔细阅读并同意服务条款",Toast.LENGTH_SHORT).show();
+                AppUtil.toastWarning(this,"请仔细阅读并同意服务条款");
             }
 
         }else if (view==importBtn){

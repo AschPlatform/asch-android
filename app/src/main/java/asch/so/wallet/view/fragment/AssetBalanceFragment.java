@@ -48,6 +48,7 @@ import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.presenter.AssetBalancePresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.IdenticonGenerator;
 import asch.so.wallet.view.adapter.AssetsAdapter;
 import butterknife.BindView;
@@ -310,7 +311,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void displayError(java.lang.Throwable ex) {
-        Toast.makeText(getContext(),ex==null?"网络错误":ex.getMessage(), Toast.LENGTH_SHORT).show();
+        AppUtil.toastError(getContext(),ex==null?"网络错误":ex.getMessage());
         refreshLayout.finishRefresh(1000);
     }
 }

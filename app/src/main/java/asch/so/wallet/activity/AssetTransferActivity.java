@@ -16,6 +16,7 @@ import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.R;
 import asch.so.wallet.presenter.AssetTransferPresenter;
 import asch.so.wallet.presenter.AssetBalancePresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.fragment.AssetTransactionsFragment;
 import asch.so.wallet.view.fragment.AssetTransferFragment;
 import butterknife.BindView;
@@ -63,7 +64,7 @@ public class AssetTransferActivity extends TitleToolbarActivity implements EasyP
         if (resultCode== Activity.RESULT_OK) {
             String qrDecodeString = data.getStringExtra("QRDecodeString");
 
-            Toast.makeText(this,qrDecodeString,Toast.LENGTH_SHORT).show();
+            AppUtil.toastInfo(this,qrDecodeString);
             if (fragment != null) {
                 fragment.setTargetAddress(qrDecodeString);
             }

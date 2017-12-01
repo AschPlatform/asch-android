@@ -17,6 +17,7 @@ import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
 
 import asch.so.base.activity.ActivityStackManager;
 import asch.so.wallet.R;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.widget.toolbar.BaseToolbar;
 import asch.so.widget.toolbar.TitleToolbar;
@@ -112,12 +113,12 @@ public class AppPinActivity extends AppLockActivity {
         customDialog.setClickListener(new CustomDialog.ClickListener() {
             @Override
             public void onConfirmClick() {
-                Toast.makeText(getApplicationContext(), "确定", Toast.LENGTH_SHORT).show();
+                AppUtil.toastInfo(getApplicationContext(), "确定");
             }
 
             @Override
             public void onCancelClick() {
-                Toast.makeText(getApplicationContext(), "取消", Toast.LENGTH_SHORT).show();
+                AppUtil.toastInfo(getApplicationContext(), "取消");
             }
         });
 

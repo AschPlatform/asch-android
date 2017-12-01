@@ -26,6 +26,7 @@ import asch.so.wallet.R;
 import asch.so.wallet.activity.TransactionDetailActivity;
 import asch.so.wallet.contract.TransactionsContract;
 import asch.so.wallet.model.entity.Transaction;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.TransactionsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,7 +121,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {
-            Toast.makeText(getContext(),exception==null?"网络错误":exception.getMessage(), Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(getContext(),exception==null?"网络错误":exception.getMessage());
         }
         if (refreshLayout.isRefreshing()){
             refreshLayout.finishRefresh(500);

@@ -18,6 +18,7 @@ import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.TestData;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,7 +95,7 @@ public class NodeURLSettingFragment extends BaseFragment implements View.OnClick
                     AppConfig.putNodeURL(url);
                     TestData.configAschSDK();
                     getActivity().finish();
-                    Toast.makeText(getContext(),"保存成功",Toast.LENGTH_SHORT).show();
+                    AppUtil.toastSuccess(getContext(),"保存成功");
                 }
             }
             break;

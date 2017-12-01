@@ -28,6 +28,7 @@ import asch.so.wallet.R;
 import asch.so.wallet.contract.VoteDelegatesContract;
 import asch.so.wallet.model.entity.Delegate;
 import asch.so.wallet.presenter.VoteDelegatesPresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.VoteDelegatesAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -167,7 +168,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {
-            Toast.makeText(getContext(),exception==null?"网络错误":exception.getMessage(), Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(getContext(),exception==null?"网络错误":exception.getMessage());
         }
         if (refreshLayout.isRefreshing()){
             refreshLayout.finishRefresh(500);
@@ -195,7 +196,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
 
     @Override
     public void displayVoteResult(String result) {
-        Toast.makeText(getContext(),result,Toast.LENGTH_SHORT).show();
+        AppUtil.toastError(getContext(),result);
     }
 
     @Override
@@ -209,7 +210,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
               delegates.add(entry.getValue());
           }
           if (delegates.size()==0){
-              Toast.makeText(getContext(),"请选择受托人",Toast.LENGTH_SHORT).show();
+              AppUtil.toastError(getContext(),"请选择受托人");
               return;
           }
           presenter.voteForDelegates(delegates);

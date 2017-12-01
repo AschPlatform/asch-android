@@ -31,6 +31,7 @@ import asch.so.base.view.Throwable;
 import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.model.entity.UIAAsset;
+import asch.so.wallet.util.AppUtil;
 import cn.bingoogolapple.qrcode.core.BGAQRCodeUtil;
 import cn.bingoogolapple.qrcode.zxing.QRCodeEncoder;
 import rx.Observable;
@@ -68,9 +69,9 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if (msg.what==1){
-                    Toast.makeText(context,"已保存到相册",Toast.LENGTH_SHORT).show();
+                    AppUtil.toastSuccess(context,"已保存到相册");
                 }else {
-                    Toast.makeText(context,"保存失败",Toast.LENGTH_SHORT).show();
+                    AppUtil.toastError(context,"保存失败");
                 }
             }
         };
@@ -101,7 +102,7 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
                 if (bitmap != null) {
                    view.displayQrCode(bitmap);
                 } else {
-                    Toast.makeText(context, "生成英文二维码失败", Toast.LENGTH_SHORT).show();
+                    AppUtil.toastError(context, "生成英文二维码失败");
                 }
             }
         }.execute();

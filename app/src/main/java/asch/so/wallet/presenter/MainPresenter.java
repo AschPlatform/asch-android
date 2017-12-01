@@ -94,7 +94,7 @@ public class MainPresenter implements MainContract.Presenter {
                     public void onNext(FullAccount account) {
                         getAccount().setFullAccount(account);
                        long blockHeight = getAccount().getFullAccount().getLatestBlock().getHeight();
-                        Toast.makeText(context,"blockHeight:"+blockHeight, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(context,"blockHeight:"+blockHeight, Toast.LENGTH_SHORT).show();
                     }
                 });
        subscriptions.add(subscription);

@@ -22,6 +22,7 @@ import asch.so.wallet.R;
 import asch.so.wallet.contract.MyVoteRecordContract;
 import asch.so.wallet.model.entity.Delegate;
 import asch.so.wallet.presenter.MyVoteRecordPresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.MyVoteRecordAdapter;
 import asch.so.wallet.view.fragment.dummy.DummyContent.DummyItem;
 import butterknife.BindView;
@@ -144,7 +145,7 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {
-            Toast.makeText(getContext(),exception==null?"网络错误":exception.getMessage(), Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(getContext(),exception==null?"网络错误":exception.getMessage());
         }
         if (refreshLayout.isRefreshing()){
             refreshLayout.finishRefresh(500);

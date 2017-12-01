@@ -161,7 +161,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     @Override
     public void displayError(java.lang.Throwable exception) {
         if (getContext()!=null){
-            Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(getContext(),exception.getMessage());
         }
 
     }

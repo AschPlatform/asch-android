@@ -20,6 +20,7 @@ import asch.so.wallet.R;
 import asch.so.wallet.contract.WhoVoteForMeContract;
 import asch.so.wallet.model.entity.Voter;
 import asch.so.wallet.presenter.WhoVoteForMePresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.WhoVoteForMeAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -156,7 +157,7 @@ public class WhoVoteForMeFragment extends BaseFragment implements WhoVoteForMeCo
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {
-            Toast.makeText(getContext(),exception==null?"网络错误":exception.getMessage(), Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(getContext(),exception==null?"网络错误":exception.getMessage());
         }
         if (refreshLayout.isRefreshing()){
             refreshLayout.finishRefresh(500);

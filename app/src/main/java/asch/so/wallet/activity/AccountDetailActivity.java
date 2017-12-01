@@ -115,7 +115,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
     private void backupAccount(){
         if (hasBackup()){
-            Toast.makeText(this,"该账户已经备份过",Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(this,"该账户已经备份过");
             return;
         }
             FragmentManager fm = getSupportFragmentManager();
@@ -133,7 +133,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                         BaseActivity.start(thiz,SecretBackupActivity.class,bundle);
                         dialog.dismiss();
                     }else {
-                        Toast.makeText(thiz,"密码输入不正确,请重新输入",Toast.LENGTH_SHORT).show();
+                        AppUtil.toastError(thiz,"密码输入不正确,请重新输入");
                     }
                 }
             });
@@ -148,7 +148,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
     private void deleteAccount(){
         if (AccountsManager.getInstance().getAccountsCount()<2){
-            Toast.makeText(this,"当前钱包只有一只账户，不能删除",Toast.LENGTH_SHORT).show();
+            AppUtil.toastError(this,"当前钱包只有一只账户，不能删除");
             return;
         }
         FragmentManager fm = getSupportFragmentManager();
@@ -161,18 +161,18 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                 EditText editText = dialog.getDialog().findViewById(R.id.passwd_et);
                 String inputPasswd=editText.getText().toString().trim();
                 if (TextUtils.isEmpty(inputPasswd)){
-                    Toast.makeText(thiz,"请输入账户密码",Toast.LENGTH_SHORT).show();
+                    AppUtil.toastError(thiz,"请输入账户密码");
                     return;
                 }
                 if ( AccountsManager.getInstance().getCurrentAccount().checKPassword(inputPasswd)){
                     AccountsManager.getInstance().removeCurrentAccount();
-                    Toast.makeText(thiz,"删除成功",Toast.LENGTH_SHORT).show();
+                    AppUtil.toastSuccess(thiz,"删除成功");
                     dialog.dismiss();
                     Intent intent = new Intent(thiz, AccountsActivity.class);
                     startActivity(intent);
                     finish();
                 }else {
-                    Toast.makeText(thiz,"密码输入不正确,请重新输入",Toast.LENGTH_SHORT).show();
+                    AppUtil.toastError(thiz,"密码输入不正确,请重新输入");
                 }
             }
         });
@@ -201,7 +201,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                 if (Validator.check(this, Validator.Type.Name,name,"账户名称只能是字母数组或者下划线"))
                 {
                     this.presenter.changeAccountName(name);
-                    Toast.makeText(this,"保存成功",Toast.LENGTH_SHORT).show();
+                    AppUtil.toastSuccess(this,"保存成功");
                     finish();
                 }
             }

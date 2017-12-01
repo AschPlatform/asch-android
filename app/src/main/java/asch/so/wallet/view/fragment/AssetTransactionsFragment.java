@@ -32,6 +32,7 @@ import asch.so.wallet.contract.AssetTransactionsContract;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.presenter.AssetTransactionsPresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.AssetTransactionsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -166,7 +167,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             loadingLayout.showError();
         }else {
             if (getContext()!=null) {
-                Toast.makeText(getContext(), exception == null ? "网络错误" : exception.getMessage(), Toast.LENGTH_SHORT).show();
+                AppUtil.toastError(getContext(), exception == null ? "网络错误" : exception.getMessage());
             }
         }
         if (refreshLayout.isRefreshing()){

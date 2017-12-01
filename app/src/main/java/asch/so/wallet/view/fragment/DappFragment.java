@@ -31,6 +31,7 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.TestData;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.IdenticonGenerator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -160,7 +161,7 @@ public class DappFragment extends BaseFragment implements View.OnClickListener {
                         String rawJson = aschResult.getRawJson();
                         Log.i(TAG, "+++++++" + rawJson);
                         callBack.onCallBack(rawJson);
-                        Toast.makeText(getContext(), "充值成功", Toast.LENGTH_SHORT).show();
+                        AppUtil.toastError(getContext(), "充值成功");
                     }
                 });
 //                .subscribe(new Action1<AschResult>() {
