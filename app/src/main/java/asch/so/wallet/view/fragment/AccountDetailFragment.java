@@ -10,13 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.AccountDetailContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountDetailPresenter;
 import asch.so.wallet.util.IdenticonGenerator;
-import asch.so.widget.toolbar.BaseToolbar;
 import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,7 +71,7 @@ public class AccountDetailFragment extends BaseFragment implements AccountDetail
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
 
     }
 

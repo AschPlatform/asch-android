@@ -162,6 +162,7 @@
 
 </RelativeLayout>
         <FrameLayout
+            android:background="@color/page_bg"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             >

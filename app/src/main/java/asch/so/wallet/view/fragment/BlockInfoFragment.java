@@ -5,12 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
-import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.BlockInfoContract;
 import asch.so.wallet.model.entity.FullAccount;
 import asch.so.wallet.presenter.BlockInfoPresenter;
@@ -89,7 +87,7 @@ public class BlockInfoFragment extends BaseFragment implements BlockInfoContract
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
         loadingLayout.showError();
         //Toast.makeText(getContext(),exception!=null?exception.getMessage():"网络错误",Toast.LENGTH_SHORT).show();
     }

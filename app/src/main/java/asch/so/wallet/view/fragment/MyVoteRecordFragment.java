@@ -2,10 +2,7 @@ package asch.so.wallet.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,23 +12,17 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.MyVoteRecordContract;
-import asch.so.wallet.contract.TransactionsContract;
 import asch.so.wallet.model.entity.Delegate;
 import asch.so.wallet.presenter.MyVoteRecordPresenter;
-import asch.so.wallet.presenter.VoteDelegatesPresenter;
 import asch.so.wallet.view.adapter.MyVoteRecordAdapter;
-import asch.so.wallet.view.adapter.TransactionsAdapter;
-import asch.so.wallet.view.adapter.VoteDelegatesAdapter;
-import asch.so.wallet.view.fragment.dummy.DummyContent;
 import asch.so.wallet.view.fragment.dummy.DummyContent.DummyItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -149,7 +140,7 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {

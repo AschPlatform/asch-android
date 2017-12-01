@@ -1,15 +1,11 @@
 package asch.so.wallet.view.fragment;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,20 +21,15 @@ import android.widget.Toast;
 
 import com.blankj.utilcode.util.ImageUtils;
 
-import junit.framework.Test;
-
-import java.security.PrivilegedExceptionAction;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.model.entity.Account;
-import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.model.entity.UIAAsset;
 import asch.so.wallet.presenter.AssetReceivePresenter;
 import asch.so.wallet.util.AppUtil;
@@ -145,11 +136,6 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
     private void copyAddress(String content){
         AppUtil.copyText(getActivity(), content);
-//       ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-//        ClipData clipData = ClipData.newPlainText(null, content);
-//        clipboardManager.setText(content);
-//        //clipboardManager.setPrimaryClip(clipData);
-//        Toast.makeText(getContext(),clipboardManager.getText(),Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -173,7 +159,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
         if (getContext()!=null){
             Toast.makeText(getContext(),exception.getMessage(),Toast.LENGTH_SHORT).show();
         }

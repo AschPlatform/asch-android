@@ -1,6 +1,5 @@
 package asch.so.wallet.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -23,13 +21,11 @@ import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.TransactionDetailActivity;
-import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.TransactionsContract;
 import asch.so.wallet.model.entity.Transaction;
-import asch.so.wallet.presenter.TransactionsPresenter;
 import asch.so.wallet.view.adapter.TransactionsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,7 +116,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {

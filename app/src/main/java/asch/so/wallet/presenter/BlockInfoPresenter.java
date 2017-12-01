@@ -3,12 +3,13 @@ package asch.so.wallet.presenter;
 import android.content.Context;
 import android.util.Log;
 
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.BlockInfoContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.FullAccount;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -48,7 +49,7 @@ public class BlockInfoPresenter implements BlockInfoContract.Presenter {
     public void loadBlockInfo() {
         String publicKey = getAccount().getPublicKey();
         rx.Observable<FullAccount> observable = AccountsManager.getInstance().createLoginAccountObservable(publicKey);
-        observable.subscribeOn(Schedulers.io())
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .subscribe(new Subscriber<FullAccount>() {
@@ -58,9 +59,9 @@ public class BlockInfoPresenter implements BlockInfoContract.Presenter {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(java.lang.Throwable e) {
                         Log.d("xasObservable error:", e.toString());
-                        view.displayError(new UIException("网络错误"));
+                        view.displayError(new Throwable("网络错误"));
                     }
 
                     @Override
@@ -68,5 +69,6 @@ public class BlockInfoPresenter implements BlockInfoContract.Presenter {
                         view.displayBlockInfo(fullAccount);
                     }
                 });
+        subscriptions.add(subscription);
     }
 }

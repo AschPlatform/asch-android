@@ -1,17 +1,14 @@
 package asch.so.wallet.view.fragment;
 
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.SecretBackupContract;
 import asch.so.wallet.presenter.SecretBackupPresenter;
@@ -83,7 +80,7 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
 
     }
 

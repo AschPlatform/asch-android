@@ -32,7 +32,5 @@ public class AssetReceiveActivity extends TitleToolbarActivity {
         setTitle("二维码收款");
         fragment=AssetReceiveFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
-//        presenter=new AssetReceivePresenter(this,fragment);
-//        fragment.setPresenter(presenter);
     }
 }

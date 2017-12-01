@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,14 +15,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.OnClickListener;
-import com.orhanobut.dialogplus.ViewHolder;
-
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseDialogFragment;
-import asch.so.base.util.ActivityUtils;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountDetailContract;
@@ -32,10 +26,8 @@ import asch.so.wallet.presenter.AccountDetailPresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.IdenticonGenerator;
 import asch.so.wallet.util.StatusBarUtil;
-import asch.so.wallet.view.fragment.AccountDetailFragment;
 import asch.so.wallet.view.validator.Validator;
 import asch.so.wallet.view.widget.InputPasswdDialog;
-import asch.so.wallet.view.widget.TransferConfirmationDialog;
 import asch.so.widget.toolbar.BaseToolbar;
 import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
@@ -222,7 +214,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
         //// TODO: 2017/11/6
     }
 

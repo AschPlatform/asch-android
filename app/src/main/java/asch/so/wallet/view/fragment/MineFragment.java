@@ -3,7 +3,6 @@ package asch.so.wallet.view.fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,14 +25,13 @@ import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AboutActivity;
 import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.AppSettingActivity;
 import asch.so.wallet.activity.BlockInfoActivity;
 import asch.so.wallet.activity.PeersActivity;
-import asch.so.wallet.activity.PincodeSettingActivity;
 import asch.so.wallet.activity.TodoActivity;
 import asch.so.wallet.activity.VoteActivity;
 import asch.so.wallet.contract.MineContract;
@@ -46,7 +43,6 @@ import asch.so.wallet.view.entity.MineItem;
 import asch.so.wallet.view.entity.MineSection;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by kimziv on 2017/9/21.
@@ -207,7 +203,7 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
 
     }
 

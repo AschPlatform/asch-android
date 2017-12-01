@@ -6,7 +6,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.MainContract;
 import asch.so.wallet.model.entity.Account;
@@ -85,9 +85,9 @@ public class MainPresenter implements MainContract.Presenter {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(java.lang.Throwable e) {
                         Log.d("loginObservable error:",e.toString());
-                        view.displayError(new UIException("登录接口网络错误"));
+                        view.displayError(new Throwable("登录接口网络错误"));
                     }
 
                     @Override

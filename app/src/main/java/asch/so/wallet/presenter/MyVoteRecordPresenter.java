@@ -10,7 +10,7 @@ import java.util.List;
 
 import asch.so.base.adapter.page.IPage;
 import asch.so.base.adapter.page.Page1;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.MyVoteRecordContract;
@@ -24,7 +24,6 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
-import so.asch.sdk.dto.query.DelegateQueryParameters;
 
 /**
  * Created by kimziv on 2017/11/29.
@@ -87,8 +86,8 @@ public class MyVoteRecordPresenter implements MyVoteRecordContract.Presenter {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        view.displayError(new UIException("网络错误"));
+                    public void onError(java.lang.Throwable e) {
+                        view.displayError(new Throwable("网络错误"));
                         pager.finishLoad(true);
                     }
 

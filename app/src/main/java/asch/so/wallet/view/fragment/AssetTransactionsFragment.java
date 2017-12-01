@@ -10,8 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,18 +19,15 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
 import asch.so.wallet.activity.TransactionDetailActivity;
-import asch.so.wallet.activity.TransactionsActivity;
-import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.AssetTransactionsContract;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.Transaction;
@@ -41,7 +36,6 @@ import asch.so.wallet.view.adapter.AssetTransactionsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ezy.ui.layout.LoadingLayout;
-import so.asch.sdk.impl.AschConst;
 
 /**
  * Created by kimziv on 2017/9/27.
@@ -167,7 +161,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {

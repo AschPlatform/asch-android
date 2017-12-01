@@ -30,8 +30,6 @@ public class AccountCreateActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_base);
-       // ButterKnife.bind(this);
         setTitle("创建账户");
 
 
@@ -39,17 +37,5 @@ public class AccountCreateActivity extends TitleToolbarActivity {
         fragment.setArguments(getBundle());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 
-        presenter=new AccountCreatePresenter(this,fragment);
-
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        return super.onCreateOptionsMenu(menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return super.onOptionsItemSelected(item);
-//    }
 }

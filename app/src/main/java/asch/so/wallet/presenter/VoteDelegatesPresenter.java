@@ -7,12 +7,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.base.adapter.page.IPage;
 import asch.so.base.adapter.page.Page1;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.VoteDelegatesContract;
@@ -26,7 +25,6 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
-import so.asch.sdk.Transaction;
 import so.asch.sdk.dto.query.DelegateQueryParameters;
 
 /**
@@ -91,8 +89,8 @@ public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        view.displayError(new UIException("网络错误"));
+                    public void onError(java.lang.Throwable e) {
+                        view.displayError(new Throwable("网络错误"));
                         pager.finishLoad(true);
                     }
 
@@ -169,7 +167,7 @@ public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onError(java.lang.Throwable e) {
                         Log.d(TAG,"vote result:"+e==null?"vote result error":e.toString());
 //                        view.displayError(new UIException("网络错误"));
 //                        pager.finishLoad(true);

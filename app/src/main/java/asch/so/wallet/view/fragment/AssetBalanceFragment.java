@@ -6,20 +6,14 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.view.menu.MenuPopupHelper;
 import android.support.v7.widget.ButtonBarLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,7 +37,7 @@ import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AccountDetailActivity;
 import asch.so.wallet.activity.AssetReceiveActivity;
@@ -55,13 +49,10 @@ import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.presenter.AssetBalancePresenter;
 import asch.so.wallet.util.IdenticonGenerator;
-import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.adapter.AssetsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import de.hdodenhof.circleimageview.CircleImageView;
-import ezy.ui.layout.LoadingLayout;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
@@ -318,7 +309,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     }
 
     @Override
-    public void displayError(UIException ex) {
+    public void displayError(java.lang.Throwable ex) {
         Toast.makeText(getContext(),ex==null?"网络错误":ex.getMessage(), Toast.LENGTH_SHORT).show();
         refreshLayout.finishRefresh(1000);
     }

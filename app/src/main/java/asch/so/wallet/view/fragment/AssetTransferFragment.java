@@ -1,10 +1,6 @@
 package asch.so.wallet.view.fragment;
 
-import android.Manifest;
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,17 +26,12 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
-import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.presenter.BasePresenter;
-import asch.so.base.util.ActivityUtils;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
-import asch.so.wallet.activity.AssetTransferActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Account;
@@ -49,13 +40,10 @@ import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.model.entity.UIAAsset;
 import asch.so.wallet.presenter.AssetTransferPresenter;
 import asch.so.wallet.view.validator.Validator;
-import asch.so.wallet.view.widget.DialogFactory;
 import asch.so.wallet.view.widget.SecondPasswdDialog;
 import asch.so.wallet.view.widget.TransferConfirmationDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 import so.asch.sdk.impl.AschConst;
 import so.asch.sdk.impl.Validation;
 
@@ -260,7 +248,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
         Toast.makeText(getContext(),exception!=null?exception.getMessage():"网络错误",Toast.LENGTH_SHORT).show();
     }
 
@@ -297,19 +285,15 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     public void displayTransferResult(boolean res, String msg) {
             Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
             scheduleHUDDismiss();
-        //Toast.makeText(getActivity(),toast!=null?toast:"转账成功",Toast.LENGTH_SHORT).show();
-//        if (secondPasswdDialog!=null){
-//            secondPasswdDialog.dismiss();
-//        }
-//
-//        getActivity().finish();
     }
 
     private  void  showHUD(){
-        hud = KProgressHUD.create(getActivity())
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setCancellable(true)
-                .show();
+        if (hud==null){
+            hud = KProgressHUD.create(getActivity())
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setCancellable(true)
+                    .show();
+        }
     }
 
     private void scheduleHUDDismiss() {

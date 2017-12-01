@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -12,7 +11,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -22,7 +20,6 @@ import com.alibaba.fastjson.JSONObject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,8 +27,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-import asch.so.base.view.UIException;
-import asch.so.wallet.TestData;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.model.entity.UIAAsset;
@@ -41,7 +37,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
@@ -158,8 +153,8 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        view.displayError(new UIException("网络错误"));
+                    public void onError(java.lang.Throwable e) {
+                        view.displayError(new Throwable("网络错误"));
                     }
 
                     @Override

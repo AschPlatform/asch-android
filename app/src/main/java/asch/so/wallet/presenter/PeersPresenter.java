@@ -6,18 +6,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.base.adapter.page.IPage;
 import asch.so.base.adapter.page.Page1;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.contract.PeesContact;
 import asch.so.wallet.model.entity.PeerNode;
-import asch.so.wallet.model.entity.Transaction;
-import asch.so.wallet.model.entity.TransferAsset;
-import asch.so.wallet.model.entity.UIATransferAsset;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -26,9 +22,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
-import so.asch.sdk.TransactionType;
 import so.asch.sdk.dto.query.PeerQueryParameters;
-import so.asch.sdk.dto.query.TransactionQueryParameters;
 
 /**
  * Created by kimziv on 2017/11/24.
@@ -89,8 +83,8 @@ public class PeersPresenter implements PeesContact.Presenter {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        view.displayError(new UIException("网络错误"));
+                    public void onError(java.lang.Throwable e) {
+                        view.displayError(new Throwable("网络错误"));
                         pager.finishLoad(true);
                     }
 

@@ -9,20 +9,17 @@ import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Account;
-import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.UIAAsset;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
@@ -78,7 +75,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                         subscriber.onNext(result);
                         subscriber.onCompleted();
                     }else {
-                        subscriber.onError(new UIException("转账失败"));
+                        subscriber.onError(new Throwable("转账失败"));
                        // subscriber.onError(result!=null?result.getException():new Exception("result is null"));
                     }
                 }
@@ -92,8 +89,8 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                         }
 
                         @Override
-                        public void onError(Throwable e) {
-                            view.displayError(new UIException("转账失败"));
+                        public void onError(java.lang.Throwable e) {
+                            view.displayError(new Throwable("转账失败"));
                         }
 
                         @Override
@@ -140,8 +137,8 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        view.displayError(new UIException("转账失败"));
+                    public void onError(java.lang.Throwable e) {
+                        view.displayError(new Throwable("转账失败"));
                     }
 
                     @Override

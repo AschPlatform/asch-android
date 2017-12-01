@@ -7,7 +7,6 @@ package asch.so.base.view;
  * @author kimziv (kimziv@qq.com)
  */
 public interface BaseView<T> {
-
     void setPresenter(T presenter);
-    void displayError(UIException exception);
+    void displayError(java.lang.Throwable exception);
 }

@@ -11,21 +11,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountImportContract;
-import asch.so.wallet.crypto.AccountSecurity;
-import asch.so.wallet.model.db.dao.AccountsDao;
-import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountImportPresenter;
 import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import so.asch.sdk.AschSDK;
-import so.asch.sdk.impl.AschFactory;
-import so.asch.sdk.security.SecurityException;
 
 /**
  * Created by kimziv on 2017/9/21.
@@ -152,7 +146,7 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
 
     }
 

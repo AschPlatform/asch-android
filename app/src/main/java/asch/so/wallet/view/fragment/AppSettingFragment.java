@@ -1,10 +1,8 @@
 package asch.so.wallet.view.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,7 +14,6 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
@@ -26,21 +23,17 @@ import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AppPinActivity;
 import asch.so.wallet.activity.LanguagesActivity;
 import asch.so.wallet.activity.NodeURLSettingActivity;
-import asch.so.wallet.activity.PincodeSettingActivity;
 import asch.so.wallet.contract.AppSettingContract;
 import asch.so.wallet.view.adapter.BaseRecyclerAdapter;
 import asch.so.wallet.view.adapter.SmartViewHolder;
 import asch.so.wallet.view.entity.SettingItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.R.layout.simple_list_item_1;
-import static android.R.layout.simple_list_item_2;
 
 /**
  * Created by kimziv on 2017/10/16.
@@ -161,7 +154,7 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
 
     }
 

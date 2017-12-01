@@ -7,18 +7,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
@@ -28,24 +22,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.DappActivity;
 import asch.so.wallet.contract.DappCenterContract;
-import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.Dapp;
-import asch.so.wallet.view.adapter.AssetsAdapter;
-import asch.so.wallet.view.adapter.DappCenterAdapter;
 import asch.so.wallet.view.adapter.DappsCenterAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
-import so.asch.sdk.AschResult;
-import so.asch.sdk.AschSDK;
 
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
@@ -153,7 +137,7 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
 
     }
 

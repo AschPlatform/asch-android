@@ -11,7 +11,7 @@ import java.util.List;
 
 import asch.so.base.adapter.page.IPage;
 import asch.so.base.adapter.page.Page1;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.TransactionsContract;
 import asch.so.wallet.model.entity.Account;
@@ -22,7 +22,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
@@ -105,8 +104,8 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        view.displayError(new UIException("网络错误"));
+                    public void onError(java.lang.Throwable e) {
+                        view.displayError(new Throwable("网络错误"));
                         pager.finishLoad(true);
                     }
 

@@ -1,41 +1,29 @@
 package asch.so.wallet.accounts;
 
 import android.accounts.AccountManager;
-import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
-import java.util.function.Consumer;
 
-import javax.annotation.Nullable;
-
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
-import asch.so.wallet.activity.module.AccountsModule;
 import asch.so.wallet.model.db.dao.AccountsDao;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.FullAccount;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
-import so.asch.sdk.impl.AschConst;
 
 /**
  * Created by kimziv on 2017/10/17.
@@ -314,7 +302,7 @@ public class AccountsManager extends Observable {
             }
 
             @Override
-            public void onError(Throwable e) {
+            public void onError(java.lang.Throwable e) {
                 Log.d("xasObservable error:", e.toString());
                 //view.displayError(new UIException("获取余额错误"));
             }

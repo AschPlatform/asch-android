@@ -2,9 +2,7 @@ package asch.so.wallet.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,18 +15,12 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
-import asch.so.wallet.contract.VoteDelegatesContract;
 import asch.so.wallet.contract.WhoVoteForMeContract;
 import asch.so.wallet.model.entity.Voter;
-import asch.so.wallet.presenter.MyVoteRecordPresenter;
 import asch.so.wallet.presenter.WhoVoteForMePresenter;
-import asch.so.wallet.view.adapter.MyVoteRecordAdapter;
-import asch.so.wallet.view.adapter.VoteDelegatesAdapter;
 import asch.so.wallet.view.adapter.WhoVoteForMeAdapter;
-import asch.so.wallet.view.fragment.dummy.DummyContent;
-import asch.so.wallet.view.fragment.dummy.DummyContent.DummyItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ezy.ui.layout.LoadingLayout;
@@ -160,7 +152,7 @@ public class WhoVoteForMeFragment extends BaseFragment implements WhoVoteForMeCo
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {

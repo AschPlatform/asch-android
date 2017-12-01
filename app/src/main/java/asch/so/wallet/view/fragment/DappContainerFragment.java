@@ -5,13 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.UIException;
-import asch.so.wallet.contract.DappCenterContract;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.contract.DappContainerContract;
-import asch.so.wallet.model.entity.Dapp;
 
 /**
  * Created by kimziv on 2017/10/11.
@@ -37,7 +33,7 @@ public class DappContainerFragment extends BaseFragment implements DappContainer
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
 
     }
 

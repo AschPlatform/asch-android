@@ -1,11 +1,7 @@
 package asch.so.wallet.activity;
 
 import android.Manifest;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,43 +9,29 @@ import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.github.omadahealth.lollipin.lib.PinCompatActivity;
-import com.github.omadahealth.lollipin.lib.interfaces.LifeCycleInterface;
-import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
-import asch.so.base.activity.BaseActivity;
 import asch.so.base.activity.BasePinCompatActivity;
-import asch.so.base.view.UIException;
+import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
-import asch.so.wallet.contract.DappCenterContract;
 import asch.so.wallet.contract.MainContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AssetBalancePresenter;
 import asch.so.wallet.presenter.DappCenterPresenter;
 import asch.so.wallet.presenter.MainPresenter;
-import asch.so.wallet.presenter.MinePresenter;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
 import asch.so.wallet.view.fragment.AssetBalanceFragment;
 import asch.so.wallet.view.fragment.DappCenterFragment;
-import asch.so.wallet.view.fragment.DappFragment;
 import asch.so.wallet.view.fragment.MineFragment;
-import asch.so.wallet.view.fragment.TestFragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -291,7 +273,7 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     }
 
     @Override
-    public void displayError(UIException exception) {
+    public void displayError(java.lang.Throwable exception) {
 
     }
 
