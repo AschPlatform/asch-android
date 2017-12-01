@@ -16,6 +16,8 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.UIAAsset;
+import asch.so.wallet.util.AppUtil;
+import asch.so.wallet.view.validator.Validator;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -24,6 +26,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
+import so.asch.sdk.impl.Validation;
 
 /**
  * Created by kimziv on 2017/9/29.
@@ -58,24 +61,29 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
     }
 
     @Override
-    public void transfer(String currency, String targetAddress, long amount, String message, String secret, String secondSecret) {
-
+    public void transfer(String currency, String targetAddress, long amount, String message, String secret, String secondSecret, String password) {
+        String encryptSecret=getAccount().getEncryptSeed();
          Subscription subscription= Observable.create(new Observable.OnSubscribe<AschResult>(){
 
                 @Override
                 public void call(Subscriber<? super AschResult> subscriber) {
+                    String decryptSecret=Account.decryptSecret(password,encryptSecret);
+                    if (!Validation.isValidSecret(decryptSecret)){
+                        subscriber.onError(new Throwable("1"));
+                        return;
+                    }
                     AschResult result=null;
                     if (AppConstants.XAS_NAME.equals(currency)){
-                         result = AschSDK.Account.transfer(targetAddress,amount,message,secret,secondSecret);
+                         result = AschSDK.Account.transfer(targetAddress,amount,message,decryptSecret,secondSecret);
                     }else {
-                        result = AschSDK.UIA.transfer(currency,targetAddress,amount,message,secret,secondSecret);
+                        result = AschSDK.UIA.transfer(currency,targetAddress,amount,message,decryptSecret,secondSecret);
                     }
                     Log.d(TAG,"transfer result:"+result==null?"null":result.getRawJson());
                     if (result!=null && result.isSuccessful()){
                         subscriber.onNext(result);
                         subscriber.onCompleted();
                     }else {
-                        subscriber.onError(new Throwable("转账失败"));
+                        subscriber.onError(new Throwable("2"));
                        // subscriber.onError(result!=null?result.getException():new Exception("result is null"));
                     }
                 }
@@ -90,18 +98,26 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
 
                         @Override
                         public void onError(java.lang.Throwable e) {
-                            view.displayError(new Throwable("转账失败"));
+                            if ("1".equals(e.getMessage()))
+                            {
+                                view.displayPasswordValidMessage(false,"用户密码不正确");
+                            }else if ("2".equals(e.getMessage())){
+                                view.displayError(new Throwable("转账失败"));
+                            }else {
+                                //todo
+                            }
+
                         }
 
                         @Override
                         public void onNext(AschResult aschResult) {
                             Log.i(TAG, "+++++++"+aschResult.getRawJson());
                             view.displayTransferResult(true,"转账成功");
-                            //view.displayToast("转账成功");
                         }
                     });
          subscriptions.add(subscription);
         }
+
 
     @Override
     public void loadAssets(String currency) {

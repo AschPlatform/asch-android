@@ -41,12 +41,13 @@ public class TransferConfirmationDialog extends BaseDialogFragment implements Vi
     private OnDismissListener onDismissListener;
 
 
-    public static TransferConfirmationDialog newInstance(String address, String amount, String currency) {
+    public static TransferConfirmationDialog newInstance(String address, String amount, String currency,String secondPasswd) {
         
         Bundle args = new Bundle();
         args.putString("address",address);
         args.putString("amount",amount);
         args.putString("currency",currency);
+        args.putString("second_password",secondPasswd);
         
         TransferConfirmationDialog fragment = new TransferConfirmationDialog();
         fragment.setArguments(args);

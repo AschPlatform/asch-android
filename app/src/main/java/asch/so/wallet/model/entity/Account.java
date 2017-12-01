@@ -132,12 +132,27 @@ public class Account extends RealmObject{
         return decryptSecret;
     }
 
+    public static String decryptSecret(String passwd, String encryptSecret){
+        if (passwd==null || passwd.length()==0)
+            return null;
+        String decryptSecret= AccountSecurity.decryptSecret(encryptSecret,passwd);
+        return decryptSecret;
+    }
+
     public boolean isBackup() {
         return backup;
     }
 
     public void setBackup(boolean backup) {
         this.backup = backup;
+    }
+
+    public boolean hasSecondSecret(){
+        if (getFullAccount()!=null && getFullAccount().getAccount()!=null)
+        {
+            return getFullAccount().getAccount().isSecondSignature();
+        }
+        return false;
     }
 
     @Override

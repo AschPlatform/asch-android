@@ -16,11 +16,12 @@ public interface AssetTransferContract {
        // void displayToast(String toast);
         void displayAssets(List<UIAAsset> assets, int selectIndex);
         void displayTransferResult(boolean res, String msg);
+        void displayPasswordValidMessage(boolean res, String msg);
     }
 
     interface Presenter extends BasePresenter{
 
-        void transfer(String currency, String targetAddress, long amount, String message, String secret, String secondSecret);
+        void transfer(String currency, String targetAddress, long amount, String message, String secret, String secondSecret,String password);
 
         void loadAssets(String currency);
     }

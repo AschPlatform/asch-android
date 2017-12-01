@@ -94,6 +94,32 @@
                 android:background="@color/divider_color"
                 />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/second_passwd_ll"
+            android:visibility="gone"
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            >
+            <EditText
+                android:id="@+id/second_passwd_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:hint="二级密码"
+                android:textSize="15sp"
+                android:textColor="#333333"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color"
+                />
+        </LinearLayout>
 
         <LinearLayout
             android:background="@android:color/white"
@@ -140,7 +166,7 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:text="0.1"
+                android:text="0.1（网络费用）"
                 android:maxLines="1" />
             <View
                 android:layout_width="match_parent"

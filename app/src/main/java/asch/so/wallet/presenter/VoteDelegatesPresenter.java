@@ -141,7 +141,7 @@ public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
         for (Delegate delegate : delegates) {
             pubKeys[i++]=delegate.getPublicKey();
         }
-        String secret = getAccount().getSeed();
+        String secret ="todo";// getAccount().getSeed();
         String secondSecret = null;
         if (pubKeys.length==0)
             return;

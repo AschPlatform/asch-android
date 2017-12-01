@@ -55,6 +55,7 @@ public class QRCodeURL {
     public static QRCodeURL decodeQRCodeURL(String url) throws UnsupportedEncodingException{
         if (url!=null){
             //int start=0;
+            QRCodeURL codeURL= new QRCodeURL();
             if (url.startsWith(REQUEST_PAY_SCHEME)){
               int mid1=REQUEST_PAY_SCHEME.length();
               int mid2=url.indexOf('?',mid1);
@@ -72,12 +73,14 @@ public class QRCodeURL {
                 }
                 String  currency=queryPairs.get("currency");
                 String  amount=queryPairs.get("amount");
-                QRCodeURL codeURL= new QRCodeURL();
                 codeURL.setAddress(address);
                 codeURL.setCurrency(currency);
                 codeURL.setAmount(amount);
                 return codeURL;
 
+            }else {
+                codeURL.setAddress(url);
+                return codeURL;
             }
         }
         return null;

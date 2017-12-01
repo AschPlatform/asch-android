@@ -69,6 +69,10 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     Button transferBtn;
     @BindView(R.id.assets_sp)
     Spinner assetsSpinner;
+    @BindView(R.id.second_passwd_ll)
+    View secondPasswdLl;
+    @BindView(R.id.second_passwd_et)
+    EditText secondPasswdEt;
 
     KProgressHUD hud;
     private Balance balance;
@@ -112,13 +116,14 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     private Account getAccount(){
         return AccountsManager.getInstance().getCurrentAccount();
     }
+
+    private boolean hasSecondPasswd(){
+        return getAccount().hasSecondSecret();
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_asset_transfer,container,false);
         ButterKnife.bind(this,rootView);
-
-//        String currency;
-//        int precision = 0;
         hideKeyboard();
 
         if (balance!=null){
@@ -130,15 +135,22 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         }
 
         targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));
+        if (hasSecondPasswd()){
+            secondPasswdLl.setVisibility(View.VISIBLE);
+        }else {
+            secondPasswdLl.setVisibility(View.GONE);
+        }
+
         transferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 String targetAddress= targetEt.getText().toString().trim();
                 String ammountStr=amountEt.getText().toString().trim();
-                Account account=getAccount();
+                //Account account=getAccount();
                 String message=memoEt.getText().toString();
-                String secret=account.getSeed(); //TestData.secret;
+               // String secret=account.getSeed();
+                String secondSecret=secondPasswdEt.getText().toString().trim();
                 //String secondSecret= null; //TestData.secondSecret;
 
                 if (currency==null)
@@ -154,29 +166,33 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                     return;
                 }
 
+                if (hasSecondPasswd()){
+                    if (!Validator.check(getContext(),Validator.Type.SecondSecret,secondSecret,"二级密码不正确")){
+                        return;
+                    }
+                }
 
-
-                showConfirmationDialog(targetAddress, ammountStr, currency, new TransferConfirmationDialog.OnConfirmListener() {
+                showConfirmationDialog(targetAddress, ammountStr, currency,secondSecret, new TransferConfirmationDialog.OnConfirmListener() {
                     @Override
                     public void onConfirm(TransferConfirmationDialog dialog) {
                         long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
                         Account currentAccount =AccountsManager.getInstance().getCurrentAccount();
                         if (currentAccount!=null && currentAccount.getFullAccount()!=null && currentAccount.getFullAccount().getAccount().isSecondSignature())
                         {
-                            showSecondSecretInputDialog(new SecondPasswdDialog.PasswordCallback() {
+                            showPasswordInputDialog(new SecondPasswdDialog.PasswordCallback() {
                                 @Override
-                                public void callback(SecondPasswdDialog dialog, String secSecret) {
-                                    if (Validator.check(getContext(), Validator.Type.SecondSecret,secSecret,"二级密码不正确"))
+                                public void callback(SecondPasswdDialog dialog, String password) {
+                                    if (Validator.check(getContext(), Validator.Type.Password,password,"用户密码不正确"))
                                     {
-                                        presenter.transfer(currency,targetAddress,amount,message,secret,secSecret);
+                                        presenter.transfer(currency,targetAddress,amount,message,null,secondSecret,password);
                                         showHUD();
                                     }
                                 }
                             });
                             return;
                         }
-                        presenter.transfer(currency,targetAddress,amount,message,secret,null);
-                        showHUD();
+                       // presenter.transfer(currency,targetAddress,amount,message,secret,null);
+                       // showHUD();
                     }
                 });
             }
@@ -199,14 +215,14 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         presenter.unSubscribe();
     }
 
-    private void showConfirmationDialog(String address, String amount, String currency, TransferConfirmationDialog.OnConfirmListener onConfirmListener){
+    private void showConfirmationDialog(String address, String amount, String currency, String secondPasswd, TransferConfirmationDialog.OnConfirmListener onConfirmListener){
         FragmentManager fm = getActivity().getSupportFragmentManager();
-        TransferConfirmationDialog dialog =TransferConfirmationDialog.newInstance(address,amount,currency);
+        TransferConfirmationDialog dialog =TransferConfirmationDialog.newInstance(address,amount,currency,secondPasswd);
         dialog.setOnClickListener(onConfirmListener);
         dialog.show(fm,"confirmation");
     }
 
-    private void showSecondSecretInputDialog(SecondPasswdDialog.PasswordCallback callback){
+    private void showPasswordInputDialog(SecondPasswdDialog.PasswordCallback callback){
         secondPasswdDialog = new SecondPasswdDialog(getActivity());
         secondPasswdDialog.setPasswordCallback(callback);
         secondPasswdDialog.clearPasswordText();
@@ -287,6 +303,13 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     public void displayTransferResult(boolean res, String msg) {
         AppUtil.toastSuccess(getContext(),msg);
             scheduleHUDDismiss();
+    }
+
+    @Override
+    public void displayPasswordValidMessage(boolean res, String msg) {
+        if (!res){
+            AppUtil.toastError(getContext(),msg);
+        }
     }
 
     private  void  showHUD(){
