@@ -269,18 +269,6 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         AppUtil.toastError(getContext(),exception!=null?exception.getMessage():"网络错误");
     }
 
-//    @Override
-//    public void displayToast(String toast) {
-//        Toast.makeText(getActivity(),toast!=null?toast:"转账成功",Toast.LENGTH_SHORT).show();
-//        if (secondPasswdDialog!=null){
-//            secondPasswdDialog.dismiss();
-//        }
-//            getActivity().finish();
-//    }
-
-//    private boolean hasAsset(String currency){
-//       return (getAccount()!=null && getAccount().getFullAccount()!=null && getAccount().getFullAccount().hasAsset(currency));
-//    }
 
     @Override
     public void displayAssets(List<UIAAsset> assets, int selectIndex) {

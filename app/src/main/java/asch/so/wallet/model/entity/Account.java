@@ -35,6 +35,9 @@ public class Account extends RealmObject{
     private String encryptSeed;
 
     private String encryptPasswd;
+
+    private String secondSecret;
+    private String enryptSecondSecret;
     //是否已备份
     private boolean backup;
 
@@ -153,6 +156,22 @@ public class Account extends RealmObject{
             return getFullAccount().getAccount().isSecondSignature();
         }
         return false;
+    }
+
+    public String getSecondSecret() {
+        return secondSecret;
+    }
+
+    public void setSecondSecret(String secondSecret) {
+        this.secondSecret = secondSecret;
+    }
+
+    public String getEnryptSecondSecret() {
+        return enryptSecondSecret;
+    }
+
+    public void setEnryptSecondSecret(String enryptSecondSecret) {
+        this.enryptSecondSecret = enryptSecondSecret;
     }
 
     @Override
