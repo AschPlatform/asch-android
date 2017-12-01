@@ -236,13 +236,8 @@ public class AccountsManager extends Observable {
     }
 
 
-
-    public  rx.Observable<FullAccount> createLoadFullAccountObservable(Account account){
-
-        ArrayList<Balance> list = new ArrayList<>();
-        String publicKey = account.getPublicKey();
-        String address = account.getAddress();
-        rx.Observable loginObservable = rx.Observable.create(new rx.Observable.OnSubscribe<FullAccount>() {
+    public  rx.Observable<FullAccount> createLoginAccountObservable(String publicKey){
+        return rx.Observable.create(new rx.Observable.OnSubscribe<FullAccount>() {
             @Override
             public void call(Subscriber<? super FullAccount> subscriber) {
                 try {
@@ -260,25 +255,37 @@ public class AccountsManager extends Observable {
                 }
             }
         });
+    }
 
-        rx.Observable uiaObservable =
-                rx.Observable.create(new rx.Observable.OnSubscribe<List<Balance>>(){
-                    @Override
-                    public void call(Subscriber<? super List<Balance>> subscriber) {
-                        AschResult result = AschSDK.UIA.getAddressBalances(address, 100, 0);
-                        Log.i(TAG, result.getRawJson());
-                        if (result.isSuccessful()) {
-                            JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
-                            JSONArray balanceJsonArray = resultJSONObj.getJSONArray("balances");
-                            List<Balance> balances = JSON.parseArray(balanceJsonArray.toJSONString(), Balance.class);
-                            subscriber.onNext(balances);
-                            subscriber.onCompleted();
-                        } else {
-                            subscriber.onError(result.getException());
-                        }
-                    }
-                });
 
+    public  rx.Observable<List<Balance>> createUIAObservable(String address){
+        return rx.Observable.create(new rx.Observable.OnSubscribe<List<Balance>>(){
+            @Override
+            public void call(Subscriber<? super List<Balance>> subscriber) {
+                AschResult result = AschSDK.UIA.getAddressBalances(address, 100, 0);
+                Log.i(TAG, result.getRawJson());
+                if (result.isSuccessful()) {
+                    JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
+                    JSONArray balanceJsonArray = resultJSONObj.getJSONArray("balances");
+                    List<Balance> balances = JSON.parseArray(balanceJsonArray.toJSONString(), Balance.class);
+                    subscriber.onNext(balances);
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(result.getException());
+                }
+            }
+        });
+    }
+
+
+
+    public  rx.Observable<FullAccount> createLoadFullAccountObservable(Account account){
+
+        ArrayList<Balance> list = new ArrayList<>();
+        String publicKey = account.getPublicKey();
+        String address = account.getAddress();
+        rx.Observable loginObservable = createLoginAccountObservable(publicKey);
+        rx.Observable uiaObservable = createUIAObservable(address);
       rx.Observable combinedObservable = rx.Observable.combineLatest(loginObservable, uiaObservable, new Func2<FullAccount, List<Balance>, FullAccount>() {
             @Override
             public FullAccount call(FullAccount fullAccount, List<Balance> balances) {

@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/page_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <ezy.ui.layout.LoadingLayout
+        android:id="@+id/loading_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:llLoadingResId="@layout/loading_default"
+        app:llEmptyImage="@drawable/ic_empty"
+        app:llErrorImage="@drawable/ic_error"
+        >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -180,6 +190,6 @@
                     android:maxLines="1" />
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
+    </ezy.ui.layout.LoadingLayout>
 </android.support.constraint.ConstraintLayout>

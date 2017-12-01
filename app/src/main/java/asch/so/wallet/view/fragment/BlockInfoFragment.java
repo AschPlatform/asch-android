@@ -5,20 +5,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.contract.BlockInfoContract;
 import asch.so.wallet.model.entity.FullAccount;
+import asch.so.wallet.presenter.BlockInfoPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ezy.ui.layout.LoadingLayout;
 import so.asch.sdk.AschSDK;
 
 /**
  * Created by kimziv on 2017/11/24.
  */
 
-public class BlockInfoFragment extends BaseFragment {
+public class BlockInfoFragment extends BaseFragment implements BlockInfoContract.View{
     @BindView(R.id.block_height_val)
     TextView blockHeightTv;
     @BindView(R.id.block_time_val)
@@ -29,6 +34,10 @@ public class BlockInfoFragment extends BaseFragment {
     TextView buildTv;
     @BindView(R.id.net_val)
     TextView netTv;
+    @BindView(R.id.loading_ll)
+    LoadingLayout loadingLayout;
+
+    private BlockInfoContract.Presenter presenter;
 
     public static BlockInfoFragment newInstance() {
         
@@ -39,17 +48,28 @@ public class BlockInfoFragment extends BaseFragment {
         return fragment;
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_block_info,container,false);
         ButterKnife.bind(this,rootView);
-        showBlockInfo();
+
+        presenter=new BlockInfoPresenter(getContext(),this);
+        presenter.loadBlockInfo();
+        loadingLayout.showLoading();
+        loadingLayout.setRetryListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.loadBlockInfo();
+                loadingLayout.showLoading();
+            }
+        });
         return rootView;
     }
 
-    private void showBlockInfo(){
+    private void showBlockInfo( FullAccount account){
 
-        FullAccount account= AccountsManager.getInstance().getCurrentAccount().getFullAccount();
         if (account!=null){
             FullAccount.BlockInfo blockInfo =account.getLatestBlock();
             FullAccount.VersionInfo versionInfo =account.getVersion();
@@ -60,6 +80,29 @@ public class BlockInfoFragment extends BaseFragment {
             buildTv.setText(versionInfo.getBuild());
             netTv.setText(versionInfo.getNet());
         }
+
+    }
+
+    @Override
+    public void setPresenter(BlockInfoContract.Presenter presenter) {
+        this.presenter=presenter;
+    }
+
+    @Override
+    public void displayError(UIException exception) {
+        loadingLayout.showError();
+        //Toast.makeText(getContext(),exception!=null?exception.getMessage():"网络错误",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void displayBlockInfo(FullAccount account) {
+        if (account==null){
+            loadingLayout.showEmpty();
+        }else {
+            showBlockInfo(account);
+            loadingLayout.showContent();
+        }
+
 
     }
 }
