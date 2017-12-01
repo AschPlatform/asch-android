@@ -249,6 +249,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
     @Override
     public void displayError(java.lang.Throwable exception) {
+        dismissHUD();
         Toast.makeText(getContext(),exception!=null?exception.getMessage():"网络错误",Toast.LENGTH_SHORT).show();
     }
 
@@ -295,6 +296,12 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                     .show();
         }
     }
+    private  void  dismissHUD(){
+        if (hud!=null) {
+            hud.dismiss();
+            hud=null;
+        }
+    }
 
     private void scheduleHUDDismiss() {
 
@@ -305,10 +312,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 if (secondPasswdDialog!=null){
                     secondPasswdDialog.dismiss();
                 }
-                if (hud!=null) {
-                    hud.dismiss();
-                    hud=null;
-                }
+               dismissHUD();
                 getActivity().finish();
             }
         }, 200);
