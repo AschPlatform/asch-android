@@ -114,7 +114,6 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
     private Account createAccount(String secret,String name, String passwd, String hint){
 
         try {
-//            String secret=genSeed();
             String pubKey = AschSDK.Helper.getPublicKey(secret);
             Log.d(TAG,secret+secret);
             Log.d(TAG,"pubKey:"+pubKey);

@@ -11,8 +11,8 @@ import asch.so.wallet.presenter.AccountImportPresenter;
 public interface AccountImportContract {
 
     interface View extends BaseView<AccountImportPresenter>{
-
-        void  reset();
+        void displayCheckMessage(String msg);
+        void displayImportAccountResult(boolean res, String msg);
     }
 
     interface Presenter extends BasePresenter{

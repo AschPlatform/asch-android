@@ -16,7 +16,6 @@ public interface AccountCreateContract {
         //void resetSeed(String seed);
         void displayCheckMessage(String msg);
         void displayCreateAccountResult(boolean res, String msg);
-
     }
 
     interface Presenter extends BasePresenter{
@@ -29,9 +28,5 @@ public interface AccountCreateContract {
          * @param hint
          */
         void storeAccount(String seed, String name, String password, String hint);
-
-        //void generateSeed();
-
-
     }
 }

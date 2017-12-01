@@ -81,6 +81,7 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
             ActivityStackManager.getInstance().finishAll();
             Intent intent =new Intent(this, MainTabActivity.class);
             startActivity(intent);
+            ActivityStackManager.getInstance().finishAll();
         }
     }
 }

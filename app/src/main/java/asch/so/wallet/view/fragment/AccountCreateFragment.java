@@ -175,7 +175,7 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (getArguments()!=null && getArguments().getString("clazz").equals(FirstStartActivity.class.getName())){
+                if (getArguments()!=null &&  FirstStartActivity.class.getName().equals(getArguments().getString("clazz"))){
                     Intent intent =new Intent(getActivity(), MainTabActivity.class);
                     startActivity(intent);
                     ActivityStackManager.getInstance().finishAll();
