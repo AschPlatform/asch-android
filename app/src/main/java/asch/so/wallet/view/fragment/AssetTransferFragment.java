@@ -152,6 +152,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                // String secret=account.getSeed();
                 String secondSecret=secondPasswdEt.getText().toString().trim();
                 //String secondSecret= null; //TestData.secondSecret;
+                boolean hasSecondPwd=hasSecondPasswd();
 
                 if (currency==null)
                 {
@@ -166,7 +167,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                     return;
                 }
 
-                if (hasSecondPasswd()){
+                if (hasSecondPwd){
                     if (!Validator.check(getContext(),Validator.Type.SecondSecret,secondSecret,"二级密码不正确")){
                         return;
                     }
@@ -177,22 +178,20 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                     public void onConfirm(TransferConfirmationDialog dialog) {
                         long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
                         Account currentAccount =AccountsManager.getInstance().getCurrentAccount();
-                        if (currentAccount!=null && currentAccount.getFullAccount()!=null && currentAccount.getFullAccount().getAccount().isSecondSignature())
+                        if (currentAccount!=null)
                         {
                             showPasswordInputDialog(new SecondPasswdDialog.PasswordCallback() {
                                 @Override
                                 public void callback(SecondPasswdDialog dialog, String password) {
                                     if (Validator.check(getContext(), Validator.Type.Password,password,"用户密码不正确"))
                                     {
-                                        presenter.transfer(currency,targetAddress,amount,message,null,secondSecret,password);
+                                        presenter.transfer(currency,targetAddress,amount,message,null,hasSecondPwd?secondSecret:null,password);
                                         showHUD();
                                     }
                                 }
                             });
                             return;
                         }
-                       // presenter.transfer(currency,targetAddress,amount,message,secret,null);
-                       // showHUD();
                     }
                 });
             }
@@ -307,9 +306,12 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
     @Override
     public void displayPasswordValidMessage(boolean res, String msg) {
-        if (!res){
+        //if (!res){
+           dismissHUD();
             AppUtil.toastError(getContext(),msg);
-        }
+        //}
+
+
     }
 
     private  void  showHUD(){

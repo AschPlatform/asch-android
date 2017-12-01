@@ -104,7 +104,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                             }else if ("2".equals(e.getMessage())){
                                 view.displayError(new Throwable("转账失败"));
                             }else {
-                                //todo
+                                view.displayError(new Throwable("转账失败"));
                             }
 
                         }
