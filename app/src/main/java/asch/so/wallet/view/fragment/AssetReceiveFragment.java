@@ -41,6 +41,7 @@ import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.model.entity.UIAAsset;
 import asch.so.wallet.presenter.AssetReceivePresenter;
+import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import so.asch.sdk.impl.AschConst;
@@ -143,11 +144,12 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     }
 
     private void copyAddress(String content){
-       ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clipData = ClipData.newPlainText(null, content);
-        clipboardManager.setText(content);
-        //clipboardManager.setPrimaryClip(clipData);
-        Toast.makeText(getContext(),clipboardManager.getText(),Toast.LENGTH_SHORT).show();
+        AppUtil.copyText(getActivity(), content);
+//       ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+//        ClipData clipData = ClipData.newPlainText(null, content);
+//        clipboardManager.setText(content);
+//        //clipboardManager.setPrimaryClip(clipData);
+//        Toast.makeText(getContext(),clipboardManager.getText(),Toast.LENGTH_SHORT).show();
     }
 
     @Override

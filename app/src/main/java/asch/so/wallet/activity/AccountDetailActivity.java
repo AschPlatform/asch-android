@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +29,7 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountDetailContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountDetailPresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.IdenticonGenerator;
 import asch.so.wallet.util.StatusBarUtil;
 import asch.so.wallet.view.fragment.AccountDetailFragment;
@@ -69,6 +71,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         ButterKnife.bind(this);
         backupBtn.setOnClickListener(this);
         deleteBtn.setOnClickListener(this);
+        addressTv.setOnClickListener(this);
         StatusBarUtil.immersive(this);
         initToolBar();
 
@@ -102,6 +105,15 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
             backupAccount();
         }else if(view==deleteBtn) {
             deleteAccount();
+        }else if (view==addressTv){
+            copyAddress();
+        }
+    }
+
+    private void copyAddress(){
+        String address=addressTv.getText().toString().trim();
+        if (!TextUtils.isEmpty(address)){
+            AppUtil.copyText(this,address);
         }
     }
 

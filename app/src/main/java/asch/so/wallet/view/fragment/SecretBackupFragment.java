@@ -15,6 +15,7 @@ import asch.so.base.view.UIException;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.SecretBackupContract;
 import asch.so.wallet.presenter.SecretBackupPresenter;
+import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -67,10 +68,13 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
     }
 
     private void copySecret(String secret){
-        ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-        clipboardManager.setText(secret);
         presenter.backupSecret(secret);
-        Toast.makeText(getContext(),"复制成功",Toast.LENGTH_SHORT).show();
+        AppUtil.copyText(getActivity(),secret);
+
+//        ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+//        clipboardManager.setText(secret);
+//        presenter.backupSecret(secret);
+//        Toast.makeText(getContext(),"复制成功",Toast.LENGTH_SHORT).show();
     }
 
     @Override

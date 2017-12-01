@@ -30,6 +30,7 @@ def buglyVersion="2.6.6"
 def loadinglayoutVersion="1.0.1"
 def flycoTabLayoutVersion="2.0.2"
 def expandableLayoutVersion="1.6.0"
+def kprogresshudVersion="1.1.0"
 project.ext {
     android = [
             compileSdkVersion: 26,
@@ -123,7 +124,8 @@ project.ext {
             "bugly"                         :"com.tencent.bugly:crashreport:${buglyVersion}",
             "loadinglayout"                 :"com.github.czy1121:loadinglayout:${loadinglayoutVersion}",
             "flycoTabLayout"                :"com.flyco.tablayout:FlycoTabLayout_Lib:${flycoTabLayoutVersion}@aar",
-            "expandableLayout"             :"com.github.aakira:expandable-layout:${expandableLayoutVersion}@aar"
+            "expandableLayout"             :"com.github.aakira:expandable-layout:${expandableLayoutVersion}@aar",
+            "kprogresshud"                  :"com.kaopiz:kprogresshud:${kprogresshudVersion}"
 
     ]
 }

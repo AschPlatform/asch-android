@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.text.method.DigitsKeyListener;
@@ -25,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +81,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @BindView(R.id.assets_sp)
     Spinner assetsSpinner;
 
+    KProgressHUD hud;
     private Balance balance;
     private QRCodeURL qrCodeURL;
     private SecondPasswdDialog secondPasswdDialog;
@@ -177,13 +180,14 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                                     if (Validator.check(getContext(), Validator.Type.SecondSecret,secSecret,"二级密码不正确"))
                                     {
                                         presenter.transfer(currency,targetAddress,amount,message,secret,secSecret);
-
+                                        showHUD();
                                     }
                                 }
                             });
                             return;
                         }
                         presenter.transfer(currency,targetAddress,amount,message,secret,null);
+                        showHUD();
                     }
                 });
             }
@@ -260,14 +264,14 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         Toast.makeText(getContext(),exception!=null?exception.getMessage():"网络错误",Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void displayToast(String toast) {
-        Toast.makeText(getActivity(),toast!=null?toast:"转账成功",Toast.LENGTH_SHORT).show();
-        if (secondPasswdDialog!=null){
-            secondPasswdDialog.dismiss();
-        }
-            getActivity().finish();
-    }
+//    @Override
+//    public void displayToast(String toast) {
+//        Toast.makeText(getActivity(),toast!=null?toast:"转账成功",Toast.LENGTH_SHORT).show();
+//        if (secondPasswdDialog!=null){
+//            secondPasswdDialog.dismiss();
+//        }
+//            getActivity().finish();
+//    }
 
 //    private boolean hasAsset(String currency){
 //       return (getAccount()!=null && getAccount().getFullAccount()!=null && getAccount().getFullAccount().hasAsset(currency));
@@ -287,6 +291,43 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         assetsSpinner.setAdapter(adapter);
         assetsSpinner.setSelection(selectIndex,true);
 
+    }
+
+    @Override
+    public void displayTransferResult(boolean res, String msg) {
+            Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
+            scheduleHUDDismiss();
+        //Toast.makeText(getActivity(),toast!=null?toast:"转账成功",Toast.LENGTH_SHORT).show();
+//        if (secondPasswdDialog!=null){
+//            secondPasswdDialog.dismiss();
+//        }
+//
+//        getActivity().finish();
+    }
+
+    private  void  showHUD(){
+        hud = KProgressHUD.create(getActivity())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setCancellable(true)
+                .show();
+    }
+
+    private void scheduleHUDDismiss() {
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (secondPasswdDialog!=null){
+                    secondPasswdDialog.dismiss();
+                }
+                if (hud!=null) {
+                    hud.dismiss();
+                    hud=null;
+                }
+                getActivity().finish();
+            }
+        }, 200);
     }
 
 

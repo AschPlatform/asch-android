@@ -99,7 +99,8 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                         @Override
                         public void onNext(AschResult aschResult) {
                             Log.i(TAG, "+++++++"+aschResult.getRawJson());
-                            view.displayToast("转账成功");
+                            view.displayTransferResult(true,"转账成功");
+                            //view.displayToast("转账成功");
                         }
                     });
          subscriptions.add(subscription);

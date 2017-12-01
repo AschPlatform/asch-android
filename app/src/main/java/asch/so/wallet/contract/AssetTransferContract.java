@@ -13,8 +13,9 @@ import asch.so.wallet.model.entity.UIAAsset;
 public interface AssetTransferContract {
 
     interface View extends BaseView<Presenter>{
-        void displayToast(String toast);
+       // void displayToast(String toast);
         void displayAssets(List<UIAAsset> assets, int selectIndex);
+        void displayTransferResult(boolean res, String msg);
     }
 
     interface Presenter extends BasePresenter{

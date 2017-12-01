@@ -143,4 +143,5 @@ dependencies {
     compile rootProject.ext.dependencies["loadinglayout"]
     compile rootProject.ext.dependencies["flycoTabLayout"]
     compile rootProject.ext.dependencies["expandableLayout"]
+    compile rootProject.ext.dependencies["kprogresshud"]
 }

@@ -61,7 +61,10 @@
             />
         <TextView
             android:id="@+id/address_tv"
-            android:layout_marginTop="13.333dp"
+            android:clickable="true"
+            android:layout_marginTop="4dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ffffff"
