@@ -156,6 +156,10 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
             public void onClick(BaseDialogFragment dialog, int which) {
                 EditText editText = dialog.getDialog().findViewById(R.id.passwd_et);
                 String inputPasswd=editText.getText().toString().trim();
+                if (TextUtils.isEmpty(inputPasswd)){
+                    Toast.makeText(thiz,"请输入账户密码",Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if ( AccountsManager.getInstance().getCurrentAccount().checKPassword(inputPasswd)){
                     AccountsManager.getInstance().removeCurrentAccount();
                     Toast.makeText(thiz,"删除成功",Toast.LENGTH_SHORT).show();

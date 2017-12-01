@@ -119,14 +119,14 @@ public class Account extends RealmObject{
     }
 
     public boolean checKPassword(String passwd){
-        if (passwd==null)
+        if (passwd==null || passwd.length()==0)
             return false;
         String decryptPasswd= AccountSecurity.decryptPassword(getEncryptPasswd(),passwd);
         return passwd.equals(decryptPasswd);
     }
 
     public String decryptSecret(String passwd){
-        if (passwd==null)
+        if (passwd==null || passwd.length()==0)
             return null;
         String decryptSecret= AccountSecurity.decryptSecret(getEncryptSeed(),passwd);
         return decryptSecret;

@@ -183,7 +183,7 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
                     getActivity().finish();
                 }
             }
-        }, 1000);
+        }, 500);
 
     }
 }
