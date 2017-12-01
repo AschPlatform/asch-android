@@ -166,6 +166,9 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
 
     @Override
     public void displayCreateAccountResult(boolean res, String msg) {
+
+        if (getActivity()==null)
+            return;
         dismissHUD();
         Toast.makeText(getContext(),msg,Toast.LENGTH_SHORT).show();
         Handler handler = new Handler();

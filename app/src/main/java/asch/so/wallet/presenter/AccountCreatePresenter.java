@@ -137,30 +137,6 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
         return null;
     }
 
-//    private void createAccount(String seed, String name, String passwd, String hint){
-//
-//        try {
-//            String pubKey = AschSDK.Helper.getPublicKey(seed);
-//            Log.d(TAG,"seed:"+seed);
-//            Log.d(TAG,"pubKey:"+pubKey);
-//            String address = AschFactory.getInstance().getSecurity().getAddress(pubKey);
-//
-//            Account account =new Account();
-//            account.setSeed(seed);
-//            account.setPublicKey(pubKey);
-//            account.setAddress(address);
-//            account.setName(name);
-//            account.setPasswd(passwd);
-//            account.setHint(hint);
-//            AccountSecurity.encryptAccount(account,passwd);
-//
-//            AccountsManager.getInstance().addAccount(account);
-//            AppConfig.putLastAccountAddress(account.getAddress());
-//        } catch (SecurityException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @Override
     public void subscribe() {
 
