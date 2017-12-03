@@ -127,9 +127,10 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                 public void onClick(BaseDialogFragment dialog, int which) {
                     EditText editText = dialog.getDialog().findViewById(R.id.passwd_et);
                     String inputPasswd=editText.getText().toString().trim();
-                    if ( AccountsManager.getInstance().getCurrentAccount().checKPassword(inputPasswd)){
+                    String secret=AccountsManager.getInstance().getCurrentAccount().decryptSecret(inputPasswd);
+                    if (secret!=null){
                         Bundle bundle=new Bundle();
-                        bundle.putString("secret",account.getSeed());
+                        bundle.putString("secret",secret);
                         BaseActivity.start(thiz,SecretBackupActivity.class,bundle);
                         dialog.dismiss();
                     }else {

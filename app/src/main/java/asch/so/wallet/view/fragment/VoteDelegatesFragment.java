@@ -202,18 +202,19 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     @Override
     public void onClick(View v) {
         if (v==voteBtn){
-          LinkedHashMap<String,Delegate> delegatesMap= adapter.getSelectedDelegatesMap();
-          Iterator<Map.Entry<String,Delegate>> it=delegatesMap.entrySet().iterator();
-            ArrayList<Delegate> delegates=new ArrayList<>();
-          while (it.hasNext()){
-              Map.Entry<String,Delegate> entry =it.next();
-              delegates.add(entry.getValue());
-          }
-          if (delegates.size()==0){
-              AppUtil.toastError(getContext(),"请选择受托人");
-              return;
-          }
-          presenter.voteForDelegates(delegates);
+            AppUtil.toastInfo(getContext(),"该功能正在开发中，敬请期待！");
+//          LinkedHashMap<String,Delegate> delegatesMap= adapter.getSelectedDelegatesMap();
+//          Iterator<Map.Entry<String,Delegate>> it=delegatesMap.entrySet().iterator();
+//            ArrayList<Delegate> delegates=new ArrayList<>();
+//          while (it.hasNext()){
+//              Map.Entry<String,Delegate> entry =it.next();
+//              delegates.add(entry.getValue());
+//          }
+//          if (delegates.size()==0){
+//              AppUtil.toastError(getContext(),"请选择受托人");
+//              return;
+//          }
+//          presenter.voteForDelegates(delegates);
         }
     }
 

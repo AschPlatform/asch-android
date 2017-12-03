@@ -146,10 +146,10 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
                 int precision=selectedAsset.getPrecision();
                 long amount = AppUtil.scaledAmountFromDecimal(Float.parseFloat(ammountStr),precision);
-                if (Long.parseLong(balance.getBalance())<amount){
-                    AppUtil.toastError(getContext(),"账户余额不够");
-                    return;
-                }
+//                if (Long.parseLong(balance.getBalance())<amount){
+//                    AppUtil.toastError(getContext(),"账户余额不够");
+//                    return;
+//                }
 
                 if (currency==null)
                 {

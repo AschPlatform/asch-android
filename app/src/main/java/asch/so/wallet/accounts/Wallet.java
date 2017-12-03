@@ -2,6 +2,7 @@ package asch.so.wallet.accounts;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
@@ -44,6 +45,7 @@ public class Wallet {
     private Context context;
     private  MnemonicCode mnemonicCode;
     private LinkedHashMap<String,BaseAsset> allssets;
+    private static final String UIA_ASSETS_CACHE_KEY=AppConfig.getNodeURL()+"UIA_ASSETS_CACHE_KEY";
 
     public Wallet(Context ctx) {
         this.context=ctx;
@@ -84,13 +86,23 @@ public class Wallet {
         return rx.Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){
             @Override
             public void call(Subscriber<? super List<UIAAsset>> subscriber) {
+                String cacheJson=CacheUtils.getInstance().getString(UIA_ASSETS_CACHE_KEY);
+                if (!TextUtils.isEmpty(cacheJson)){
+                    JSONObject resultJSONObj=JSONObject.parseObject(cacheJson);
+                    JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
+                    List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
+                    subscriber.onNext(assets);
+                    subscriber.onCompleted();
+                    return;
+                }
                 AschResult result = AschSDK.UIA.getAssets(100,0);
                 Log.i(TAG,result.getRawJson());
                 if (result.isSuccessful()){
-                    JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
+                    String rawJson=result.getRawJson();
+                    JSONObject resultJSONObj=JSONObject.parseObject(rawJson);
                     JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
                     List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
-                   // CacheUtils.getInstance().put(AppConfig.getNodeURL());
+                    CacheUtils.getInstance().put(UIA_ASSETS_CACHE_KEY,rawJson,AppConstants.DEFAULT_CACHE_TIMEOUT);
                     subscriber.onNext(assets);
                     subscriber.onCompleted();
                 }else{
