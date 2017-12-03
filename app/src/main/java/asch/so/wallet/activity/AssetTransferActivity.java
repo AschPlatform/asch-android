@@ -31,24 +31,42 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class AssetTransferActivity extends TitleToolbarActivity implements EasyPermissions.PermissionCallbacks{
 
     private static final int REQUEST_CODE_QRCODE_PERMISSIONS = 1;
-
-//    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
-
-    private AssetTransferPresenter presenter;
     private AssetTransferFragment fragment;
+
+    //        fragment.setPresenter(presenter);
+    public enum Action{
+        ScanSecretToTransfer(1),
+        AssetBalanceToTransfer(2);
+
+        public int value;
+        Action(int value) {
+            this.value = value;
+        }
+
+        public static Action valueOf(int value) {
+            switch (value) {
+                case 1:
+                    return ScanSecretToTransfer;
+                case 2:
+                    return AssetBalanceToTransfer;
+                default:
+                    return null;
+            }
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ButterKnife.bind(this);
         setTitle("资产转账");
         fragment=AssetTransferFragment.newInstance();
-
         Bundle bundle=getIntent().getExtras();
         fragment.setArguments(bundle);
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
-//        presenter =new AssetTransferPresenter(this,fragment);
-//        fragment.setPresenter(presenter);
     }
 
 

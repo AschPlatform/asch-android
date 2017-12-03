@@ -135,7 +135,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
         });
 
         presenter.generateQrCode(account.getAddress(),"XAS","8");
-        presenter.loadAssets();
+        presenter.loadAssets(false);
         return rootView;
     }
 

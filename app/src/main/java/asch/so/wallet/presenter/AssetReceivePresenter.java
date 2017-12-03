@@ -120,9 +120,9 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
 
 
     @Override
-    public void loadAssets() {
+    public void loadAssets(boolean ignoreCache) {
 
-      Subscription subscription=  Wallet.getInstance().loadAssets(new Wallet.OnLoadAssetsListener() {
+      Subscription subscription=  Wallet.getInstance().loadAssets(false, new Wallet.OnLoadAssetsListener() {
             @Override
             public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
                 if (exception!=null){

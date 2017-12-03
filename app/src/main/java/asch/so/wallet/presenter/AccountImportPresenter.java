@@ -70,14 +70,6 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
                     return;
                 }
                 subscriber.onError(new Throwable("2"));
-//
-//                Account account=createAccount(secret, name,password,hint);
-//                if (account!=null){
-//                    subscriber.onNext(account);
-//                    subscriber.onCompleted();
-//                    return;
-//                }
-//                subscriber.onError(new Throwable("账户导入失败"));
             }
         });
 
@@ -123,6 +115,8 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
             account.setHint(hint);
             account.setSeed(secret);
             AccountSecurity.encryptAccount(account,passwd);
+            account.setSeed(null);
+            account.setPasswd(null);
             return account;
         } catch (SecurityException e) {
             e.printStackTrace();

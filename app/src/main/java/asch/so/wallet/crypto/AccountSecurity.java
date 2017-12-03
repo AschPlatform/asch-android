@@ -33,8 +33,6 @@ public class AccountSecurity {
             account.setEncryptSeed(civ.toString());
             AesCbcWithIntegrity.CipherTextIvMac civ2 =encrypt(passwd, key);
             account.setEncryptPasswd(civ2.toString());
-
-
             return account;
         } catch (GeneralSecurityException e) {
             e.printStackTrace();

@@ -8,8 +8,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
@@ -18,6 +20,7 @@ import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.BaseAsset;
+import asch.so.wallet.model.entity.Delegate;
 import asch.so.wallet.model.entity.UIAAsset;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
@@ -86,7 +89,8 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                         subscriber.onNext(result);
                         subscriber.onCompleted();
                     }else {
-                        subscriber.onError(new Throwable("2"));
+                        subscriber.onError(new Throwable(result.getError()));
+//                        subscriber.onError(new Throwable("2"));
                        // subscriber.onError(result!=null?result.getException():new Exception("result is null"));
                     }
                 }
@@ -104,11 +108,15 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                             if ("1".equals(e.getMessage()))
                             {
                                 view.displayPasswordValidMessage(false,"用户密码不正确");
-                            }else if ("2".equals(e.getMessage())){
-                                view.displayError(new Throwable("转账失败"));
-                            }else {
-                                view.displayError(new Throwable("转账失败"));
+                            }else{
+                                view.displayError(e);
                             }
+
+//                                if ("2".equals(e.getMessage())){
+//                                view.displayError(new Throwable("转账失败"));
+//                            }else {
+//                                view.displayError(new Throwable("转账失败"));
+//                            }
 
                         }
 
@@ -123,15 +131,24 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
 
 
     @Override
-    public void loadAssets(String currency) {
+    public void loadAssets(String currency, boolean ignoreCache) {
 
-        Subscription subscription=  Wallet.getInstance().loadAssets(new Wallet.OnLoadAssetsListener() {
+        Subscription subscription=  Wallet.getInstance().loadAssets(ignoreCache, new Wallet.OnLoadAssetsListener() {
             @Override
             public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
                 if (exception!=null){
                     view.displayError(new Throwable("获取资产错误"));
                 }else {
-                    view.displayAssets(assetsMap);
+                    Iterator<Map.Entry<String,BaseAsset>> it=assetsMap.entrySet().iterator();
+                    LinkedHashMap<String, BaseAsset> map=new LinkedHashMap<>();
+                   // ArrayList<Delegate> delegates=new ArrayList<>();
+                    while (it.hasNext()){
+                        Map.Entry<String,BaseAsset> entry =it.next();
+                       if (hasAsset(entry.getKey())){
+                           map.put(entry.getKey(),entry.getValue());
+                       }
+                    }
+                    view.displayAssets(map);
                 }
             }
         });

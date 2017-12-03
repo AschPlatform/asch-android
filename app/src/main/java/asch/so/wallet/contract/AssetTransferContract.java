@@ -26,6 +26,6 @@ public interface AssetTransferContract {
 
         void transfer(String currency, String targetAddress, long amount, String message, String secret, String secondSecret,String password);
 
-        void loadAssets(String currency);
+        void loadAssets(String currency, boolean ignoreCache);
     }
 }

@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -37,6 +38,7 @@ import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.activity.AssetTransferActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Account;
@@ -87,8 +89,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     private SecondPasswdDialog secondPasswdDialog;
     //private HashMap<String, BaseAsset> assetsMap;
     private BaseAsset selectedAsset;
-
-    String currency=null;
+    private String currency=null;
+    private AssetTransferActivity.Action action;
     //int precision = 0;
 
     public static AssetTransferFragment newInstance() {
@@ -103,6 +105,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        action= AssetTransferActivity.Action.valueOf(getArguments().getInt("action"));
         balance= JSON.parseObject(getArguments().getString("balance"),Balance.class);
         String uri = getArguments().getString("qrcode_uri");
         parseQRUri(uri);
@@ -137,11 +140,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
                 String targetAddress= targetEt.getText().toString().trim();
                 String ammountStr=amountEt.getText().toString().trim();
-                //Account account=getAccount();
                 String message=memoEt.getText().toString();
-               // String secret=account.getSeed();
                 String secondSecret=secondPasswdEt.getText().toString().trim();
-                //String secondSecret= null; //TestData.secondSecret;
                 boolean hasSecondPwd=hasSecondPasswd();
 
                 int precision=selectedAsset.getPrecision();
@@ -195,6 +195,24 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 });
             }
         });
+//        switch (action){
+//            case ScanSecretToTransfer:
+//            {
+//               // assetsSpinner.setClickable(true);
+//               // assetsSpinner.setOnTouchListener(null);
+//            }
+//            break;
+//            case AssetBalanceToTransfer:{
+//                assetsSpinner.setOnTouchListener(new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        return true;
+//                    }
+//                });
+//            }
+//            break;
+//            default:
+//        }
 
         feeEt.setKeyListener(null);
         if (qrCodeURL!=null){
@@ -206,20 +224,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
            // AppUtil.toastError(getContext(),"收款二维码有错误");
         }
 
-//        if (qrCodeURL!=null){
-//            targetEt.setText(qrCodeURL.getAddress());
-//            amountEt.setText(qrCodeURL.getAmount());
-//            String assetName = qrCodeURL.getCurrency();
-//            this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
-//            presenter.loadAssets(currency);
-//        }
-
-//        if (qrCodeURL!=null){
-//            targetEt.setText(qrCodeURL.getAddress());
-//            amountEt.setText(qrCodeURL.getAmount());
-//        }
-//
-        presenter.loadAssets(currency);
+        presenter.loadAssets(currency,false);
         return rootView;
     }
 
@@ -288,22 +293,19 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @Override
    public void displayAssets(LinkedHashMap<String,BaseAsset> assetsMap){
         Log.d(TAG,"++++assets:"+assetsMap.toString());
-//        ArrayList<String> nameList=new ArrayList<String>();
-//        nameList.add(AschConst.CORE_COIN_NAME);
-//        for (UIAAsset uiaAsset :
-//                assets) {
-//            nameList.add(uiaAsset.getName());
-//        }
         List<String> nameList=new ArrayList<>(assetsMap.keySet());
         int selectIndex= nameList.indexOf(currency);
         BaseAsset asset=assetsMap.get(currency);
         selectedAsset=asset;
-       // precision = asset.getPrecision();
+        if (asset==null){
+            presenter.loadAssets(currency,true);
+        }
 
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         assetsSpinner.setAdapter(adapter);
         assetsSpinner.setSelection(selectIndex,true);
+
 
     }
 
@@ -380,15 +382,35 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
     public void setTargetAddress(String uri){
         parseQRUri(uri);
+//        if (qrCodeURL!=null && qrCodeURL.getAddress()!=null){
+//            targetEt.setText(qrCodeURL.getAddress());
+//           // amountEt.setText(qrCodeURL.getAmount());
+//           // String assetName = qrCodeURL.getCurrency();
+////            if (TextUtils.isEmpty(assetName)){
+////                presenter.loadAssets(currency,true);
+////            }else {
+////                //this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
+////                this.currency= assetName;
+////            }
+//
+//        }else {
+//            AppUtil.toastError(getContext(),"收款地址二维码有错误");
+//        }
         if (qrCodeURL!=null){
             targetEt.setText(qrCodeURL.getAddress());
             amountEt.setText(qrCodeURL.getAmount());
             String assetName = qrCodeURL.getCurrency();
-            this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
+            if (TextUtils.isEmpty(assetName)){
+                presenter.loadAssets(currency,true);
+            }else {
+                //this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
+                this.currency= assetName;
+            }
+
         }else {
             AppUtil.toastError(getContext(),"收款二维码有错误");
         }
-        presenter.loadAssets(currency);
+        presenter.loadAssets(currency,false);
     }
 
 }

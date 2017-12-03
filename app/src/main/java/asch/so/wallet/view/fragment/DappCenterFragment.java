@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -21,10 +22,13 @@ import com.youth.banner.loader.ImageLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.DappActivity;
+import asch.so.wallet.activity.PeersActivity;
+import asch.so.wallet.activity.VoteActivity;
 import asch.so.wallet.contract.DappCenterContract;
 import asch.so.wallet.model.entity.Dapp;
 import asch.so.wallet.view.adapter.DappsCenterAdapter;
@@ -73,8 +77,19 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
-                Intent intent=new Intent(getActivity(),DappActivity.class);
-                startActivity(intent);
+                switch (position){
+                    case 0:{
+                        BaseActivity.start(getActivity(),VoteActivity.class,null);
+                    }
+                        break;
+                    case 1:
+                    {
+                        BaseActivity.start(getActivity(),PeersActivity.class,null);
+                    }
+                        break;
+                }
+//                Intent intent=new Intent(getActivity(),DappActivity.class);
+//                startActivity(intent);
             }
         });
 //        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -101,14 +116,14 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
             }
         });
 
-
-        //添加Header
-        View header = LayoutInflater.from(getContext()).inflate(R.layout.banner_dapp_center, dappListRv, false);
-        Banner banner = (Banner) header;
-        banner.setImageLoader(new GlideImageLoader());
-        banner.setImages(BANNER_ITEMS);
-        banner.start();
-        adapter.addHeaderView(banner);
+//
+//        //添加Header
+//        View header = LayoutInflater.from(getContext()).inflate(R.layout.banner_dapp_center, dappListRv, false);
+//        Banner banner = (Banner) header;
+//        banner.setImageLoader(new GlideImageLoader());
+//        banner.setImages(BANNER_ITEMS);
+//        banner.start();
+//        adapter.addHeaderView(banner);
 
         return rootView;
     }

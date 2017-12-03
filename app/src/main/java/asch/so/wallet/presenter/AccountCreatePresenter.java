@@ -127,6 +127,8 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
             account.setPasswd(passwd);
             account.setHint(hint);
             AccountSecurity.encryptAccount(account,passwd);
+            account.setSeed(null);
+            account.setPasswd(null);
             return account;
 //            AccountsManager.getInstance().addAccount(account);
 //            AppConfig.putLastAccountAddress(account.getAddress());

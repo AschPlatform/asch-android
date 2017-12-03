@@ -131,6 +131,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
                     qrCodeURL.setAmount("");
                 }
                 bundle.putString("qrcode_uri",qrCodeURL.encodeQRCodeURL());
+                bundle.putInt("action", AssetTransferActivity.Action.AssetBalanceToTransfer.getValue());
                 Intent intent =new Intent(getActivity(), AssetTransferActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);

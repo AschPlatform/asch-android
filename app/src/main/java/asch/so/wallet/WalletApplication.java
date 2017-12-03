@@ -88,7 +88,7 @@ public class WalletApplication extends MultiDexApplication {
 
     private void initWallet(){
         Wallet.init(this);
-        Wallet.getInstance().loadAssets(new Wallet.OnLoadAssetsListener() {
+        Wallet.getInstance().loadAssets(true,new Wallet.OnLoadAssetsListener() {
             @Override
             public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
                 Log.d(TAG,"all assets:"+assetsMap.toString());

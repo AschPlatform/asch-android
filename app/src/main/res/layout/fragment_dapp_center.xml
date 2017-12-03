@@ -1,11 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f2f2f2">
+    android:background="@color/page_bg">
+    <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:background="?attr/colorPrimary"-->
+        <asch.so.widget.toolbar.TitleToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolBarHeight"
+            android:background="@mipmap/toolbar"
+            android:paddingTop="@dimen/toolBarPaddingTop"
+            android:fitsSystemWindows="true"
+            app:backIcon="@mipmap/back"
+            app:backText="返回"
+            app:backTextAppearance="?attr/actionMenuTextAppearance"
+            app:backTextColor="@android:color/white"
+            app:backVisible="false"
+            app:closeText="关闭"
+            app:closeTextAppearance="?attr/actionMenuTextAppearance"
+            app:closeTextColor="@android:color/white"
+            app:closeVisible="false"
+            app:subtitle=""
+            app:subtitleTextAppearance="@style/Subtitle_Appearance"
+            app:subtitleVisible="false"
+            app:title="发现"
+            app:titleTextAppearance="@style/Title_Appearance"
+            app:titleTextColor="@android:color/white"
+            app:title_gravity="center" />
+        <!--<android.support.v7.widget.Toolbar-->
+        <!--android:id="@+id/toolbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="?attr/actionBarSize"-->
+        <!--android:background="?attr/colorPrimary"-->
+        <!--app:layout_scrollFlags="scroll|enterAlways|snap"-->
+        <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
 
+    </android.support.design.widget.AppBarLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
@@ -46,7 +86,7 @@
         <!--android:background="@android:color/transparent"-->
         <!--app:title="应用中心"/>-->
 
-</FrameLayout>
+</LinearLayout>
 
 
     <!--<?xml version="1.0" encoding="utf-8"?>-->

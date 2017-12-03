@@ -53,6 +53,10 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                    return null;
            }
        }
+
+       public int getValue() {
+           return value;
+       }
    }
 
     @BindView(R.id.toolbar)
@@ -153,6 +157,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                 try {
                     //QRCodeURL uri = QRCodeURL.decodeQRCodeURL(result);
                     bundle.putString("qrcode_uri",result);
+                    bundle.putInt("action", AssetTransferActivity.Action.ScanSecretToTransfer.getValue());
                     BaseActivity.start(this,AssetTransferActivity.class,bundle);
                     finish();
                 }catch (Exception e){

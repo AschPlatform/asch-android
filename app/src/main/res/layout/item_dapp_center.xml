@@ -13,6 +13,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:contentDescription="@string/app_name"
+        android:src="@mipmap/xas_icon"
         tools:background="#fff0f0f0"/>
 
     <LinearLayout
@@ -26,7 +27,7 @@
             android:textColor="#333333"
             android:textSize="17sp"
             android:minWidth="200dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="24dp"
             tools:background="#fff0f0f0"/>
         <TextView
             android:id="@+id/lmi_grade"
@@ -36,6 +37,7 @@
             android:singleLine="true"
             android:textSize="14sp"
             android:minWidth="50dp"
+            android:visibility="gone"
             android:layout_marginTop="5dp"
             android:textColor="@android:color/holo_orange_dark"
             tools:background="#fff0f0f0"/>

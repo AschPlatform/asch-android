@@ -82,12 +82,12 @@ public class Wallet {
         this.allssets = allssets;
     }
 
-    public  rx.Observable<List<UIAAsset>> createLoadAllAssetsObservable(){
+    public  rx.Observable<List<UIAAsset>> createLoadAllAssetsObservable(boolean ignoreCache){
         return rx.Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){
             @Override
             public void call(Subscriber<? super List<UIAAsset>> subscriber) {
                 String cacheJson=CacheUtils.getInstance().getString(UIA_ASSETS_CACHE_KEY);
-                if (!TextUtils.isEmpty(cacheJson)){
+                if (!ignoreCache && !TextUtils.isEmpty(cacheJson)){
                     JSONObject resultJSONObj=JSONObject.parseObject(cacheJson);
                     JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
                     List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
@@ -113,8 +113,8 @@ public class Wallet {
     }
 
 
-    public Subscription loadAssets(OnLoadAssetsListener callback) {
-        Observable uiaOervable = createLoadAllAssetsObservable();
+    public Subscription loadAssets(boolean ignoreCache, OnLoadAssetsListener callback) {
+        Observable uiaOervable = createLoadAllAssetsObservable(ignoreCache);
         Subscription subscription= uiaOervable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
