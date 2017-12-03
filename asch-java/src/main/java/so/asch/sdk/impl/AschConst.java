@@ -14,6 +14,8 @@ public final class AschConst {
     public static final int BASE58_ADDRESS_LEN = 34 ;
     public static final Date ASCH_BEGIN_EPOCH;
     public static final String CORE_COIN_NAME="XAS";
+    public static final int CORE_COIN_PRECISION=8;
+    //public static final long CORE_COIN_QU
 
     static {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");

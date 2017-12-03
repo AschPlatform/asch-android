@@ -8,13 +8,16 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.UIAAsset;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
@@ -121,55 +124,65 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
 
     @Override
     public void loadAssets(String currency) {
-       // Account account = getAccount();
-        //String address=account.getAddress();
-        ArrayList<UIAAsset> list=new ArrayList<UIAAsset>();
-        Observable  uiaOervable =
-                Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){
-                    @Override
-                    public void call(Subscriber<? super List<UIAAsset>> subscriber) {
-                        AschResult result = AschSDK.UIA.getAssets(100,0);
-                        Log.i(TAG,result.getRawJson());
-                        if (result.isSuccessful()){
-                            JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
-                            JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
-                            List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
-                            list.addAll(assets);
-                            subscriber.onNext(list);
-                            subscriber.onCompleted();
-                        }else{
-                            subscriber.onError(result.getException());
-                        }
-                    }
-                });
 
-       Subscription subscription= uiaOervable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<UIAAsset>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(java.lang.Throwable e) {
-                        view.displayError(new Throwable("转账失败"));
-                    }
-
-                    @Override
-                    public void onNext(List<UIAAsset> assets) {
-                        ArrayList<UIAAsset> filterdAssets=new ArrayList<>();
-                        for (UIAAsset uiaAsset :
-                                assets) {
-                            if (hasAsset(uiaAsset.getName())){
-                                filterdAssets.add(uiaAsset);
-                            }
-                        }
-                        view.displayAssets(filterdAssets,getSelectedIndex(filterdAssets,currency));
-                    }
-                });
-       subscriptions.add(subscription);
+        Subscription subscription=  Wallet.getInstance().loadAssets(new Wallet.OnLoadAssetsListener() {
+            @Override
+            public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
+                if (exception!=null){
+                    view.displayError(new Throwable("获取资产错误"));
+                }else {
+                    view.displayAssets(assetsMap);
+                }
+            }
+        });
+        subscriptions.add(subscription);
+//        ArrayList<UIAAsset> list=new ArrayList<UIAAsset>();
+//        Observable  uiaOervable =
+//                Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){
+//                    @Override
+//                    public void call(Subscriber<? super List<UIAAsset>> subscriber) {
+//                        AschResult result = AschSDK.UIA.getAssets(100,0);
+//                        Log.i(TAG,result.getRawJson());
+//                        if (result.isSuccessful()){
+//                            JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
+//                            JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
+//                            List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
+//                            list.addAll(assets);
+//                            subscriber.onNext(list);
+//                            subscriber.onCompleted();
+//                        }else{
+//                            subscriber.onError(result.getException());
+//                        }
+//                    }
+//                });
+//
+//       Subscription subscription= uiaOervable.subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .unsubscribeOn(Schedulers.io())
+//                .subscribe(new Subscriber<List<UIAAsset>>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(java.lang.Throwable e) {
+//                        view.displayError(new Throwable("转账失败"));
+//                    }
+//
+//                    @Override
+//                    public void onNext(List<UIAAsset> assets) {
+//                        ArrayList<UIAAsset> filterdAssets=new ArrayList<>();
+//                        for (UIAAsset uiaAsset :
+//                                assets) {
+//                            if (hasAsset(uiaAsset.getName())){
+//                                filterdAssets.add(uiaAsset);
+//                            }
+//                        }
+//                        view.displayAssets(filterdAssets,getSelectedIndex(filterdAssets,currency));
+//                    }
+//                });
+//       subscriptions.add(subscription);
     }
 
     private int getSelectedIndex(List<UIAAsset> assets, String currency){

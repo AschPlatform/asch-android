@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.Utils;
@@ -22,9 +23,12 @@ import com.tencent.bugly.crashreport.CrashReport;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 
+import asch.so.base.view.Throwable;
 import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.activity.AppPinActivity;
+import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.util.IdenticonGenerator;
 import io.realm.DynamicRealm;
 import io.realm.Realm;
@@ -74,12 +78,22 @@ public class WalletApplication extends MultiDexApplication {
         Utils.init(this);
         initBuglySDK();
         AppConfig.init(this);
-        Wallet.init(this);
+        initWallet();
         initAschSDK();
         //TestData.configAschSDK();
         initRealm();
         initLockManager();
         IdenticonGenerator.init(this);
+    }
+
+    private void initWallet(){
+        Wallet.init(this);
+        Wallet.getInstance().loadAssets(new Wallet.OnLoadAssetsListener() {
+            @Override
+            public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
+                Log.d(TAG,"all assets:"+assetsMap.toString());
+            }
+        });
     }
 
     private void initBuglySDK() {

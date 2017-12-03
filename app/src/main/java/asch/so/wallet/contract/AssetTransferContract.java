@@ -1,9 +1,11 @@
 package asch.so.wallet.contract;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import asch.so.base.presenter.BasePresenter;
 import asch.so.base.view.BaseView;
+import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.UIAAsset;
 
 /**
@@ -14,7 +16,8 @@ public interface AssetTransferContract {
 
     interface View extends BaseView<Presenter>{
        // void displayToast(String toast);
-        void displayAssets(List<UIAAsset> assets, int selectIndex);
+        //void displayAssets(List<UIAAsset> assets, int selectIndex);
+        void displayAssets(LinkedHashMap<String,BaseAsset> assetsMap);
         void displayTransferResult(boolean res, String msg);
         void displayPasswordValidMessage(boolean res, String msg);
     }

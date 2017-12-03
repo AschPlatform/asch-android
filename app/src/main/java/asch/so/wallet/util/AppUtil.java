@@ -24,6 +24,14 @@ public class AppUtil {
         return BigDecimal.valueOf(bigInt, precision);
     }
 
+    public static long scaledAmountFromDecimal(float amount, int precision){
+        long scaled_precision = 1;
+        for (int i = 0; i < precision; ++i) {
+            scaled_precision *= 10;
+        }
+        return (long) (amount*scaled_precision);
+    }
+
     public static CharSequence getRelativeTimeSpanString(Context context, long millis){
         int flags = DateUtils.FORMAT_SHOW_DATE
                 |DateUtils.FORMAT_SHOW_YEAR

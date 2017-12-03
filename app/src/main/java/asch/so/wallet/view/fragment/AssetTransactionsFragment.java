@@ -25,11 +25,14 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
 import asch.so.wallet.activity.TransactionDetailActivity;
 import asch.so.wallet.contract.AssetTransactionsContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
+import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.presenter.AssetTransactionsPresenter;
 import asch.so.wallet.util.AppUtil;
@@ -37,6 +40,7 @@ import asch.so.wallet.view.adapter.AssetTransactionsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ezy.ui.layout.LoadingLayout;
+import so.asch.sdk.impl.AschConst;
 
 /**
  * Created by kimziv on 2017/9/27.
@@ -78,6 +82,10 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         balance= (Balance) JSON.parseObject(getArguments().getString("balance"),Balance.class);
     }
 
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_asset_transactions,container,false);
@@ -110,6 +118,17 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             @Override
             public void onClick(View view) {
                 Bundle bundle = getArguments();
+                String json =bundle.getString("balance");
+                Balance balance=JSON.parseObject(json,Balance.class);
+                QRCodeURL qrCodeURL=new QRCodeURL();
+                if (balance!=null){
+                    qrCodeURL.setAddress(getAccount().getAddress());
+                    qrCodeURL.setCurrency(balance.getCurrency());
+                }else {
+                    qrCodeURL.setAddress(getAccount().getAddress());
+                    qrCodeURL.setCurrency(AschConst.CORE_COIN_NAME);
+                }
+                bundle.putString("qrcode_uri",qrCodeURL.encodeQRCodeURL());
                 Intent intent =new Intent(getActivity(), AssetTransferActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);

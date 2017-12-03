@@ -22,7 +22,10 @@ import android.widget.Toast;
 import com.blankj.utilcode.util.ImageUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
@@ -30,6 +33,7 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.UIAAsset;
 import asch.so.wallet.presenter.AssetReceivePresenter;
 import asch.so.wallet.util.AppUtil;
@@ -63,6 +67,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
     String currency="XAS";
     private Account account;
+   // private HashMap<String, BaseAsset> assetsMap;
 
     TextWatcher textWatcher=new TextWatcher() {
 
@@ -174,20 +179,11 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
 
     @Override
-    public void displayAssets(List<UIAAsset> assets) {
-        Log.d(TAG,"++++assets:"+assets.toString());
-        ArrayList<String> nameList=new ArrayList<String>();
-        nameList.add(AschConst.CORE_COIN_NAME);
-        for (UIAAsset uiaAsset:
-                assets) {
-            nameList.add(uiaAsset.getName());
-        }
-//        assets.forEach(new Consumer<UIAAsset>() {
-//            @Override
-//            public void accept(UIAAsset uiaAsset) {
-//                nameList.add(uiaAsset.getName());
-//            }
-//        });
+    public void displayAssets(LinkedHashMap<String,BaseAsset> assetsMap) {
+        Log.d(TAG,"++++assets:"+assetsMap.toString());
+       // this.assetsMap=assetsMap;
+        List<String> nameList=new ArrayList<>(assetsMap.keySet());
+
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         assetsSp.setAdapter(adapter);

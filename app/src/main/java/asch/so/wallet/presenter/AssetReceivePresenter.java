@@ -24,11 +24,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 
 import asch.so.base.view.Throwable;
+import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.contract.AssetReceiveContract;
+import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.model.entity.UIAAsset;
 import asch.so.wallet.util.AppUtil;
@@ -115,55 +118,58 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
        return qrCodeURL.encodeQRCodeURL();
     }
 
-//    @Override
-//    public  void testDecodeQRCodeURL(){
-//        try {
-//            QRCodeURL url =  QRCodeURL.decodeQRCodeURL(qrCodeURL.encodeQRCodeURL());
-//            Toast.makeText(context,url.toString(),Toast.LENGTH_SHORT).show();
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     @Override
     public void loadAssets() {
-        ArrayList<UIAAsset> list=new ArrayList<UIAAsset>();
-        Observable uiaOervable =
-                Observable.create((Observable.OnSubscribe<List<UIAAsset>>) subscriber -> {
-                    AschResult result = AschSDK.UIA.getAssets(100,0);
-                    Log.i(TAG,result.getRawJson());
-                    if (result.isSuccessful()){
-                        JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
-                        JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
-                        List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
-                        list.addAll(assets);
-                        subscriber.onNext(list);
-                        subscriber.onCompleted();
-                    }else{
-                        subscriber.onError(result.getException());
-                    }
-                });
 
-        Subscription subscription= uiaOervable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<UIAAsset>>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(java.lang.Throwable e) {
-                        view.displayError(new Throwable("网络错误"));
-                    }
-
-                    @Override
-                    public void onNext(List<UIAAsset> assets) {
-                        view.displayAssets(assets);
-                    }
-                });
-        subscriptions.add(subscription);
+      Subscription subscription=  Wallet.getInstance().loadAssets(new Wallet.OnLoadAssetsListener() {
+            @Override
+            public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
+                if (exception!=null){
+                    view.displayError(new Throwable("获取资产错误"));
+                }else {
+                    view.displayAssets(assetsMap);
+                }
+            }
+        });
+      subscriptions.add(subscription);
+//        ArrayList<UIAAsset> list=new ArrayList<UIAAsset>();
+//        Observable uiaOervable =
+//                Observable.create((Observable.OnSubscribe<List<UIAAsset>>) subscriber -> {
+//                    AschResult result = AschSDK.UIA.getAssets(100,0);
+//                    Log.i(TAG,result.getRawJson());
+//                    if (result.isSuccessful()){
+//                        JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
+//                        JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
+//                        List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
+//                        list.addAll(assets);
+//                        subscriber.onNext(list);
+//                        subscriber.onCompleted();
+//                    }else{
+//                        subscriber.onError(result.getException());
+//                    }
+//                });
+//
+//        Subscription subscription= uiaOervable.subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .unsubscribeOn(Schedulers.io())
+//                .subscribe(new Subscriber<List<UIAAsset>>() {
+//                    @Override
+//                    public void onCompleted() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onError(java.lang.Throwable e) {
+//                        view.displayError(new Throwable("网络错误"));
+//                    }
+//
+//                    @Override
+//                    public void onNext(List<UIAAsset> assets) {
+//                        view.displayAssets(assets);
+//                    }
+//                });
+//        subscriptions.add(subscription);
     }
 
 
