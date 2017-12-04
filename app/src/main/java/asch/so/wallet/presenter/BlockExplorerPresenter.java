@@ -41,7 +41,7 @@ public class BlockExplorerPresenter implements BlockExplorerContract.Presenter {
     private CompositeSubscription subscriptions;
     private IPage pager;
 
-    public BlockExplorerPresenter(BlockExplorerContract.View view, Context context) {
+    public BlockExplorerPresenter(Context context, BlockExplorerContract.View view) {
         this.view = view;
         this.context = context;
         this.view.setPresenter(this);
