@@ -6,7 +6,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.base.adapter.page.IPage;
@@ -14,12 +13,10 @@ import asch.so.base.adapter.page.Page1;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.accounts.AccountsManager;
-import asch.so.wallet.contract.BlockExplorerContract;
+import asch.so.wallet.contract.MyDelegateInfoContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Block;
-import asch.so.wallet.model.entity.Transaction;
-import asch.so.wallet.model.entity.TransferAsset;
-import asch.so.wallet.model.entity.UIATransferAsset;
+import asch.so.wallet.model.entity.Delegate;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -34,16 +31,16 @@ import so.asch.sdk.dto.query.BlockQueryParameters;
  * Created by kimziv on 2017/12/4.
  */
 
-public class BlockExplorerPresenter implements BlockExplorerContract.Presenter {
+public class MyDelegateInfoPresenter implements MyDelegateInfoContract.Presenter {
 
-    private BlockExplorerContract.View view;
     private Context context;
-    private CompositeSubscription subscriptions;
+    private MyDelegateInfoContract.View view;
     private IPage pager;
+    private CompositeSubscription subscriptions;
 
-    public BlockExplorerPresenter(Context context, BlockExplorerContract.View view) {
-        this.view = view;
+    public MyDelegateInfoPresenter(Context context, MyDelegateInfoContract.View view) {
         this.context = context;
+        this.view = view;
         this.view.setPresenter(this);
         subscriptions=new CompositeSubscription();
         initPager();
@@ -64,9 +61,10 @@ public class BlockExplorerPresenter implements BlockExplorerContract.Presenter {
     private void loadBlocks(int pageIndex, int pageSize) {
         int offset = pageIndex * pageSize;
         int limit = pageSize;
-       // String address = getAccount().getAddress();
+        String publicKey = getAccount().getPublicKey();
         Subscription subscription = Observable.create((Observable.OnSubscribe<List<Block>>) subscriber -> {
             BlockQueryParameters params = new BlockQueryParameters()
+                    .setGeneratorPublicKey(publicKey)
                     .orderByDescending("height")
                     .setOffset(offset)
                     .setLimit(limit);
@@ -74,8 +72,8 @@ public class BlockExplorerPresenter implements BlockExplorerContract.Presenter {
             AschResult result = AschSDK.Block.queryBlocks(params);
             if (result.isSuccessful()) {
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
-                JSONArray BlocksJsonArray = resultJSONObj.getJSONArray("blocks");
-                List<Block> blocks = JSON.parseArray(BlocksJsonArray.toJSONString(), Block.class);
+                JSONArray blocksJsonArray = resultJSONObj.getJSONArray("blocks");
+                List<Block> blocks = JSON.parseArray(blocksJsonArray.toJSONString(), Block.class);
                 subscriber.onNext(blocks);
                 subscriber.onCompleted();
             } else {
@@ -109,6 +107,44 @@ public class BlockExplorerPresenter implements BlockExplorerContract.Presenter {
         subscriptions.add(subscription);
     }
 
+
+    private Observable createFetchForgingStatus(String publicKey){
+
+       return Observable.create(new Observable.OnSubscribe<Boolean>(){
+            @Override
+            public void call(Subscriber<? super Boolean> subscriber) {
+                AschResult result = AschSDK.Delegate.getForgingStatus(publicKey);
+                if (result.isSuccessful()) {
+                    JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
+                    boolean enabled = resultJSONObj.getBoolean("enabled");
+                    subscriber.onNext(enabled);
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(new Throwable(result.getError()));
+                }
+            }
+        });
+    }
+
+    private Observable createFetchDelegateInfo(String publicKey){
+
+        return Observable.create(new Observable.OnSubscribe<Delegate>(){
+            @Override
+            public void call(Subscriber<? super Delegate> subscriber) {
+                AschResult result = AschSDK.Delegate.getDelegateByPublicKey(publicKey)
+                if (result.isSuccessful()) {
+                    JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
+                    JSONObject delegateJsonObj = resultJSONObj.getJSONObject("delegate");
+                    Delegate delegate = JSON.parseObject(delegateJsonObj.toJSONString(), Delegate.class);
+                    subscriber.onNext(delegate);
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(new Throwable(result.getError()));
+                }
+            }
+        });
+    }
+
     @Override
     public void subscribe() {
 
@@ -120,7 +156,12 @@ public class BlockExplorerPresenter implements BlockExplorerContract.Presenter {
     }
 
     @Override
-    public void searchBlock(String blockId) {
+    public void loadDelegateInfo() {
+
+    }
+
+    @Override
+    public void registerDelegate(String delegateName) {
 
     }
 

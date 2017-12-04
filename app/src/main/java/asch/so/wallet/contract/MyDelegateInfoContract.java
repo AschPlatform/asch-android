@@ -5,16 +5,15 @@ import java.util.List;
 import asch.so.base.presenter.BasePresenter;
 import asch.so.base.view.BaseView;
 import asch.so.wallet.model.entity.Block;
-import asch.so.wallet.model.entity.Transaction;
 
 /**
  * Created by kimziv on 2017/12/4.
  */
 
-public interface BlockExplorerContract {
+public interface MyDelegateInfoContract {
 
-    interface View extends BaseView<BasePresenter>{
-        void displayBlock(Block block);
+    interface View extends BaseView<Presenter>{
+        void displayDelegateInfo();
 
         void displayFirstPageBlocks(List<Block> blocks);
 
@@ -22,11 +21,9 @@ public interface BlockExplorerContract {
     }
 
     interface Presenter extends BasePresenter{
-        /**
-         * 搜索区块
-         * @param blockId
-         */
-        void searchBlock(String blockId);
+        void loadDelegateInfo();
+
+        void registerDelegate(String delegateName);
 
         void loadFirstPageBlocks();
 
