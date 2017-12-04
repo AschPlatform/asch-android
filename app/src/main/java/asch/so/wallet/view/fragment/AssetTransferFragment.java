@@ -144,13 +144,6 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 String secondSecret=secondPasswdEt.getText().toString().trim();
                 boolean hasSecondPwd=hasSecondPasswd();
 
-                int precision=selectedAsset.getPrecision();
-                long amount = AppUtil.scaledAmountFromDecimal(Float.parseFloat(ammountStr),precision);
-//                if (Long.parseLong(balance.getBalance())<amount){
-//                    AppUtil.toastError(getContext(),"账户余额不够");
-//                    return;
-//                }
-
                 if (currency==null)
                 {
                     AppUtil.toastError(getContext(),"请选择币种");
@@ -163,6 +156,12 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 if (!Validator.check(getContext(), Validator.Type.Amount,ammountStr,"无效金额")){
                     return;
                 }
+                int precision=selectedAsset.getPrecision();
+                long amount = AppUtil.scaledAmountFromDecimal(Float.parseFloat(ammountStr),precision);
+//                if (Long.parseLong(balance.getBalance())<amount){
+//                    AppUtil.toastError(getContext(),"账户余额不够");
+//                    return;
+//                }
 
                 if (hasSecondPwd){
                     if (!Validator.check(getContext(),Validator.Type.SecondSecret,secondSecret,"二级密码不正确")){
