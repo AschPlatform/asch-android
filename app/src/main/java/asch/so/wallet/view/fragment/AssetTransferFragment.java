@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -82,6 +83,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     View secondPasswdLl;
     @BindView(R.id.second_passwd_et)
     EditText secondPasswdEt;
+    @BindView(R.id.balance_tv)
+    TextView balanceTv;
 
     KProgressHUD hud;
     private Balance balance;
@@ -117,6 +120,13 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         return AccountsManager.getInstance().getCurrentAccount();
     }
 
+    private Balance getBalance(){
+        if (currency!=null && (getAccount().getFullAccount()!=null)&&(getAccount().getFullAccount().getBalancesMap()!=null)){
+            return  getAccount().getFullAccount().getBalancesMap().get(currency);
+        }
+        return null;
+    }
+
     private boolean hasSecondPasswd(){
         return getAccount().hasSecondSecret();
     }
@@ -126,6 +136,23 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         ButterKnife.bind(this,rootView);
 
         hideKeyboard();
+
+        if (qrCodeURL!=null){
+            targetEt.setText(qrCodeURL.getAddress());
+            amountEt.setText(qrCodeURL.getAmount());
+            String assetName = qrCodeURL.getCurrency();
+            this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
+        }else {
+            // AppUtil.toastError(getContext(),"收款二维码有错误");
+        }
+
+        Balance balanceRemain=getBalance();
+        float realBalance = balanceRemain!=null?balanceRemain.getRealBalance():-1;
+        if (realBalance>=0){
+            balanceTv.setText(String.valueOf(realBalance));
+        }else {
+            balanceTv.setText("");
+        }
 
         targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));
         if (hasSecondPasswd()){
@@ -158,10 +185,10 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 }
                 int precision=selectedAsset.getPrecision();
                 long amount = AppUtil.scaledAmountFromDecimal(Float.parseFloat(ammountStr),precision);
-//                if (Long.parseLong(balance.getBalance())<amount){
-//                    AppUtil.toastError(getContext(),"账户余额不够");
-//                    return;
-//                }
+                if (realBalance>=0 && AppUtil.scaledAmountFromDecimal(realBalance,precision)<amount){
+                    AppUtil.toastError(getContext(),"账户余额不够");
+                    return;
+                }
 
                 if (hasSecondPwd){
                     if (!Validator.check(getContext(),Validator.Type.SecondSecret,secondSecret,"二级密码不正确")){
@@ -194,6 +221,12 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 });
             }
         });
+        amountEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                balanceTv.setVisibility(hasFocus?View.VISIBLE:View.INVISIBLE);
+            }
+        });
 //        switch (action){
 //            case ScanSecretToTransfer:
 //            {
@@ -214,14 +247,23 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 //        }
 
         feeEt.setKeyListener(null);
-        if (qrCodeURL!=null){
-            targetEt.setText(qrCodeURL.getAddress());
-            amountEt.setText(qrCodeURL.getAmount());
-            String assetName = qrCodeURL.getCurrency();
-            this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
-        }else {
-           // AppUtil.toastError(getContext(),"收款二维码有错误");
-        }
+
+//        if (qrCodeURL!=null){
+//            targetEt.setText(qrCodeURL.getAddress());
+//            amountEt.setText(qrCodeURL.getAmount());
+//            String assetName = qrCodeURL.getCurrency();
+//            this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
+//        }else {
+//           // AppUtil.toastError(getContext(),"收款二维码有错误");
+//        }
+//
+//        Balance balanceRemain=getBalance();
+//        float realBalance = balanceRemain!=null?balanceRemain.getRealBalance():-1;
+//        if (realBalance>=0){
+//            balanceTv.setText(String.valueOf(realBalance));
+//        }else {
+//            balanceTv.setText("");
+//        }
 
         presenter.loadAssets(currency,false);
         return rootView;
@@ -366,6 +408,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
             }
 
         }catch (Exception e){
+            qrCodeURL=null;
             e.printStackTrace();
         }
 

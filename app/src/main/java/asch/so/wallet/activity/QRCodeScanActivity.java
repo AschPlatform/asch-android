@@ -121,7 +121,6 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     @Override
     public void onScanQRCodeSuccess(String result) {
         Log.i(TAG, "result:" + result);
-        AppUtil.toastSuccess(this, result);
         vibrate();
        // zbarView.startSpot();
         switch (action){
@@ -166,6 +165,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
             }
                 break;
         }
+        AppUtil.toastSuccess(this, result);
     }
 
 //    @Override
