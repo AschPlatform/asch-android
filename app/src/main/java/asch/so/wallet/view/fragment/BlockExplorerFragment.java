@@ -100,7 +100,7 @@ public class BlockExplorerFragment extends BaseFragment implements BlockExplorer
 
     @Override
     public void setPresenter(BasePresenter presenter) {
-        
+
     }
 
     @Override
