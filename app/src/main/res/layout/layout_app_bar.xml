@@ -29,7 +29,13 @@
         app:title="标题"
         app:titleTextAppearance="@style/Title_Appearance"
         app:titleTextColor="@android:color/white"
-        app:title_gravity="center" />
+        app:title_gravity="center"
+        app:rightText=""
+        app:rightTextAppearance="?attr/actionMenuTextAppearance"
+        app:rightTextColor="@android:color/white"
+        app:rightVisible="false"
+        app:rightMarginRight="16dp"
+        />
     <!--<android.support.v7.widget.Toolbar-->
         <!--android:id="@+id/toolbar"-->
         <!--android:layout_width="match_parent"-->

@@ -264,7 +264,7 @@ public class TitleToolbar extends BaseToolbar implements View.OnClickListener{
             layoutParams.rightMargin = typedArray.getDimensionPixelSize(
                     R.styleable.TitleToolbar_rightMarginRight, dp2px(DEFAULT_RIGHT_MARGIN_RIGHT));
 
-            addView(mBackTextView, layoutParams);
+            addView(mRightTextView, layoutParams);
         }
 
         typedArray.recycle();

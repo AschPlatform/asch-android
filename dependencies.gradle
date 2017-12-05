@@ -1,4 +1,4 @@
-def supportVersion = "26.1.0"
+def supportVersion = "27.0.1"
 def rxBindingVersion = "0.4.0"
 def retrofitVersion = "2.2.0"
 def okHttpVersion = "3.7.0"
@@ -32,6 +32,11 @@ def flycoTabLayoutVersion="2.0.2"
 def expandableLayoutVersion="1.6.0"
 def kprogresshudVersion="1.1.0"
 def toastyVersion="1.2.5"
+def bgaPhotopickerVersion="1.2.7"
+def bgaBaseadapterVersion="1.2.7"
+def glideVersion="4.3.1"
+def nineoldandroidsVersion="2.4.0"
+def photoPickerVersion="0.9.10"
 
 project.ext {
     android = [
@@ -128,7 +133,12 @@ project.ext {
             "flycoTabLayout"                :"com.flyco.tablayout:FlycoTabLayout_Lib:${flycoTabLayoutVersion}@aar",
             "expandableLayout"             :"com.github.aakira:expandable-layout:${expandableLayoutVersion}@aar",
             "kprogresshud"                  :"com.kaopiz:kprogresshud:${kprogresshudVersion}",
-            "toasty"                 :"com.github.GrenderG:Toasty:${toastyVersion}"
+            "toasty"                        :"com.github.GrenderG:Toasty:${toastyVersion}",
+            "bgaPhotopicker"                :"cn.bingoogolapple:bga-photopicker:${bgaPhotopickerVersion}@aar",
+            "glide"                         :"com.github.bumptech.glide:glide:${glideVersion}",
+            "bgaBaseadapter"                :"cn.bingoogolapple:bga-baseadapter:${bgaBaseadapterVersion}@aar",
+            "nineoldandroids"               :"com.nineoldandroids:library:${nineoldandroidsVersion}",
+            "photoPicker"                   :"me.iwf.photopicker:PhotoPicker:${photoPickerVersion}@aar"
 
     ]
 }
