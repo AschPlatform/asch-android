@@ -40,6 +40,9 @@ public class TitleToolbarActivity extends BaseActivity {
                     case R.id.back:
                        onBackClicked(v);
                         break;
+                    case R.id.right:
+                        onRightClicked(v);
+                        break;
                 }
             }
         });
@@ -57,11 +60,24 @@ public class TitleToolbarActivity extends BaseActivity {
         toolbar.setTitleVisible(true);
     }
 
+    protected void setRightTitle(String title){
+        toolbar.setRightText(title);
+        toolbar.setRightVisible(true);
+    }
+
     /**
      * 返回
      * @param v
      */
     protected void onBackClicked(View v){
         onBackPressed();
+    }
+
+    /**
+     * 需要重写
+     * @param v
+     */
+    protected void onRightClicked(View v) {
+
     }
 }

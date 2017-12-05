@@ -68,6 +68,14 @@
         <attr name="backTextSize" format="dimension" />
         <attr name="backIcon" format="reference" />
         <attr name="backMarginRight" format="dimension" />
+
+        <attr name="rightVisible" format="boolean" />
+        <attr name="rightText" format="string" />
+        <attr name="rightTextAppearance" format="reference" />
+        <attr name="rightTextColor" format="color" />
+        <attr name="rightTextSize" format="dimension" />
+        <attr name="rightIcon" format="reference" />
+        <attr name="rightMarginRight" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="PinCodeView">

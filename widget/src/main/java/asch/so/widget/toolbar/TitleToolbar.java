@@ -38,7 +38,12 @@ public class TitleToolbar extends BaseToolbar implements View.OnClickListener{
     private CharSequence mBackText;
     private boolean mBackVisible;
 
+    private TextView mRightTextView;
+    private CharSequence mRightText;
+    private boolean mRightVisible;
+
     private static final int DEFAULT_BACK_MARGIN_RIGHT = 8;
+    private static final int DEFAULT_RIGHT_MARGIN_RIGHT = 8;
 
     public TitleToolbar(Context context) {
         super(context);
@@ -218,6 +223,50 @@ public class TitleToolbar extends BaseToolbar implements View.OnClickListener{
                     LayoutParams.MATCH_PARENT, Gravity.LEFT | Gravity.CENTER_VERTICAL));
         }
 
+        if (!isChild(mRightTextView)) {
+            mRightTextView = new TextView(context);
+            mRightTextView.setId(R.id.right);
+            mRightTextView.setSingleLine();
+            mRightTextView.setEllipsize(TextUtils.TruncateAt.END);
+            mRightTextView.setGravity(Gravity.CENTER_VERTICAL);
+
+            int rightTextAppearance =
+                    typedArray.getResourceId(R.styleable.TitleToolbar_rightTextAppearance, 0);
+            if (rightTextAppearance != 0) {
+                mRightTextView.setTextAppearance(context, rightTextAppearance);
+            }
+
+            if (typedArray.hasValue(R.styleable.TitleToolbar_rightTextColor)) {
+                int rightTextColor =
+                        typedArray.getColor(R.styleable.TitleToolbar_rightTextColor, Color.WHITE);
+                mRightTextView.setTextColor(rightTextColor);
+            }
+
+            if (typedArray.hasValue(R.styleable.TitleToolbar_rightTextSize)) {
+                mRightTextView.setTextSize(
+                        typedArray.getDimensionPixelSize(R.styleable.TitleToolbar_rightTextSize, 0));
+            }
+
+            Drawable drawable = typedArray.getDrawable(R.styleable.TitleToolbar_rightIcon);
+            if (drawable != null) {
+                mRightTextView.setCompoundDrawablesWithIntrinsicBounds(null, null, drawable, null);
+            }
+
+            setRightText(typedArray.getText(R.styleable.TitleToolbar_rightText));
+            setRightVisible(typedArray.getBoolean(R.styleable.TitleToolbar_rightVisible, false));
+
+            mRightTextView.setClickable(true);
+            mRightTextView.setOnClickListener(this);
+
+            LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
+                    LayoutParams.MATCH_PARENT, Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+
+            layoutParams.rightMargin = typedArray.getDimensionPixelSize(
+                    R.styleable.TitleToolbar_rightMarginRight, dp2px(DEFAULT_RIGHT_MARGIN_RIGHT));
+
+            addView(mBackTextView, layoutParams);
+        }
+
         typedArray.recycle();
         //noinspection RestrictedApi
         a.recycle();
@@ -295,6 +344,8 @@ public class TitleToolbar extends BaseToolbar implements View.OnClickListener{
         return mSubTitleVisible;
     }
 
+    /**  close text config **/
+
     public void setCloseText(int resId) {
         setCloseText(getContext().getText(resId));
     }
@@ -322,7 +373,7 @@ public class TitleToolbar extends BaseToolbar implements View.OnClickListener{
     public boolean isCloseVisible() {
         return mCloseVisible;
     }
-
+    /**  back text config **/
     public void setBackText(int resId) {
         setBackText(getContext().getText(resId));
     }
@@ -349,6 +400,35 @@ public class TitleToolbar extends BaseToolbar implements View.OnClickListener{
 
     public boolean isBackVisible() {
         return mBackVisible;
+    }
+
+    /**  right text config **/
+    public void setRightText(int resId) {
+        setRightText(getContext().getText(resId));
+    }
+
+    public void setRightText(CharSequence rightText) {
+        mRightText = rightText;
+        if (mRightTextView != null) {
+            mRightTextView.setText(rightText);
+        }
+    }
+
+    public CharSequence getRightText() {
+        return mRightText;
+    }
+
+    public void setRightTextColor(int color) {
+        mRightTextView.setTextColor(color);
+    }
+
+    public void setRightVisible(boolean visible) {
+        mRightVisible = visible;
+        mRightTextView.setVisibility(mRightVisible ? VISIBLE : GONE);
+    }
+
+    public boolean isRightVisible() {
+        return mRightVisible;
     }
 
     @Override

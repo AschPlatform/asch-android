@@ -2,4 +2,5 @@
 <resources>
     <item name="close" type="id" />
     <item name="back" type="id" />
+    <item name="right" type="id" />
 </resources>
