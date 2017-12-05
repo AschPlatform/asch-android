@@ -208,7 +208,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                             showPasswordInputDialog(new SecondPasswdDialog.PasswordCallback() {
                                 @Override
                                 public void callback(SecondPasswdDialog dialog, String password) {
-                                    if (Validator.check(getContext(), Validator.Type.Password,password,"用户密码不正确"))
+                                    if (Validator.check(getContext(), Validator.Type.Password,password,"账户密码不正确"))
                                     {
                                         presenter.transfer(currency,targetAddress,amount,message,null,hasSecondPwd?secondSecret:null,password);
                                         showHUD();

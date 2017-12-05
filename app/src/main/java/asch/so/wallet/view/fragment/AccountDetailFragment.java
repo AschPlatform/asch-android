@@ -79,7 +79,7 @@ public class AccountDetailFragment extends BaseFragment implements AccountDetail
     public void displayAccount(Account account) {
         this.addressTv.setText(account.getAddress());
         this.nameEt.setText(account.getName());
-        this.balanceTv.setText("666 XAS");
+        this.balanceTv.setText(" XAS");
         IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {

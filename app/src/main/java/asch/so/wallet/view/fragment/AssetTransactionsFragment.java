@@ -141,7 +141,14 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         receiveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = getArguments();
+                String json =bundle.getString("balance");
+                Balance balance=JSON.parseObject(json,Balance.class);
+                String currency = balance.getCurrency();
+                Bundle params=new Bundle();
+                params.putString("currency",currency);
                 Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
+                intent.putExtras(params);
                 startActivity(intent);
             }
         });

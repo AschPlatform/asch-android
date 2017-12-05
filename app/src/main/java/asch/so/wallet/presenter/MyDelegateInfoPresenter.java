@@ -108,7 +108,7 @@ public class MyDelegateInfoPresenter implements MyDelegateInfoContract.Presenter
     }
 
 
-    private Observable createFetchForgingStatus(String publicKey){
+    private Observable createFetchForgingStatusObservable(String publicKey){
 
        return Observable.create(new Observable.OnSubscribe<Boolean>(){
             @Override
@@ -126,12 +126,12 @@ public class MyDelegateInfoPresenter implements MyDelegateInfoContract.Presenter
         });
     }
 
-    private Observable createFetchDelegateInfo(String publicKey){
+    private Observable createFetchDelegateInfoObservable(String publicKey){
 
         return Observable.create(new Observable.OnSubscribe<Delegate>(){
             @Override
             public void call(Subscriber<? super Delegate> subscriber) {
-                AschResult result = AschSDK.Delegate.getDelegateByPublicKey(publicKey)
+                AschResult result = AschSDK.Delegate.getDelegateByPublicKey(publicKey);
                 if (result.isSuccessful()) {
                     JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                     JSONObject delegateJsonObj = resultJSONObj.getJSONObject("delegate");

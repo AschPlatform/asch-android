@@ -31,6 +31,8 @@ public class AssetReceiveActivity extends TitleToolbarActivity {
         ButterKnife.bind(this);
         setTitle("二维码收款");
         fragment=AssetReceiveFragment.newInstance();
+        Bundle bundle=getBundle();
+        fragment.setArguments(bundle!=null?bundle:new Bundle());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
     }
 }

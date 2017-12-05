@@ -72,10 +72,10 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
 
             }
             break;
-            case English:
-            {
-            }
-                break;
+//            case English:
+//            {
+//            }
+//                break;
         }
 
         adapter.notifyDataSetChanged();
@@ -84,8 +84,8 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
     }
 
     public enum Item{
-        Chinese("zh_cn","中文",false),
-        English("en", "English",false);
+        Chinese("zh_cn","中文",false);
+       // English("en", "English",false);
 
         public String code;
         public String title;

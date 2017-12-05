@@ -107,16 +107,10 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                         public void onError(java.lang.Throwable e) {
                             if ("1".equals(e.getMessage()))
                             {
-                                view.displayPasswordValidMessage(false,"用户密码不正确");
+                                view.displayPasswordValidMessage(false,"账户密码不正确");
                             }else{
                                 view.displayError(e);
                             }
-
-//                                if ("2".equals(e.getMessage())){
-//                                view.displayError(new Throwable("转账失败"));
-//                            }else {
-//                                view.displayError(new Throwable("转账失败"));
-//                            }
 
                         }
 

@@ -65,7 +65,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
     private Bitmap qrcodeBmp;
 
-    String currency="XAS";
+    String currency=AschConst.CORE_COIN_NAME;
     private Account account;
    // private HashMap<String, BaseAsset> assetsMap;
 
@@ -101,6 +101,9 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         account= AccountsManager.getInstance().getCurrentAccount();
+        Bundle args = getArguments();
+        String cur =args.getString("currency");
+        currency=cur!=null?cur:AschConst.CORE_COIN_NAME;
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
     }
@@ -181,9 +184,9 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     @Override
     public void displayAssets(LinkedHashMap<String,BaseAsset> assetsMap) {
         Log.d(TAG,"++++assets:"+assetsMap.toString());
-       // this.assetsMap=assetsMap;
         List<String> nameList=new ArrayList<>(assetsMap.keySet());
-
+        int selectIndex= nameList.indexOf(currency);
+        selectIndex=selectIndex==-1?0:selectIndex;
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         assetsSp.setAdapter(adapter);
@@ -201,5 +204,6 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
             }
         });
+        assetsSp.setSelection(selectIndex,true);
     }
 }

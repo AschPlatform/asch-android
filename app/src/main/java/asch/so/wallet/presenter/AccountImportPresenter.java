@@ -85,7 +85,7 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
                     @Override
                     public void onError(java.lang.Throwable e) {
                         if ("1".equals(e.getMessage())){
-                            view.displayCheckMessage("此账户以及存在");
+                            view.displayCheckMessage("此账户已经存在");
                         }else if ("2".equals(e.getMessage())){
                             view.displayError(new Throwable("账户导入失败"));
                         }

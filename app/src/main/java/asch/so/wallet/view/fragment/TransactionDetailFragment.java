@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.blankj.utilcode.util.TimeUtils;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.AppConstants;
@@ -63,8 +64,9 @@ public class TransactionDetailFragment extends BaseFragment {
         Transaction transaction = getTransaction();
         txIDTv.setText(transaction.getId());
         txTypeTv.setText(Transaction.Type.fromCode(transaction.getType()).getName());
-        CharSequence ago= AppUtil.getRelativeTimeSpanString(getContext(),transaction.dateFromAschTimestamp().getTime());
-        txDateTv.setText(ago);
+        String dateTime = TimeUtils.date2String(transaction.dateFromAschTimestamp());
+       // CharSequence ago= AppUtil.getRelativeTimeSpanString(getContext(),transaction.dateFromAschTimestamp().getTime());
+        txDateTv.setText(dateTime);
         txSenderTv.setText(transaction.getSenderId());
         txReceiveTv.setText(transaction.getRecipientId());
         txAmountTv.setText(amountFroTransaction(transaction));

@@ -186,7 +186,7 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:text="0.1（网络费用）"
+                android:text="0.1XAS（交易费）"
                 android:maxLines="1" />
             <View
                 android:layout_width="match_parent"
