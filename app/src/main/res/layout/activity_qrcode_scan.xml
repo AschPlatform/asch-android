@@ -40,38 +40,20 @@
         app:qrcv_scanLineColor="@color/colorPrimaryDark"
         app:qrcv_toolbarHeight="65dp"
         app:qrcv_topOffset="20dp"/>
-    <!--<cn.bingoogolapple.qrcode.zxing.ZXingView-->
-        <!--android:id="@+id/zxingview"-->
-        <!--android:layout_below="@+id/scan_toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--app:qrcv_animTime="1000"-->
-        <!--app:qrcv_barCodeTipText="将条码放入框内，即可自动扫描"-->
-        <!--app:qrcv_barcodeRectHeight="120dp"-->
-        <!--app:qrcv_borderColor="@android:color/white"-->
-        <!--app:qrcv_borderSize="1dp"-->
-        <!--app:qrcv_cornerColor="@color/colorPrimaryDark"-->
-        <!--app:qrcv_cornerLength="20dp"-->
-        <!--app:qrcv_cornerSize="3dp"-->
-        <!--app:qrcv_customGridScanLineDrawable="@mipmap/custom_grid_scan_line"-->
-        <!--app:qrcv_isBarcode="false"-->
-        <!--app:qrcv_isCenterVertical="false"-->
-        <!--app:qrcv_isOnlyDecodeScanBoxArea="false"-->
-        <!--app:qrcv_isScanLineReverse="true"-->
-        <!--app:qrcv_isShowDefaultGridScanLineDrawable="false"-->
-        <!--app:qrcv_isShowDefaultScanLineDrawable="true"-->
-        <!--app:qrcv_isShowTipBackground="true"-->
-        <!--app:qrcv_isShowTipTextAsSingleLine="false"-->
-        <!--app:qrcv_isTipTextBelowRect="false"-->
-        <!--app:qrcv_maskColor="#33FFFFFF"-->
-        <!--app:qrcv_qrCodeTipText="将二维码/条码放入框内，即可自动扫描"-->
-        <!--app:qrcv_rectWidth="200dp"-->
-        <!--app:qrcv_scanLineColor="@color/colorPrimaryDark"-->
-        <!--app:qrcv_scanLineMargin="0dp"-->
-        <!--app:qrcv_scanLineSize="0.5dp"-->
-        <!--app:qrcv_tipTextColor="@android:color/white"-->
-        <!--app:qrcv_tipTextSize="12sp"-->
-        <!--app:qrcv_toolbarHeight="56dp"-->
-        <!--app:qrcv_topOffset="20dp"/>-->
+    <com.github.zagum.switchicon.SwitchIconView
+        android:id="@+id/flash_switch"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="160dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:padding="0dp"
+        app:si_animation_duration="500"
+        app:si_disabled_alpha=".3"
+        app:si_disabled_color="#b7b7b7"
+        app:si_tint_color="#FFFFFF"
+        app:si_enabled="false"
+        app:si_no_dash="false"
+        app:srcCompat="@drawable/ic_flash_on_black_24dp"/>
 
 </RelativeLayout>

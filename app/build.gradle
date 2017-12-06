@@ -148,5 +148,6 @@ dependencies {
     compile rootProject.ext.dependencies["glide"]
     compile rootProject.ext.dependencies["bgaBaseadapter"]
     compile rootProject.ext.dependencies["bgaPhotopicker"]
+    compile rootProject.ext.dependencies["switchIcon"]
 
 }

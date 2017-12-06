@@ -14,7 +14,10 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.github.zagum.switchicon.SwitchIconView;
 
 import java.io.File;
 import java.util.List;
@@ -80,6 +83,8 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
 
     @BindView(R.id.zbarview)
     ZBarView zbarView;
+    @BindView(R.id.flash_switch)
+    SwitchIconView flashSwitch;
 
     private Action action;
 
@@ -105,7 +110,18 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                 }
             }
         });
+        flashSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flashSwitch.switchState();
+                if (flashSwitch.isIconEnabled()){
+                    zbarView.openFlashlight();
+                }else {
+                    zbarView.closeFlashlight();
+                }
 
+            }
+        });
         StatusBarUtil.immersive(this);
         zbarView.setDelegate(this);
 
@@ -122,13 +138,6 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                     .pauseOnScroll(false) // 滚动列表时是否暂停加载图片
                     .build();
             startActivityForResult(photoPickerIntent, REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY);
-//            PhotoPicker.builder()
-//                    .setPhotoCount(1)
-//                    .setGridColumnCount(3)
-//                    .setShowCamera(false)
-//                    .setShowGif(false)
-//                    .setPreviewEnabled(true)
-//                    .start(this, PhotoPicker.REQUEST_CODE);
         } else {
             EasyPermissions.requestPermissions(this, "图片选择需要以下权限:\n\n1.访问设备上的照片\n\n2.拍照", REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY, perms);
         }
@@ -164,6 +173,51 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     @Override
     public void onScanQRCodeSuccess(String result) {
         Log.i(TAG, "result:" + result);
+        processQRString(result);
+//        vibrate();
+//        // zbarView.startSpot();
+//        switch (action) {
+//            case ScanSecretToPaste: {
+//                Intent intent = new Intent();
+//                intent.putExtra("QRDecodeString", result);
+//                setResult(RESULT_OK, intent);
+//                finish();
+//            }
+//            break;
+//            case ScanAddressToPaste: {
+//                if (!Validator.check(this, Validator.Type.QRCodeUrl, result, "无效地址")) {
+//                    zbarView.startSpot();
+//                    return;
+//                }
+//                Intent intent = new Intent();
+//                intent.putExtra("QRDecodeString", result);
+//                setResult(RESULT_OK, intent);
+//                finish();
+//            }
+//            break;
+//            case ScanAddressToPay: {
+//                if (!Validator.check(this, Validator.Type.QRCodeUrl, result, "无效地址")) {
+//                    zbarView.startSpot();
+//                    return;
+//                }
+//                Bundle bundle = new Bundle();
+//                try {
+//                    //QRCodeURL uri = QRCodeURL.decodeQRCodeURL(result);
+//                    bundle.putString("qrcode_uri", result);
+//                    bundle.putInt("action", AssetTransferActivity.Action.ScanSecretToTransfer.getValue());
+//                    BaseActivity.start(this, AssetTransferActivity.class, bundle);
+//                    finish();
+//                } catch (Exception e) {
+//                    AppUtil.toastError(this, "二维码格式无效");
+//                }
+//            }
+//            break;
+//        }
+//        AppUtil.toastSuccess(this, result);
+    }
+
+
+    private void processQRString(String result){
         vibrate();
         // zbarView.startSpot();
         switch (action) {
@@ -206,12 +260,6 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
         AppUtil.toastSuccess(this, result);
     }
 
-//    @Override
-//    public void onBackPressed() {
-//        super.onBackPressed();
-//        finish();
-//    }
-
     @Override
     public void onScanQRCodeOpenCameraError() {
         //Log.e(TAG, "打开相机出错");
@@ -237,7 +285,8 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                     if (TextUtils.isEmpty(result)) {
                         AppUtil.toastError(QRCodeScanActivity.this, "未发现二维码");
                     } else {
-                        AppUtil.toastSuccess(QRCodeScanActivity.this, result);
+                        processQRString(result);
+                        //AppUtil.toastSuccess(QRCodeScanActivity.this, result);
                     }
                 }
             }.execute();
