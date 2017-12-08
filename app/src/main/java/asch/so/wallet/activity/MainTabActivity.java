@@ -15,12 +15,14 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
+import com.vector.update_app.UpdateAppManager;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
 import asch.so.base.activity.BasePinCompatActivity;
 import asch.so.base.view.Throwable;
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.MainContract;
 import asch.so.wallet.model.entity.Account;
@@ -29,6 +31,7 @@ import asch.so.wallet.presenter.DappCenterPresenter;
 import asch.so.wallet.presenter.MainPresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.StatusBarUtil;
+import asch.so.wallet.util.UpdateAppHttpUtil;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
 import asch.so.wallet.view.fragment.AssetBalanceFragment;
 import asch.so.wallet.view.fragment.DappCenterFragment;
@@ -115,6 +118,8 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
 
         setupViewPager(viewPager);
         mainPresenter=new MainPresenter(this,this);
+
+        updateApp();
     }
 
 
@@ -282,6 +287,22 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     public void displayAccount(Account account) {
 
     }
+
+    public void updateApp() {
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(this)
+                //更新地址
+                .setUpdateUrl(AppConstants.UPADATE_URL)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                .setTopPic(R.mipmap.update_top)
+                .setThemeColor(0xff32b3e3)
+                .build()
+                .update();
+    }
+
 
 //    @Override
 //    protected void onResume() {

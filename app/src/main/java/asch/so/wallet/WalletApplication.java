@@ -19,6 +19,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.vector.update_app.UpdateAppManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -135,6 +136,7 @@ public class WalletApplication extends MultiDexApplication {
 
         // lockManager.getAppLock().setPinChallengeCancelled(true);
     }
+
 
 
     public ApplicationComponent getApplicationComponent() {

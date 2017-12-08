@@ -39,6 +39,11 @@ android {
             //buildConfigField 'com.baronzhang.android.library.util.StethoHelper', 'STETHO', 'new com.baronzhang.android.weather.util.stetho.DebugStethoHelper()'
         }
 
+//        preview {
+//            //关键代码，release， debug为library中已有buildType
+//            matchingFallbacks = ['release', 'debug']
+//        }
+
         release {
             buildConfigField("boolean", "LOG_DEBUG", "false")
             minifyEnabled false
@@ -149,5 +154,7 @@ dependencies {
     compile rootProject.ext.dependencies["bgaBaseadapter"]
     compile rootProject.ext.dependencies["bgaPhotopicker"]
     compile rootProject.ext.dependencies["switchIcon"]
+    compile rootProject.ext.dependencies["update"]
+    compile rootProject.ext.dependencies["okhttpUtils"]
 
 }
