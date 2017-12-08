@@ -19,7 +19,7 @@ public class AppConstants {
 //   public static final  String DEFAULT_NODE_URL="http://mainnet.asch.io";
 //   public static final  String DEFAULT_MAGIC="5f5b3cf5";
 
-    public static String UPADATE_URL = "https://raw.githubusercontent.com/WVector/AppUpdateDemo/master/json/json.txt";
+    public static String UPADATE_URL = "http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/android/update.json";
 
     public static final  String BUGLY_APP_ID="7e968af450";
 

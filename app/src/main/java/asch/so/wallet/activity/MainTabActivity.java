@@ -14,8 +14,13 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.AppUtils;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
+import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
+import com.vector.update_app.UpdateCallback;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -119,7 +124,7 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
         setupViewPager(viewPager);
         mainPresenter=new MainPresenter(this,this);
 
-        updateApp();
+       AppUtil.updateApp(this);
     }
 
 
@@ -286,21 +291,6 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     @Override
     public void displayAccount(Account account) {
 
-    }
-
-    public void updateApp() {
-        new UpdateAppManager
-                .Builder()
-                //当前Activity
-                .setActivity(this)
-                //更新地址
-                .setUpdateUrl(AppConstants.UPADATE_URL)
-                //实现httpManager接口的对象
-                .setHttpManager(new UpdateAppHttpUtil())
-                .setTopPic(R.mipmap.update_top)
-                .setThemeColor(0xff32b3e3)
-                .build()
-                .update();
     }
 
 

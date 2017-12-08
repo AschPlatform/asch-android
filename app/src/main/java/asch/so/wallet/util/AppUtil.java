@@ -1,15 +1,25 @@
 package asch.so.wallet.util;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.text.format.DateUtils;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.AppUtils;
+import com.vector.update_app.UpdateAppBean;
+import com.vector.update_app.UpdateAppManager;
+import com.vector.update_app.UpdateCallback;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import asch.so.base.util.DateConvertUtils;
+import asch.so.wallet.AppConstants;
+import asch.so.wallet.R;
 import es.dmoral.toasty.Toasty;
 import so.asch.sdk.impl.AschConst;
 
@@ -68,6 +78,55 @@ public class AppUtil {
 
     public static void toastNormal(Context context, String msg){
         Toasty.normal(context,msg,Toast.LENGTH_SHORT).show();
+    }
+
+
+    public static void updateApp(Activity activity) {
+        new UpdateAppManager
+                .Builder()
+                //当前Activity
+                .setActivity(activity)
+                //更新地址
+                .setUpdateUrl(AppConstants.UPADATE_URL)
+                //实现httpManager接口的对象
+                .setHttpManager(new UpdateAppHttpUtil())
+                .setTopPic(R.mipmap.update_top)
+                .setThemeColor(0xff32b3e3)
+                .build()
+                .checkNewApp(new UpdateCallback(){
+                    @Override
+                    protected UpdateAppBean parseJson(String json) {
+                        UpdateAppBean updateAppBean= JSON.parseObject(json,UpdateAppBean.class);
+                        JSONObject jsonObject = JSON.parseObject(json);
+
+                        int versionCode = jsonObject.getIntValue("version_code");
+                        int currentVersionCode= AppUtils.getAppVersionCode();
+                        if (versionCode<=currentVersionCode){
+                            updateAppBean.setUpdate("No");
+                        }
+                        return updateAppBean;
+                    }
+
+                    @Override
+                    protected void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                        super.hasNewApp(updateApp, updateAppManager);
+                    }
+
+                    @Override
+                    protected void onAfter() {
+                        super.onAfter();
+                    }
+
+                    @Override
+                    protected void noNewApp() {
+                        super.noNewApp();
+                    }
+
+                    @Override
+                    protected void onBefore() {
+                        super.onBefore();
+                    }
+                });
     }
 
 }

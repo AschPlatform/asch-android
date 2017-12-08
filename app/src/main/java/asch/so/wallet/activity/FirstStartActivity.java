@@ -44,8 +44,7 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
         checkBox.setOnClickListener(this);
         termTv.setOnClickListener(this);
         StatusBarUtil.immersive(this);
-
-
+        AppUtil.updateApp(this);
     }
 
 

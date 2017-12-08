@@ -55,6 +55,18 @@ android {
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 //        }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+               def fileName ="asch-app-${defaultConfig.versionName}(${defaultConfig.versionCode})-${variant.buildType.name}.apk"
+                output.outputFile.renameTo(new File(outputFile.parent,fileName))
+//                rename_andd_moveout_apk(output.outputFile,variant.buildType.name)
+            }
+        }
+    }
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
@@ -158,3 +170,17 @@ dependencies {
     compile rootProject.ext.dependencies["okhttpUtils"]
 
 }
+
+
+//def rename_andd_moveout_apk(orignalFile, buildType) {
+//    def intoFile = rootDir.parentFile.getAbsolutePath()+File.separator+"updateTest"
+//    def originName=intoFile+File.separator+orignalFile.name
+//    def toName=intoFile+File.separator+"asch-app-"+buildType+".apk"
+//
+//    //println intoFile
+//    copy {
+//        from orignalFile.getAbsolutePath()
+//        into intoFile
+//        rename(originName, toName)
+//    }
+//}

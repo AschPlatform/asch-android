@@ -1,0 +1,11 @@
+{
+  "update": "Yes",
+  "version_name":"1.0.5",
+  "version_code":16,
+  "new_version": "1.0.5(16)",
+  "apk_file_url": "http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/android/asch-app-release.apk",
+  "update_log": "1，强制更新逻辑策略添加。\r\n2，受托人投票更能。\r\n3，受托人取消投票。\r\n4，区块浏览和查询。",
+  "target_size": "24M",
+  "new_md5":"295687E756F569C7159974DD493489A5",
+  "constraint": false
+}
