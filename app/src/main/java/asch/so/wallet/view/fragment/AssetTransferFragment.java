@@ -147,12 +147,12 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         }
 
         Balance balanceRemain=getBalance();
-        float realBalance = balanceRemain!=null?balanceRemain.getRealBalance():-1;
-        if (realBalance>=0){
-            balanceTv.setText(String.valueOf(realBalance));
-        }else {
-            balanceTv.setText("");
-        }
+        //float realBalance = balanceRemain!=null?balanceRemain.getDecimalBalance().floatValue():-1;
+        //if (realBalance>=0){
+            balanceTv.setText(balanceRemain.getBalanceString());
+        //}else {
+         //   balanceTv.setText("");
+        //}
 
         targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));
         if (hasSecondPasswd()){
@@ -185,7 +185,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 }
                 int precision=selectedAsset.getPrecision();
                 long amount = AppUtil.scaledAmountFromDecimal(Float.parseFloat(ammountStr),precision);
-                if (realBalance>=0 && AppUtil.scaledAmountFromDecimal(realBalance,precision)<amount){
+                long remainBalance=balanceRemain!=null?balanceRemain.getLongBalance():-1;
+                if (remainBalance>=0 && remainBalance<amount){
                     AppUtil.toastError(getContext(),"账户余额不够");
                     return;
                 }

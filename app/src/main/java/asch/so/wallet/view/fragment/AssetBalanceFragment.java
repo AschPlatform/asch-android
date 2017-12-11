@@ -215,7 +215,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         } else if (backupBtn == view || identicon==view || nameTv==view) {
             if (accountBalance!=null){
                 Bundle bundle =new Bundle();
-                bundle.putFloat("balance",accountBalance.getRealBalance());
+                bundle.putString("balance",accountBalance.getBalanceString());
                 BaseActivity.start(getActivity(), AccountDetailActivity.class,bundle);
             }
         } else if (view.getId() == R.id.scan_ll) {
@@ -291,7 +291,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void displayXASBalance(Balance balance) {
-        String amount = String.valueOf(balance.getRealBalance());
+        String amount =balance.getBalanceString();  // String.valueOf(balance.getRealBalance());
         xasBalanceTv.setText(amount);
         topBalanceTv.setText(amount + " XAS");
         accountBalance=balance;

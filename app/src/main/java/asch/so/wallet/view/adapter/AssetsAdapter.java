@@ -40,7 +40,7 @@ public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHol
         Balance balance =assetList.get(position);
         holder.currencyIconIv.setImageResource(balance.getCurrency().equals(AschConst.CORE_COIN_NAME)?R.mipmap.xas_icon:R.mipmap.other_coin_icon);
         holder.assetNameTv.setText(balance.getCurrency());
-        holder.balanceTv.setText(String.valueOf(balance.getRealBalance()));
+        holder.balanceTv.setText(balance.getBalanceString());
     }
 
     @Override

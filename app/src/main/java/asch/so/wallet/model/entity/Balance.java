@@ -1,5 +1,9 @@
 package asch.so.wallet.model.entity;
 
+import java.math.BigDecimal;
+
+import asch.so.wallet.util.AppUtil;
+
 /**
  * Created by kimziv on 2017/9/28.
  */
@@ -70,5 +74,16 @@ public class Balance {
 
     public float getRealBalance(){
        return (float) (Double.parseDouble(balance)/(Math.pow(10,precision)));
+    }
+
+    public long getLongBalance(){
+        return  Long.parseLong(balance);
+    }
+    public BigDecimal getDecimalBalance(){
+        return AppUtil.decimalFromBigint(Long.parseLong(balance),precision);
+    }
+
+    public String getBalanceString(){
+        return AppUtil.decimalFromBigint(Long.parseLong(balance),precision).toString();
     }
 }

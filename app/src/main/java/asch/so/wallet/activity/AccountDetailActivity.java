@@ -67,8 +67,8 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         StatusBarUtil.immersive(this);
         initToolBar();
 
-        float balance=getBundle().getFloat("balance");
-        this.balanceTv.setText(String.format("%.3f XAS",balance));
+        String balance=getBundle().getString("balance");
+        this.balanceTv.setText(balance);
 
         presenter=new AccountDetailPresenter(this,this);
         presenter.loadAccount(null);

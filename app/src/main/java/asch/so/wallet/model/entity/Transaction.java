@@ -6,9 +6,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import asch.so.wallet.util.AppUtil;
 import so.asch.sdk.AschHelper;
 import so.asch.sdk.AschSDK;
 import so.asch.sdk.TransactionType;
+import so.asch.sdk.impl.AschConst;
 import so.asch.sdk.transaction.asset.AssetInfo;
 
 /**
@@ -269,6 +271,16 @@ public class Transaction {
 
     public void setAssetInfo(Asset assetInfo) {
         this.assetInfo = assetInfo;
+    }
+
+    public String getBanlanceShow(boolean isSender){
+        if ( TransactionType.Transfer.getCode()==getType()){
+           return   String.format("%s%s", isSender?"-":"+", AppUtil.decimalFromBigint(getAmount(), AschConst.CORE_COIN_PRECISION).toString()+" XAS");
+        }else if (TransactionType.UIATransfer.getCode()==getType()){
+            UIATransferAsset asset=(UIATransferAsset)getAssetInfo();
+         return String.format("%s%s", isSender?"-":"+",asset.getUiaTransfer().getAmountShow()+" "+asset.getUiaTransfer().getCurrency());
+        }
+        return "0 XAS";
     }
 
 

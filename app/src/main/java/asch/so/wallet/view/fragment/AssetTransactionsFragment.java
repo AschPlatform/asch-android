@@ -208,7 +208,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
     @Override
     public void displayBalance(Balance balance) {
-        amountTv.setText(String.valueOf(balance.getRealBalance()));
+        amountTv.setText(balance.getBalanceString());
         assetTv.setText(balance.getCurrency()+" 余额");
     }
 
