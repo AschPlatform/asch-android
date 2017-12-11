@@ -3,11 +3,216 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="asch.so.wallet.view.fragment.AccountInfoFragment">
+            <LinearLayout
+                android:layout_marginTop="0dp"
+                android:background="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                >
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp">
+                    <TextView
+                        android:gravity="left|center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:text="总余额"
+                        android:textSize="15sp"
+                        android:textColor="#999999"
+                        android:maxLines="1" />
+                    <TextView
+                        android:id="@+id/balance_tv"
+                        android:gravity="right|center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@null"
+                        android:text="7268.50925894 XAS"
+                        android:textSize="15sp"
+                        android:textColor="#333333"
+                        android:maxLines="1" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:visibility="visible"
+                    android:background="@color/divider_color"
+                    />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp">
+                    <TextView
+                        android:gravity="left|center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:text="公钥"
+                        android:textSize="15sp"
+                        android:textColor="#999999"
+                        android:maxLines="1" />
+                    <TextView
+                        android:id="@+id/pubkey_tv"
+                        android:gravity="right|center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@null"
+                        android:text="91789ab7e4ef9615f296842017ee287f77f1ab27476df95000df32388f45a088"
+                        android:textSize="12sp"
+                        android:textColor="#333333"
+                        android:maxLines="3" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:visibility="visible"
+                    android:background="@color/divider_color"
+                    />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp">
+                    <TextView
+                        android:gravity="left|center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:text="地址"
+                        android:textSize="15sp"
+                        android:textColor="#999999"
+                        android:maxLines="1" />
+                    <TextView
+                        android:id="@+id/address_tv"
+                        android:gravity="right|center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@null"
+                        android:text="AHcGmYnCyr6jufT5AGbpmRUv55ebwMLCym"
+                        android:textSize="12sp"
+                        android:textColor="#333333"
+                        android:maxLines="2" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:visibility="visible"
+                    android:background="@color/divider_color"
+                    />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp">
+                    <TextView
+                        android:gravity="left|center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:text="二级密码"
+                        android:textSize="15sp"
+                        android:textColor="#999999"
+                        android:maxLines="1" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:gravity="right|center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <Button
+                            android:id="@+id/second_passwd_btn"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="10dp"
+                            style="@style/PrimaryButton.Style"
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:textColor="#FFFFFF"
+                            android:textSize="15sp"
+                            android:text="未设置" />
+                    </LinearLayout>
+                    <!--<TextView-->
+                        <!--android:id="@+id/second_passwd_tv"-->
+                        <!--android:gravity="right|center_vertical"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:layout_marginRight="10dp"-->
+                        <!--android:background="@null"-->
+                        <!--android:text="已设置"-->
+                        <!--android:textSize="15sp"-->
+                        <!--android:textColor="#333333"-->
+                        <!--android:maxLines="1" />-->
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:visibility="visible"
+                    android:background="@color/divider_color"
+                    />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="57dp">
+                    <TextView
+                        android:gravity="left|center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:background="@null"
+                        android:text="锁仓状态"
+                        android:textSize="15sp"
+                        android:textColor="#999999"
+                        android:maxLines="1" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:gravity="right|center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <Button
+                            android:id="@+id/lock_coins_btn"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="10dp"
+                            style="@style/PrimaryButton.Style"
+                            android:layout_width="100dp"
+                            android:layout_height="40dp"
+                            android:textColor="#FFFFFF"
+                            android:textSize="15sp"
+                            android:text="未锁仓" />
+                    </LinearLayout>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+                    <!--<TextView-->
+                        <!--android:id="@+id/lock_coins_tv"-->
+                        <!--android:gravity="right|center_vertical"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_marginLeft="10dp"-->
+                        <!--android:layout_marginRight="10dp"-->
+                        <!--android:background="@null"-->
+                        <!--android:text="未锁仓"-->
+                        <!--android:textSize="15sp"-->
+                        <!--android:textColor="#333333"-->
+                        <!--android:maxLines="1" />-->
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:visibility="visible"
+                    android:background="@color/divider_color"
+                    />
 
+            </LinearLayout>
 </FrameLayout>

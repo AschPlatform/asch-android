@@ -89,6 +89,9 @@
             android:name=".activity.VoteActivity"
             android:label="@string/title_activity_vote"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".activity.AccountInfoActivity"
+            android:theme="@style/AppTheme"></activity>
 
     </application>
 

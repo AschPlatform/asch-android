@@ -45,6 +45,11 @@ public class DappCenterPresenter implements DappCenterContract.Presenter{
         dapp2.setCategory("system");
         dapp2.setDescription("节点列表");
 
+        Dapp dapp3=new Dapp();
+        dapp3.setName("个人中心");
+        dapp3.setCategory("system");
+        dapp3.setDescription("个人中心");
+
 //
 
 //        Dapp dapp=new Dapp();
@@ -70,6 +75,7 @@ public class DappCenterPresenter implements DappCenterContract.Presenter{
         ArrayList<Dapp> data=new ArrayList<>();
         data.add(dapp);
         data.add(dapp2);
+        data.add(dapp3);
         this.view.displayDappList(data);
 
     }

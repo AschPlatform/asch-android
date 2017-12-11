@@ -26,11 +26,14 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.AccountInfoActivity;
 import asch.so.wallet.activity.DappActivity;
 import asch.so.wallet.activity.PeersActivity;
 import asch.so.wallet.activity.VoteActivity;
 import asch.so.wallet.contract.DappCenterContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Dapp;
+import asch.so.wallet.model.entity.FullAccount;
 import asch.so.wallet.view.adapter.DappsCenterAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,6 +90,11 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
                         BaseActivity.start(getActivity(),PeersActivity.class,null);
                     }
                         break;
+                    case 2:
+                    {
+                        BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
+                    }
+                    break;
                 }
 //                Intent intent=new Intent(getActivity(),DappActivity.class);
 //                startActivity(intent);

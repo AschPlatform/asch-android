@@ -6,9 +6,13 @@ package asch.so.wallet.model.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
+
+import asch.so.wallet.util.AppUtil;
+import so.asch.sdk.impl.AschConst;
 
 /**
  *
@@ -174,6 +178,10 @@ public class FullAccount {
 
         public String getBalance() {
             return balance;
+        }
+
+        public BigDecimal getBalanceDecimalValue(){
+            return AppUtil.decimalFromBigint(Long.parseLong(balance), AschConst.CORE_COIN_PRECISION);
         }
 
         public void setBalance(String balance) {
