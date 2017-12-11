@@ -81,7 +81,7 @@ public class TransactionDetailFragment extends BaseFragment {
     private String amountFroTransaction(Transaction transaction){
         switch (Transaction.Type.fromCode(transaction.getType())){
             case Transfer:
-                return AppUtil.decimalFromBigint(transaction.getAmount(), AppConstants.PRECISION).floatValue()+" XAS";
+                return AppUtil.decimalFromBigint(transaction.getAmount(), AppConstants.PRECISION).toString()+" XAS";
             case Signature:
                 break;
             case Delegate:
