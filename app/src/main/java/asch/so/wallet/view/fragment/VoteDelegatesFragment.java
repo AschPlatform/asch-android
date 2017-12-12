@@ -30,6 +30,7 @@ import asch.so.wallet.model.entity.Delegate;
 import asch.so.wallet.presenter.VoteDelegatesPresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.VoteDelegatesAdapter;
+import asch.so.wallet.view.widget.AllPasswdsDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ezy.ui.layout.LoadingLayout;
@@ -202,7 +203,15 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     @Override
     public void onClick(View v) {
         if (v==voteBtn){
-            AppUtil.toastInfo(getContext(),"该功能正在开发中，敬请期待！");
+            List<Delegate> selectedDelegates=adapter.getSelectedDelegates();
+            if (selectedDelegates!=null && selectedDelegates.size()>0){
+                AllPasswdsDialog dialog = new AllPasswdsDialog(getContext(),true);
+                dialog.show();
+//                VoteConfirmationFragment fragment =VoteConfirmationFragment.newInstance(selectedDelegates);
+//                fragment.show(getFragmentManager(),"投票给受托人");
+            }
+
+            //AppUtil.toastInfo(getContext(),"该功能正在开发中，敬请期待！");
 //          LinkedHashMap<String,Delegate> delegatesMap= adapter.getSelectedDelegatesMap();
 //          Iterator<Map.Entry<String,Delegate>> it=delegatesMap.entrySet().iterator();
 //            ArrayList<Delegate> delegates=new ArrayList<>();

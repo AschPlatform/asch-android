@@ -61,8 +61,8 @@ android {
 
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-               def fileName ="asch-app-${defaultConfig.versionName}(${defaultConfig.versionCode})-${variant.buildType.name}.apk"
-                output.outputFile.renameTo(new File(outputFile.parent,fileName))
+                def fileName = "asch-app-${defaultConfig.versionName}(${defaultConfig.versionCode})-${variant.buildType.name}.apk"
+                output.outputFile.renameTo(new File(outputFile.parent, fileName))
 //                rename_andd_moveout_apk(output.outputFile,variant.buildType.name)
             }
         }
@@ -170,7 +170,6 @@ dependencies {
     compile rootProject.ext.dependencies["okhttpUtils"]
 
 }
-
 
 //def rename_andd_moveout_apk(orignalFile, buildType) {
 //    def intoFile = rootDir.parentFile.getAbsolutePath()+File.separator+"updateTest"

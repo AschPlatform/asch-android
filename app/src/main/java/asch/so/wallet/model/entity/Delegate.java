@@ -1,5 +1,8 @@
 package asch.so.wallet.model.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by kimziv on 2017/11/29.
  */
@@ -22,7 +25,7 @@ package asch.so.wallet.model.entity;
             "voted": true
         }
  */
-public class Delegate {
+public class Delegate implements Parcelable{
     private String username;
     private String address;
     private String publicKey;
@@ -148,5 +151,71 @@ public class Delegate {
 
     public void setVoted(boolean voted) {
         this.voted = voted;
+    }
+
+    public static final Parcelable.Creator<Delegate> CREATOR = new Creator<Delegate>(){
+        @Override
+        public Delegate createFromParcel(Parcel source) {
+            Delegate delegate = new Delegate();
+            delegate.setUsername(source.readString());
+            delegate.setAddress(source.readString());
+            delegate.setPublicKey(source.readString());
+            delegate.setBalance(source.readLong());
+            delegate.setVote(source.readLong());
+            delegate.setProducedblocks(source.readInt());
+            delegate.setMissedblocks(source.readInt());
+            delegate.setFees(source.readLong());
+            delegate.setRewards(source.readLong());
+            delegate.setRate(source.readInt());
+            delegate.setApproval(source.readFloat());
+            delegate.setProductivity(source.readFloat());
+            delegate.setForged(source.readLong());
+            delegate.setVoted(source.readByte() != 0);
+
+            return delegate;
+        }
+
+        @Override
+        public Delegate[] newArray(int size) {
+            return new Delegate[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    /*
+     private String username;
+    private String address;
+    private String publicKey;
+    private long balance;
+    private long vote;
+    private int producedblocks;
+    private int missedblocks;
+    private long fees;
+    private long rewards;
+    private int rate;
+    private float approval;
+    private float productivity;
+    private long forged;
+    private boolean voted;
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(username);
+        dest.writeString(address);
+        dest.writeString(publicKey);
+        dest.writeLong(balance);
+        dest.writeLong(vote);
+        dest.writeInt(producedblocks);
+        dest.writeInt(missedblocks);
+        dest.writeLong(fees);
+        dest.writeLong(rewards);
+        dest.writeInt(rate);
+        dest.writeFloat(approval);
+        dest.writeFloat(productivity);
+        dest.writeLong(forged);
+        dest.writeByte((byte)(voted?1:0));
     }
 }

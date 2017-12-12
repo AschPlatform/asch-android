@@ -15,9 +15,12 @@ import com.github.aakira.expandablelayout.ExpandableLayoutListenerAdapter;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.Utils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import asch.so.wallet.R;
 import asch.so.wallet.model.entity.Delegate;
@@ -31,8 +34,6 @@ import butterknife.ButterKnife;
  * TODO: Replace the implementation with code for your data type.
  */
 public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegatesAdapter.ViewHolder> {
-   // private final List<DummyItem> mValues;
-    //private final OnListFragmentInteractionListener mListener;
     private  OnSelectedDelegatesListener selectedDelegatesListener;
     private LinkedHashMap<String, Delegate> selectedDelegatesMap;
 
@@ -122,6 +123,17 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
 
     public LinkedHashMap<String, Delegate> getSelectedDelegatesMap() {
         return selectedDelegatesMap;
+    }
+
+    public List<Delegate> getSelectedDelegates(){
+        LinkedHashMap<String,Delegate> delegatesMap= getSelectedDelegatesMap();
+        Iterator<Map.Entry<String,Delegate>> it=delegatesMap.entrySet().iterator();
+        ArrayList<Delegate> delegates=new ArrayList<>();
+        while (it.hasNext()){
+            Map.Entry<String,Delegate> entry =it.next();
+            delegates.add(entry.getValue());
+        }
+        return delegates;
     }
 
     public OnSelectedDelegatesListener getSelectedDelegatesListener() {
