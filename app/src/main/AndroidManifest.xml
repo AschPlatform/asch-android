@@ -92,6 +92,11 @@
         <activity
             android:name=".activity.AccountInfoActivity"
             android:theme="@style/AppTheme"></activity>
+        <activity android:name=".activity.LockCoinsActivity"
+            android:theme="@style/AppTheme"
+            >
+
+        </activity>
 
     </application>
 

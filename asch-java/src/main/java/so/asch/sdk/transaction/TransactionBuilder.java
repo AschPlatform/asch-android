@@ -204,6 +204,8 @@ public class TransactionBuilder {
                         .setTimestamp(getSecurity().getTransactionTimestamp())
                         .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
             case Lock:
+                //new TransactionInfo()
+
                 break;
         }
         return null;

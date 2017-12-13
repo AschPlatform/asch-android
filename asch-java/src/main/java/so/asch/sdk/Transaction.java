@@ -79,6 +79,4 @@ public interface Transaction extends AschInterface{
     //transactionId	string	交易id
     AschResult addTransaction(String secret, int amount, String recipientId,
                               String senderPublicKey, String secondSecret, String multiSignAccountPublicKey);
-
-
 }

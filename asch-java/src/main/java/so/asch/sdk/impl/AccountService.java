@@ -126,4 +126,27 @@ public class AccountService extends so.asch.sdk.impl.AschRESTService implements 
             return fail(ex);
         }
     }
+
+    @Override
+    public AschResult lockCoins(long height, String secret, String secondSecret) {
+        try {
+            //Argument.require(Validation.isv);
+            Argument.require(Validation.isValidSecret(secret), "invalid secret");
+            Argument.require(Validation.isValidSecondSecret(secondSecret), "invalid secondSecret");
+
+            TransactionInfo transaction  = getTransactionBuilder().buildVote(null,null,"xxx","xxx");
+            return broadcastTransaction(transaction);
+           // ParameterMap parameters = new ParameterMap();
+//                    .put("secret", secret)
+//                    .put("amount", amount)
+//                    .put("recipientId", recipientId)
+//                    .put("secondSecret", secondSecret)
+//                    .put("senderPublicKey", senderPublicKey)
+//                    .put("multisigAccountPublicKey", multiSignAccountPublicKey);
+
+           // return post(AschServiceUrls.Transaction.CREATE_TRANSACTION, parameters);
+        } catch (Exception ex) {
+            return fail(ex);
+        }
+    }
 }

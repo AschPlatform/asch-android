@@ -128,4 +128,26 @@ public interface Account extends AschInterface {
     //accounts	json	账户信息元组，每个元素包含地址、余额、公钥
     AschResult getTopAccounts(QueryParameters parameters);
 
+    //    账户锁仓
+//  备注：锁仓后且区块高度未达到锁仓高度，则该账户不能执行如下操作：
+//
+//  交易类型type	备注
+//	主链XAS转账
+//	Dapp充值
+//	Dapp提现
+//	存储小文件
+//	发行商注册
+//	资产注册
+//	资发行产
+//	主链uia转账
+//    请求参数说明：
+//
+//    名称	类型	必填	说明
+//    transaction	json	Y	asch-js.transaction.createLock生成的交易数据
+//    返回参数说明：
+//
+//    名称	类型	说明
+//    success	boole	是否成功
+//    transactionId	string	交易id
+    AschResult lockCoins(long height, String secret, String secondSecret);
 }
