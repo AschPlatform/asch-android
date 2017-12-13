@@ -5,13 +5,16 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -60,6 +63,9 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     Button voteBtn;
     @BindView(R.id.status_tv)
     TextView statusTv;
+
+    private AllPasswdsDialog dialog=null;
+    KProgressHUD hud=null;
 
     private VoteDelegatesContract.Presenter presenter;
     private VoteDelegatesAdapter adapter;
@@ -196,8 +202,16 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     }
 
     @Override
-    public void displayVoteResult(String result) {
-        AppUtil.toastError(getContext(),result);
+    public void displayVoteResult(boolean success, String msg) {
+        dismissHUD();
+        if (success){
+            AppUtil.toastSuccess(getContext(),msg);
+            if (dialog!=null){
+                dialog.dismiss();
+            }
+        }else {
+            AppUtil.toastError(getContext(),msg);
+        }
     }
 
     @Override
@@ -205,26 +219,35 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         if (v==voteBtn){
             List<Delegate> selectedDelegates=adapter.getSelectedDelegates();
             if (selectedDelegates!=null && selectedDelegates.size()>0){
-                AllPasswdsDialog dialog = new AllPasswdsDialog(getContext(),true);
-                dialog.show();
-//                VoteConfirmationFragment fragment =VoteConfirmationFragment.newInstance(selectedDelegates);
-//                fragment.show(getFragmentManager(),"投票给受托人");
+                dialog = new AllPasswdsDialog(getContext(),true);
+                dialog.show(new AllPasswdsDialog.OnConfirmationListenner() {
+                    @Override
+                    public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                        if (TextUtils.isEmpty(errMsg)){
+                            voteForDelegates(secret, secondSecret);
+                            showHUD();
+                        }else {
+                            AppUtil.toastError(getContext(), errMsg);
+                        }
+                    }
+                });
             }
-
-            //AppUtil.toastInfo(getContext(),"该功能正在开发中，敬请期待！");
-//          LinkedHashMap<String,Delegate> delegatesMap= adapter.getSelectedDelegatesMap();
-//          Iterator<Map.Entry<String,Delegate>> it=delegatesMap.entrySet().iterator();
-//            ArrayList<Delegate> delegates=new ArrayList<>();
-//          while (it.hasNext()){
-//              Map.Entry<String,Delegate> entry =it.next();
-//              delegates.add(entry.getValue());
-//          }
-//          if (delegates.size()==0){
-//              AppUtil.toastError(getContext(),"请选择受托人");
-//              return;
-//          }
-//          presenter.voteForDelegates(delegates);
         }
+    }
+
+    private void voteForDelegates(String secret, String secondSecret){
+        LinkedHashMap<String,Delegate> delegatesMap= adapter.getSelectedDelegatesMap();
+        Iterator<Map.Entry<String,Delegate>> it=delegatesMap.entrySet().iterator();
+        ArrayList<Delegate> delegates=new ArrayList<>();
+        while (it.hasNext()){
+            Map.Entry<String,Delegate> entry =it.next();
+            delegates.add(entry.getValue());
+        }
+        if (delegates.size()==0){
+            AppUtil.toastError(getContext(),"请选择受托人");
+            return;
+        }
+        presenter.voteForDelegates(delegates,secret, secondSecret);
     }
 
     private void showSelectedDelegatesCount(){
@@ -242,6 +265,20 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         showSelectedDelegatesCount();
     }
 
+    private  void  showHUD(){
+        if (hud==null){
+            hud = KProgressHUD.create(getActivity())
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setCancellable(true)
+                    .show();
+        }
+    }
+
+    private  void  dismissHUD(){
+        if (hud!=null){
+            hud.dismiss();
+        }
+    }
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

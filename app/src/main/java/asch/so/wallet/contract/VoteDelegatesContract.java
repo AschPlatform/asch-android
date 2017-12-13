@@ -17,7 +17,7 @@ public interface VoteDelegatesContract {
 
         void displayMorePageDelegates(List<Delegate> delegates);
 
-        void displayVoteResult(String result);
+        void displayVoteResult(boolean success, String msg);
     }
 
     interface Presenter extends BasePresenter {
@@ -26,6 +26,6 @@ public interface VoteDelegatesContract {
 
         void loadMorePageDelegates();
 
-       void voteForDelegates(List<Delegate> delegates);
+       void voteForDelegates(List<Delegate> delegates,  String secret, String secondSecret);
     }
 }

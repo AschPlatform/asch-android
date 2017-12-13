@@ -44,8 +44,17 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
 
     @BindView(R.id.dialog_close)
     ImageView closeIv;
+    private OnConfirmationListenner listenner;
 
     private CompositeSubscription subscriptions;
+
+    public OnConfirmationListenner getListenner() {
+        return listenner;
+    }
+
+    public void setListenner(OnConfirmationListenner listenner) {
+        this.listenner = listenner;
+    }
 
     public AllPasswdsDialog(@NonNull Context context, boolean needSecondPasswd) {
         super(context, R.style.PasswordDialog);
@@ -79,14 +88,14 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
             case R.id.ok_btn: {
                 String accountPasswd=accountPasswdEt.getText().toString().trim();
                 String secondPasswd=secondPasswdEt.getText().toString().trim();
-                if (Validator.check(getContext(), Validator.Type.Secret,accountPasswd,"账户密码不正确"))
-                {
-                    return;
-                }
-                if (Validator.check(getContext(), Validator.Type.SecondSecret,secondPasswd,"二级密码不正确"))
-                {
-                    return;
-                }
+//                if (!Validator.check(getContext(), Validator.Type.Password,accountPasswd,"账户密码不正确"))
+//                {
+//                    return;
+//                }
+//                if (!Validator.check(getContext(), Validator.Type.SecondSecret,secondPasswd,"二级密码不正确"))
+//                {
+//                    return;
+//                }
                 checkAccountPasswd(accountPasswd, secondPasswd);
 
             }
@@ -94,18 +103,8 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
         }
     }
 
-    private void checkAccountPasswd(String accountPasswd, String secondPasswd) {
-//        if (Validator.check(getContext(), Validator.Type.Password,password,"账户密码不正确"))
-//        {
-//            return false;
-//        }
+    private void checkAccountPasswd(String accountPasswd, String secondSecret) {
         String encryptSecret = getAccount().getEncryptSeed();
-        String decryptSecret = Account.decryptSecret(accountPasswd, encryptSecret);
-        if (!Validation.isValidSecret(decryptSecret)) {
-            AppUtil.toastError(getContext(), "账户密码不正确");
-            return;
-        }
-
         Subscription subscription = Observable.create(new Observable.OnSubscribe<String>() {
 
             @Override
@@ -130,16 +129,28 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
                     @Override
                     public void onError(java.lang.Throwable e) {
                         if ("1".equals(e.getMessage())) {
-                            AppUtil.toastError(getContext(), "账户密码不正确");
+                           // AppUtil.toastError(getContext(), "账户密码不正确");
+                            if (listenner!=null){
+                                listenner.callback(AllPasswdsDialog.this,null,null,"账户密码不正确");
+                            }
                         }
+
                     }
 
                     @Override
-                    public void onNext(String password) {
-                        //view.displayTransferResult(true,"转账成功");
+                    public void onNext(String secret) {
+                        if (listenner!=null){
+                            listenner.callback(AllPasswdsDialog.this,secret,secondSecret,null);
+                        }
                     }
                 });
         subscriptions.add(subscription);
+    }
+
+
+    public void show(OnConfirmationListenner listenner) {
+        super.show();
+        this.setListenner(listenner);
     }
 
     @Override
@@ -152,7 +163,7 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
         return AccountsManager.getInstance().getCurrentAccount();
     }
 
-    public interface ConfirmationCallback {
-        void callback(AllPasswdsDialog dialog, String password);
+    public interface OnConfirmationListenner {
+        void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg);
     }
 }

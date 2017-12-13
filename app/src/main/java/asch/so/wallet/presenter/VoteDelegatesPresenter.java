@@ -134,28 +134,25 @@ public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
 
     //Vote
     @Override
-    public void voteForDelegates(List<Delegate> delegates){
+    public void voteForDelegates(List<Delegate> delegates, String secret, String secondSecret){
         //ArrayList<String> pubKeys=new ArrayList<>();
         String[] pubKeys =new String[delegates.size()];
         int i =0;
         for (Delegate delegate : delegates) {
             pubKeys[i++]=delegate.getPublicKey();
         }
-        String secret ="todo";// getAccount().getSeed();
-        String secondSecret = null;
+//        String secret ="todo";// getAccount().getSeed();
+//        String secondSecret = null;
         if (pubKeys.length==0)
             return;
 
         Subscription subscription = Observable.create((Observable.OnSubscribe<AschResult>) subscriber -> {
            AschResult result = AschSDK.Account.vote(pubKeys,null,secret,secondSecret);
             if (result.isSuccessful()) {
-//                JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
-//                JSONArray delegatesJsonArray = resultJSONObj.getJSONArray("delegates");
-//                List<Delegate> delegates = JSON.parseArray(delegatesJsonArray.toJSONString(), Delegate.class);
                 subscriber.onNext(result);
                 subscriber.onCompleted();
             } else {
-                subscriber.onError(result.getException());
+                subscriber.onError(new Throwable(result.getError()));
             }
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -169,19 +166,13 @@ public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
                     @Override
                     public void onError(java.lang.Throwable e) {
                         Log.d(TAG,"vote result:"+e==null?"vote result error":e.toString());
-//                        view.displayError(new UIException("网络错误"));
-//                        pager.finishLoad(true);
+                        view.displayVoteResult(false,e==null?"投票失败":e.toString());
                     }
 
                     @Override
                     public void onNext(AschResult result) {
                         Log.d(TAG,"vote result:"+result.getRawJson());
-//                        if (pager.isFirstPage()) {
-//                            view.displayFirstPageDelegates(delegates);
-//                        } else {
-//                            view.displayMorePageDelegates(delegates);
-//                        }
-//                        pager.finishLoad(true);
+                        view.displayVoteResult(true, "投票成功");
                     }
                 });
         subscriptions.add(subscription);
