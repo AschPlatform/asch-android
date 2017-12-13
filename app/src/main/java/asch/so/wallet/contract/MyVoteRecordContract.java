@@ -15,6 +15,8 @@ public interface MyVoteRecordContract {
         void displayFirstPageDelegates(List<Delegate> delegates);
 
         void displayMorePageDelegates(List<Delegate> delegates);
+
+        void displayDownVoteResult(boolean success, String msg);
     }
 
     interface Presenter extends BasePresenter {
@@ -22,5 +24,7 @@ public interface MyVoteRecordContract {
         void loadFirstPageDelegates();
 
         void loadMorePageDelegates();
+
+        void downVoteForDelegates(List<Delegate> delegates,  String secret, String secondSecret);
     }
 }

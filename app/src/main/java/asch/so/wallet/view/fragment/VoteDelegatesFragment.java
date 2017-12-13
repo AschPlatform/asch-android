@@ -65,7 +65,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     TextView statusTv;
 
     private AllPasswdsDialog dialog=null;
-    KProgressHUD hud=null;
+    private KProgressHUD hud=null;
 
     private VoteDelegatesContract.Presenter presenter;
     private VoteDelegatesAdapter adapter;
@@ -182,6 +182,11 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         }else {
             refreshLayout.finishLoadmore(500);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     @Override

@@ -108,9 +108,9 @@ public class Validation {
         return  (upvotes != null || downvotes != null) &&
                 (!isIntersected(upvotes, downvotes)) &&
                 (!(isDuplicate(upvotes) || isDuplicate(downvotes)))&&
-                ((upvotes == null ? 0 : upvotes.length) + (downvotes == null ? 0 : downvotes.length) <= 33)&&
-                (allIsValidPublicKey(upvotes)) ||
-                (allIsValidPublicKey(downvotes));
+                ((upvotes == null ? 0 : upvotes.length) + (downvotes == null ? 0 : downvotes.length) <= 33) &&
+                (allIsValidPublicKey(upvotes) ||
+                allIsValidPublicKey(downvotes));
     }
 
     public static boolean isValidMultiSignatureKeys(String[] addKeys, String[]removeKeys){
@@ -180,9 +180,11 @@ public class Validation {
     }
 
     public static  boolean allIsValidPublicKey(String[] items){
-        if (items == null || items.length ==0)
-            throw new IllegalArgumentException("items must not null or empty");
 
+        if (items == null || items.length ==0){
+         return false;
+        }
+            //throw new IllegalArgumentException("items must not null or empty");
         for(String o : items){
             if (!Validation.isValidPublicKey(o))
                 return false;

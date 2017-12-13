@@ -1,6 +1,7 @@
 package asch.so.wallet.presenter;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -16,6 +17,7 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.MyVoteRecordContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Delegate;
+import asch.so.wallet.view.adapter.MyVoteRecordAdapter;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -30,6 +32,7 @@ import so.asch.sdk.AschSDK;
  */
 
 public class MyVoteRecordPresenter implements MyVoteRecordContract.Presenter {
+    private static final String TAG= MyVoteRecordPresenter.class.getSimpleName();
     private Context context;
     private MyVoteRecordContract.View view;
     private CompositeSubscription subscriptions;
@@ -60,12 +63,6 @@ public class MyVoteRecordPresenter implements MyVoteRecordContract.Presenter {
         int limit = pageSize;
         String address = getAccount().getAddress();
         Subscription subscription = Observable.create((Observable.OnSubscribe<List<Delegate>>) subscriber -> {
-//            DelegateQueryParameters params =new DelegateQueryParameters()
-//                    .setAddress(address)
-//                    .orderByAscending("rate")
-//                    .setOffset(offset)
-//                    .setLimit(limit);
-
             AschResult result = AschSDK.Account.getVotedDelegates(address);
             if (result.isSuccessful()) {
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
@@ -104,6 +101,48 @@ public class MyVoteRecordPresenter implements MyVoteRecordContract.Presenter {
         subscriptions.add(subscription);
     }
 
+
+    @Override
+    public void downVoteForDelegates(List<Delegate> delegates, String secret, String secondSecret) {
+        String[] pubKeys =new String[delegates.size()];
+        int i =0;
+        for (Delegate delegate : delegates) {
+            pubKeys[i++]=delegate.getPublicKey();
+        }
+        if (pubKeys.length==0)
+            return;
+
+        Subscription subscription = Observable.create((Observable.OnSubscribe<AschResult>) subscriber -> {
+            AschResult result = AschSDK.Account.vote(null,pubKeys,secret,secondSecret);
+            if (result.isSuccessful()) {
+                subscriber.onNext(result);
+                subscriber.onCompleted();
+            } else {
+                subscriber.onError(new Throwable(result.getError()));
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<AschResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(java.lang.Throwable e) {
+                        Log.d(TAG,"vote result:"+e==null?"vote result error":e.toString());
+                        view.displayDownVoteResult(false,e==null?"取消投票失败":e.toString());
+                    }
+
+                    @Override
+                    public void onNext(AschResult result) {
+                        Log.d(TAG,"vote result:"+result.getRawJson());
+                        view.displayDownVoteResult(true, "取消投票成功");
+                    }
+                });
+        subscriptions.add(subscription);
+    }
 
     private Account getAccount() {
         return AccountsManager.getInstance().getCurrentAccount();
