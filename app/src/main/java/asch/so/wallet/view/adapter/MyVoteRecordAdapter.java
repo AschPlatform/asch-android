@@ -109,7 +109,7 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         return delegates;
     }
 
-    public void removeVotedDelegates(){
+    public void removeDownVotedDelegates(){
         LinkedHashMap<String,Delegate> delegatesMap= getSelectedDelegatesMap();
         Iterator<Map.Entry<String,Delegate>> it=delegatesMap.entrySet().iterator();
         ArrayList<Delegate> delegates=new ArrayList<>(getData());

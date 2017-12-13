@@ -210,6 +210,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     public void displayVoteResult(boolean success, String msg) {
         dismissHUD();
         if (success){
+            adapter.disableVotedDelegates();
             AppUtil.toastSuccess(getContext(),msg);
             if (dialog!=null){
                 dialog.dismiss();

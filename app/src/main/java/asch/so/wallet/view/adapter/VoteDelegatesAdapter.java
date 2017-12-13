@@ -84,26 +84,6 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
                 }
             }
         });
-
-
-       // viewHolder.expandableLayout.setInRecyclerView(true);
-        //viewHolder.expandableLayout.setBackgroundColor(ContextCompat.getColor(ContextCompat.createDeviceProtectedStorageContext(), item.colorId2));
-       // viewHolder.expandableLayout.setInterpolator(item.interpolator);
-        //viewHolder.expandableLayout.setExpanded(expandState.get(position));
-//        viewHolder.expandableLayout.setListener(new ExpandableLayoutListenerAdapter() {
-//            @Override
-//            public void onPreOpen() {
-//                createRotateAnimator(viewHolder.buttonLayout, 0f, 180f).start();
-//                expandState.put(position, true);
-//            }
-//
-//            @Override
-//            public void onPreClose() {
-//                createRotateAnimator(holder.buttonLayout, 180f, 0f).start();
-//                expandState.put(position, false);
-//            }
-//        });
-
     }
 
     private void selectDelegate(Delegate delegate) {
@@ -134,6 +114,20 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
             delegates.add(entry.getValue());
         }
         return delegates;
+    }
+
+    public void disableVotedDelegates(){
+        LinkedHashMap<String,Delegate> delegatesMap= getSelectedDelegatesMap();
+        Iterator<Map.Entry<String,Delegate>> it=delegatesMap.entrySet().iterator();
+        ArrayList<Delegate> delegates=new ArrayList<>(getData());
+        while (it.hasNext()){
+            Map.Entry<String,Delegate> entry =it.next();
+            Delegate delegate=entry.getValue();
+            if (delegatesMap.containsValue(delegate)){
+                delegate.setVoted(true);
+            }
+        }
+       this.notifyDataSetChanged();
     }
 
     public OnSelectedDelegatesListener getSelectedDelegatesListener() {

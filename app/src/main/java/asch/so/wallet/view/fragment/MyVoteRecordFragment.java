@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -25,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.MyVoteRecordContract;
 import asch.so.wallet.model.entity.Delegate;
@@ -242,7 +240,10 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
     public void displayDownVoteResult(boolean success, String msg) {
         dismissHUD();
         if (success){
-            adapter.removeVotedDelegates();
+            adapter.removeDownVotedDelegates();
+            if (adapter.getData().isEmpty()){
+                loadingLayout.showEmpty();
+            }
             AppUtil.toastSuccess(getContext(),msg);
             if (dialog!=null){
                 dialog.dismiss();
