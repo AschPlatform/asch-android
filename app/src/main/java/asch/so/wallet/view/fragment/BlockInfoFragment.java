@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.TimeUtils;
+
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
@@ -73,7 +75,8 @@ public class BlockInfoFragment extends BaseFragment implements BlockInfoContract
             FullAccount.VersionInfo versionInfo =account.getVersion();
 
             blockHeightTv.setText(String.valueOf(blockInfo.getHeight()));
-            blockTimeTv.setText(AschSDK.Helper.dateFromAschTimestamp((int) blockInfo.getTimestamp()).toString());
+            String dateTime = TimeUtils.date2String(AschSDK.Helper.dateFromAschTimestamp((int) blockInfo.getTimestamp()));
+            blockTimeTv.setText(dateTime);
             versionTv.setText(versionInfo.getVersion());
             buildTv.setText(versionInfo.getBuild());
             netTv.setText(versionInfo.getNet());
