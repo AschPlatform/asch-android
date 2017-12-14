@@ -1,9 +1,11 @@
 package asch.so.wallet.view.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -43,7 +45,10 @@ public class TransactionDetailFragment extends BaseFragment {
     TextView txConfirmationsTv;
     @BindView(R.id.block_id_tv)
     TextView txBlockIdTv;
-
+    @BindView(R.id.memo_ll)
+    LinearLayout memoLl;
+    @BindView(R.id.memo_tv)
+    TextView memoTv;
 
 
     public static TransactionDetailFragment newInstance() {
@@ -70,10 +75,15 @@ public class TransactionDetailFragment extends BaseFragment {
         txSenderTv.setText(transaction.getSenderId());
         txReceiveTv.setText(transaction.getRecipientId());
         txAmountTv.setText(amountFroTransaction(transaction));
+        if (TextUtils.isEmpty(transaction.getMessage())){
+            memoLl.setVisibility(View.GONE);
+        }else {
+            memoLl.setVisibility(View.VISIBLE);
+            memoTv.setText(transaction.getMessage());
+        }
         txFeeTv.setText(AppUtil.decimalFromBigint(transaction.getFee(), AppConstants.PRECISION).floatValue()+" XAS");
         txConfirmationsTv.setText(transaction.getConfirmations()+"");
         txBlockIdTv.setText(transaction.getBlockId());
-
 
         return rootView;
     }

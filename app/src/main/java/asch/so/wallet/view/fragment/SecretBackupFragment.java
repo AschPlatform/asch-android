@@ -1,6 +1,7 @@
 package asch.so.wallet.view.fragment;
 
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +47,24 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
         copyBtn.setOnClickListener(this);
        String secret=getArguments().getString("secret");
         secretTv.setText(secret);
-
+        showAlertDialog();
         presenter=new SecretBackupPresenter(getContext(),this);
         return rootView;
+    }
+
+    private void showAlertDialog(){
+        AlertDialog.Builder builder =new AlertDialog
+                .Builder(getContext());
+        builder.setTitle("重要提示")
+        .setMessage("助记词用于恢复账户，只能备份一次，请将它抄下来，并保存在安全的地方！")
+        .setCancelable(false)
+        .setPositiveButton("确定",null)
+        .show();
+
+//        AlertDialog dialog =new AlertDialog(getContext())
+//                .setTitle("重要提示")
+//                .setContent("助记词用于恢复账户，只能备份一次，请将它抄下来，并保存在安全的地方！");
+//        dialog.show();
     }
 
     @Override
