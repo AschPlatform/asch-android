@@ -5,11 +5,13 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.text.format.DateUtils;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
@@ -61,23 +63,34 @@ public class AppUtil {
     //Custom Toast
 
     public static void toastError(Context context, String msg){
-        Toasty.error(context,msg,Toast.LENGTH_SHORT,true).show();
+        Toast toast = Toasty.error(context,msg,Toast.LENGTH_SHORT,true);
+        toast.setGravity(Gravity.CENTER, 0, ConvertUtils.dp2px(-130));
+        toast.show();
+
     }
 
     public static void toastSuccess(Context context, String msg){
-        Toasty.success(context,msg,Toast.LENGTH_SHORT,true).show();
+        Toast toast = Toasty.success(context,msg,Toast.LENGTH_SHORT,true);
+        toast.setGravity(Gravity.CENTER, 0, ConvertUtils.dp2px(-130));
+        toast.show();
     }
 
     public static void toastInfo(Context context, String msg){
-        Toasty.info(context,msg,Toast.LENGTH_SHORT,true).show();
+        Toast toast = Toasty.info(context,msg,Toast.LENGTH_SHORT,true);
+        toast.setGravity(Gravity.CENTER, 0, ConvertUtils.dp2px(-130));
+        toast.show();
     }
 
     public static void toastWarning(Context context, String msg){
-        Toasty.warning(context,msg,Toast.LENGTH_SHORT,true).show();
+        Toast toast = Toasty.warning(context,msg,Toast.LENGTH_SHORT,true);
+        toast.setGravity(Gravity.CENTER, 0, ConvertUtils.dp2px(-130));
+        toast.show();
     }
 
     public static void toastNormal(Context context, String msg){
-        Toasty.normal(context,msg,Toast.LENGTH_SHORT).show();
+        Toast toast = Toasty.normal(context,msg,Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, ConvertUtils.dp2px(-130));
+        toast.show();
     }
 
 

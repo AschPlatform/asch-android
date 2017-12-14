@@ -109,20 +109,20 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
 //            }
 //        });
 
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(final RefreshLayout refreshlayout) {
-                refreshlayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (adapter.getItemCount() < 2) {
-                           presenter.loadDappList();
-                        }
-                        refreshlayout.finishRefresh();
-                    }
-                },2000);
-            }
-        });
+//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh(final RefreshLayout refreshlayout) {
+//                refreshlayout.getLayout().postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        if (adapter.getItemCount() < 2) {
+//                           presenter.loadDappList();
+//                        }
+//                        refreshlayout.finishRefresh();
+//                    }
+//                },2000);
+//            }
+//        });
 
 //
 //        //添加Header

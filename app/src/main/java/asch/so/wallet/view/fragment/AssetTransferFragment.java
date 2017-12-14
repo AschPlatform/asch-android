@@ -180,6 +180,12 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 if (!Validator.check(getContext(), Validator.Type.Address,targetAddress,"无效地址，请重新输入")){
                    return;
                 }
+
+                if (targetAddress.equals(getAccount().getAddress())){
+                    AppUtil.toastError(getContext(),"接受地址和发送地址不能相同");
+                    return;
+                }
+
                 if (!Validator.check(getContext(), Validator.Type.Amount,ammountStr,"无效金额")){
                     return;
                 }
