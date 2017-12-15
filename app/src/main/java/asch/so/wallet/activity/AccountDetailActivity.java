@@ -131,6 +131,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                     if (secret!=null){
                         Bundle bundle=new Bundle();
                         bundle.putString("secret",secret);
+                        bundle.putInt("action", SecretBackupActivity.Action.BackupFromAccountDetail.getValue());
                         BaseActivity.start(thiz,SecretBackupActivity.class,bundle);
                         dialog.dismiss();
                     }else {

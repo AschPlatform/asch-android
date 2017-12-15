@@ -82,12 +82,7 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
 
     private void copySecret(String secret){
         presenter.backupSecret(secret);
-        AppUtil.copyText(getActivity(),secret);
-
-//        ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
-//        clipboardManager.setText(secret);
-//        presenter.backupSecret(secret);
-//        Toast.makeText(getContext(),"复制成功",Toast.LENGTH_SHORT).show();
+        AppUtil.copyTextWithWarning(getActivity(),secret, "已经复制到粘贴板，但还需您手动备份到安全的地方！");
     }
 
     @Override

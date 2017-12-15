@@ -20,7 +20,9 @@ public class SecretBackupActivity extends TitleToolbarActivity {
 
     public enum Action {
         BackupFromStart(1),
-        BackupFromInApp(2);
+        BackupFromInApp(2),
+        BackupFromAccountDetail(3),
+        ;
 
         public int value;
 
@@ -34,6 +36,8 @@ public class SecretBackupActivity extends TitleToolbarActivity {
                     return BackupFromStart;
                 case 2:
                     return BackupFromInApp;
+                case 3:
+                    return BackupFromAccountDetail;
                 default:
                     return null;
             }
@@ -62,6 +66,8 @@ public class SecretBackupActivity extends TitleToolbarActivity {
             ActivityStackManager.getInstance().finishAll();
         }else if (action==Action.BackupFromInApp){
             ActivityStackManager.getInstance().finishNActivity(2);
+        }else if(action==Action.BackupFromAccountDetail){
+            super.onBackClicked(v);
         }
     }
 }

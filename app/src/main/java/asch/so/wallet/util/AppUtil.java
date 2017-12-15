@@ -53,11 +53,26 @@ public class AppUtil {
     }
 
     public static void copyText(Context context, String content){
+//        ClipboardManager clipboardManager = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+//        //ClipData clipData = ClipData.newPlainText(null, content);
+//        clipboardManager.setText(content);
+//        //clipboardManager.setPrimaryClip(clipData);
+//        AppUtil.toastSuccess(context,"复制成功");
+        copyText(context,content,"复制成功");
+    }
+
+    public static void copyText(Context context, String content, String msg){
         ClipboardManager clipboardManager = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
         //ClipData clipData = ClipData.newPlainText(null, content);
         clipboardManager.setText(content);
         //clipboardManager.setPrimaryClip(clipData);
-        AppUtil.toastSuccess(context,"复制成功");
+        AppUtil.toastSuccess(context,msg);
+    }
+
+    public static void copyTextWithWarning(Context context, String content, String msg){
+        ClipboardManager clipboardManager = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboardManager.setText(content);
+        AppUtil.toastWarning(context,msg);
     }
 
     //Custom Toast
