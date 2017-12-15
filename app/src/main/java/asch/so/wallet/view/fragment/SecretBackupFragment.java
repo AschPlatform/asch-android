@@ -60,11 +60,6 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
         .setCancelable(false)
         .setPositiveButton("确定",null)
         .show();
-
-//        AlertDialog dialog =new AlertDialog(getContext())
-//                .setTitle("重要提示")
-//                .setContent("助记词用于恢复账户，只能备份一次，请将它抄下来，并保存在安全的地方！");
-//        dialog.show();
     }
 
     @Override
