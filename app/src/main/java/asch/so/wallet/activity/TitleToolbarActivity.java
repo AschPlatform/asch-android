@@ -1,5 +1,6 @@
 package asch.so.wallet.activity;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -23,6 +24,7 @@ public class TitleToolbarActivity extends BaseActivity {
         //setContentView(R.layout.activity_base);
         setContentView(activityLayoutResId());
         initToolBar();
+//        setOrientation();
         StatusBarUtil.immersive(this);
     }
 
@@ -59,6 +61,10 @@ public class TitleToolbarActivity extends BaseActivity {
         toolbar.setTitle(title);
         toolbar.setTitleVisible(true);
     }
+
+//    protected void setOrientation(){
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT);
+//    }
 
     protected void setRightTitle(String title){
         toolbar.setRightText(title);

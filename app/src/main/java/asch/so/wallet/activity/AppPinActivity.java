@@ -1,5 +1,6 @@
 package asch.so.wallet.activity;
 
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -48,6 +49,7 @@ public class AppPinActivity extends AppLockActivity {
 
         initToolBar();
         StatusBarUtil.immersive(this);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
     }
 

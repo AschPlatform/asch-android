@@ -3,6 +3,7 @@ package asch.so.base.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -89,9 +90,12 @@ public class BaseActivity extends AppCompatActivity {
             ActivityStackManager.getInstance().push(this);
             hasInit = true;
         }
-
+        setOrientation();
     }
 
+    protected void setOrientation(){
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -100,6 +104,8 @@ public class BaseActivity extends AppCompatActivity {
             ActivityStackManager.getInstance().push(this);
             hasInit = true;
         }
+
+        setOrientation();
 //        mFragmentClazz = getIntent().getStringExtra(EXTRA_FRAGMENT);
 //        FrameLayout frameLayout = new FrameLayout(this);
 //        frameLayout.setId(widget_frame);

@@ -2,6 +2,7 @@ package asch.so.wallet.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -65,6 +66,7 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         StatusBarUtil.immersive(this);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
