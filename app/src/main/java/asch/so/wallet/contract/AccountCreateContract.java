@@ -15,7 +15,7 @@ public interface AccountCreateContract {
 
         //void resetSeed(String seed);
         void displayCheckMessage(String msg);
-        void displayCreateAccountResult(boolean res, String msg);
+        void displayCreateAccountResult(boolean res, String msg, String secret);
     }
 
     interface Presenter extends BasePresenter{

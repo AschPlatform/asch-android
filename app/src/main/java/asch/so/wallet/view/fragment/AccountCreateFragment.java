@@ -1,5 +1,7 @@
 package asch.so.wallet.view.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,13 +16,17 @@ import android.widget.Toast;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import asch.so.base.activity.ActivityStackManager;
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.activity.BackupActivity;
 import asch.so.wallet.activity.FirstStartActivity;
 import asch.so.wallet.activity.MainTabActivity;
+import asch.so.wallet.activity.SecretBackupActivity;
 import asch.so.wallet.contract.AccountCreateContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountCreatePresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
@@ -166,29 +172,88 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
 
 
     @Override
-    public void displayCreateAccountResult(boolean res, String msg) {
+    public void displayCreateAccountResult(boolean res, String msg, String secret) {
 
         if (getActivity()==null)
             return;
         dismissHUD();
         if (res) {
             AppUtil.toastSuccess(getContext(), msg);
+            showSuccessDialog(secret);
         }else {
             AppUtil.toastError(getContext(),msg);
         }
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (getArguments()!=null &&  FirstStartActivity.class.getName().equals(getArguments().getString("clazz"))){
+//                    Intent intent =new Intent(getActivity(), MainTabActivity.class);
+//                    startActivity(intent);
+//                    ActivityStackManager.getInstance().finishAll();
+//                }else {
+//                    getActivity().finish();
+//                }
+//            }
+//        }, 500);
+
+    }
+
+    private void goback(){
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (getArguments()!=null &&  FirstStartActivity.class.getName().equals(getArguments().getString("clazz"))){
-                    Intent intent =new Intent(getActivity(), MainTabActivity.class);
-                    startActivity(intent);
-                    ActivityStackManager.getInstance().finishAll();
-                }else {
-                    getActivity().finish();
-                }
+              finishPage();
             }
         }, 500);
+    }
 
+    private void finishPage(){
+        if (getArguments()!=null &&  FirstStartActivity.class.getName().equals(getArguments().getString("clazz"))){
+            Intent intent =new Intent(getActivity(), MainTabActivity.class);
+            startActivity(intent);
+            ActivityStackManager.getInstance().finishAll();
+        }else {
+            getActivity().finish();
+        }
+    }
+
+    private void goBackup(String secret){
+        if (secret!=null) {
+            Bundle bundle = new Bundle();
+            bundle.putString("secret", secret);
+            if (getArguments()!=null &&  FirstStartActivity.class.getName().equals(getArguments().getString("clazz"))){
+                bundle.putInt("action", SecretBackupActivity.Action.BackupFromStart.getValue());
+            }else {
+                bundle.putInt("action", SecretBackupActivity.Action.BackupFromInApp.getValue());
+            }
+
+            BaseActivity.start(getActivity(), SecretBackupActivity.class, bundle);
+        }
+    }
+
+
+    public void showSuccessDialog(String secret){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("安全提示")
+                .setCancelable(false)
+        .setMessage("尊敬的用户您好，当前账户已经创建成功，为了账户资金安全考虑，务必请您对账户进行备份！")
+        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                 goBackup(secret);
+            }
+        })
+        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                goback();
+
+            }
+        }).show()
+        ;
     }
 }

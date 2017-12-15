@@ -29,6 +29,7 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
     private AccountCreateContract.View view;
     private Context context;
     private CompositeSubscription subscriptions;
+    private String tmpSecret;
 
     public  AccountCreatePresenter(Context context, AccountCreateContract.View view){
         this.context=context;
@@ -53,6 +54,7 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
                     subscriber.onError(new Throwable("2"));
                     return;
                 }
+                tmpSecret=secret;
                 Account account=createAccount(secret, name,password,hint);
                 if (account!=null){
                     subscriber.onNext(account);
@@ -87,7 +89,8 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
                    public void onNext(Account account) {
                        AccountsManager.getInstance().addAccount(account);
                        AppConfig.putLastAccountAddress(account.getAddress());
-                       view.displayCreateAccountResult(true,"账户创建成功");
+                       view.displayCreateAccountResult(true,"账户创建成功", tmpSecret);
+                       tmpSecret=null;
                    }
                });
        subscriptions.add(subscription);
