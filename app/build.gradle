@@ -5,6 +5,22 @@ apply plugin: 'realm-android'
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+    signingConfigs {
+        release {
+            keyAlias 'aschkey'
+            keyPassword 'asch123456!'
+            storeFile file(rootProject.ext.release_keystore)
+            storePassword 'asch123456!'
+        }
+        debug {
+            keyAlias 'aschkey'
+            keyPassword 'asch123456!'
+            storeFile file(rootProject.ext.debug_keystore)
+            storePassword 'asch123456!'
+        }
+    }
+
     defaultConfig {
         renderscriptTargetApi rootProject.ext.android.targetSdkVersion
         renderscriptSupportModeEnabled true

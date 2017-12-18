@@ -101,7 +101,7 @@ public class WalletApplication extends MultiDexApplication {
 
     private void initBuglySDK() {
         CrashReport.initCrashReport(getApplicationContext(), AppConstants.BUGLY_APP_ID, true);
-        CrashReport.setAppChannel(this, "Release");
+        CrashReport.setAppChannel(this, BuildConfig.LOG_DEBUG?AppConstants.DEBUG_TAG:AppConstants.RELEASE_TAG);
         String verName =AppUtils.getAppVersionName();
         int verCode= AppUtils.getAppVersionCode();
         CrashReport.setAppVersion(getApplicationContext(), String.format("%s(%d)",verName,verCode));

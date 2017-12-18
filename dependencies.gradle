@@ -48,8 +48,8 @@ project.ext {
             applicationId    : "asch.so.wallet",
             minSdkVersion    : 16,
             targetSdkVersion : 26,
-            versionCode      : 18,
-            versionName      : "1.0.7"
+            versionCode      : 20,
+            versionName      : "1.0.9"
     ]
 
     aschsdk = [
@@ -62,6 +62,10 @@ project.ext {
             versionName      : "1.0.1"
     ]
 
+    //调试签名
+    debug_keystore = getRootDir().getPath() + "/keysotre/release.jks"
+    release_keystore = getRootDir().getPath() + "/keysotre/release.jks"
+    //所有的依赖库
     dependencies = [
             //android-support
             "support-v4"                  : "com.android.support:support-v4:${supportVersion}",
