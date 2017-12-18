@@ -88,7 +88,7 @@ public final class RESTOkHttp {
 //                    content));
 //        }
       
-         System.out.println("++++++content:"+content);
+         //System.out.println("++++++content:"+content);
 
         if (!content.contains("\"success\":")){
             throw new IOException(String.format("Http server response failed, code:%d, reason:%s.\n content:%s",

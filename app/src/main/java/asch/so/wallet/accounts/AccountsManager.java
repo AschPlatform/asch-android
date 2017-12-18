@@ -6,6 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -236,7 +237,7 @@ public class AccountsManager extends Observable {
                 try {
                     AschResult result = AschSDK.Account.secureLogin(publicKey);
                     if (result != null && result.isSuccessful()) {
-                        Log.i(TAG, result.getRawJson());
+                        LogUtils.iTag(TAG, result.getRawJson());
                         FullAccount fullAccount = JSON.parseObject(result.getRawJson(), FullAccount.class);
                         subscriber.onNext(fullAccount);
                         subscriber.onCompleted();
@@ -256,7 +257,7 @@ public class AccountsManager extends Observable {
             @Override
             public void call(Subscriber<? super List<Balance>> subscriber) {
                 AschResult result = AschSDK.UIA.getAddressBalances(address, 100, 0);
-                Log.i(TAG, result.getRawJson());
+                LogUtils.iTag(TAG, result.getRawJson());
                 if (result.isSuccessful()) {
                     JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                     JSONArray balanceJsonArray = resultJSONObj.getJSONArray("balances");
@@ -308,13 +309,13 @@ public class AccountsManager extends Observable {
 
             @Override
             public void onError(java.lang.Throwable e) {
-                Log.d("xasObservable error:", e.toString());
+                LogUtils.dTag("xasObservable error:", e.toString());
                 //view.displayError(new UIException("获取余额错误"));
             }
 
             @Override
             public void onNext(FullAccount fullAccount) {
-                Log.d(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getBalances().toString());
+                LogUtils.dTag(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getBalances().toString());
                 account.setFullAccount(fullAccount);
             }
         });

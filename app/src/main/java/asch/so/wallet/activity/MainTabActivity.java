@@ -42,6 +42,7 @@ import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
 import asch.so.wallet.view.fragment.AssetBalanceFragment;
 import asch.so.wallet.view.fragment.DappCenterFragment;
 import asch.so.wallet.view.fragment.MineFragment;
+import asch.so.wallet.view.fragment.TodoFragment;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -55,9 +56,8 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     private MenuItem menuItem;
     private BottomNavigationView bottomNavigationView;
 
-    private AssetBalancePresenter assetsPresenter;
-    private DappCenterPresenter dappCenterPresenter;
-    //private MinePresenter minePresenter;
+//    private AssetBalancePresenter assetsPresenter;
+//    private DappCenterPresenter dappCenterPresenter;
     private MainPresenter mainPresenter;
     private boolean isExit;
 
@@ -132,7 +132,7 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
 
     private void configLockManager(){
         LockManager<AppPinActivity> lockManager = LockManager.getInstance();
-        lockManager.getAppLock().setTimeout(60*60*1000);
+        lockManager.getAppLock().setTimeout(15*60*1000);
     }
 
     @Override
@@ -154,19 +154,21 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
 
         AssetBalanceFragment assetsFragment=AssetBalanceFragment.newInstance();
         DappCenterFragment dappCenterFragment=DappCenterFragment.newInstance();
+        //TodoFragment dappFragment=TodoFragment.newInstance();
         MineFragment mineFragment=MineFragment.newInstance();
 
 
         adapter.addFragment(assetsFragment);
         adapter.addFragment(dappCenterFragment);
+       // adapter.addFragment(dappFragment);
         adapter.addFragment(mineFragment);
         viewPager.setAdapter(adapter);
 
-        assetsPresenter =new AssetBalancePresenter(assetsFragment);
-        assetsFragment.setPresenter(assetsPresenter);
+//        assetsPresenter =new AssetBalancePresenter(assetsFragment);
+//        assetsFragment.setPresenter(assetsPresenter);
 
-        dappCenterPresenter=new DappCenterPresenter(this,dappCenterFragment);
-        dappCenterPresenter.loadDappList();
+//        dappCenterPresenter=new DappCenterPresenter(this,dappCenterFragment);
+//        dappCenterPresenter.loadDappList();
 
 //        minePresenter=new MinePresenter(this, mineFragment);
 //        mineFragment.setPresenter(minePresenter);

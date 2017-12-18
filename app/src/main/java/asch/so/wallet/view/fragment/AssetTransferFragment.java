@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.blankj.utilcode.util.LogUtils;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.math.BigInteger;
@@ -340,7 +341,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
     @Override
    public void displayAssets(LinkedHashMap<String,BaseAsset> assetsMap){
-        Log.d(TAG,"++++assets:"+assetsMap.toString());
+        LogUtils.dTag(TAG,"++++assets:"+assetsMap.toString());
         List<String> nameList=new ArrayList<>(assetsMap.keySet());
         int selectIndex= nameList.indexOf(currency);
         BaseAsset asset=assetsMap.get(currency);

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
 import net.i2p.crypto.eddsa.spec.EdDSAParameterSpec;
 import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
@@ -106,7 +108,7 @@ public class TestData {
    InputStream wis = context.getResources().getAssets().open(Bip39.BIP39_WORDLIST_FILENAME);
    String words = Bip39.generateMnemonic(wis,12);
 
-   Log.i(TAG, "words:"+words);
+   LogUtils.iTag(TAG, "words:"+words);
    return words;
   }catch (Exception ex){
    ex.printStackTrace();
@@ -123,14 +125,14 @@ public class TestData {
  }
 
  public static   void testSDK(){
-  Log.d(TAG, "publicKey:testSDK begin");
+  LogUtils.dTag(TAG, "publicKey:testSDK begin");
   String publicKey = AschSDK.Helper.getPublicKey(secret);
-  Log.d(TAG, "publicKey:"+publicKey);
+  LogUtils.dTag(TAG, "publicKey:"+publicKey);
 
   String  address = null;
   try {
    address = AschFactory.getInstance().getSecurity().getAddress(publicKey);
-   Log.i(TAG, "address:"+address);
+   LogUtils.iTag(TAG, "address:"+address);
   } catch (SecurityException e) {
    e.printStackTrace();
   }

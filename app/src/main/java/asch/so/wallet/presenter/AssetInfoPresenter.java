@@ -6,6 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +69,7 @@ public class AssetInfoPresenter implements AssetInfoContract.Presenter {
                     @Override
                     public void call(Subscriber<? super List<UIAAsset>> subscriber) {
                         AschResult result = AschSDK.UIA.getAddressBalances(address,100,0);
-                        Log.i(TAG,result.getRawJson());
+                        LogUtils.iTag(TAG,result.getRawJson());
                         if (result.isSuccessful()){
                             JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
                             JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");

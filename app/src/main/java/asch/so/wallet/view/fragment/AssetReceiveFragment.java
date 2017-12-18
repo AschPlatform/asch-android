@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.blankj.utilcode.util.ImageUtils;
+import com.blankj.utilcode.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -183,7 +184,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
     @Override
     public void displayAssets(LinkedHashMap<String,BaseAsset> assetsMap) {
-        Log.d(TAG,"++++assets:"+assetsMap.toString());
+        LogUtils.dTag(TAG,"++++assets:"+assetsMap.toString());
         List<String> nameList=new ArrayList<>(assetsMap.keySet());
         int selectIndex= nameList.indexOf(currency);
         selectIndex=selectIndex==-1?0:selectIndex;

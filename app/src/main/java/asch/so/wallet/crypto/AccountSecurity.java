@@ -2,6 +2,8 @@ package asch.so.wallet.crypto;
 
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 
@@ -29,7 +31,7 @@ public class AccountSecurity {
         try {
             SecretKeys key =generateKeyFromPassword(passwd,saltString(salt));
             AesCbcWithIntegrity.CipherTextIvMac civ =encrypt(account.getSeed(), key);
-            Log.i(TAG, "Encrypted: " + civ.toString());
+            LogUtils.iTag(TAG, "Encrypted: " + civ.toString());
             account.setEncryptSeed(civ.toString());
             AesCbcWithIntegrity.CipherTextIvMac civ2 =encrypt(passwd, key);
             account.setEncryptPasswd(civ2.toString());

@@ -3,6 +3,8 @@ package asch.so.wallet.presenter;
 import android.content.Context;
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.util.Observer;
 
 import asch.so.base.view.Throwable;
@@ -72,13 +74,13 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        Log.d("xasObservable error:",e.toString());
+                        LogUtils.dTag("xasObservable error:",e.toString());
                         view.displayError(new Throwable("获取余额错误"));
                     }
 
                     @Override
                     public void onNext(FullAccount fullAccount) {
-                        Log.d(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getBalances().toString());
+                        LogUtils.dTag(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getBalances().toString());
                         getAccount().setFullAccount(fullAccount);
 
                         if (fullAccount!=null){

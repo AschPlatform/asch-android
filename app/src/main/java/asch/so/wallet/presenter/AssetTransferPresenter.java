@@ -6,6 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.LogUtils;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -84,7 +85,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                     }else {
                         result = AschSDK.UIA.transfer(currency,targetAddress,amount,message,decryptSecret,secondSecret);
                     }
-                    Log.d(TAG,"transfer result:"+result==null?"null":result.getRawJson());
+                    LogUtils.dTag(TAG,"transfer result:"+result==null?"null":result.getRawJson());
                     if (result!=null && result.isSuccessful()){
                         subscriber.onNext(result);
                         subscriber.onCompleted();
@@ -116,7 +117,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
 
                         @Override
                         public void onNext(AschResult aschResult) {
-                            Log.i(TAG, "+++++++"+aschResult.getRawJson());
+                            LogUtils.iTag(TAG, "+++++++"+aschResult.getRawJson());
                             view.displayTransferResult(true,"转账成功");
                         }
                     });

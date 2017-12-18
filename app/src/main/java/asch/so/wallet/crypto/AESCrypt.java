@@ -3,6 +3,8 @@ package asch.so.wallet.crypto;
 import android.util.Base64;
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
@@ -79,7 +81,7 @@ public final class AESCrypt {
             return encoded;
         } catch (UnsupportedEncodingException e) {
             if (DEBUG_LOG_ENABLED)
-                Log.e(TAG, "UnsupportedEncodingException ", e);
+                LogUtils.eTag(TAG, "UnsupportedEncodingException ", e);
             throw new GeneralSecurityException(e);
         }
     }
@@ -134,7 +136,7 @@ public final class AESCrypt {
             return message;
         } catch (UnsupportedEncodingException e) {
             if (DEBUG_LOG_ENABLED)
-                Log.e(TAG, "UnsupportedEncodingException ", e);
+                LogUtils.eTag(TAG, "UnsupportedEncodingException ", e);
 
             throw new GeneralSecurityException(e);
         }
@@ -167,12 +169,12 @@ public final class AESCrypt {
 
     private static void log(String what, byte[] bytes) {
         if (DEBUG_LOG_ENABLED)
-            Log.d(TAG, what + "[" + bytes.length + "] [" + bytesToHex(bytes) + "]");
+            LogUtils.dTag(TAG, what + "[" + bytes.length + "] [" + bytesToHex(bytes) + "]");
     }
 
     private static void log(String what, String value) {
         if (DEBUG_LOG_ENABLED)
-            Log.d(TAG, what + "[" + value.length() + "] [" + value + "]");
+            LogUtils.dTag(TAG, what + "[" + value.length() + "] [" + value + "]");
     }
 
 

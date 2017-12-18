@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.github.zagum.switchicon.SwitchIconView;
 
 import java.io.File;
@@ -172,7 +173,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
 
     @Override
     public void onScanQRCodeSuccess(String result) {
-        Log.i(TAG, "result:" + result);
+        LogUtils.iTag(TAG, "result:" + result);
         processQRString(result);
 //        vibrate();
 //        // zbarView.startSpot();

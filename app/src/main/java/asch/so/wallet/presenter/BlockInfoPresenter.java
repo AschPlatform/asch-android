@@ -3,6 +3,8 @@ package asch.so.wallet.presenter;
 import android.content.Context;
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import asch.so.base.view.Throwable;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.BlockInfoContract;
@@ -60,7 +62,7 @@ public class BlockInfoPresenter implements BlockInfoContract.Presenter {
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        Log.d("xasObservable error:", e.toString());
+                        LogUtils.dTag("xasObservable error:", e.toString());
                         view.displayError(new Throwable("网络错误"));
                     }
 

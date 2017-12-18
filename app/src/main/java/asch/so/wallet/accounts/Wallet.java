@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.CacheUtils;
+import com.blankj.utilcode.util.LogUtils;
 
 import org.bitcoinj.crypto.MnemonicCode;
 
@@ -96,7 +97,7 @@ public class Wallet {
                     return;
                 }
                 AschResult result = AschSDK.UIA.getAssets(100,0);
-                Log.i(TAG,result.getRawJson());
+                LogUtils.iTag(TAG,result.getRawJson());
                 if (result.isSuccessful()){
                     String rawJson=result.getRawJson();
                     JSONObject resultJSONObj=JSONObject.parseObject(rawJson);

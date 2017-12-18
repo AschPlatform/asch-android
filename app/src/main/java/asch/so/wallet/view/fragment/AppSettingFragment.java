@@ -77,11 +77,11 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
                // BaseActivity.start(getActivity(), PincodeSettingActivity.class,null);
             }
                 break;
-            case MineProfile:
-            {
-                // TODO: 2017/10/16
-            }
-                break;
+//            case MineProfile:
+//            {
+//                // TODO: 2017/10/16
+//            }
+//                break;
         }
     }
 
@@ -89,7 +89,7 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
         Language("语言选择", true),
         NodeURL("节点URL", true),
         Pincode("设置Pin码", true),
-        MineProfile("个人信息", true),
+       // MineProfile("个人信息", true),
         ;
         public String title;
         public boolean hasArrow;

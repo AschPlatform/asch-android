@@ -3,6 +3,8 @@ package asch.so.wallet.presenter;
 import android.content.Context;
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConfig;
 import asch.so.wallet.accounts.AccountsManager;
@@ -100,7 +102,7 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
     public String genSeed() {
         try {
             String words = Bip39.getInstance().generateMnemonic(12);
-            Log.i(TAG, "words:"+words);
+            LogUtils.iTag(TAG, "words:"+words);
            return words;
         }catch (Exception ex){
         }
@@ -118,8 +120,8 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
 
         try {
             String pubKey = AschSDK.Helper.getPublicKey(secret);
-            Log.d(TAG,secret+secret);
-            Log.d(TAG,"pubKey:"+pubKey);
+            LogUtils.dTag(TAG,secret+secret);
+            LogUtils.dTag(TAG,"pubKey:"+pubKey);
             String address = AschFactory.getInstance().getSecurity().getAddress(pubKey);
 
             Account account =new Account();

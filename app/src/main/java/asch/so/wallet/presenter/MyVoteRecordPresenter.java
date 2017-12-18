@@ -6,6 +6,7 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.LogUtils;
 
 import java.util.List;
 
@@ -131,13 +132,13 @@ public class MyVoteRecordPresenter implements MyVoteRecordContract.Presenter {
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        Log.d(TAG,"vote result:"+e==null?"vote result error":e.toString());
+                        LogUtils.dTag(TAG,"vote result:"+e==null?"vote result error":e.toString());
                         view.displayDownVoteResult(false,e==null?"取消投票失败":e.toString());
                     }
 
                     @Override
                     public void onNext(AschResult result) {
-                        Log.d(TAG,"vote result:"+result.getRawJson());
+                        LogUtils.dTag(TAG,"vote result:"+result.getRawJson());
                         view.displayDownVoteResult(true, "取消投票成功");
                     }
                 });

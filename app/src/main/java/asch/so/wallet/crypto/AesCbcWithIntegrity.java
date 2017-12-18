@@ -58,6 +58,8 @@ import android.os.Process;
 import android.util.Base64;
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
+
 /**
  * Simple library for the "right" defaults for AES key generation, encryption,
  * and decryption using 128-bit AES, CBC, PKCS5 padding, and a random 16-byte IV
@@ -671,7 +673,7 @@ public class AesCbcWithIntegrity {
                 }
             } catch (Exception e) {
                 if (ALLOW_BROKEN_PRNG) {
-                    Log.w(PrngFixes.class.getSimpleName(), "Failed to seed OpenSSL PRNG", e);
+                    LogUtils.wTag(PrngFixes.class.getSimpleName(), "Failed to seed OpenSSL PRNG", e);
                 } else {
                     throw new SecurityException("Failed to seed OpenSSL PRNG", e);
                 }
@@ -714,7 +716,7 @@ public class AesCbcWithIntegrity {
                 SecureRandom rng1 = new SecureRandom();
                 if (!rng1.getProvider().getClass().getSimpleName().equals("LinuxPRNGSecureRandomProvider")) {
                     if (ALLOW_BROKEN_PRNG) {
-                        Log.w(PrngFixes.class.getSimpleName(),
+                        LogUtils.wTag(PrngFixes.class.getSimpleName(),
                                 "new SecureRandom() backed by wrong Provider: " + rng1.getProvider().getClass());
                         return;
                     } else {
@@ -728,7 +730,7 @@ public class AesCbcWithIntegrity {
                     rng2 = SecureRandom.getInstance("SHA1PRNG");
                 } catch (NoSuchAlgorithmException e) {
                     if (ALLOW_BROKEN_PRNG) {
-                        Log.w(PrngFixes.class.getSimpleName(), "SHA1PRNG not available", e);
+                        LogUtils.wTag(PrngFixes.class.getSimpleName(), "SHA1PRNG not available", e);
                         return;
                     } else {
                         new SecurityException("SHA1PRNG not available", e);
@@ -736,7 +738,7 @@ public class AesCbcWithIntegrity {
                 }
                 if (!rng2.getProvider().getClass().getSimpleName().equals("LinuxPRNGSecureRandomProvider")) {
                     if (ALLOW_BROKEN_PRNG) {
-                        Log.w(PrngFixes.class.getSimpleName(),
+                        LogUtils.wTag(PrngFixes.class.getSimpleName(),
                                 "SecureRandom.getInstance(\"SHA1PRNG\") backed by wrong" + " Provider: "
                                 + rng2.getProvider().getClass());
                         return;
@@ -824,7 +826,7 @@ public class AesCbcWithIntegrity {
                 } catch (IOException e) {
                     // On a small fraction of devices /dev/urandom is not
                     // writable Log and ignore.
-                    Log.w(PrngFixes.class.getSimpleName(), "Failed to mix seed into "
+                    LogUtils.wTag(PrngFixes.class.getSimpleName(), "Failed to mix seed into "
                             + URANDOM_FILE);
                 } finally {
                     mSeeded = true;

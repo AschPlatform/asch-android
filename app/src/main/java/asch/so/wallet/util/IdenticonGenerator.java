@@ -9,6 +9,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.blankj.utilcode.util.CacheUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
@@ -50,7 +51,7 @@ public class IdenticonGenerator {
 //        }
 //        return;
         Bitmap bitmap = value == null ? null : CacheUtils.getInstance().getBitmap(value);
-        Log.d(TAG, "bitmap info:" + (bitmap != null ? bitmap.toString() : "null"));
+        LogUtils.dTag(TAG, "bitmap info:" + (bitmap != null ? bitmap.toString() : "null"));
         if (bitmap != null) {
             if (listener != null) {
                 listener.onIdenticonGenerated(bitmap);

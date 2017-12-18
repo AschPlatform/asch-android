@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.regex.Pattern;
@@ -163,7 +165,7 @@ public class StatusBarUtil {
                 window.setAttributes(e);
                 result = true;
             } catch (Exception var8) {
-                Log.e("StatusBar", "darkIcon: failed");
+                LogUtils.eTag("StatusBar", "darkIcon: failed");
             }
         }
 

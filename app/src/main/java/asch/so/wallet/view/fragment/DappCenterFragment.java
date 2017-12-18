@@ -34,6 +34,8 @@ import asch.so.wallet.contract.DappCenterContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Dapp;
 import asch.so.wallet.model.entity.FullAccount;
+import asch.so.wallet.presenter.DappCenterPresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.DappsCenterAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +75,9 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_dapp_center,container,false);
         ButterKnife.bind(this,rootView);
+
+        presenter=new DappCenterPresenter(getContext(),this);
+
         dappListRv.setLayoutManager(new LinearLayoutManager(getContext()));
         dappListRv.setItemAnimator(new DefaultItemAnimator());
         dappListRv.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
@@ -80,9 +85,11 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+
                 switch (position){
                     case 0:{
-                        BaseActivity.start(getActivity(),VoteActivity.class,null);
+                        showToast();
+                       // BaseActivity.start(getActivity(),VoteActivity.class,null);
                     }
                         break;
                     case 1:
@@ -92,12 +99,11 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
                         break;
                     case 2:
                     {
-                        BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
+                        showToast();
+                       // BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
                     }
                     break;
                 }
-//                Intent intent=new Intent(getActivity(),DappActivity.class);
-//                startActivity(intent);
             }
         });
 //        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -132,8 +138,12 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
 //        banner.setImages(BANNER_ITEMS);
 //        banner.start();
 //        adapter.addHeaderView(banner);
-
+        presenter.loadDappList();
         return rootView;
+    }
+
+    private void showToast(){
+        AppUtil.toastInfo(getContext(),"该功能正在开发者，尽情期待...");
     }
 
     public static List<BannerItem> BANNER_ITEMS = new ArrayList<BannerItem>(){{
@@ -166,10 +176,7 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
 
     @Override
     public void displayDappList(List<Dapp> dapps) {
-//        this.dappList.clear();
-//        this.dappList.addAll(dapps);
         adapter.replaceData(dapps);
-//        adapter.notifyDataSetChanged();
     }
 
     public static class BannerItem {

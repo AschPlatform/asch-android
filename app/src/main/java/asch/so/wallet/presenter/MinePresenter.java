@@ -61,7 +61,7 @@ public class MinePresenter implements MineContract.Presenter, java.util.Observer
 //        list.add(new MineSection(new MineItem(R.mipmap.my_bell,"投票")));
        // list.add(new MineSection(new MineItem(R.mipmap.my_block_info,"交易记录")));
         list.add(new MineSection(true,"Section 3"));
-//        list.add(new MineSection(new MineItem(R.mipmap.my_block_info,"区块详情")));
+        list.add(new MineSection(new MineItem(R.mipmap.my_user,"使用手册")));
         list.add(new MineSection(new MineItem(R.mipmap.my_users,"关于我们")));
 
 

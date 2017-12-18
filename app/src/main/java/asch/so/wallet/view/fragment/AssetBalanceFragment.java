@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -181,7 +182,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
                 int scrollRange = appBarLayout.getTotalScrollRange();
-                Log.v(TAG, "verticalOffset:" + verticalOffset + ", scrollRange:" + scrollRange);
+                LogUtils.vTag(TAG, "verticalOffset:" + verticalOffset + ", scrollRange:" + scrollRange);
                 float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
                 toolbar.setAlpha((1 - fraction));
 

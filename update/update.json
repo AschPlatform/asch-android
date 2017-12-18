@@ -1,8 +1,8 @@
 {
   "update": "Yes",
-  "version_name":"1.0.6",
-  "version_code":17,
-  "new_version": "1.0.6(17)",
+  "version_name":"1.0.7",
+  "version_code":18,
+  "new_version": "1.0.7(18)",
   "apk_file_url": "http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/android/app-release.apk",
   "update_log": "1，强制更新逻辑策略添加。\r\n2，受托人投票更能。\r\n3，受托人取消投票。\r\n4，区块浏览和查询。",
   "target_size": "24M",

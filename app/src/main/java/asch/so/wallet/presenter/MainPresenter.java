@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.blankj.utilcode.util.LogUtils;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.accounts.AccountsManager;
@@ -61,7 +62,7 @@ public class MainPresenter implements MainContract.Presenter {
                 try {
                     AschResult result = AschSDK.Account.secureLogin(publicKey);
                     if (result!=null && result.isSuccessful()){
-                        Log.i(TAG,result.getRawJson());
+                        LogUtils.iTag(TAG,result.getRawJson());
 //                        Map<String, Object> map =result.parseMap();
                         FullAccount account= JSON.parseObject(result.getRawJson(),FullAccount.class);
                         subscriber.onNext(account);
@@ -86,7 +87,7 @@ public class MainPresenter implements MainContract.Presenter {
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        Log.d("loginObservable error:",e.toString());
+                        LogUtils.dTag("loginObservable error:",e.toString());
                         view.displayError(new Throwable("登录接口网络错误"));
                     }
 

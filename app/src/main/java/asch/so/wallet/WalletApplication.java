@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.blankj.utilcode.util.AppUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -77,14 +78,15 @@ public class WalletApplication extends MultiDexApplication {
                 .build();
         walletApplication = this;
         Utils.init(this);
+        configLog();
         initBuglySDK();
         AppConfig.init(this);
         initWallet();
         initAschSDK();
-        //TestData.configAschSDK();
         initRealm();
         initLockManager();
         IdenticonGenerator.init(this);
+       // initLockScreenListener();
     }
 
     private void initWallet(){
@@ -92,14 +94,14 @@ public class WalletApplication extends MultiDexApplication {
         Wallet.getInstance().loadAssets(true,new Wallet.OnLoadAssetsListener() {
             @Override
             public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
-                Log.d(TAG,"all assets:"+assetsMap.toString());
+                LogUtils.dTag(TAG,"all assets:"+assetsMap.toString());
             }
         });
     }
 
     private void initBuglySDK() {
         CrashReport.initCrashReport(getApplicationContext(), AppConstants.BUGLY_APP_ID, true);
-        CrashReport.setAppChannel(this, "TEST");
+        CrashReport.setAppChannel(this, "Release");
         String verName =AppUtils.getAppVersionName();
         int verCode= AppUtils.getAppVersionCode();
         CrashReport.setAppVersion(getApplicationContext(), String.format("%s(%d)",verName,verCode));
@@ -118,7 +120,7 @@ public class WalletApplication extends MultiDexApplication {
         RealmConfiguration configuration = new RealmConfiguration.Builder()
                 .name("wallet.db")
                 .schemaVersion(AppConstants.DB_SCHEME_VERSION)
-                .deleteRealmIfMigrationNeeded()
+                //.deleteRealmIfMigrationNeeded()
                 .build();
         //Realm.deleteRealm(configuration);
         Realm.setDefaultConfiguration(configuration);
@@ -133,9 +135,37 @@ public class WalletApplication extends MultiDexApplication {
         lockManager.getAppLock().setTimeout(1000);
         lockManager.getAppLock().setLogoId(R.mipmap.ic_launcher);
         lockManager.getAppLock().setShouldShowForgot(false);
-
-        // lockManager.getAppLock().setPinChallengeCancelled(true);
     }
+
+    private void configLog(){
+        LogUtils.getConfig().setLogSwitch(BuildConfig.LOG_DEBUG);
+    }
+
+//    private void initLockScreenListener(){
+//        LockManager<AppPinActivity> lockManager = LockManager.getInstance();
+//        LockScreenListener l = new LockScreenListener(this);
+//        l.begin(new LockScreenListener.ScreenStateListener() {
+//
+//            @Override
+//            public void onUserPresent() {
+//                lockManager.getAppLock().setTimeout(60*60*1000);
+//            }
+//
+//            @Override
+//            public void onScreenOn() {
+//                lockManager.getAppLock().
+//                //Log.e("onScreenOn", "onScreenOn");
+//            }
+//
+//            @Override
+//            public void onScreenOff() {
+//
+//                lockManager.getAppLock().setTimeout(1000);
+//            }
+//        });
+//    }
+
+
 
 
 

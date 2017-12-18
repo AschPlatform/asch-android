@@ -3,6 +3,8 @@ package asch.so.wallet.presenter;
 import android.content.Context;
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import asch.so.base.view.Throwable;
 import asch.so.wallet.contract.LockCoinsContract;
 import asch.so.wallet.model.entity.Delegate;
@@ -68,13 +70,13 @@ public class LockCoinsPresenter implements LockCoinsContract.Presenter {
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        Log.d(TAG,"vote result:"+e==null?"vote result error":e.toString());
+                        LogUtils.dTag(TAG,"vote result:"+e==null?"vote result error":e.toString());
                         view.displayLockCoinsResult(false,e==null?"锁仓失败":e.toString());
                     }
 
                     @Override
                     public void onNext(AschResult result) {
-                        Log.d(TAG,"vote result:"+result.getRawJson());
+                        LogUtils.dTag(TAG,"vote result:"+result.getRawJson());
                         view.displayLockCoinsResult(true, "锁仓成功");
                     }
                 });

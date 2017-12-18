@@ -2,6 +2,8 @@ package asch.so.wallet.model.db;
 
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -163,11 +165,11 @@ public class RealmDatabase {
             realm.commitTransaction();
         } catch (RuntimeException e) {
             realm.cancelTransaction();
-            Log.e(LOG_TAG, e.getMessage(), e);
+            LogUtils.eTag(LOG_TAG, e.getMessage(), e);
             throw new RealmException("Error during transaction.", e);
         } catch (Error e) {
             realm.cancelTransaction();
-            Log.e(LOG_TAG, e.getMessage(), e);
+            LogUtils.eTag(LOG_TAG, e.getMessage(), e);
             throw e;
         }
     }
