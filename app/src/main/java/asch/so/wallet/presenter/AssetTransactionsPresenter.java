@@ -72,12 +72,15 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
         int offset = pageIndex * pageSize;
         int limit = pageSize;
         String address = getAccount().getAddress();
+        //String pubKey = getAccount().getPublicKey();
       Subscription subscription = Observable.create((Observable.OnSubscribe<List<Transaction>>) subscriber -> {
             AschResult result;
             if (isUIA()) {
                 result = AschSDK.UIA.getTransactions(address, currency, limit, offset);
             } else {
                 TransactionQueryParameters params = new TransactionQueryParameters()
+//                        .setSenderPublicKey(pubKey)
+//                        .setOwnerPublicKey(pubKey)
                         .setSenderId(address)
                         .setRecipientId(address)
                         .setUia(0)

@@ -125,8 +125,9 @@ public class TransactionQueryParameters extends QueryParameters {
         return this;
     }
 
-    public void setSenderPublicKey(String senderPublicKey) {
+    public TransactionQueryParameters setSenderPublicKey(String senderPublicKey) {
         this.senderPublicKey = senderPublicKey;
+        return this;
     }
 
     public Integer getUia() {

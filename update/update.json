@@ -1,8 +1,8 @@
 {
-  "update": "Yes",
-  "version_name":"1.0.8",
-  "version_code":19,
-  "new_version": "1.0.8(19)",
+  "update": "No",
+  "version_name":"1.0.9",
+  "version_code":20,
+  "new_version": "1.0.9(20)",
   "apk_file_url": "http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/android/app-release.apk",
   "update_log": "1，增加用户手册。\r\n2，更新策略调整。\r\n3，Log打印开关。\r\n4，切换到钱包主网。",
   "target_size": "24M",
