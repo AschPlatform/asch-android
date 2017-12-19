@@ -200,6 +200,41 @@ public class AccountsManager extends Observable {
         }
     }
 
+    /**
+     * 更新地址
+     * @param pubKey
+     * @param address
+     */
+    public void updateAccountAddress(String pubKey, String address) {
+        for (Account account : accounts
+                ) {
+            if (account.getPublicKey().equals(pubKey)) {
+                account.setName(address);
+                AccountsDao.getInstance().updateAccount(account);
+            }
+        }
+    }
+
+    /**
+     * 更新当前用户的别名
+     *
+     * @param name
+     */
+    public void updateAccountAddress(String name) {
+        if (currentAccount != null) {
+            // currentAccount.setName(name);
+            //updateAccount(currentAccount.getAddress(),name);
+            AccountsDao.getInstance().updateAccountAddress(currentAccount, name, new AccountsDao.OnUpdateAddressListener() {
+
+                @Override
+                public void onUpdateAddress(Account account, String address) {
+                    setChanged();
+                    notifyObservers();
+                }
+            });
+        }
+    }
+
     public void setAccountBackup(boolean isBackup) {
         if (currentAccount != null) {
             AccountsDao.getInstance().updateAccountBackup(currentAccount, isBackup, new AccountsDao.OnUpdateBackupListener() {
@@ -316,6 +351,8 @@ public class AccountsManager extends Observable {
             @Override
             public void onNext(FullAccount fullAccount) {
                 LogUtils.dTag(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getBalances().toString());
+               // account.setAddress(fullAccount.getAccount().getAddress());
+                updateAccountAddress(fullAccount.getAccount().getAddress());
                 account.setFullAccount(fullAccount);
             }
         });

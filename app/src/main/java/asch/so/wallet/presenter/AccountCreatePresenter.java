@@ -90,7 +90,8 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
                    @Override
                    public void onNext(Account account) {
                        AccountsManager.getInstance().addAccount(account);
-                       AppConfig.putLastAccountAddress(account.getAddress());
+//                       AppConfig.putLastAccountAddress(account.getAddress());
+                       AppConfig.putLastAccountPublicKey(account.getPublicKey());
                        view.displayCreateAccountResult(true,"账户创建成功", tmpSecret);
                        tmpSecret=null;
                    }

@@ -302,7 +302,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     public void displayAccount(Account account) {
         nameTv.setText(account.getName()==null?"":account.getName());
         backupBtn.setText(account.isBackup()?"已备份":"请备份");
-        IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
+        IdenticonGenerator.getInstance().generateBitmap(account.getPublicKey(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {
                 identicon.setImageBitmap(bmp);

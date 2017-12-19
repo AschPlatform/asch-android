@@ -233,7 +233,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         this.addressTv.setText(account.getAddress());
         this.nameEt.setText(account.getName());
 //        this.balanceTv.setText("666 XAS");
-        IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
+        IdenticonGenerator.getInstance().generateBitmap(account.getPublicKey(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {
                 identiconIv.setImageBitmap(bmp);

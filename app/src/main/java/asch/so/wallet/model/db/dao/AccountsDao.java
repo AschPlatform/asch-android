@@ -175,6 +175,18 @@ public class AccountsDao {
         });
     }
 
+    public void  updateAccountAddress(Account account, String address, OnUpdateAddressListener listener){
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                account.setAddress(address);
+                if (listener!=null){
+                    listener.onUpdateAddress(account,address);
+                }
+            }
+        });
+    }
+
     public interface OnUpdateNameListener{
 
         void onUpdateName(Account account, String name);
@@ -185,5 +197,9 @@ public class AccountsDao {
         void onUpdateBackup(Account account, boolean backup);
     }
 
+    public interface OnUpdateAddressListener{
+
+        void onUpdateAddress(Account account, String address);
+    }
 
 }

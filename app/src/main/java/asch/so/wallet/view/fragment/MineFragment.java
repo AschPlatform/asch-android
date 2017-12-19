@@ -212,7 +212,7 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     public void displayAccount(Account account) {
         nameTv.setText(account.getName());
         addressTv.setText(account.getAddress());
-        IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
+        IdenticonGenerator.getInstance().generateBitmap(account.getPublicKey(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {
                 identicon.setImageBitmap(bmp);

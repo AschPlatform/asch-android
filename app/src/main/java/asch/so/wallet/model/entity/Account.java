@@ -22,9 +22,10 @@ public class Account extends RealmObject{
     private String name;
     //@PrimaryKey
     //地址
-    @PrimaryKey
+//    @PrimaryKey
     private String address;
     //公钥
+    @PrimaryKey
     private String publicKey;
 
     //账户加密密码
@@ -192,7 +193,7 @@ public class Account extends RealmObject{
         }
         else if (obj instanceof Account) {
             Account accountObj = (Account) obj;
-            return (accountObj.getAddress().equals(this.getAddress()));
+            return (accountObj.getPublicKey().equals(this.getPublicKey()));
         }
         return false;
     }

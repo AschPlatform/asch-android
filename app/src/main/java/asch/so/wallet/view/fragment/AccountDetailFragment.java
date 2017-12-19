@@ -80,7 +80,7 @@ public class AccountDetailFragment extends BaseFragment implements AccountDetail
         this.addressTv.setText(account.getAddress());
         this.nameEt.setText(account.getName());
         this.balanceTv.setText(" XAS");
-        IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
+        IdenticonGenerator.getInstance().generateBitmap(account.getPublicKey(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {
                 identiconIv.setImageBitmap(bmp);

@@ -101,7 +101,7 @@ public void loadSavedAccounts() {
     @Override
     public void setCurrentAccount(Account account) {
         AccountsManager.getInstance().setCurrentAccount(account);
-        AppConfig.putLastAccountAddress(account.getAddress());
+        //AppConfig.putLastAccountAddress(account.getAddress());
         AppConfig.putLastAccountPublicKey(account.getPublicKey());
     }
 

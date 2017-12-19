@@ -45,7 +45,7 @@ public class AccountsAdapter extends BaseQuickAdapter<Account, AccountsAdapter.V
             viewHolder.checkmarkIv.setVisibility(View.INVISIBLE);
         }
 
-        IdenticonGenerator.getInstance().generateBitmap(account.getAddress(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
+        IdenticonGenerator.getInstance().generateBitmap(account.getPublicKey(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {
                 viewHolder.identicon.setImageBitmap(bmp);
