@@ -141,34 +141,6 @@ public class WalletApplication extends MultiDexApplication {
         LogUtils.getConfig().setLogSwitch(BuildConfig.LOG_DEBUG);
     }
 
-//    private void initLockScreenListener(){
-//        LockManager<AppPinActivity> lockManager = LockManager.getInstance();
-//        LockScreenListener l = new LockScreenListener(this);
-//        l.begin(new LockScreenListener.ScreenStateListener() {
-//
-//            @Override
-//            public void onUserPresent() {
-//                lockManager.getAppLock().setTimeout(60*60*1000);
-//            }
-//
-//            @Override
-//            public void onScreenOn() {
-//                lockManager.getAppLock().
-//                //Log.e("onScreenOn", "onScreenOn");
-//            }
-//
-//            @Override
-//            public void onScreenOff() {
-//
-//                lockManager.getAppLock().setTimeout(1000);
-//            }
-//        });
-//    }
-
-
-
-
-
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;
     }

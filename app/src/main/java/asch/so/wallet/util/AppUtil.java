@@ -21,6 +21,7 @@ import java.math.BigInteger;
 
 import asch.so.base.util.DateConvertUtils;
 import asch.so.wallet.AppConstants;
+import asch.so.wallet.BuildConfig;
 import asch.so.wallet.R;
 import es.dmoral.toasty.Toasty;
 import so.asch.sdk.impl.AschConst;
@@ -110,6 +111,9 @@ public class AppUtil {
 
 
     public static void updateApp(Activity activity) {
+        if (BuildConfig.DEBUG){
+            return;
+        }
         new UpdateAppManager
                 .Builder()
                 //当前Activity

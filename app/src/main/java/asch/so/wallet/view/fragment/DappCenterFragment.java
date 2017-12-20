@@ -88,8 +88,8 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
 
                 switch (position){
                     case 0:{
-                        showToast();
-                       // BaseActivity.start(getActivity(),VoteActivity.class,null);
+                        //showToast();
+                        BaseActivity.start(getActivity(),VoteActivity.class,null);
                     }
                         break;
                     case 1:
