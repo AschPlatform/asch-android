@@ -58,11 +58,11 @@ public class AccountsManager extends Observable {
     private void loadAccounts() {
         this.accounts.addAll(AccountsDao.getInstance().queryAllSavedAccounts());
         if (this.accounts != null && this.accounts.size() > 0) {
-            String lastAddress = AppConfig.getLastAccountAddress();
-            if (lastAddress != null) {
+            String lastPubkey = AppConfig.getlastAccountPublicKey();
+            if (lastPubkey != null) {
                 for (Account account :
                         accounts) {
-                    if (account.getAddress().equals(lastAddress)) {
+                    if (account.getPublicKey().equals(lastPubkey)) {
                         setCurrentAccount(account);
                     }
                 }
