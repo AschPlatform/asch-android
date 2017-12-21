@@ -97,14 +97,6 @@
             android:visibility="gone"
             android:background="@color/divider_color"
             />
-        <!--<com.github.aakira.expandablelayout.ExpandableLinearLayout-->
-            <!--android:id="@+id/expandableLayout"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="vertical"-->
-            <!--app:ael_duration="400"-->
-            <!--app:ael_expanded="false"-->
-            <!--&gt;-->
         <LinearLayout
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -139,6 +131,14 @@
             android:visibility="gone"
             android:background="@color/divider_color"
             />
+        <com.github.aakira.expandablelayout.ExpandableLinearLayout
+            android:id="@+id/expandableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:orientation="vertical"
+            app:ael_duration="400"
+            app:ael_expanded="false"
+            >
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -304,7 +304,7 @@
                 android:textColor="#333333"
                 android:maxLines="1" />
         </LinearLayout>
-        <!--</com.github.aakira.expandablelayout.ExpandableLinearLayout>-->
+        </com.github.aakira.expandablelayout.ExpandableLinearLayout>
     </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

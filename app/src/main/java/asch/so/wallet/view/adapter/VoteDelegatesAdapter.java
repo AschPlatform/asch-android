@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -36,11 +37,14 @@ import butterknife.ButterKnife;
 public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegatesAdapter.ViewHolder> {
     private  OnSelectedDelegatesListener selectedDelegatesListener;
     private LinkedHashMap<String, Delegate> selectedDelegatesMap;
+    private HashMap<String,Boolean> expandStatesMap;
+//    private int tapIndex;
 
     public VoteDelegatesAdapter(@Nullable List<Delegate> data, OnSelectedDelegatesListener listener) {
         super(R.layout.item_vote_delegates, data);
         this.selectedDelegatesListener = listener;
         this.selectedDelegatesMap=new LinkedHashMap<>();
+        this.expandStatesMap=new HashMap<String, Boolean>();
     }
 
     public VoteDelegatesAdapter(OnSelectedDelegatesListener listener) {
@@ -54,6 +58,7 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
     @Override
     protected void convert(ViewHolder viewHolder, Delegate item) {
         viewHolder.setIsRecyclable(false);
+        viewHolder.expandableLayout.setExpanded(false);
         viewHolder.rateTv.setText(String.valueOf(item.getRate()));
         viewHolder.nameTv.setText(item.getUsername());
         viewHolder.addressTv.setText(item.getAddress());
@@ -82,6 +87,28 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
                 }else {
                     deselectDelegate(item);
                 }
+                viewHolder.expandableLayout.toggle();
+            }
+        });
+
+        viewHolder.expandableLayout.setInRecyclerView(true);
+        viewHolder.expandableLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+        //viewHolder.expandableLayout.setInterpolator(item.interpolator);
+        viewHolder.expandableLayout.setExpanded(viewHolder.getAdapterPosition()/2==0);
+//        viewHolder.expandableLayout.setExpanded( expandStatesMap.getOrDefault(item.getPublicKey(),false));
+        viewHolder.expandableLayout.setListener(new ExpandableLayoutListenerAdapter() {
+            @Override
+            public void onPreOpen() {
+                expandStatesMap.put(item.getPublicKey(),true);
+                //createRotateAnimator(holder.buttonLayout, 0f, 180f).start();
+
+                //expandState.put(viewHolder.getAdapterPosition(), true);
+            }
+
+            @Override
+            public void onPreClose() {
+                //createRotateAnimator(holder.buttonLayout, 180f, 0f).start();
+                expandStatesMap.put(item.getPublicKey(),false);
             }
         });
     }
@@ -160,11 +187,12 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
         TextView approvalTv;
         @BindView(R.id.checkBox)
         CheckBox checkBox;
-//        @BindView(R.id.expandableLayout)
-//        ExpandableLinearLayout expandableLayout;
+        @BindView(R.id.expandableLayout)
+        ExpandableLinearLayout expandableLayout;
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
+            expandableLayout.initLayout();
         }
 
     }

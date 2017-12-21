@@ -28,7 +28,9 @@ import java.util.Map;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.VoteDelegatesContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Delegate;
 import asch.so.wallet.presenter.VoteDelegatesPresenter;
 import asch.so.wallet.util.AppUtil;
@@ -220,12 +222,17 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         }
     }
 
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
+    }
+
     @Override
     public void onClick(View v) {
         if (v==voteBtn){
             List<Delegate> selectedDelegates=adapter.getSelectedDelegates();
             if (selectedDelegates!=null && selectedDelegates.size()>0){
-                dialog = new AllPasswdsDialog(getContext(),true);
+                boolean hasSecondSecret=getAccount().hasSecondSecret();
+                dialog = new AllPasswdsDialog(getContext(),hasSecondSecret);
                 dialog.show(new AllPasswdsDialog.OnConfirmationListenner() {
                     @Override
                     public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {

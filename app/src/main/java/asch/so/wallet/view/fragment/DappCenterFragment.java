@@ -99,8 +99,8 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
                         break;
                     case 2:
                     {
-                        showToast();
-                       // BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
+                        //showToast();
+                       BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
                     }
                     break;
                 }

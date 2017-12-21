@@ -44,6 +44,8 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
 
     @BindView(R.id.dialog_close)
     ImageView closeIv;
+
+    private boolean needSecondSecret;
     private OnConfirmationListenner listenner;
 
     private CompositeSubscription subscriptions;
@@ -59,6 +61,7 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
     public AllPasswdsDialog(@NonNull Context context, boolean needSecondPasswd) {
         super(context, R.style.PasswordDialog);
         subscriptions = new CompositeSubscription();
+        this.needSecondSecret=needSecondPasswd;
         initDilaog(needSecondPasswd);
     }
 
@@ -140,7 +143,7 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
                     @Override
                     public void onNext(String secret) {
                         if (listenner!=null){
-                            listenner.callback(AllPasswdsDialog.this,secret,secondSecret,null);
+                            listenner.callback(AllPasswdsDialog.this,secret, needSecondSecret?secondSecret:null,null);
                         }
                     }
                 });
