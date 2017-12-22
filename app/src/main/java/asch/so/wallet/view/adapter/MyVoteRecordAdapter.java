@@ -5,12 +5,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
+import net.cachapa.expandablelayout.ExpandableLayout;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,11 +37,12 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
 
     private OnSelectedDelegatesListener selectedDelegatesListener;
     private LinkedHashMap<String, Delegate> selectedDelegatesMap;
-
+    private HashMap<Integer,Boolean> expandStatesMap;
     public MyVoteRecordAdapter(@Nullable List<Delegate> data, OnSelectedDelegatesListener listener) {
         super(R.layout.item_vote_delegates, data);
         this.selectedDelegatesListener = listener;
         this.selectedDelegatesMap=new LinkedHashMap<>();
+        this.expandStatesMap=new HashMap<Integer, Boolean>();
     }
     public MyVoteRecordAdapter(OnSelectedDelegatesListener listener) {
         this(null,listener);
@@ -57,25 +62,37 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         viewHolder.producedBlocksTv.setText(String.valueOf(item.getProducedblocks()));
         viewHolder.missedBlocksTv.setText(String.valueOf(item.getMissedblocks()));
         viewHolder.approvalTv.setText(String.valueOf(item.getApproval()));
-//        if (!item.isVoted()){
-//            viewHolder.checkBox.setChecked(true);
-//            viewHolder.checkBox.setClickable(false);
-//            viewHolder.checkBox.setEnabled(false);
-//        }else {
-            viewHolder.checkBox.setChecked(getSelectedDelegatesMap().containsKey(item.getPublicKey()));
-           // viewHolder.checkBox.setClickable(true);
-           // viewHolder.checkBox.setEnabled(true);
-       // }
-        viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        if (getSelectedDelegatesMap().containsKey(item.getPublicKey())){
+            viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_slected);
+        }else {
+            viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_unslected);
+        }
+
+        viewHolder.selectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    selectDelegate(item);
+            public void onClick(View v) {
+                boolean select=(Boolean) viewHolder.selectBtn.getTag();
+                viewHolder.selectBtn.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
+                viewHolder.selectBtn.setTag(!select);
+                Delegate delegate = getData().get(viewHolder.getAdapterPosition());
+                expandStatesMap.put(viewHolder.getAdapterPosition(),!select);
+                if (!select){
+                    selectDelegate(delegate);
                 }else {
-                    deselectDelegate(item);
+                    deselectDelegate(delegate);
                 }
             }
         });
+//        viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked){
+//                    selectDelegate(item);
+//                }else {
+//                    deselectDelegate(item);
+//                }
+//            }
+//        });
     }
 
 
@@ -122,7 +139,7 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         this.replaceData(delegates);
     }
 
-    public static class ViewHolder extends BaseViewHolder {
+    public static class ViewHolder extends BaseViewHolder implements View.OnClickListener, ExpandableLayout.OnExpansionUpdateListener{
 
         @BindView(R.id.rate_tv)
         TextView rateTv;
@@ -142,13 +159,28 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         TextView missedBlocksTv;
         @BindView(R.id.approval_tv)
         TextView approvalTv;
-        @BindView(R.id.checkBox)
-        CheckBox checkBox;
+        @BindView(R.id.expandable_layout)
+        ExpandableLayout expandableLayout;
+        @BindView(R.id.select_btn)
+        ImageButton selectBtn;
+        @BindView(R.id.expand_btn)
+        ImageButton expandBtn;
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
+            expandBtn.setOnClickListener(this);
+            selectBtn.setTag(false);
         }
 
+        @Override
+        public void onClick(View v) {
+            expandableLayout.toggle();
+        }
+
+        @Override
+        public void onExpansionUpdate(float expansionFraction, int state) {
+
+        }
     }
 
     public interface OnSelectedDelegatesListener {

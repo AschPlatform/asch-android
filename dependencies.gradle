@@ -29,7 +29,7 @@ def bubbleLayoutVersion="1.2.0"
 def buglyVersion="2.6.6"
 def loadinglayoutVersion="1.0.1"
 def flycoTabLayoutVersion="2.0.2"
-def expandableLayoutVersion="1.6.0"
+def expandableLayoutVersion="2.9.2" // "1.6.0"
 def kprogresshudVersion="1.1.0"
 def toastyVersion="1.2.5"
 def bgaPhotopickerVersion="1.2.7"
@@ -138,7 +138,8 @@ project.ext {
             "bugly"                         :"com.tencent.bugly:crashreport:${buglyVersion}",
             "loadinglayout"                 :"com.github.czy1121:loadinglayout:${loadinglayoutVersion}",
             "flycoTabLayout"                :"com.flyco.tablayout:FlycoTabLayout_Lib:${flycoTabLayoutVersion}@aar",
-            "expandableLayout"             :"com.github.aakira:expandable-layout:${expandableLayoutVersion}@aar",
+           // "expandableLayout"             :"com.github.aakira:expandable-layout:${expandableLayoutVersion}@aar",
+            "expandablelayout2"              :"net.cachapa.expandablelayout:expandablelayout:${expandableLayoutVersion}",
             "kprogresshud"                  :"com.kaopiz:kprogresshud:${kprogresshudVersion}",
             "toasty"                        :"com.github.GrenderG:Toasty:${toastyVersion}",
             "bgaPhotopicker"                :"cn.bingoogolapple:bga-photopicker:${bgaPhotopickerVersion}@aar",

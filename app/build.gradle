@@ -175,7 +175,6 @@ dependencies {
     compile rootProject.ext.dependencies["bugly"]
     compile rootProject.ext.dependencies["loadinglayout"]
     compile rootProject.ext.dependencies["flycoTabLayout"]
-    compile rootProject.ext.dependencies["expandableLayout"]
     compile rootProject.ext.dependencies["kprogresshud"]
     compile rootProject.ext.dependencies["toasty"]
     compile rootProject.ext.dependencies["glide"]
@@ -184,6 +183,8 @@ dependencies {
     compile rootProject.ext.dependencies["switchIcon"]
     compile rootProject.ext.dependencies["update"]
     compile rootProject.ext.dependencies["okhttpUtils"]
+    compile 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+    //compile rootProject.ext.dependencies["expandableLayout2"]
 
 }
 
