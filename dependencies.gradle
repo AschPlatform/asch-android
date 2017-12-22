@@ -42,10 +42,18 @@ def updateVersion="3.3.8"
 def okhttpUtilsVersion="3.8.0"
 
 project.ext {
+
+//    mode=[
+//            "test":"asch.so.wallet.test",
+//            "release":"asch.so.wallet"
+//    ]
+
+
     android = [
             compileSdkVersion: 26,
             buildToolsVersion: "26.0.3",
             applicationId    : "asch.so.wallet",
+            applicationIdTest    : "asch.so.wallet.test",
             minSdkVersion    : 16,
             targetSdkVersion : 26,
             versionCode      : 9,

@@ -6,6 +6,7 @@ android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
 
+
     signingConfigs {
         release {
             keyAlias 'aschkey'
@@ -24,7 +25,8 @@ android {
     defaultConfig {
         renderscriptTargetApi rootProject.ext.android.targetSdkVersion
         renderscriptSupportModeEnabled true
-        applicationId rootProject.ext.android.applicationId
+//        applicationId rootProject.ext.android.applicationId
+        applicationId rootProject.ext.android.applicationIdTest
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
@@ -52,6 +54,7 @@ android {
     buildTypes {
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
+            resValue "string", "app_name", "ASCH钱包Test"
             //buildConfigField 'com.baronzhang.android.library.util.StethoHelper', 'STETHO', 'new com.baronzhang.android.weather.util.stetho.DebugStethoHelper()'
         }
 
@@ -64,6 +67,7 @@ android {
             buildConfigField("boolean", "LOG_DEBUG", "false")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "ASCH钱包Test"
             // buildConfigField 'com.baronzhang.android.library.util.StethoHelper', 'STETHO', 'new com.baronzhang.android.weather.util.stetho.ReleaseStethoHelper()'
         }
 //        release {
