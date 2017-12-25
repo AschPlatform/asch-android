@@ -1,11 +1,14 @@
 package asch.so.wallet.util;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.text.format.DateUtils;
 import android.view.Gravity;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -159,6 +162,14 @@ public class AppUtil {
                         super.onBefore();
                     }
                 });
+    }
+
+
+    public static ObjectAnimator createRotateAnimator(final View target, final float from, final float to) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(target, "rotation", from, to);
+        animator.setDuration(100);
+        animator.setInterpolator(new LinearInterpolator());
+        return animator;
     }
 
 }

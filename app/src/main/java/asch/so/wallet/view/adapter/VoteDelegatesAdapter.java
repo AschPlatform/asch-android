@@ -1,12 +1,14 @@
 package asch.so.wallet.view.adapter;
 
 import android.animation.ObjectAnimator;
+import android.os.Debug;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.github.zagum.switchicon.SwitchIconView;
@@ -29,6 +32,7 @@ import java.util.Map;
 
 import asch.so.wallet.R;
 import asch.so.wallet.model.entity.Delegate;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.fragment.VoteDelegatesFragment.OnListFragmentInteractionListener;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,14 +45,12 @@ import butterknife.ButterKnife;
 public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegatesAdapter.ViewHolder> {
     private  OnSelectedDelegatesListener selectedDelegatesListener;
     private LinkedHashMap<String, Delegate> selectedDelegatesMap;
-    private HashMap<Integer,Boolean> expandStatesMap;
-    private static final int UNSELECTED = -1;
-    private int selectedItem = UNSELECTED;
+    //private HashMap<Integer,Boolean> expandStatesMap;
     public VoteDelegatesAdapter(@Nullable List<Delegate> data, OnSelectedDelegatesListener listener) {
         super(R.layout.item_vote_delegates, data);
         this.selectedDelegatesListener = listener;
         this.selectedDelegatesMap=new LinkedHashMap<>();
-        this.expandStatesMap=new HashMap<Integer, Boolean>();
+        //this.expandStatesMap=new HashMap<Integer, Boolean>();
     }
 
     public VoteDelegatesAdapter(OnSelectedDelegatesListener listener) {
@@ -73,26 +75,28 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
         viewHolder.missedBlocksTv.setText(String.valueOf(item.getMissedblocks()));
         viewHolder.approvalTv.setText(String.valueOf(item.getApproval()));
         if (item.isVoted()){
-            viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_slected);
+            viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_disable);
             viewHolder.selectBtn.setClickable(false);
             viewHolder.selectBtn.setEnabled(false);
         }else {
-            viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_unslected);
+            Delegate delegate=getItem(viewHolder.getAdapterPosition());
+            boolean select=selectedDelegatesMap.containsValue(delegate);
+            viewHolder.selectBtn.setBackgroundResource(select?R.mipmap.item_slected:R.mipmap.item_unslected);
             viewHolder.selectBtn.setClickable(true);
             viewHolder.selectBtn.setEnabled(true);
         }
 
-       boolean expand=  expandStatesMap.getOrDefault(viewHolder.getAdapterPosition(),false);
+        boolean expand= (boolean) viewHolder.expandBtn.getTag();
         viewHolder.expandableLayout.setExpanded(expand);
+        viewHolder.expandBtn.setBackgroundResource(expand?R.mipmap.expand_arrow_up:R.mipmap.expand_arrow_down);
+        LogUtils.d(TAG,"viewHolder.getAdapterPosition:"+viewHolder.getAdapterPosition()+" expand:"+expand);
 
         viewHolder.selectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean select=(Boolean) viewHolder.selectBtn.getTag();
-                viewHolder.selectBtn.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
-                viewHolder.selectBtn.setTag(!select);
-                Delegate delegate = getData().get(viewHolder.getAdapterPosition());
-                expandStatesMap.put(viewHolder.getAdapterPosition(),!select);
+                Delegate delegate=getItem(viewHolder.getAdapterPosition());
+                boolean select=selectedDelegatesMap.containsValue(delegate);
+                v.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
                 if (!select){
                     selectDelegate(delegate);
                 }else {
@@ -100,31 +104,25 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
                 }
             }
         });
+        viewHolder.expandBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int state=viewHolder.expandableLayout.getState();
+                if (state == ExpandableLayout.State.EXPANDED) {
+                    v.setBackgroundResource(R.mipmap.expand_arrow_down);
+                    //AppUtil.createRotateAnimator(viewHolder.expandBtn, 180f, 0f).start();
+                }else if (state == ExpandableLayout.State.COLLAPSED){
+                    v.setBackgroundResource(R.mipmap.expand_arrow_up);
+                    //AppUtil.createRotateAnimator(viewHolder.expandBtn, 0f, 180f).start();
+                }
+                boolean select=(Boolean) v.getTag();
+                v.setTag(!select);
+               // expandStatesMap.put(viewHolder.getAdapterPosition(),!select);
+                viewHolder.expandableLayout.toggle();
+            }
+        });
 
         viewHolder.expandableLayout.setInterpolator(new OvershootInterpolator());
-
-       // viewHolder.expandableLayout.setOnExpansionUpdateListener(this);
-
-//        viewHolder.expandableLayout.setInRecyclerView(true);
-//        viewHolder.expandableLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
-//        //viewHolder.expandableLayout.setInterpolator(item.interpolator);
-//        viewHolder.expandableLayout.setExpanded(viewHolder.getAdapterPosition()/2==0);
-////        viewHolder.expandableLayout.setExpanded( expandStatesMap.getOrDefault(item.getPublicKey(),false));
-//        viewHolder.expandableLayout.setListener(new ExpandableLayoutListenerAdapter() {
-//            @Override
-//            public void onPreOpen() {
-//                expandStatesMap.put(item.getPublicKey(),true);
-//                //createRotateAnimator(holder.buttonLayout, 0f, 180f).start();
-//
-//                //expandState.put(viewHolder.getAdapterPosition(), true);
-//            }
-//
-//            @Override
-//            public void onPreClose() {
-//                //createRotateAnimator(holder.buttonLayout, 180f, 0f).start();
-//                expandStatesMap.put(item.getPublicKey(),false);
-//            }
-//        });
     }
 
     private void selectDelegate(Delegate delegate) {
@@ -179,7 +177,7 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
         this.selectedDelegatesListener = selectedDelegatesListener;
     }
 
-    public static class ViewHolder extends BaseViewHolder implements View.OnClickListener, ExpandableLayout.OnExpansionUpdateListener{
+    public static class ViewHolder extends BaseViewHolder implements ExpandableLayout.OnExpansionUpdateListener{
 
         @BindView(R.id.rate_tv)
         TextView rateTv;
@@ -208,30 +206,16 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
-            expandBtn.setOnClickListener(this);
-            selectBtn.setTag(false);
+//            expandBtn.setOnClickListener(this);
+            expandBtn.setTag(false);
+            expandableLayout.setOnExpansionUpdateListener(this);
         }
 
         @Override
         public void onExpansionUpdate(float expansionFraction, int state) {
             Log.d("ExpandableLayout", "State: " + state);
-            if (state != ExpandableLayout.State.COLLAPSED) {
-               // .smoothScrollToPosition(getAdapterPosition());
-            }
-        }
-
-        @Override
-        public void onClick(View v) {
-            expandableLayout.toggle();
         }
     }
-
-//    public ObjectAnimator createRotateAnimator(final View target, final float from, final float to) {
-//        ObjectAnimator animator = ObjectAnimator.ofFloat(target, "rotation", from, to);
-//        animator.setDuration(300);
-//        animator.setInterpolator(Utils.createInterpolator(Utils.LINEAR_INTERPOLATOR));
-//        return animator;
-//    }
 
     public interface OnSelectedDelegatesListener {
 
