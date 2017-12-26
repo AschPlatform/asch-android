@@ -21,6 +21,7 @@ import com.vector.update_app.UpdateCallback;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 
 import asch.so.base.util.DateConvertUtils;
 import asch.so.wallet.AppConstants;
@@ -38,6 +39,11 @@ public class AppUtil {
     public static BigDecimal decimalFromBigint(long bigInt, int precision){
 
         return BigDecimal.valueOf(bigInt, precision);
+    }
+
+    public  static String decimalFormat(BigDecimal decimal){
+        DecimalFormat df = new DecimalFormat("#.########");
+        return df.format(decimal);
     }
 
     public static long scaledAmountFromDecimal(float amount, int precision){
@@ -114,7 +120,7 @@ public class AppUtil {
 
 
     public static void updateApp(Activity activity) {
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG || BuildConfig.TEST){
             return;
         }
         new UpdateAppManager
