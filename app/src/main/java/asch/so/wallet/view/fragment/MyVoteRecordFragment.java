@@ -234,13 +234,21 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
             loadingLayout.showContent();
         }
         adapter.replaceData(delegates);
-        refreshLayout.finishRefresh(500);
+        if (refreshLayout.isRefreshing()){
+            refreshLayout.finishRefresh(500);
+        }else {
+            refreshLayout.finishLoadmore(500);
+        }
     }
 
     @Override
     public void displayMorePageDelegates(List<Delegate> delegates) {
         adapter.addData(delegates);
-        refreshLayout.finishLoadmore(500);
+        if (refreshLayout.isRefreshing()){
+            refreshLayout.finishRefresh(500);
+        }else {
+            refreshLayout.finishLoadmore(500);
+        }
     }
 
     @Override

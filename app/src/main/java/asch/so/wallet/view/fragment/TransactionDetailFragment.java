@@ -19,7 +19,6 @@ import asch.so.wallet.model.entity.UIATransferAsset;
 import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import so.asch.sdk.TransactionType;
 
 /**
  * Created by kimziv on 2017/10/27.
@@ -81,8 +80,8 @@ public class TransactionDetailFragment extends BaseFragment {
             memoLl.setVisibility(View.VISIBLE);
             memoTv.setText(transaction.getMessage());
         }
-        txFeeTv.setText(AppUtil.decimalFromBigint(transaction.getFee(), AppConstants.PRECISION).floatValue()+" XAS");
-        txConfirmationsTv.setText(transaction.getConfirmations()+"");
+        txFeeTv.setText(AppUtil.decimalFormat(AppUtil.decimalFromBigint(transaction.getFee(), AppConstants.PRECISION))+" XAS");
+        txConfirmationsTv.setText(String.valueOf(transaction.getConfirmations()));
         txBlockIdTv.setText(transaction.getBlockId());
 
         return rootView;
@@ -91,7 +90,7 @@ public class TransactionDetailFragment extends BaseFragment {
     private String amountFroTransaction(Transaction transaction){
         switch (Transaction.Type.fromCode(transaction.getType())){
             case Transfer:
-                return AppUtil.decimalFromBigint(transaction.getAmount(), AppConstants.PRECISION).toString()+" XAS";
+                return AppUtil.decimalFormat(AppUtil.decimalFromBigint(transaction.getAmount(), AppConstants.PRECISION))+" XAS";
             case Signature:
                 break;
             case Delegate:

@@ -1,17 +1,14 @@
 package asch.so.wallet.model.entity;
 
-import com.alibaba.fastjson.JSONObject;
-
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import asch.so.wallet.util.AppUtil;
-import so.asch.sdk.AschHelper;
 import so.asch.sdk.AschSDK;
 import so.asch.sdk.TransactionType;
 import so.asch.sdk.impl.AschConst;
-import so.asch.sdk.transaction.asset.AssetInfo;
 
 /**
  * Created by kimziv on 2017/10/13.
@@ -275,7 +272,8 @@ public class Transaction {
 
     public String getBanlanceShow(boolean isSender){
         if ( TransactionType.Transfer.getCode()==getType()){
-           return   String.format("%s%s", isSender?"-":"+", AppUtil.decimalFromBigint(getAmount(), AschConst.CORE_COIN_PRECISION).toString()+" XAS");
+            BigDecimal decimal = AppUtil.decimalFromBigint(getAmount(), AschConst.CORE_COIN_PRECISION);
+            return   String.format("%s%s", isSender?"-":"+", AppUtil.decimalFormat(decimal)+" XAS");
         }else if (TransactionType.UIATransfer.getCode()==getType()){
             UIATransferAsset asset=(UIATransferAsset)getAssetInfo();
          return String.format("%s%s", isSender?"-":"+",asset.getUiaTransfer().getAmountShow()+" "+asset.getUiaTransfer().getCurrency());

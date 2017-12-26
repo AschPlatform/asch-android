@@ -1,11 +1,14 @@
 package asch.so.wallet.util;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.text.format.DateUtils;
 import android.view.Gravity;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -18,6 +21,7 @@ import com.vector.update_app.UpdateCallback;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.text.DecimalFormat;
 
 import asch.so.base.util.DateConvertUtils;
 import asch.so.wallet.AppConstants;
@@ -35,6 +39,11 @@ public class AppUtil {
     public static BigDecimal decimalFromBigint(long bigInt, int precision){
 
         return BigDecimal.valueOf(bigInt, precision);
+    }
+
+    public  static String decimalFormat(BigDecimal decimal){
+        DecimalFormat df = new DecimalFormat("#.########");
+        return df.format(decimal);
     }
 
     public static long scaledAmountFromDecimal(float amount, int precision){
@@ -111,7 +120,7 @@ public class AppUtil {
 
 
     public static void updateApp(Activity activity) {
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG || BuildConfig.TEST){
             return;
         }
         new UpdateAppManager
@@ -159,6 +168,14 @@ public class AppUtil {
                         super.onBefore();
                     }
                 });
+    }
+
+
+    public static ObjectAnimator createRotateAnimator(final View target, final float from, final float to) {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(target, "rotation", from, to);
+        animator.setDuration(100);
+        animator.setInterpolator(new LinearInterpolator());
+        return animator;
     }
 
 }

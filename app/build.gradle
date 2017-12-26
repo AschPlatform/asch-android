@@ -54,6 +54,7 @@ android {
     buildTypes {
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
+            buildConfigField("boolean", "TEST", "true")
             resValue "string", "app_name", "ASCH钱包Test"
             //buildConfigField 'com.baronzhang.android.library.util.StethoHelper', 'STETHO', 'new com.baronzhang.android.weather.util.stetho.DebugStethoHelper()'
         }
@@ -65,6 +66,7 @@ android {
 
         release {
             buildConfigField("boolean", "LOG_DEBUG", "false")
+            buildConfigField("boolean", "TEST", "true")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             resValue "string", "app_name", "ASCH钱包Test"
@@ -76,17 +78,17 @@ android {
 //        }
     }
 
-    applicationVariants.all { variant ->
-        variant.outputs.all { output ->
-
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                def fileName = "asch-app-${defaultConfig.versionName}(${defaultConfig.versionCode})-${variant.buildType.name}.apk"
-                output.outputFile.renameTo(new File(outputFile.parent, fileName))
-//                rename_andd_moveout_apk(output.outputFile,variant.buildType.name)
-            }
-        }
-    }
+//    applicationVariants.all { variant ->
+//        variant.outputs.all { output ->
+//
+//            def outputFile = output.outputFile
+//            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+//                def fileName = "asch-app-${defaultConfig.versionName}(${defaultConfig.versionCode})-${variant.buildType.name}.apk"
+//                output.outputFile.renameTo(new File(outputFile.parent, fileName))
+////                rename_andd_moveout_apk(output.outputFile,variant.buildType.name)
+//            }
+//        }
+//    }
     externalNativeBuild {
         cmake {
             path "CMakeLists.txt"

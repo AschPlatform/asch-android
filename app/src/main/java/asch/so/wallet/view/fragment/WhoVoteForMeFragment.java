@@ -174,13 +174,21 @@ public class WhoVoteForMeFragment extends BaseFragment implements WhoVoteForMeCo
             loadingLayout.showContent();
         }
         adapter.replaceData(voters);
-        refreshLayout.finishRefresh(500);
+        if (refreshLayout.isRefreshing()){
+            refreshLayout.finishRefresh(500);
+        }else {
+            refreshLayout.finishLoadmore(500);
+        }
     }
 
     @Override
     public void displayMorePageVoters(List<Voter> voters) {
         adapter.addData(voters);
-        refreshLayout.finishLoadmore(500);
+        if (refreshLayout.isRefreshing()){
+            refreshLayout.finishRefresh(500);
+        }else {
+            refreshLayout.finishLoadmore(500);
+        }
     }
 
     /**

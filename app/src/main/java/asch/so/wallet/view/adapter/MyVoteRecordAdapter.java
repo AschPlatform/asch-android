@@ -62,37 +62,55 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         viewHolder.producedBlocksTv.setText(String.valueOf(item.getProducedblocks()));
         viewHolder.missedBlocksTv.setText(String.valueOf(item.getMissedblocks()));
         viewHolder.approvalTv.setText(String.valueOf(item.getApproval()));
-        if (getSelectedDelegatesMap().containsKey(item.getPublicKey())){
+        if (getSelectedDelegatesMap().containsValue(item)){
             viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_slected);
         }else {
             viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_unslected);
         }
 
+        boolean expand= (boolean) viewHolder.expandBtn.getTag();
+        viewHolder.expandableLayout.setExpanded(expand);
+        viewHolder.expandBtn.setBackgroundResource(expand?R.mipmap.expand_arrow_up:R.mipmap.expand_arrow_down);
+
         viewHolder.selectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean select=(Boolean) viewHolder.selectBtn.getTag();
-                viewHolder.selectBtn.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
-                viewHolder.selectBtn.setTag(!select);
-                Delegate delegate = getData().get(viewHolder.getAdapterPosition());
-                expandStatesMap.put(viewHolder.getAdapterPosition(),!select);
+                Delegate delegate=getItem(viewHolder.getAdapterPosition());
+                boolean select=selectedDelegatesMap.containsValue(delegate);
+                v.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
                 if (!select){
                     selectDelegate(delegate);
                 }else {
                     deselectDelegate(delegate);
                 }
+
+//                boolean select=(Boolean) viewHolder.selectBtn.getTag();
+//                viewHolder.selectBtn.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
+//                viewHolder.selectBtn.setTag(!select);
+//                Delegate delegate = getData().get(viewHolder.getAdapterPosition());
+//                expandStatesMap.put(viewHolder.getAdapterPosition(),!select);
+//                if (!select){
+//                    selectDelegate(delegate);
+//                }else {
+//                    deselectDelegate(delegate);
+//                }
             }
         });
-//        viewHolder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                if (isChecked){
-//                    selectDelegate(item);
-//                }else {
-//                    deselectDelegate(item);
-//                }
-//            }
-//        });
+
+        viewHolder.expandBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int state=viewHolder.expandableLayout.getState();
+                if (state == ExpandableLayout.State.EXPANDED) {
+                    v.setBackgroundResource(R.mipmap.expand_arrow_down);
+                }else if (state == ExpandableLayout.State.COLLAPSED){
+                    v.setBackgroundResource(R.mipmap.expand_arrow_up);
+                }
+                boolean select=(Boolean) v.getTag();
+                v.setTag(!select);
+                viewHolder.expandableLayout.toggle();
+            }
+        });
     }
 
 
@@ -139,7 +157,7 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         this.replaceData(delegates);
     }
 
-    public static class ViewHolder extends BaseViewHolder implements View.OnClickListener, ExpandableLayout.OnExpansionUpdateListener{
+    public static class ViewHolder extends BaseViewHolder implements  ExpandableLayout.OnExpansionUpdateListener{
 
         @BindView(R.id.rate_tv)
         TextView rateTv;
@@ -168,13 +186,9 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
-            expandBtn.setOnClickListener(this);
+           // expandBtn.setOnClickListener(this);
+            expandBtn.setTag(false);
             selectBtn.setTag(false);
-        }
-
-        @Override
-        public void onClick(View v) {
-            expandableLayout.toggle();
         }
 
         @Override

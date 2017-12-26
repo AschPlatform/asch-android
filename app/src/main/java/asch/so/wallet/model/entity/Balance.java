@@ -85,6 +85,6 @@ public class Balance {
 
     public String getBalanceString(){
         long longBalance=Long.parseLong(balance);
-        return longBalance==0?"0":AppUtil.decimalFromBigint(longBalance,precision).toString();
+        return longBalance==0?"0":AppUtil.decimalFormat(AppUtil.decimalFromBigint(longBalance,precision));
     }
 }

@@ -41,14 +41,37 @@ def switchIconVersion="1.3.6"
 def updateVersion="3.3.8"
 def okhttpUtilsVersion="3.8.0"
 
+
+def env=[
+        dev:"dev",
+        test:"test",
+        prod:"pro"
+]
+
+def build=[
+     debug:"debug",
+     release:"release"
+]
+
+
 project.ext {
 
-//    mode=[
-//            "test":"asch.so.wallet.test",
-//            "release":"asch.so.wallet"
+    config=[
+            envType:env["test"],
+            buildType:build["debug"]
+    ]
+
+
+//    android = [
+//            compileSdkVersion: 26,
+//            buildToolsVersion: "26.0.3",
+//            applicationId    : "asch.so.wallet",
+//            applicationIdTest    : "asch.so.wallet.test",
+//            minSdkVersion    : 16,
+//            targetSdkVersion : 26,
+//            versionCode      : 9,
+//            versionName      : "1.0.9"
 //    ]
-
-
     android = [
             compileSdkVersion: 26,
             buildToolsVersion: "26.0.3",
@@ -56,7 +79,7 @@ project.ext {
             applicationIdTest    : "asch.so.wallet.test",
             minSdkVersion    : 16,
             targetSdkVersion : 26,
-            versionCode      : 9,
+            versionCode      : 10,
             versionName      : "1.0.9"
     ]
 
@@ -162,3 +185,5 @@ project.ext {
 
     ]
 }
+
+
