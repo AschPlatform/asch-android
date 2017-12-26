@@ -29,7 +29,7 @@ def bubbleLayoutVersion="1.2.0"
 def buglyVersion="2.6.6"
 def loadinglayoutVersion="1.0.1"
 def flycoTabLayoutVersion="2.0.2"
-def expandableLayoutVersion="2.9.2" // "1.6.0"
+def expandableLayoutVersion="2.9.2"
 def kprogresshudVersion="1.1.0"
 def toastyVersion="1.2.5"
 def bgaPhotopickerVersion="1.2.7"
@@ -40,7 +40,7 @@ def photoPickerVersion="0.9.10"
 def switchIconVersion="1.3.6"
 def updateVersion="3.3.8"
 def okhttpUtilsVersion="3.8.0"
-
+def filedownloaderVersion="1.6.9"
 
 def env=[
         dev:"dev",
@@ -169,8 +169,7 @@ project.ext {
             "bugly"                         :"com.tencent.bugly:crashreport:${buglyVersion}",
             "loadinglayout"                 :"com.github.czy1121:loadinglayout:${loadinglayoutVersion}",
             "flycoTabLayout"                :"com.flyco.tablayout:FlycoTabLayout_Lib:${flycoTabLayoutVersion}@aar",
-           // "expandableLayout"             :"com.github.aakira:expandable-layout:${expandableLayoutVersion}@aar",
-            "expandablelayout2"              :"net.cachapa.expandablelayout:expandablelayout:${expandableLayoutVersion}",
+            "expandablelayout"              :"net.cachapa.expandablelayout:expandablelayout:${expandableLayoutVersion}",
             "kprogresshud"                  :"com.kaopiz:kprogresshud:${kprogresshudVersion}",
             "toasty"                        :"com.github.GrenderG:Toasty:${toastyVersion}",
             "bgaPhotopicker"                :"cn.bingoogolapple:bga-photopicker:${bgaPhotopickerVersion}@aar",
@@ -181,7 +180,8 @@ project.ext {
             "switchIcon"                    :"com.github.zagum:Android-SwitchIcon:${switchIconVersion}",
 //            "update"                        :"com.github.czy1121:update:${updateVersion}"
             "update"                        :"com.qianwen:update-app:${updateVersion}",
-            "okhttpUtils"                  :"com.qianwen:okhttp-utils:${okhttpUtilsVersion}"
+            "okhttpUtils"                  :"com.qianwen:okhttp-utils:${okhttpUtilsVersion}",
+            "filedownloader"                :"com.liulishuo.filedownloader:library:${filedownloaderVersion}"
 
     ]
 }

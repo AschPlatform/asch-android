@@ -58,11 +58,13 @@ android {
             resValue "string", "app_name", "ASCH钱包Test"
             //buildConfigField 'com.baronzhang.android.library.util.StethoHelper', 'STETHO', 'new com.baronzhang.android.weather.util.stetho.DebugStethoHelper()'
         }
-
-//        preview {
-//            //关键代码，release， debug为library中已有buildType
-//            matchingFallbacks = ['release', 'debug']
-//        }
+        local{
+            matchingFallbacks = ['release', 'debug']
+        }
+        preview {
+            //关键代码，release， debug为library中已有buildType
+            matchingFallbacks = ['release', 'debug']
+        }
 
         release {
             buildConfigField("boolean", "LOG_DEBUG", "false")
@@ -189,9 +191,8 @@ dependencies {
     compile rootProject.ext.dependencies["switchIcon"]
     compile rootProject.ext.dependencies["update"]
     compile rootProject.ext.dependencies["okhttpUtils"]
-    compile 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
-    //compile rootProject.ext.dependencies["expandableLayout2"]
-
+    compile rootProject.ext.dependencies["filedownloader"]
+    compile rootProject.ext.dependencies["expandablelayout"]
 }
 
 //def rename_andd_moveout_apk(orignalFile, buildType) {
