@@ -193,6 +193,7 @@ dependencies {
     compile rootProject.ext.dependencies["okhttpUtils"]
     compile rootProject.ext.dependencies["filedownloader"]
     compile rootProject.ext.dependencies["expandablelayout"]
+    compile project(path: ':CordovaLib')
 }
 
 //def rename_andd_moveout_apk(orignalFile, buildType) {
