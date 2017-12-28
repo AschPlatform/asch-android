@@ -144,6 +144,10 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
         return selectedDelegatesMap;
     }
 
+    public void clearSelectedDelegatesMap(){
+        selectedDelegatesMap.clear();
+    }
+
     public List<Delegate> getSelectedDelegates(){
         LinkedHashMap<String,Delegate> delegatesMap= getSelectedDelegatesMap();
         Iterator<Map.Entry<String,Delegate>> it=delegatesMap.entrySet().iterator();

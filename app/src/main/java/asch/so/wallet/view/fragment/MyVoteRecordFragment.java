@@ -188,6 +188,11 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
         }
     }
 
+    private void clearSeletedDelegates(){
+        adapter.clearSelectedDelegatesMap();
+        statusTv.setText(String.format("已选择%d位受托人",0));
+    }
+
     private void downVoteForDelegates(String secret, String secondSecret){
         LinkedHashMap<String,Delegate> delegatesMap= adapter.getSelectedDelegatesMap();
         Iterator<Map.Entry<String,Delegate>> it=delegatesMap.entrySet().iterator();
@@ -257,6 +262,7 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
         dismissHUD();
         if (success){
             adapter.removeDownVotedDelegates();
+            clearSeletedDelegates();
             if (adapter.getData().isEmpty()){
                 loadingLayout.showEmpty();
             }

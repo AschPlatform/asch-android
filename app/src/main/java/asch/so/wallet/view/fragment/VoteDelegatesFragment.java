@@ -213,6 +213,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         dismissHUD();
         if (success){
             adapter.disableVotedDelegates();
+            clearSeletedDelegates();
             AppUtil.toastSuccess(getContext(),msg);
             if (dialog!=null){
                 dialog.dismiss();
@@ -267,6 +268,11 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     private void showSelectedDelegatesCount(){
         int count=  adapter.getSelectedDelegatesMap().size();
         statusTv.setText(String.format("已选择%d位受托人",count));
+    }
+
+    private void clearSeletedDelegates(){
+        adapter.clearSelectedDelegatesMap();
+        statusTv.setText(String.format("已选择%d位受托人",0));
     }
 
     @Override

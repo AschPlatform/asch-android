@@ -113,6 +113,9 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         });
     }
 
+    public void clearSelectedDelegatesMap(){
+        selectedDelegatesMap.clear();
+    }
 
     private void selectDelegate(Delegate delegate) {
         selectedDelegatesMap.put(delegate.getPublicKey(),delegate);
