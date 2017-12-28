@@ -276,8 +276,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         presenter.voteForDelegates(delegates,secret, secondSecret);
     }
 
-    private void showSelectedDelegatesCount(){
-        int count=  adapter.getSelectedDelegatesMap().size();
+    private void showSelectedDelegatesCount(int count){
         statusTv.setText(String.format("已选择%d位受托人",count));
     }
 
@@ -288,12 +287,24 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
 
     @Override
     public void selectDelegate(Delegate delegate) {
-        showSelectedDelegatesCount();
+        int count=  adapter.getSelectedDelegatesMap().size();
+        showSelectedDelegatesCount(count);
     }
 
     @Override
     public void deselectDelegate(Delegate delegate) {
-        showSelectedDelegatesCount();
+        int count=  adapter.getSelectedDelegatesMap().size();
+        showSelectedDelegatesCount(count);
+    }
+
+    @Override
+    public boolean checkDelegateCount() {
+        int count=  adapter.getSelectedDelegatesMap().size();
+        if (count>=33){
+            AppUtil.toastWarning(getContext(),"每张票最多可以同时投33人");
+            return false;
+        }
+        return true;
     }
 
     private  void  showHUD(){

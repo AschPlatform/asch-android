@@ -219,8 +219,7 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
         presenter.downVoteForDelegates(delegates,secret, secondSecret);
     }
 
-    private void showSelectedDelegatesCount(){
-        int count=  adapter.getSelectedDelegatesMap().size();
+    private void showSelectedDelegatesCount(int count){
         statusTv.setText(String.format("已选择%d位受托人",count));
     }
 
@@ -303,14 +302,27 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
     }
 
     @Override
+    public boolean checkDelegateCount() {
+        int count=  adapter.getSelectedDelegatesMap().size();
+        if (count>=33){
+            AppUtil.toastWarning(getContext(),"每张票最多可以同时投33人");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public void selectDelegate(Delegate delegate) {
-        showSelectedDelegatesCount();
+        int count=  adapter.getSelectedDelegatesMap().size();
+        showSelectedDelegatesCount(count);
     }
 
     @Override
     public void deselectDelegate(Delegate delegate) {
-        showSelectedDelegatesCount();
+        int count=  adapter.getSelectedDelegatesMap().size();
+        showSelectedDelegatesCount(count);
     }
+
 
     /**
      * This interface must be implemented by activities that contain this

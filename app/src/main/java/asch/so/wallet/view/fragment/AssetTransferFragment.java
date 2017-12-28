@@ -197,10 +197,6 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 BigDecimal amountDecimal=new BigDecimal(ammountStr);
                 MathContext mc=new MathContext(ammountStr.length(), RoundingMode.HALF_UP);
                 amountDecimal=amountDecimal.multiply(new BigDecimal(10).pow(precision),mc);
-                //amountDecimal.setScale(precision);
-                //amountDecimal.scaleByPowerOfTen(precision);
-                //amountDecimal.movePointRight(precision);
-                //long amount = AppUtil.scaledAmountFromDecimal(Float.parseFloat(ammountStr),precision);
                 long amount = amountDecimal.longValue();
                 long remainBalance=balanceRemain!=null?balanceRemain.getLongBalance():-1;
                 if (remainBalance>=0 && remainBalance<amount){

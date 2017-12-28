@@ -96,11 +96,17 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
             public void onClick(View v) {
                 Delegate delegate=getItem(viewHolder.getAdapterPosition());
                 boolean select=selectedDelegatesMap.containsValue(delegate);
-                v.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
+
                 if (!select){
-                    selectDelegate(delegate);
+                    if (selectedDelegatesListener!=null && selectedDelegatesListener.checkDelegateCount()) {
+                        selectDelegate(delegate);
+                        v.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
+                    }else {
+                       // v.setBackgroundResource(R.mipmap.item_unslected);
+                    }
                 }else {
                     deselectDelegate(delegate);
+                    v.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
                 }
             }
         });
@@ -126,10 +132,10 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
     }
 
     private void selectDelegate(Delegate delegate) {
-        selectedDelegatesMap.put(delegate.getPublicKey(),delegate);
-        if (selectedDelegatesListener!=null){
-            selectedDelegatesListener.selectDelegate(delegate);
-        }
+            selectedDelegatesMap.put(delegate.getPublicKey(),delegate);
+            if (selectedDelegatesListener!=null){
+                selectedDelegatesListener.selectDelegate(delegate);
+            }
     }
 
     private void deselectDelegate(Delegate delegate) {
@@ -222,6 +228,8 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
     }
 
     public interface OnSelectedDelegatesListener {
+
+        boolean checkDelegateCount();
 
         void selectDelegate(Delegate delegate);
 
