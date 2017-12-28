@@ -230,6 +230,10 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     @Override
     public void onClick(View v) {
         if (v==voteBtn){
+//            if (!checkFee()){
+//                AppUtil.toastError(getContext(),"余额不足");
+//                return;
+//            }
             List<Delegate> selectedDelegates=adapter.getSelectedDelegates();
             if (selectedDelegates!=null && selectedDelegates.size()>0){
                 boolean hasSecondSecret=getAccount().hasSecondSecret();
@@ -248,6 +252,13 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
                 });
             }
         }
+    }
+
+    private boolean checkFee(){
+        Account account= AccountsManager.getInstance().getCurrentAccount();
+        if (account.getFullAccount()==null)
+            return true;
+       return account.getFullAccount().getAccount().checkVoteFee();
     }
 
     private void voteForDelegates(String secret, String secondSecret){

@@ -178,4 +178,22 @@ public class AppUtil {
         return animator;
     }
 
+    public static String extractInfoFromError(Throwable ex){
+        if (ex==null){
+            return "服务器错误";
+        }
+        String error=ex.getMessage();
+        if (error.contains("Failed to connect")){
+            return "网络连接失败，请检查你网络设置";
+        }else if (error.contains("Insufficient balance")){
+            return "余额不足";
+        }else if (error.contains("Failed to remove vote")){
+            return "您选择的部分受托人已经取消投票，请区块确认后刷新再操作";
+        }else if (error.contains("Failed to add vote")){
+            return "您选择的部分受托人已经投过票，请区块确认后刷新再操作";
+        }else {
+            return "服务器错误，请检查您填写的信息是否正确";
+        }
+    }
+
 }

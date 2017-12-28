@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Consumer;
 
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.util.AppUtil;
 import so.asch.sdk.impl.AschConst;
 
@@ -227,6 +228,24 @@ public class FullAccount {
         public void setLockHeight(long lockHeight) {
             this.lockHeight = lockHeight;
         }
+
+        public boolean checkTransferFee(){
+         // BigDecimal decimal =  AppUtil.decimalFromBigint(Long.parseLong(balance), AppConstants.PRECISION);
+           return AschConst.Fees.TRANSFER<Long.parseLong(balance);
+        }
+
+        public boolean checkUIATransferFee(){
+            return AschConst.Fees.UIA_TRANSFER<Long.parseLong(balance);
+        }
+
+        public boolean checkVoteFee(){
+            return AschConst.Fees.VOTE<Long.parseLong(balance);
+        }
+
+        public boolean checkSetSecondPwdFee(){
+            return AschConst.Fees.SECOND_SIGNATURE<Long.parseLong(balance);
+        }
+
     }
 
     public static class BlockInfo{

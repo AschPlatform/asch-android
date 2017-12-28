@@ -168,11 +168,15 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
     @Override
     public void onClick(View v) {
         if (v==downVoteBtn){
+//            if (!checkFee()){
+//                AppUtil.toastError(getContext(),"余额不足");
+//                return;
+//            }
             List<Delegate> selectedDelegates=adapter.getSelectedDelegates();
             if (selectedDelegates!=null && selectedDelegates.size()>0){
                 boolean hasSecondSecret=getAccount().hasSecondSecret();
                 dialog = new AllPasswdsDialog(getContext(),hasSecondSecret);
-                dialog.setTitle("取消受托人投票");
+                dialog.setTitle("取消给受托人的投票");
                 dialog.show(new AllPasswdsDialog.OnConfirmationListenner() {
                     @Override
                     public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
@@ -186,6 +190,13 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
                 });
             }
         }
+    }
+
+    private boolean checkFee(){
+        Account account= AccountsManager.getInstance().getCurrentAccount();
+        if (account.getFullAccount()==null)
+            return true;
+        return account.getFullAccount().getAccount().checkVoteFee();
     }
 
     private void clearSeletedDelegates(){
