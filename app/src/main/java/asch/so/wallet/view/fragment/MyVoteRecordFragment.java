@@ -188,6 +188,8 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
                         }
                     }
                 });
+            }else {
+                AppUtil.toastError(getContext(), "请选择受托人");
             }
         }
     }

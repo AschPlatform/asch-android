@@ -1,5 +1,6 @@
 package asch.so.wallet.view.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -58,17 +60,17 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         viewHolder.addressTv.setText(item.getAddress());
         viewHolder.balanceTv.setText(String.valueOf(item.getBalance()));
         viewHolder.publicKeyTv.setText(item.getPublicKey());
-        viewHolder.productivityTv.setText(String.valueOf(item.getProductivity()));
+        viewHolder.productivityTv.setText(String.format("%f",item.getProductivity()));
         viewHolder.producedBlocksTv.setText(String.valueOf(item.getProducedblocks()));
         viewHolder.missedBlocksTv.setText(String.valueOf(item.getMissedblocks()));
-        viewHolder.approvalTv.setText(String.valueOf(item.getApproval()));
+        viewHolder.approvalTv.setText(String.format("%f",item.getApproval()));
         if (getSelectedDelegatesMap().containsValue(item)){
             viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_slected);
         }else {
             viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_unslected);
         }
 
-        boolean expand= (boolean) viewHolder.expandBtn.getTag();
+        boolean expand= isExpand(viewHolder.getAdapterPosition()) ;
         viewHolder.expandableLayout.setExpanded(expand);
         viewHolder.expandBtn.setBackgroundResource(expand?R.mipmap.expand_arrow_up:R.mipmap.expand_arrow_down);
 
@@ -89,34 +91,36 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
                     deselectDelegate(delegate);
                     v.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
                 }
-
-//                boolean select=(Boolean) viewHolder.selectBtn.getTag();
-//                viewHolder.selectBtn.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
-//                viewHolder.selectBtn.setTag(!select);
-//                Delegate delegate = getData().get(viewHolder.getAdapterPosition());
-//                expandStatesMap.put(viewHolder.getAdapterPosition(),!select);
-//                if (!select){
-//                    selectDelegate(delegate);
-//                }else {
-//                    deselectDelegate(delegate);
-//                }
             }
         });
 
         viewHolder.expandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int state=viewHolder.expandableLayout.getState();
-                if (state == ExpandableLayout.State.EXPANDED) {
+                boolean isExpand=isExpand(viewHolder.getAdapterPosition());
+                if (isExpand){
                     v.setBackgroundResource(R.mipmap.expand_arrow_down);
-                }else if (state == ExpandableLayout.State.COLLAPSED){
+                    expandStatesMap.put(viewHolder.getAdapterPosition(),false);
+                }else {
                     v.setBackgroundResource(R.mipmap.expand_arrow_up);
+                    expandStatesMap.put(viewHolder.getAdapterPosition(),true);
                 }
-                boolean select=(Boolean) v.getTag();
-                v.setTag(!select);
                 viewHolder.expandableLayout.toggle();
+//                int state=viewHolder.expandableLayout.getState();
+//                if (state == ExpandableLayout.State.EXPANDED) {
+//                    v.setBackgroundResource(R.mipmap.expand_arrow_down);
+//                }else if (state == ExpandableLayout.State.COLLAPSED){
+//                    v.setBackgroundResource(R.mipmap.expand_arrow_up);
+//                }
+//                boolean select=(Boolean) v.getTag();
+//                v.setTag(!select);
+//                viewHolder.expandableLayout.toggle();
             }
         });
+    }
+
+    private boolean isExpand(int pos){
+        return expandStatesMap.containsKey(pos)?expandStatesMap.get(pos):false;
     }
 
     public void clearSelectedDelegatesMap(){
@@ -164,6 +168,12 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
             }
         }
         this.replaceData(delegates);
+    }
+
+    @Override
+    public void replaceData(@NonNull Collection<? extends Delegate> data) {
+        expandStatesMap.clear();
+        super.replaceData(data);
     }
 
     public static class ViewHolder extends BaseViewHolder implements  ExpandableLayout.OnExpansionUpdateListener{

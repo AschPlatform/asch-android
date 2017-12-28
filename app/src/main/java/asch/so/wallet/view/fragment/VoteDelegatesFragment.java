@@ -250,6 +250,8 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
                         }
                     }
                 });
+            }else {
+                AppUtil.toastError(getContext(), "请选择受托人");
             }
         }
     }
