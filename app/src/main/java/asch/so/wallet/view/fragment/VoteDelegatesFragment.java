@@ -233,6 +233,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
             if (selectedDelegates!=null && selectedDelegates.size()>0){
                 boolean hasSecondSecret=getAccount().hasSecondSecret();
                 dialog = new AllPasswdsDialog(getContext(),hasSecondSecret);
+                dialog.setTitle("投票给受托人");
                 dialog.show(new AllPasswdsDialog.OnConfirmationListenner() {
                     @Override
                     public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
