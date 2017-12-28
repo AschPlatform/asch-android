@@ -153,7 +153,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         Balance balanceRemain=getBalance();
         //float realBalance = balanceRemain!=null?balanceRemain.getDecimalBalance().floatValue():-1;
         //if (realBalance>=0){
-            balanceTv.setText(balanceRemain.getBalanceString());
+            balanceTv.setText(balanceRemain==null?"":balanceRemain.getBalanceString());
         //}else {
          //   balanceTv.setText("");
         //}
