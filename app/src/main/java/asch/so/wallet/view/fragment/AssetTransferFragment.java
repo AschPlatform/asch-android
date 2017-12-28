@@ -28,7 +28,10 @@ import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.LogUtils;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -191,7 +194,14 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                     return;
                 }
                 int precision=selectedAsset.getPrecision();
-                long amount = AppUtil.scaledAmountFromDecimal(Float.parseFloat(ammountStr),precision);
+                BigDecimal amountDecimal=new BigDecimal(ammountStr);
+                MathContext mc=new MathContext(ammountStr.length(), RoundingMode.HALF_UP);
+                amountDecimal=amountDecimal.multiply(new BigDecimal(10).pow(precision),mc);
+                //amountDecimal.setScale(precision);
+                //amountDecimal.scaleByPowerOfTen(precision);
+                //amountDecimal.movePointRight(precision);
+                //long amount = AppUtil.scaledAmountFromDecimal(Float.parseFloat(ammountStr),precision);
+                long amount = amountDecimal.longValue();
                 long remainBalance=balanceRemain!=null?balanceRemain.getLongBalance():-1;
                 if (remainBalance>=0 && remainBalance<amount){
                     AppUtil.toastError(getContext(),"账户余额不够");
