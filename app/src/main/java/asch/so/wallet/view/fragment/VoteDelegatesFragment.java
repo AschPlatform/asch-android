@@ -213,6 +213,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         dismissHUD();
         if (success){
             adapter.disableVotedDelegates();
+            clearSeletedDelegates();
             AppUtil.toastSuccess(getContext(),msg);
             if (dialog!=null){
                 dialog.dismiss();
@@ -229,10 +230,15 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     @Override
     public void onClick(View v) {
         if (v==voteBtn){
+//            if (!checkFee()){
+//                AppUtil.toastError(getContext(),"余额不足");
+//                return;
+//            }
             List<Delegate> selectedDelegates=adapter.getSelectedDelegates();
             if (selectedDelegates!=null && selectedDelegates.size()>0){
                 boolean hasSecondSecret=getAccount().hasSecondSecret();
                 dialog = new AllPasswdsDialog(getContext(),hasSecondSecret);
+                dialog.setTitle("投票给受托人");
                 dialog.show(new AllPasswdsDialog.OnConfirmationListenner() {
                     @Override
                     public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
@@ -244,8 +250,17 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
                         }
                     }
                 });
+            }else {
+                AppUtil.toastError(getContext(), "请选择受托人");
             }
         }
+    }
+
+    private boolean checkFee(){
+        Account account= AccountsManager.getInstance().getCurrentAccount();
+        if (account.getFullAccount()==null)
+            return true;
+       return account.getFullAccount().getAccount().checkVoteFee();
     }
 
     private void voteForDelegates(String secret, String secondSecret){
@@ -263,19 +278,35 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         presenter.voteForDelegates(delegates,secret, secondSecret);
     }
 
-    private void showSelectedDelegatesCount(){
-        int count=  adapter.getSelectedDelegatesMap().size();
+    private void showSelectedDelegatesCount(int count){
         statusTv.setText(String.format("已选择%d位受托人",count));
+    }
+
+    private void clearSeletedDelegates(){
+        adapter.clearSelectedDelegatesMap();
+        statusTv.setText(String.format("已选择%d位受托人",0));
     }
 
     @Override
     public void selectDelegate(Delegate delegate) {
-        showSelectedDelegatesCount();
+        int count=  adapter.getSelectedDelegatesMap().size();
+        showSelectedDelegatesCount(count);
     }
 
     @Override
     public void deselectDelegate(Delegate delegate) {
-        showSelectedDelegatesCount();
+        int count=  adapter.getSelectedDelegatesMap().size();
+        showSelectedDelegatesCount(count);
+    }
+
+    @Override
+    public boolean checkDelegateCount() {
+        int count=  adapter.getSelectedDelegatesMap().size();
+        if (count>=33){
+            AppUtil.toastWarning(getContext(),"每张票最多可以同时投33人");
+            return false;
+        }
+        return true;
     }
 
     private  void  showHUD(){

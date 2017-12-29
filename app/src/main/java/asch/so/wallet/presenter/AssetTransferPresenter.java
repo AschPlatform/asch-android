@@ -148,53 +148,6 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
             }
         });
         subscriptions.add(subscription);
-//        ArrayList<UIAAsset> list=new ArrayList<UIAAsset>();
-//        Observable  uiaOervable =
-//                Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){
-//                    @Override
-//                    public void call(Subscriber<? super List<UIAAsset>> subscriber) {
-//                        AschResult result = AschSDK.UIA.getAssets(100,0);
-//                        Log.i(TAG,result.getRawJson());
-//                        if (result.isSuccessful()){
-//                            JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
-//                            JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
-//                            List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
-//                            list.addAll(assets);
-//                            subscriber.onNext(list);
-//                            subscriber.onCompleted();
-//                        }else{
-//                            subscriber.onError(result.getException());
-//                        }
-//                    }
-//                });
-//
-//       Subscription subscription= uiaOervable.subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .unsubscribeOn(Schedulers.io())
-//                .subscribe(new Subscriber<List<UIAAsset>>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(java.lang.Throwable e) {
-//                        view.displayError(new Throwable("转账失败"));
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<UIAAsset> assets) {
-//                        ArrayList<UIAAsset> filterdAssets=new ArrayList<>();
-//                        for (UIAAsset uiaAsset :
-//                                assets) {
-//                            if (hasAsset(uiaAsset.getName())){
-//                                filterdAssets.add(uiaAsset);
-//                            }
-//                        }
-//                        view.displayAssets(filterdAssets,getSelectedIndex(filterdAssets,currency));
-//                    }
-//                });
-//       subscriptions.add(subscription);
     }
 
     private int getSelectedIndex(List<UIAAsset> assets, String currency){

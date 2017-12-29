@@ -8,6 +8,7 @@
     >
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
+        android:layout_above="@id/bottom_ll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:srlPrimaryColor="@color/colorPrimary"
@@ -68,7 +69,7 @@
             android:layout_height="match_parent">
             <Button
                 android:id="@+id/down_vote_btn"
-                style="@style/PrimaryButton.Style"
+                android:background="@drawable/rect_btn_selector"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"

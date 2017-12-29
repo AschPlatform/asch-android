@@ -2,6 +2,7 @@ package asch.so.wallet.view.adapter;
 
 import android.animation.ObjectAnimator;
 import android.os.Debug;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ import com.github.zagum.switchicon.SwitchIconView;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -45,12 +47,12 @@ import butterknife.ButterKnife;
 public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegatesAdapter.ViewHolder> {
     private  OnSelectedDelegatesListener selectedDelegatesListener;
     private LinkedHashMap<String, Delegate> selectedDelegatesMap;
-    //private HashMap<Integer,Boolean> expandStatesMap;
+    private HashMap<Integer,Boolean> expandStatesMap;
     public VoteDelegatesAdapter(@Nullable List<Delegate> data, OnSelectedDelegatesListener listener) {
         super(R.layout.item_vote_delegates, data);
         this.selectedDelegatesListener = listener;
         this.selectedDelegatesMap=new LinkedHashMap<>();
-        //this.expandStatesMap=new HashMap<Integer, Boolean>();
+        this.expandStatesMap=new HashMap<Integer, Boolean>();
     }
 
     public VoteDelegatesAdapter(OnSelectedDelegatesListener listener) {
@@ -70,10 +72,10 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
         viewHolder.addressTv.setText(item.getAddress());
         viewHolder.balanceTv.setText(String.valueOf(item.getBalance()));
         viewHolder.publicKeyTv.setText(item.getPublicKey());
-        viewHolder.productivityTv.setText(String.valueOf(item.getProductivity()));
+        viewHolder.productivityTv.setText(String.format("%f",item.getProductivity()));
         viewHolder.producedBlocksTv.setText(String.valueOf(item.getProducedblocks()));
         viewHolder.missedBlocksTv.setText(String.valueOf(item.getMissedblocks()));
-        viewHolder.approvalTv.setText(String.valueOf(item.getApproval()));
+        viewHolder.approvalTv.setText(String.format("%f",item.getApproval()));
         if (item.isVoted()){
             viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_disable);
             viewHolder.selectBtn.setClickable(false);
@@ -86,7 +88,7 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
             viewHolder.selectBtn.setEnabled(true);
         }
 
-        boolean expand= (boolean) viewHolder.expandBtn.getTag();
+        boolean expand= isExpand(viewHolder.getAdapterPosition()) ; //(boolean) viewHolder.expandBtn.getTag();
         viewHolder.expandableLayout.setExpanded(expand);
         viewHolder.expandBtn.setBackgroundResource(expand?R.mipmap.expand_arrow_up:R.mipmap.expand_arrow_down);
         LogUtils.d(TAG,"viewHolder.getAdapterPosition:"+viewHolder.getAdapterPosition()+" expand:"+expand);
@@ -96,28 +98,32 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
             public void onClick(View v) {
                 Delegate delegate=getItem(viewHolder.getAdapterPosition());
                 boolean select=selectedDelegatesMap.containsValue(delegate);
-                v.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
+
                 if (!select){
-                    selectDelegate(delegate);
+                    if (selectedDelegatesListener!=null && selectedDelegatesListener.checkDelegateCount()) {
+                        selectDelegate(delegate);
+                        v.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
+                    }else {
+                       // v.setBackgroundResource(R.mipmap.item_unslected);
+                    }
                 }else {
                     deselectDelegate(delegate);
+                    v.setBackgroundResource(!select?R.mipmap.item_slected:R.mipmap.item_unslected);
                 }
             }
         });
         viewHolder.expandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int state=viewHolder.expandableLayout.getState();
-                if (state == ExpandableLayout.State.EXPANDED) {
+
+                boolean isExpand=isExpand(viewHolder.getAdapterPosition());
+                if (isExpand){
                     v.setBackgroundResource(R.mipmap.expand_arrow_down);
-                    //AppUtil.createRotateAnimator(viewHolder.expandBtn, 180f, 0f).start();
-                }else if (state == ExpandableLayout.State.COLLAPSED){
+                    expandStatesMap.put(viewHolder.getAdapterPosition(),false);
+                }else {
                     v.setBackgroundResource(R.mipmap.expand_arrow_up);
-                    //AppUtil.createRotateAnimator(viewHolder.expandBtn, 0f, 180f).start();
+                    expandStatesMap.put(viewHolder.getAdapterPosition(),true);
                 }
-                boolean select=(Boolean) v.getTag();
-                v.setTag(!select);
-               // expandStatesMap.put(viewHolder.getAdapterPosition(),!select);
                 viewHolder.expandableLayout.toggle();
             }
         });
@@ -125,11 +131,15 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
         viewHolder.expandableLayout.setInterpolator(new OvershootInterpolator());
     }
 
+    private boolean isExpand(int pos){
+       return expandStatesMap.containsKey(pos)?expandStatesMap.get(pos):false;
+    }
+
     private void selectDelegate(Delegate delegate) {
-        selectedDelegatesMap.put(delegate.getPublicKey(),delegate);
-        if (selectedDelegatesListener!=null){
-            selectedDelegatesListener.selectDelegate(delegate);
-        }
+            selectedDelegatesMap.put(delegate.getPublicKey(),delegate);
+            if (selectedDelegatesListener!=null){
+                selectedDelegatesListener.selectDelegate(delegate);
+            }
     }
 
     private void deselectDelegate(Delegate delegate) {
@@ -142,6 +152,10 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
 
     public LinkedHashMap<String, Delegate> getSelectedDelegatesMap() {
         return selectedDelegatesMap;
+    }
+
+    public void clearSelectedDelegatesMap(){
+        selectedDelegatesMap.clear();
     }
 
     public List<Delegate> getSelectedDelegates(){
@@ -177,6 +191,12 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
         this.selectedDelegatesListener = selectedDelegatesListener;
     }
 
+    @Override
+    public void replaceData(@NonNull Collection<? extends Delegate> data) {
+        expandStatesMap.clear();
+        super.replaceData(data);
+    }
+
     public static class ViewHolder extends BaseViewHolder implements ExpandableLayout.OnExpansionUpdateListener{
 
         @BindView(R.id.rate_tv)
@@ -206,8 +226,6 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
-//            expandBtn.setOnClickListener(this);
-            expandBtn.setTag(false);
             expandableLayout.setOnExpansionUpdateListener(this);
         }
 
@@ -217,7 +235,10 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
         }
     }
 
+
     public interface OnSelectedDelegatesListener {
+
+        boolean checkDelegateCount();
 
         void selectDelegate(Delegate delegate);
 

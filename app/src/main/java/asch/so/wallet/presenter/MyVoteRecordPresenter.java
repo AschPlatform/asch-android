@@ -18,6 +18,7 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.MyVoteRecordContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Delegate;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.MyVoteRecordAdapter;
 import rx.Observable;
 import rx.Subscriber;
@@ -133,7 +134,7 @@ public class MyVoteRecordPresenter implements MyVoteRecordContract.Presenter {
                     @Override
                     public void onError(java.lang.Throwable e) {
                         LogUtils.dTag(TAG,"vote result:"+e==null?"vote result error":e.toString());
-                        view.displayDownVoteResult(false,e==null?"取消投票失败":e.toString());
+                        view.displayDownVoteResult(false, AppUtil.extractInfoFromError(e));
                     }
 
                     @Override

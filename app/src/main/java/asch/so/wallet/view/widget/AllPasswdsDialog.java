@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
@@ -45,6 +46,9 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
     @BindView(R.id.dialog_close)
     ImageView closeIv;
 
+    @BindView(R.id.title_tv)
+    TextView titleTv;
+
     private boolean needSecondSecret;
     private OnConfirmationListenner listenner;
 
@@ -80,6 +84,11 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
 
         closeIv.setOnClickListener(this);
         okBtn.setOnClickListener(this);
+    }
+
+    public AllPasswdsDialog setTitle(String title){
+        titleTv.setText(title);
+        return this;
     }
 
     @Override

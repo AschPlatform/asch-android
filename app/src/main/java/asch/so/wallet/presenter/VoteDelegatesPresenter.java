@@ -18,6 +18,7 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.VoteDelegatesContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Delegate;
+import asch.so.wallet.util.AppUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -142,8 +143,6 @@ public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
         for (Delegate delegate : delegates) {
             pubKeys[i++]=delegate.getPublicKey();
         }
-//        String secret ="todo";// getAccount().getSeed();
-//        String secondSecret = null;
         if (pubKeys.length==0)
             return;
 
@@ -167,7 +166,8 @@ public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
                     @Override
                     public void onError(java.lang.Throwable e) {
                         LogUtils.dTag(TAG,"vote result:"+e==null?"vote result error":e.toString());
-                        view.displayVoteResult(false,e==null?"投票失败":e.toString());
+//                        view.displayVoteResult(false,e==null?"投票失败":e.toString());
+                        view.displayVoteResult(false, AppUtil.extractInfoFromError(e));
                     }
 
                     @Override
