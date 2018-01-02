@@ -27,6 +27,7 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.AccountInfoActivity;
+import asch.so.wallet.activity.BaseCordovaActivity;
 import asch.so.wallet.activity.DappActivity;
 import asch.so.wallet.activity.PeersActivity;
 import asch.so.wallet.activity.VoteActivity;
@@ -100,7 +101,10 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
                     case 2:
                     {
                         //showToast();
-                       BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
+                      // BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
+                        //BaseActivity.start(getActivity(), BaseCordovaActivity.class,null);
+                        Intent intent=new Intent(getContext(),BaseCordovaActivity.class);
+                        startActivity(intent);
                     }
                     break;
                 }
