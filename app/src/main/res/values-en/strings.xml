@@ -178,7 +178,7 @@
     <string name="password_error">the password is wrong, please input again</string>
     <string name="only_one_account">only one account for the wallet, so can not be deleted</string>
     <string name="delete_success">delete successfully</string>
-    <string name="account_input_tip">account name must be letters, digits  or underscore character</string>
+    <string name="account_input_tip">account name (only letters, digits  anr underscore character)</string>
     <string name="personal_center">personal center</string>
     <string name="forget_pin">forget pin code?</string>
     <string name="pin_tip">click‘sure’ to create a new pin code.\n\n if you remember your pin code, click ‘cancel’ to back.?</string>
