@@ -19,11 +19,11 @@
             android:paddingTop="@dimen/toolBarPaddingTop"
             android:fitsSystemWindows="true"
             app:backIcon="@mipmap/back"
-            app:backText="返回"
+            app:backText="@string/back"
             app:backTextAppearance="?attr/actionMenuTextAppearance"
             app:backTextColor="@android:color/white"
             app:backVisible="true"
-            app:closeText="关闭"
+            app:closeText="@string/close"
             app:closeTextAppearance="?attr/actionMenuTextAppearance"
             app:closeTextColor="@android:color/white"
             app:closeVisible="false"
@@ -85,7 +85,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:background="@null"
-            android:hint="钱包名称"
+            android:hint="@string/wallet_name"
             android:textSize="15sp"
             android:textColor="#999999"
             android:gravity="center_vertical"
@@ -97,7 +97,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:background="@null"
-            android:hint="请输入钱包名称"
+            android:hint="@string/wallet_name_input"
             android:textSize="13sp"
             android:textColor="#333333"
             android:inputType="textPersonName"
@@ -127,7 +127,7 @@
             android:layout_weight="1"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:text="备份账户"
+            android:text="@string/backup_account"
             tools:ignore="HardcodedText" />
     </LinearLayout>
     <LinearLayout
@@ -147,7 +147,7 @@
             android:layout_weight="1"
             android:textColor="#2784f0"
             android:textSize="15sp"
-            android:text="删除账户"
+            android:text="@string/delete_account"
             tools:ignore="HardcodedText" />
     </LinearLayout>
 

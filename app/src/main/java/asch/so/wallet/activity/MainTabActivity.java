@@ -239,7 +239,7 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     private void exit(){
         if (!isExit) {
             isExit = true;
-            AppUtil.toastWarning(getApplicationContext(), "再按一次退出程序");
+            AppUtil.toastWarning(getApplicationContext(), getString(R.string.out_off_hint));
             mHandler.sendEmptyMessageDelayed(0, 2000);
         } else {
             Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -278,7 +278,7 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     private void requestCodeQRCodePermissions() {
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (!EasyPermissions.hasPermissions(this, perms)) {
-            EasyPermissions.requestPermissions(this, "扫描二维码需要打开相机和散光灯的权限", REQUEST_CODE_QRCODE_PERMISSIONS, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.photo_permission), REQUEST_CODE_QRCODE_PERMISSIONS, perms);
         }
     }
 

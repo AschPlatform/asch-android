@@ -69,7 +69,7 @@ public class AppPinActivity extends AppLockActivity {
 
         int type=getIntent().getIntExtra(AppLock.EXTRA_TYPE,-1);
         if (type==AppLock.ENABLE_PINLOCK){
-        toolbar.setTitle("设置Pin码");
+        toolbar.setTitle(getString(R.string.set_pin));
         }else{
             toolbar.setVisibility(View.GONE);
         }
@@ -88,9 +88,9 @@ public class AppPinActivity extends AppLockActivity {
     public void showForgotDialog() {
         Resources res = getResources();
         // Create the builder with required paramaters - Context, Title, Positive Text
-        CustomDialog.Builder builder = new CustomDialog.Builder(this, "忘记pin码?","确定");
-        builder.content("点击 '确定' 创建一个新的pin码。\n\n如果你记得你的pin码, 点击 '取消' 返回。");
-        builder.negativeText("取消");
+        CustomDialog.Builder builder = new CustomDialog.Builder(this, getString(R.string.forget_pin),getString(R.string.confirm));
+        builder.content(getString(R.string.pin_tip));
+        builder.negativeText(getString(R.string.cancel));
 
         //Set theme
         builder.darkTheme(false);
@@ -115,12 +115,12 @@ public class AppPinActivity extends AppLockActivity {
         customDialog.setClickListener(new CustomDialog.ClickListener() {
             @Override
             public void onConfirmClick() {
-                AppUtil.toastInfo(getApplicationContext(), "确定");
+                AppUtil.toastInfo(getApplicationContext(), getString(R.string.confirm));
             }
 
             @Override
             public void onCancelClick() {
-                AppUtil.toastInfo(getApplicationContext(), "取消");
+                AppUtil.toastInfo(getApplicationContext(), getString(R.string.cancel));
             }
         });
 

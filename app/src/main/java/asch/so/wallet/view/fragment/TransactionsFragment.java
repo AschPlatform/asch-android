@@ -121,7 +121,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {
-            AppUtil.toastError(getContext(),exception==null?"网络错误":exception.getMessage());
+            AppUtil.toastError(getContext(),exception==null?getString(R.string.net_error):exception.getMessage());
         }
         if (refreshLayout.isRefreshing()){
             refreshLayout.finishRefresh(500);

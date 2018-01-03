@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="私钥"
+                android:text="@string/secret_key"
                 />
             </LinearLayout>
         <EditText
@@ -38,7 +38,7 @@
             android:layout_height="113dp"
             android:layout_margin="10dp"
             android:background="@drawable/secret_et_bg"
-            android:hint="私钥（BIP39格式，可扫码输入）"
+            android:hint="@string/secret_key_hint"
             android:textSize="13sp"
             android:textColor="#333333"
             android:enabled="true"
@@ -67,7 +67,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:background="@null"
-            android:hint="账户名称（只能是字母、数字、下划线）"
+            android:hint="@string/account_hint"
             android:textSize="15sp"
             android:textColor="#333333"
             android:inputType="textPersonName"
@@ -91,7 +91,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:background="@null"
-            android:hint="密码(不少于8位字符)"
+            android:hint="@string/password_input_hint"
             android:textSize="15sp"
             android:textColor="#333333"
             android:inputType="textPassword"
@@ -116,7 +116,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:background="@null"
-            android:hint="重复密码"
+            android:hint="@string/password_repet"
             android:textSize="15sp"
             android:textColor="#333333"
             android:inputType="textPassword"
@@ -140,7 +140,7 @@
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
             android:background="@null"
-            android:hint="密码提示（可不填）"
+            android:hint="@string/password_hint"
             android:textSize="15sp"
             android:textColor="#333333"
             android:inputType="text"
@@ -163,7 +163,7 @@
         android:layout_height="44dp"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
-        android:text="导入账户" />
+        android:text="@string/import_account" />
     <TextView
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
@@ -172,7 +172,7 @@
         android:layout_marginRight="20dp"
         android:textSize="13sp"
         android:textColor="#888888"
-        android:text="注：请备份好你的密码，该账户不提供密码找回功能，密码用于加密保护私钥，强度非常重要。"
+        android:text="@string/remark_hint"
         />
     <FrameLayout
         android:layout_width="match_parent"

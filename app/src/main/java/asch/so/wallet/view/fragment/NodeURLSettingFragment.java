@@ -90,12 +90,12 @@ public class NodeURLSettingFragment extends BaseFragment implements View.OnClick
             case  R.id.item_save:
             {
                 String url =urltEt.getText().toString().trim();
-                if (Validator.check(getContext(), Validator.Type.URL,url,"节点URL格式不对"))
+                if (Validator.check(getContext(), Validator.Type.URL,url,getString(R.string.node_url_error)))
                 {
                     AppConfig.putNodeURL(url);
                     TestData.configAschSDK();
                     getActivity().finish();
-                    AppUtil.toastSuccess(getContext(),"保存成功");
+                    AppUtil.toastSuccess(getContext(),getString(R.string.save_success));
                 }
             }
             break;

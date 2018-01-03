@@ -3,16 +3,16 @@
     <item
         android:id="@+id/item_assets"
         android:icon="@mipmap/tab_property_nor"
-        android:title="资产" />
+        android:title="@string/assets" />
 
     <item
         android:id="@+id/item_discovery"
         android:icon="@mipmap/tab_app_nor"
-        android:title="发现" />
+        android:title="@string/find_out" />
 
     <item
         android:id="@+id/item_mine"
         android:icon="@mipmap/tab_my_nor"
-        android:title="我的" />
+        android:title="@string/mine" />
 
 </menu>

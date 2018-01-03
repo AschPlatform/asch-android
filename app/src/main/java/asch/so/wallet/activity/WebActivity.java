@@ -32,8 +32,8 @@ public class WebActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("使用手册");
-        setRightTitle("打开浏览器");
+        setTitle(getString(R.string.use_explain));
+        setRightTitle(getString(R.string.open_browser));
         WebFragment fragment=WebFragment.newInstance(AppConstants.USER_MANNUAL_URL);
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 

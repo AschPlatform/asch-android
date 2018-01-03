@@ -26,7 +26,7 @@
             android:cursorVisible="true"
             android:inputType="textPassword"
             android:textSize="15sp"
-            android:hint="请输入高度"
+            android:hint="@string/input_height"
             android:maxLines="1"
             android:textColor="#333333" />
         <EditText
@@ -42,7 +42,7 @@
             android:cursorVisible="true"
             android:inputType="textPassword"
             android:textSize="15sp"
-            android:hint="请输入当前账户密码"
+            android:hint="@string/account_pwd_hint"
             android:maxLines="1"
             android:textColor="#333333" />
         <EditText
@@ -58,7 +58,7 @@
             android:cursorVisible="true"
             android:inputType="textPassword"
             android:textSize="15sp"
-            android:hint="请输入二级密码"
+            android:hint="@string/input_secondary_password"
             android:maxLines="1"
             android:textColor="#333333" />
 
@@ -72,7 +72,7 @@
             android:layout_height="40dp"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
-            android:text="确定" />
+            android:text="@string/confirm" />
 
     </LinearLayout>
 </LinearLayout>

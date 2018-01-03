@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion rootProject.ext.android.compileSdkVersion
-    buildToolsVersion rootProject.ext.android.buildToolsVersion
+    compileSdkVersion 26
+    buildToolsVersion '26.0.3'
 
 
     signingConfigs {
@@ -122,7 +122,7 @@ android {
 }
 
 dependencies {
-//    implementation 'com.android.support:support-v4:26.1.0'
+    //    implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -135,19 +135,15 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:multidex:1.0.1'
-
-//    releaseCompile project(path: ':base', configuration: 'release')
-//    debugCompile project(path: ':base', configuration: 'debug')
+    //    releaseCompile project(path: ':base', configuration: 'release')
+    //    debugCompile project(path: ':base', configuration: 'debug')
     compile project(':base')
     compile project(':widget')
     compile project(':asch-java')
-
     compile rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
-
     compile rootProject.ext.dependencies["dagger"]
     annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
-
     compile rootProject.ext.dependencies["retrofit2-fastjson-converter"]
     compile rootProject.ext.dependencies["cardview"]
     compile rootProject.ext.dependencies["rxandroid"]
@@ -155,14 +151,11 @@ dependencies {
     compile rootProject.ext.dependencies["smart-refresh-layout"]
     compile rootProject.ext.dependencies["smart-refresh-header"]
     compile rootProject.ext.dependencies["circleimageview"]
-
-
     compile rootProject.ext.dependencies["zxing-core"]
     compile rootProject.ext.dependencies["bga-zxing"]
     compile rootProject.ext.dependencies["bga-qrcodecore"]
     compile rootProject.ext.dependencies["bga-zbar"]
     compile rootProject.ext.dependencies["easypermissions"]
-
     compile rootProject.ext.dependencies["js-bridge"]
     compile rootProject.ext.dependencies["agentweb"]
     compile rootProject.ext.dependencies["hawk"]
@@ -191,7 +184,6 @@ dependencies {
     compile rootProject.ext.dependencies["okhttpUtils"]
     compile 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
     //compile rootProject.ext.dependencies["expandableLayout2"]
-
 }
 
 //def rename_andd_moveout_apk(orignalFile, buildType) {

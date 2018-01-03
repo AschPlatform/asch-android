@@ -21,7 +21,7 @@ public class TransactionsActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("交易记录");
+        setTitle(getString(R.string.transaction_record));
         //StatusBarUtil.immersive(this);
         TransactionsFragment transactionsFragment=TransactionsFragment.newInstance();
 

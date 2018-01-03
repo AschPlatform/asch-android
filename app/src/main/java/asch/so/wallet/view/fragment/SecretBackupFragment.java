@@ -55,10 +55,10 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
     private void showAlertDialog(){
         AlertDialog.Builder builder =new AlertDialog
                 .Builder(getContext());
-        builder.setTitle("重要提示")
-        .setMessage("助记词用于恢复账户，只能备份一次，请将它抄下来，并保存在安全的地方！")
+        builder.setTitle(getString(R.string.important_note))
+        .setMessage(getString(R.string.note_content))
         .setCancelable(false)
-        .setPositiveButton("确定",null)
+        .setPositiveButton(getString(R.string.confirm),null)
         .show();
     }
 
@@ -77,7 +77,7 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
 
     private void copySecret(String secret){
         presenter.backupSecret(secret);
-        AppUtil.copyTextWithWarning(getActivity(),secret, "已经复制到粘贴板，但还需您手动备份到安全的地方！");
+        AppUtil.copyTextWithWarning(getActivity(),secret, getString(R.string.sure_copy));
     }
 
     @Override

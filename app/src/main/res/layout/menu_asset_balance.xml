@@ -43,7 +43,7 @@
                 android:clickable="false"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:text="扫一扫"
+                android:text="@string/scan"
                 android:textSize="14sp"/>
         </LinearLayout>
 
@@ -69,7 +69,7 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:clickable="false"
-            android:text="收款"
+            android:text="@string/receipt"
             android:textSize="14sp"/>
         </LinearLayout>
     <LinearLayout
@@ -94,7 +94,7 @@
             android:gravity="center"
             android:clickable="false"
             android:textColor="@color/white"
-            android:text="账单"
+            android:text="@string/bill"
             android:textSize="14sp"/>
         </LinearLayout>
     </LinearLayout>

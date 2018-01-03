@@ -62,7 +62,7 @@ public class AssetTransferActivity extends TitleToolbarActivity implements EasyP
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("资产转账");
+        setTitle(getString(R.string.asset_transfer));
         fragment=AssetTransferFragment.newInstance();
         Bundle bundle=getIntent().getExtras();
         fragment.setArguments(bundle);
@@ -112,7 +112,7 @@ public class AssetTransferActivity extends TitleToolbarActivity implements EasyP
     private void requestCodeQRCodePermissions() {
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (!EasyPermissions.hasPermissions(this, perms)) {
-            EasyPermissions.requestPermissions(this, "扫描二维码需要打开相机和散光灯的权限", REQUEST_CODE_QRCODE_PERMISSIONS, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.photo_permission), REQUEST_CODE_QRCODE_PERMISSIONS, perms);
         }
     }
 }

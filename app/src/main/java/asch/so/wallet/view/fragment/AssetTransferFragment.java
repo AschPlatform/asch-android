@@ -177,20 +177,20 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
                 if (currency==null)
                 {
-                    AppUtil.toastError(getContext(),"请选择币种");
+                    AppUtil.toastError(getContext(),getString(R.string.select_coin));
                     return;
                 }
 
-                if (!Validator.check(getContext(), Validator.Type.Address,targetAddress,"无效地址，请重新输入")){
+                if (!Validator.check(getContext(), Validator.Type.Address,targetAddress,getString(R.string.address_invalid))){
                    return;
                 }
 
                 if (targetAddress.equals(getAccount().getAddress())){
-                    AppUtil.toastError(getContext(),"接受地址和发送地址不能相同");
+                    AppUtil.toastError(getContext(),getString(R.string.address_same));
                     return;
                 }
 
-                if (!Validator.check(getContext(), Validator.Type.Amount,ammountStr,"无效金额")){
+                if (!Validator.check(getContext(), Validator.Type.Amount,ammountStr,getString(R.string.invalid_money))){
                     return;
                 }
                 int precision=selectedAsset.getPrecision();
@@ -200,7 +200,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 long amount = amountDecimal.longValue();
                 long remainBalance=balanceRemain!=null?balanceRemain.getLongBalance():-1;
                 if (remainBalance>=0 && remainBalance<amount){
-                    AppUtil.toastError(getContext(),"账户余额不够");
+                    AppUtil.toastError(getContext(),getString(R.string.money_not_enough));
                     return;
                 }
 
@@ -341,7 +341,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @Override
     public void displayError(java.lang.Throwable exception) {
         dismissHUD();
-        AppUtil.toastError(getContext(),exception!=null?exception.getMessage():"网络错误");
+        AppUtil.toastError(getContext(),exception!=null?exception.getMessage():getString(R.string.net_error));
     }
 
 
@@ -464,7 +464,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
             }
 
         }else {
-            AppUtil.toastError(getContext(),"收款二维码有错误");
+            AppUtil.toastError(getContext(),getString(R.string.receipt_rq_error));
         }
         presenter.loadAssets(currency,false);
     }

@@ -17,7 +17,7 @@ public class AccountInfoActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("个人中心");
+        setTitle(getString(R.string.personal_center));
       AccountInfoFragment fragment =  AccountInfoFragment.newInstance("","");
 
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment, R.id.fragment_container);

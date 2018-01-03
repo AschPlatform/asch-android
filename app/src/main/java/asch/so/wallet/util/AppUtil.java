@@ -68,7 +68,7 @@ public class AppUtil {
 //        clipboardManager.setText(content);
 //        //clipboardManager.setPrimaryClip(clipData);
 //        AppUtil.toastSuccess(context,"复制成功");
-        copyText(context,content,"复制成功");
+        copyText(context,content,context.getString(R.string.copy_success));
     }
 
     public static void copyText(Context context, String content, String msg){

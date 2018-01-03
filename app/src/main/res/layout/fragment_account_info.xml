@@ -21,7 +21,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:background="@null"
-                        android:text="总余额"
+                        android:text="@string/all_balance"
                         android:textSize="15sp"
                         android:textColor="#999999"
                         android:maxLines="1" />
@@ -54,7 +54,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:background="@null"
-                        android:text="公钥"
+                        android:text="@string/public_key"
                         android:textSize="15sp"
                         android:textColor="#999999"
                         android:maxLines="1" />
@@ -87,7 +87,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:background="@null"
-                        android:text="地址"
+                        android:text="@string/address"
                         android:textSize="15sp"
                         android:textColor="#999999"
                         android:maxLines="1" />
@@ -120,7 +120,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:background="@null"
-                        android:text="二级密码"
+                        android:text="@string/secondary_password"
                         android:textSize="15sp"
                         android:textColor="#999999"
                         android:maxLines="1" />
@@ -140,7 +140,7 @@
                             android:layout_height="40dp"
                             android:textColor="#FFFFFF"
                             android:textSize="15sp"
-                            android:text="未设置" />
+                            android:text="@string/not_set" />
                     </LinearLayout>
                     <!--<TextView-->
                         <!--android:id="@+id/second_passwd_tv"-->
@@ -171,7 +171,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:background="@null"
-                        android:text="锁仓状态"
+                        android:text="@string/lock_state"
                         android:textSize="15sp"
                         android:textColor="#999999"
                         android:maxLines="1" />
@@ -191,7 +191,7 @@
                             android:layout_height="40dp"
                             android:textColor="#FFFFFF"
                             android:textSize="15sp"
-                            android:text="未锁仓" />
+                            android:text="@string/not_lock" />
                     </LinearLayout>
 
                     <!--<TextView-->

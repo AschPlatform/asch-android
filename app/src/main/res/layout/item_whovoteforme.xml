@@ -29,7 +29,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="地址"
+                android:text="@string/address"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -62,7 +62,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="用户名"
+                android:text="@string/user_name"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -96,7 +96,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="权重"
+                android:text="@string/weight"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -129,7 +129,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="余额"
+                android:text="@string/balance"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -159,7 +159,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="公钥"
+                android:text="@string/public_key"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />

@@ -14,6 +14,7 @@ import asch.so.base.adapter.page.IPage;
 import asch.so.base.adapter.page.Page1;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
+import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.VoteDelegatesContract;
 import asch.so.wallet.model.entity.Account;
@@ -92,7 +93,7 @@ public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        view.displayError(new Throwable("网络错误"));
+                        view.displayError(new Throwable(context.getString(R.string.net_error)));
                         pager.finishLoad(true);
                     }
 
@@ -166,14 +167,13 @@ public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
                     @Override
                     public void onError(java.lang.Throwable e) {
                         LogUtils.dTag(TAG,"vote result:"+e==null?"vote result error":e.toString());
-//                        view.displayVoteResult(false,e==null?"投票失败":e.toString());
-                        view.displayVoteResult(false, AppUtil.extractInfoFromError(e));
+                        view.displayVoteResult(false,e==null?context.getString(R.string.vote_fail):e.toString());
                     }
 
                     @Override
                     public void onNext(AschResult result) {
                         LogUtils.dTag(TAG,"vote result:"+result.getRawJson());
-                        view.displayVoteResult(true, "投票成功");
+                        view.displayVoteResult(true, context.getString(R.string.vote_success));
                     }
                 });
         subscriptions.add(subscription);

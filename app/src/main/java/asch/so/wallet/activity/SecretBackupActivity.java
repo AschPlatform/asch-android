@@ -53,7 +53,7 @@ public class SecretBackupActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("助记词备份");
+        setTitle(getString(R.string.mnemonic_backup));
         SecretBackupFragment fragment = SecretBackupFragment.newInstance();
         action=Action.valueOf(getBundle().getInt("action"));
         fragment.setArguments(getBundle());
@@ -85,11 +85,11 @@ public class SecretBackupActivity extends TitleToolbarActivity {
     private void showBackupAlertDialog(DialogInterface.OnClickListener okListener){
         AlertDialog.Builder builder =new AlertDialog
                 .Builder(this);
-        builder.setTitle("重要提示")
-                .setMessage("请您确认：助记词是否已经备份到安全的地方？备份的机会只有一次，若已经备份，请点击\"确定\"；若还没有备份，请点击\"取消\"重新进行备份！")
+        builder.setTitle(getString(R.string.important_note))
+                .setMessage(getString(R.string.sure_backup))
                 .setCancelable(false)
-                .setPositiveButton("确定",okListener)
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.confirm),okListener)
+                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

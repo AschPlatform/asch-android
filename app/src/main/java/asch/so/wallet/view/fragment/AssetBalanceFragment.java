@@ -301,7 +301,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void displayAccount(Account account) {
         nameTv.setText(account.getName()==null?"":account.getName());
-        backupBtn.setText(account.isBackup()?"已备份":"请备份");
+        backupBtn.setText(account.isBackup()?getString(R.string.have_backup):getString(R.string.please_backup));
         IdenticonGenerator.getInstance().generateBitmap(account.getPublicKey(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {
@@ -312,7 +312,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void displayError(java.lang.Throwable ex) {
-        AppUtil.toastError(getContext(),ex==null?"网络错误":ex.getMessage());
+        AppUtil.toastError(getContext(),ex==null?getString(R.string.net_error):ex.getMessage());
         refreshLayout.finishRefresh(1000);
     }
 }

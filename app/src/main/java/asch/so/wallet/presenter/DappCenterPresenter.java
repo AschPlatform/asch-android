@@ -5,6 +5,7 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
+import asch.so.wallet.R;
 import asch.so.wallet.contract.DappCenterContract;
 import asch.so.wallet.model.entity.Dapp;
 
@@ -36,19 +37,19 @@ public class DappCenterPresenter implements DappCenterContract.Presenter{
     public void loadDappList() {
 
         Dapp dapp=new Dapp();
-        dapp.setName("受托人投票");
+        dapp.setName(context.getString(R.string.node_vote));
         dapp.setCategory("system");
-        dapp.setDescription("受托人投票.");
+        dapp.setDescription(context.getString(R.string.node_vote));
 
         Dapp dapp2=new Dapp();
-        dapp2.setName("节点列表");
+        dapp2.setName(context.getString(R.string.vote_list));
         dapp2.setCategory("system");
-        dapp2.setDescription("节点列表");
+        dapp2.setDescription(context.getString(R.string.vote_list));
 
         Dapp dapp3=new Dapp();
-        dapp3.setName("个人中心");
+        dapp3.setName(context.getString(R.string.personal_center));
         dapp3.setCategory("system");
-        dapp3.setDescription("个人中心");
+        dapp3.setDescription(context.getString(R.string.personal_center));
 
 //
 

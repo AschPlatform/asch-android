@@ -34,11 +34,12 @@ public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesF
     private MyPagerAdapter adapter;
 
     private ArrayList<Fragment> mFagments = new ArrayList<>();
-    private String[] mTitles = {"受托人列表", "投票记录", "谁投了我"};
+    private String[] mTitles;// = {getString(R.string.node_list), getString(R.string.vote_record), getString(R.string.vote_me)};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("投票");
+        setTitle(getString(R.string.vote));
+        mTitles = new String[]{getString(R.string.node_list), getString(R.string.vote_record), getString(R.string.vote_me)};
         ButterKnife.bind(this);
 
         initView();

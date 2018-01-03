@@ -32,7 +32,7 @@ public class AccountsActivity extends TitleToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        setTitle("所有账户");
+        setTitle(getString(R.string.all_account));
         AccountsFragment accountsFragment=AccountsFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), accountsFragment, R.id.fragment_container);
     }
