@@ -182,8 +182,8 @@ dependencies {
     compile rootProject.ext.dependencies["switchIcon"]
     compile rootProject.ext.dependencies["update"]
     compile rootProject.ext.dependencies["okhttpUtils"]
-    compile 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
-    //compile rootProject.ext.dependencies["expandableLayout2"]
+    compile rootProject.ext.dependencies["expandablelayout"]
+    compile rootProject.ext.dependencies["localeChanger"]
 }
 
 //def rename_andd_moveout_apk(orignalFile, buildType) {

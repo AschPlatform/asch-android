@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -27,6 +28,7 @@ import asch.so.base.util.DateConvertUtils;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.BuildConfig;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.MainTabActivity;
 import es.dmoral.toasty.Toasty;
 import so.asch.sdk.impl.AschConst;
 
@@ -194,6 +196,15 @@ public class AppUtil {
         }else {
             return "服务器错误，请检查您填写的信息是否正确";
         }
+    }
+
+    public static void restartApp(Context context){
+        Intent intent = new Intent(context, MainTabActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
+
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
 
 }

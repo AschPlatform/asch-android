@@ -217,5 +217,6 @@
     <string name="weight">权重</string>
     <string name="refresh">刷新</string>
     <string name="scan_code">扫码</string>
+    <string name="language_default">默认</string>
 
 </resources>

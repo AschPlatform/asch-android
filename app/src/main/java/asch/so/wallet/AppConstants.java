@@ -1,5 +1,9 @@
 package asch.so.wallet;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
 /**
  * Created by kimziv on 2017/9/20.
  */
@@ -33,4 +37,12 @@ public class AppConstants {
 
     public static final  String DEBUG_TAG="Debug";
     public static final String RELEASE_TAG="Release";
+
+    public static final List<Locale> SUPPORTED_LOCALES =
+            Arrays.asList(
+                    Locale.getDefault(),
+                    new Locale("zh"),
+                    new Locale("en")
+            );
+
 }

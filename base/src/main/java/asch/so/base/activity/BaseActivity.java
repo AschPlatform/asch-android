@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.franmontiel.localechanger.LocaleChanger;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -157,7 +159,14 @@ public class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         ActivityStackManager.getInstance().remove(this);
     }
-//
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+
+    //
 //
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {

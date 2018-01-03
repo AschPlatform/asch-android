@@ -1,6 +1,7 @@
 package asch.so.wallet.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.AppUtils;
+import com.franmontiel.localechanger.LocaleChanger;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
@@ -147,6 +149,12 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
         if (mainPresenter!=null){
             mainPresenter.unSubscribe();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
     }
 
     private void setupViewPager(ViewPager viewPager) {

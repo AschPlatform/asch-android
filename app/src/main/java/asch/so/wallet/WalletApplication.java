@@ -3,6 +3,7 @@ package asch.so.wallet;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatDelegate;
@@ -12,6 +13,7 @@ import android.util.Log;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
+import com.franmontiel.localechanger.LocaleChanger;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
@@ -25,7 +27,10 @@ import com.vector.update_app.UpdateAppManager;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.accounts.Wallet;
@@ -46,7 +51,6 @@ public class WalletApplication extends MultiDexApplication {
     private static final String TAG = WalletApplication.class.getSimpleName();
     private ApplicationComponent applicationComponent;
     private static WalletApplication walletApplication;
-
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
@@ -73,6 +77,8 @@ public class WalletApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
 
+        LocaleChanger.initialize(getApplicationContext(), AppConstants.SUPPORTED_LOCALES);
+
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
@@ -87,6 +93,12 @@ public class WalletApplication extends MultiDexApplication {
         initLockManager();
         IdenticonGenerator.init(this);
        // initLockScreenListener();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        LocaleChanger.onConfigurationChanged();
     }
 
     private void initWallet(){
