@@ -86,15 +86,23 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
     }
 
     public enum Item {
-        Language("语言选择", true),
-        NodeURL("节点URL", true),
-        Pincode("设置Pin码", true),
-       // MineProfile("个人信息", true),
+//        Language("语言选择", true),
+//        NodeURL("节点URL", true),
+//        Pincode("设置Pin码", true),
+        Language(R.string.language_select, true),
+        NodeURL(R.string.node_url, true),
+        Pincode(R.string.set_pin, true),
         ;
-        public String title;
+        //public String title;
+        public int titleResId;
         public boolean hasArrow;
-        Item(String name, boolean hasArrow) {
-            this.title = name;
+//        Item(String name, boolean hasArrow) {
+//            this.title = name;
+//            this.hasArrow = hasArrow;
+//        }
+
+        Item(int redId, boolean hasArrow) {
+            this.titleResId = redId;
             this.hasArrow = hasArrow;
         }
     }
@@ -109,7 +117,9 @@ public class AppSettingFragment extends BaseFragment implements AppSettingContra
         adapter=new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()),R.layout.item_app_setting,this) {
             @Override
             protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
-                holder.text(R.id.item_title_tv,model.title);
+                String title=getString(model.titleResId);
+                holder.text(R.id.item_title_tv,title);
+//                holder.text(R.id.item_title_tv,model.title);
                 Switch sw = ButterKnife.findById(holder.itemView,R.id.pin_switch);
                 ImageView arrowIv=ButterKnife.findById(holder.itemView,R.id.arrow_iv);
 
