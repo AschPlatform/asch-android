@@ -223,5 +223,5 @@
     <string name="weight">weight</string>
     <string name="refresh">refresh</string>
     <string name="scan_code">scan code</string>
-    <string name="language_default">Default</string>
+    <string name="language_default">Auto</string>
 </resources>
