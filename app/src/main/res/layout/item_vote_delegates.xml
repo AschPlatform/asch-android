@@ -107,7 +107,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="@string/depositary"
+                android:text="@string/depository"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />

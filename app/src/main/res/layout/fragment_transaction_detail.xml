@@ -311,7 +311,7 @@ android:layout_height="match_parent">
                     android:layout_height="wrap_content"
                     android:textColor="#333333"
                     android:textSize="15sp"
-                    android:text="@string/transaction_cosst"
+                    android:text="@string/transaction_cost"
                     />
                 <TextView
                     android:id="@+id/tx_fee_tv"

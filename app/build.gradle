@@ -49,6 +49,10 @@ android {
 //            enabled true
 //        }
         multiDexEnabled true
+
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a','arm64-v8a'
+        }
     }
 
     dexOptions {

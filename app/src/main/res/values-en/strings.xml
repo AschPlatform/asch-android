@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="password_repet">confirm password</string>
-    <string name="transaction_cosst">transaction costs</string>
-    <string name="depositary">depositary</string>
+    <!--<string name="password_repeat">confirm password</string>-->
+    <!--<string name="transaction_cost">transaction costs</string>-->
+    <!--<string name="depositary">depositary</string>-->
 
     <string name="app_name">ASCH Wallet</string>
     <string name="app_name_test">ASCH Wallet Test</string>
@@ -57,7 +57,7 @@
     <string name="password_short">password(no less than eight characters)</string>
     <string name="password_inconsistency">the password is inconsistent, please input again</string>
     <string name="password_input_hint">password</string>
-    <string name="password_repeat"> repeat password</string>
+    <string name="password_repeat"> confirm password</string>
     <string name="password_hint">password hint(may not fill）</string>
     <string name="account_hint"><font size="12">account name(only letters, figures and underscore character)</font></string>
     <string name="remark_hint">remark: please backup your password. This account does not have the function of finding password. Password is used for cryptography to protect secret key and the strength is very important.</string>
@@ -146,7 +146,7 @@
     <string name="transaction_sender">sender</string>
     <string name="transaction_receiver">receiver</string>
     <string name="transaction_money">money</string>
-    <string name="transaction_cost">transaction cost</string>
+    <string name="transaction_cost">transaction fee</string>
     <string name="sure_time">confirmation</string>
     <string name="block_id">block ID</string>
     <string name="all_account">all accounts</string>

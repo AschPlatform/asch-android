@@ -51,7 +51,7 @@
     <string name="password_short">请输入不少于8位字符的密码</string>
     <string name="password_inconsistency">密码不一致,请重新输入</string>
     <string name="password_input_hint">密码(不少于8位字符)</string>
-    <string name="password_repet">重复密码</string>
+    <string name="password_repeat">重复密码</string>
     <string name="password_hint">密码提示（可不填）</string>
     <string name="account_hint">账户名称（只能是字母、数字、下划线）</string>
     <string name="remark_hint">注：请备份好你的密码，该账户不提供密码找回功能，密码用于加密保护私钥，强度非常重要。</string>
@@ -140,7 +140,7 @@
     <string name="transaction_sender">发送者</string>
     <string name="transaction_receiver">接受者</string>
     <string name="transaction_money">金额</string>
-    <string name="transaction_cosst">交易费</string>
+    <string name="transaction_cost">交易费</string>
     <string name="sure_time">确认数</string>
     <string name="block_id">区块ID</string>
     <string name="all_account">所有账户</string>
@@ -209,7 +209,7 @@
     <string name="transfer_record">转账记录</string>
     <string name="operating_system">操作系统</string>
     <string name="ranking">排名</string>
-    <string name="depositary">受托人</string>
+    <string name="depository">受托人</string>
     <string name="productivity">生产率</string>
     <string name="production_block">生产块数</string>
     <string name="miss_block">丢失块数</string>
