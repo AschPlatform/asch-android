@@ -81,14 +81,15 @@
                 ​
                 <Button
                     android:id="@+id/backup_btn"
-                    android:layout_width="40dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
                     android:gravity="center"
                     android:background="@drawable/backup_bg"
                     android:text="@string/please_backup"
                     android:textSize="10sp"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     />
             </LinearLayout>

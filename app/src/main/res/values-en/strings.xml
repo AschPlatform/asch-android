@@ -51,9 +51,9 @@
     <string name="secret_key_error">the format of secret key is unmatched with BIP39</string>
     <string name="wallet_name_invalid">wallet name doesn’t meet the requirement</string>
     <string name="wallet_name">wallet name</string>
-    <string name="wallet_name_input">Please input the wallet name</string>
+    <string name="wallet_name_input">wallet name</string>
     <string name="wallet_name_exist">the wallet name exists</string>
-    <string name="password_short">Please input the password of no less than eight characters</string>
+    <string name="password_short">password(no less than eight characters)</string>
     <string name="password_inconsistency">the password is inconsistent, please input again</string>
     <string name="password_input_hint">password</string>
     <string name="password_repeat"> repeat password</string>
@@ -67,7 +67,7 @@
     <string name="find_out">discovery</string>
     <string name="mine">mine</string>
     <string name="please_backup">please backup</string>
-    <string name="have_backup">You have had a backup</string>
+    <string name="have_backup">You had a backup</string>
     <string name="net_error">net error</string>
     <string name="xas_balance">XAS balance</string>
     <string name="back">back</string>
@@ -115,7 +115,7 @@
     <string name="payee_address_input_hint">payee account address(supporting QR input)</string>
     <string name="transfer_amount">transfer amount</string>
     <string name="secondary_password">secondary password</string>
-    <string name="remark">remark</string>
+    <string name="remark">memo</string>
     <string name="cost_hint">internet cost</string>
     <string name="transaction_fee">0.1XAS（transaction fee）</string>
     <string name="next">next</string>
@@ -127,9 +127,9 @@
     <string name="account_password_error">account password is wrong</string>
     <string name="receipt_rq_error">receipt QR code is wrong</string>
     <string name="transfer_to">transfer to </string>
-    <string name="account_input_title">please input account password</string>
+    <string name="account_input_title">account password</string>
     <string name="account_input">account password</string>
-    <string name="account_pwd_hint">please input working account password</string>
+    <string name="account_pwd_hint">account password</string>
     <string name="transfer_success">transferring is successful</string>
     <string name="asset_get_error">it is wrong to get asset</string>
     <string name="qr_receipt">QR receipt</string>
@@ -199,7 +199,7 @@
     <string name="copy_success">copy successfully</string>
     <string name="loading">loading.</string>
     <string name="vote_to_trustee">vote to delegates</string>
-    <string name="input_secondary_password">please input secondary password</string>
+    <string name="input_secondary_password">secondary password</string>
     <string name="version">ASCH phone walletV1.0.0</string>
     <string name="all_balance">all balance</string>
     <string name="balance">balance</string>

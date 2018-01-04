@@ -19,12 +19,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SizeUtils;
+import com.franmontiel.localechanger.LocaleChanger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -301,6 +305,16 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void displayAccount(Account account) {
         nameTv.setText(account.getName()==null?"":account.getName());
+        int width=0;
+        if (LocaleChanger.getLocale().getLanguage().contains("zh"))
+        {
+            width=ConvertUtils.dp2px(45);
+        }else{
+            width=ConvertUtils.dp2px(100);
+        }
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)backupBtn.getLayoutParams();
+        params.width =width;
+        backupBtn.setLayoutParams(params);
         backupBtn.setText(account.isBackup()?getString(R.string.have_backup):getString(R.string.please_backup));
         IdenticonGenerator.getInstance().generateBitmap(account.getPublicKey(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
