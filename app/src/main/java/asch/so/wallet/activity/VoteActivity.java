@@ -1,6 +1,8 @@
 package asch.so.wallet.activity;
 
+import android.database.DataSetObservable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -10,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.flyco.tablayout.SlidingTabLayout;
 
@@ -30,6 +33,9 @@ public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesF
     SlidingTabLayout tablayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
+    private VoteDelegatesFragment voteDelegatesFragment;
+    private  MyVoteRecordFragment myVoteRecordFragment;
+    private WhoVoteForMeFragment whoVoteForMeFragment;
 
     private MyPagerAdapter adapter;
 
@@ -43,18 +49,6 @@ public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesF
         ButterKnife.bind(this);
 
         initView();
-       // setContentView(R.layout.activity_vote);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     @Override
@@ -63,15 +57,45 @@ public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesF
     }
 
     private void initView() {
-        //for (String s : mTitles) {
-            mFagments.add(VoteDelegatesFragment.newInstance(1));
-           mFagments.add(MyVoteRecordFragment.newInstance(1));
-          mFagments.add(WhoVoteForMeFragment.newInstance(1));
-        //}
-        //getChildFragmentManager() 如果是嵌套在fragment中就要用这个
+        voteDelegatesFragment=VoteDelegatesFragment.newInstance(1);
+        myVoteRecordFragment=MyVoteRecordFragment.newInstance(1);
+        whoVoteForMeFragment=WhoVoteForMeFragment.newInstance(1);
+        mFagments.add(voteDelegatesFragment);
+        mFagments.add(myVoteRecordFragment);
+          mFagments.add(whoVoteForMeFragment);
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
         tablayout.setViewPager(viewPager, mTitles);
+        //viewPager.setOffscreenPageLimit(0);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                switch (position){
+                    case 0:{
+                        voteDelegatesFragment.refreshData();
+                    }
+                    break;
+                    case  1:{
+                        myVoteRecordFragment.refreshData();
+                    }
+                    break;
+                    case 2:{
+                        whoVoteForMeFragment.refreshData();
+                    }
+                    break;
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -81,9 +105,19 @@ public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesF
 
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
+
+//        private DataSetObservable mObservable = new DataSetObservable();
+//        public static final int POSITION_UNCHANGED = -1;
+//        private  int mChildCount=0;
+//        public static final int POSITION_NONE = -2;
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+
+//        @Override
+//        public Object instantiateItem(ViewGroup container, int position) {
+//            return super.instantiateItem(container, position);
+//        }
 
         @Override
         public int getCount() {
@@ -99,5 +133,16 @@ public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesF
         public Fragment getItem(int position) {
             return mFagments.get(position);
         }
+
+//        @Override
+//        public int getItemPosition(@NonNull Object object) {
+//                return POSITION_NONE;
+//        }
+
+//        @Override
+//        public void notifyDataSetChanged() {
+//            mChildCount = getCount();
+//            super.notifyDataSetChanged();
+//        }
     }
 }

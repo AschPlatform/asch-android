@@ -60,10 +60,10 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         viewHolder.addressTv.setText(item.getAddress());
         viewHolder.balanceTv.setText(String.valueOf(item.getBalance()));
         viewHolder.publicKeyTv.setText(item.getPublicKey());
-        viewHolder.productivityTv.setText(String.format("%f",item.getProductivity()));
+        viewHolder.productivityTv.setText(String.format("%f%%",item.getProductivity()));
         viewHolder.producedBlocksTv.setText(String.valueOf(item.getProducedblocks()));
         viewHolder.missedBlocksTv.setText(String.valueOf(item.getMissedblocks()));
-        viewHolder.approvalTv.setText(String.format("%f",item.getApproval()));
+        viewHolder.approvalTv.setText(String.format("%f%%",item.getApproval()));
         if (getSelectedDelegatesMap().containsValue(item)){
             viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_slected);
         }else {

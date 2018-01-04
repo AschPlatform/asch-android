@@ -140,6 +140,9 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
 
         return view;
     }
+    public void refreshData(){
+        refreshLayout.autoRefresh();
+    }
 
     @Override
     public void onDestroyView() {

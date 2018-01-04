@@ -135,6 +135,9 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
         return view;
     }
 
+    public void refreshData(){
+        refreshLayout.autoRefresh();
+    }
 
     @Override
     public void onAttach(Context context) {

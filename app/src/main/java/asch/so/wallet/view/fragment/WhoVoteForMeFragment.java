@@ -130,6 +130,10 @@ public class WhoVoteForMeFragment extends BaseFragment implements WhoVoteForMeCo
     }
 
 
+    public void refreshData(){
+        refreshLayout.autoRefresh();
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
