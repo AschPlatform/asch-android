@@ -96,7 +96,7 @@
     <string name="copy">copy</string>
     <string name="sure_copy">it has been copied on the pasteboard. Please backup in a safe place!</string>
     <string name="note_content">the mnemonic word is used to recover account and can be backup one time. Please write down and save in a safe place! </string>
-    <string name="sure_backup">please confirm whether the mnemonic word has been backed up in a safe place. There is only one chance to backup. If you have backed up,please click “sure”, or click ‘cancel’!</string>
+    <string name="sure_backup">please confirm whether the mnemonic word has been backed up in a safe place. There is only one chance to backup. If you have backed up,please click “confirm”, or click ‘cancel’!</string>
     <string name="import_fail">fail to import account</string>
     <string name="import_success">success to import account</string>
     <string name="scan">scan</string>
@@ -182,7 +182,7 @@
     <string name="account_input_tip">account name (only letters, digits  anr underscore character)</string>
     <string name="personal_center">personal center</string>
     <string name="forget_pin">forget pin code?</string>
-    <string name="pin_tip">click‘sure’ to create a new pin code.\n\n if you remember your pin code, click ‘cancel’ to back.?</string>
+    <string name="pin_tip">click‘confirm’ to create a new pin code.\n\n if you remember your pin code, click ‘cancel’ to back.?</string>
     <string name="locked">lock</string>
     <string name="locked_fail"> fail to lock</string>
     <string name="locked_success">lock successfully</string>
