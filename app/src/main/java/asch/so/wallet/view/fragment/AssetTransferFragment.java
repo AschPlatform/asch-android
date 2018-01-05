@@ -205,7 +205,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 }
 
                 if (hasSecondPwd){
-                    if (!Validator.check(getContext(),Validator.Type.SecondSecret,secondSecret,"二级密码不正确")){
+                    if (!Validator.check(getContext(),Validator.Type.SecondSecret,secondSecret,getString(R.string.secondary_password_error))){
                         return;
                     }
                 }
@@ -222,7 +222,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                             showPasswordInputDialog(new SecondPasswdDialog.PasswordCallback() {
                                 @Override
                                 public void callback(SecondPasswdDialog dialog, String password) {
-                                    if (Validator.check(getContext(), Validator.Type.Password,password,"账户密码不正确"))
+                                    if (Validator.check(getContext(), Validator.Type.Password,password,getString(R.string.account_password_error)))
                                     {
                                         presenter.transfer(currency,targetAddress,amount,message,null,hasSecondPwd?secondSecret:null,password);
                                         showHUD();

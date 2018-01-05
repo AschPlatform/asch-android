@@ -243,11 +243,14 @@
     <string name="error_balance_insufficient">余额不足</string>
     <string name="error_vote_cancel">您选择的部分受托人已经取消投票，请区块确认后刷新再操作</string>
     <string name="error_vote_ok">您选择的部分受托人已经投过票，请区块确认后刷新再操作</string>
-    <string name="error_params">服务器错误，请检查您填写的信息是否正确</string>
+    <!--<string name="error_params_post">服务器错误，请检查您填写的信息是否正确</string>-->
+    <string name="error_params">服务器错误，请检查您参数是否正确</string>
 
+    <string name="please_select_delegate">请选择受托人</string>
     <string name="select_vote_format">已选择%d位受托人</string>
     <string name="error_vote_ok_count">投票给受托人，每次最多可以投33人</string>
     <string name="error_vote_cancel_count">取消给受投人的投票，每次最多可以同时取消33人</string>
+    <string name="vote_cancel_to_trustee">取消给受托人的投票</string>
 
 
 </resources>

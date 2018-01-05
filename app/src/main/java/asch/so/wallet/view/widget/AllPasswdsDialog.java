@@ -142,7 +142,7 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
                     public void onError(java.lang.Throwable e) {
                         if ("1".equals(e.getMessage())) {
                             if (listenner!=null){
-                                listenner.callback(AllPasswdsDialog.this,null,null,"账户密码不正确");
+                                listenner.callback(AllPasswdsDialog.this,null,null,getContext().getString(R.string.account_password_error));
                             }
                         }
 
