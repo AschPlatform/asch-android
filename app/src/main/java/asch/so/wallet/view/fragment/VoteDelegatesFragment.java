@@ -306,7 +306,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     public boolean checkDelegateCount() {
         int count=  adapter.getSelectedDelegatesMap().size();
         if (count>=33){
-            AppUtil.toastWarning(getContext(),"每张票最多可以同时投33人");
+            AppUtil.toastWarning(getContext(),getContext().getString(R.string.error_vote_ok_count));
             return false;
         }
         return true;

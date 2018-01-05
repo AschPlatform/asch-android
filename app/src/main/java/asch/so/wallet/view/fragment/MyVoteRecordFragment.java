@@ -310,7 +310,7 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
     public boolean checkDelegateCount() {
         int count=  adapter.getSelectedDelegatesMap().size();
         if (count>=33){
-            AppUtil.toastWarning(getContext(),"每张票最多可以同时投33人");
+            AppUtil.toastWarning(getContext(),getContext().getString(R.string.error_vote_cancel_count));
             return false;
         }
         return true;
