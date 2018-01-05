@@ -141,7 +141,6 @@ public class AllPasswdsDialog extends Dialog implements View.OnClickListener {
                     @Override
                     public void onError(java.lang.Throwable e) {
                         if ("1".equals(e.getMessage())) {
-                           // AppUtil.toastError(getContext(), "账户密码不正确");
                             if (listenner!=null){
                                 listenner.callback(AllPasswdsDialog.this,null,null,"账户密码不正确");
                             }

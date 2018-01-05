@@ -167,7 +167,7 @@ public class VoteDelegatesPresenter implements VoteDelegatesContract.Presenter {
                     @Override
                     public void onError(java.lang.Throwable e) {
                         LogUtils.dTag(TAG,"vote result:"+e==null?"vote result error":e.toString());
-                        view.displayVoteResult(false,e==null?context.getString(R.string.vote_fail):e.toString());
+                        view.displayVoteResult(false, AppUtil.extractInfoFromError(context, e));
                     }
 
                     @Override

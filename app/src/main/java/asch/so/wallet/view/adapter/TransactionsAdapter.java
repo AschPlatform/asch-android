@@ -52,24 +52,6 @@ public class TransactionsAdapter extends BaseQuickAdapter<Transaction, Transacti
         CharSequence ago= AppUtil.getRelativeTimeSpanString(context, transaction.dateFromAschTimestamp().getTime());
         viewHolder.dateTv.setText(ago);
     }
-    /*
-        <string name="general_transfer">普通转账</string>
-    <string name="set_second_secret">设置二级密码</string>
-    <string name="register_delegate">注册受托人</string>
-    <string name="vote_transaction">投票</string>
-    <string name="multi_signature">多重签名</string>
-    <string name="dapp_transaction">DApp</string>
-    <string name="in_transfer">Dapp充值</string>
-    <string name="out_transfer">Dapp提现</string>
-    <string name="store_transaction">小文件存储</string>
-    <string name="uia_issuer">发行商注册</string>
-    <string name="uia_asset">资产注册</string>
-    <string name="uia_flags">设置ACL模式</string>
-    <string name="uia_acl">更新ACL访问控制列表</string>
-    <string name="uia_issue_asset">资发行产</string>
-    <string name="uia_transfer">主链UIA转账</string>
-    <string name="lock_transaction">锁仓</string>
-     */
 
     private int getResIdFromCode(Transaction.Type type){
         switch (type){

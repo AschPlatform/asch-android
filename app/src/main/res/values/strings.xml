@@ -237,4 +237,13 @@
     <string name="uia_transfer">主链UIA转账</string>
     <string name="lock_transaction">锁仓</string>
 
+    <string name="select_vote_format">已选择%d位受托人</string>
+    <string name="error_server">服务器错误</string>
+    <string name="error_network">网络连接失败，请检查你网络设置</string>
+    <string name="error_balance_insufficient">余额不足</string>
+    <string name="error_vote_cancel">您选择的部分受托人已经取消投票，请区块确认后刷新再操作</string>
+    <string name="error_vote_ok">您选择的部分受托人已经投过票，请区块确认后刷新再操作</string>
+    <string name="error_params">服务器错误，请检查您填写的信息是否正确</string>
+
+
 </resources>
