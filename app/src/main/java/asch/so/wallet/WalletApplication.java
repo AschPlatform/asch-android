@@ -122,9 +122,15 @@ public class WalletApplication extends MultiDexApplication {
 
     private void initAschSDK() {
         String url = AppConfig.getNodeURL();
+        url=TextUtils.isEmpty(url) ? AppConstants.DEFAULT_NODE_URL : url;
         AschSDK.Config.initBIP39(Wallet.getInstance().getMnemonicCode());
-        AschSDK.Config.setAschServer(TextUtils.isEmpty(url) ? AppConstants.DEFAULT_NODE_URL : url);
-        AschSDK.Config.setMagic(AppConstants.DEFAULT_MAGIC);
+        AschSDK.Config.setAschServer(url);
+        if (url.contains("mainnet")){
+            AschSDK.Config.setMagic(AppConstants.MAINNET_MAGIC);
+        }else {
+            AschSDK.Config.setMagic(AppConstants.TESTNET_MAGIC);
+        }
+
     }
 
     private void initRealm() {

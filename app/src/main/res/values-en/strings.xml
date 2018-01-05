@@ -211,7 +211,7 @@
     <string name="state">state</string>
     <string name="not_lock">not lock</string>
     <string name="input_height">input height</string>
-    <string name="select_vote">you have selected 0 delegates</string>
+    <string name="select_vote"> 0 delegate have been selected</string>
     <string name="transfer_record">transfer record</string>
     <string name="operating_system">operating system</string>
     <string name="ranking">ranking</string>
@@ -242,4 +242,19 @@
     <string name="uia_issue_asset">Issuing asset</string>
     <string name="uia_transfer">Main-chain UIA transfer</string>
     <string name="lock_transaction">Lock</string>
+
+
+    <string name="error_server">Server error</string>
+    <string name="error_network">Network connection failed, please check your network settings</string>
+    <string name="error_balance_insufficient">Insufficient balance</string>
+    <string name="error_vote_cancel">Some delegates selected by you have already been canceled the votes, please refresh and proceed after the block confirmation</string>
+    <string name="error_vote_ok"> Some delegates selected by you have already been voted, please refresh and proceed after the block confirmation</string>
+    <string name="error_params">Server error, please check your parameters</string>
+
+    <string name="please_select_delegate">Please select the delegate</string>
+    <string name="select_vote_format">%d delegates have been selected </string>
+    <string name="error_vote_ok_count">Vote for the delegates, up to 33 persons each time</string>
+    <string name="error_vote_cancel_count">Cancel the vote for the delegates, up to 33 persons each time</string>
+    <string name="vote_cancel_to_trustee">Cancel the vote for the delegates</string>
+
 </resources>

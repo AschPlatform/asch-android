@@ -20,6 +20,9 @@ public class AppConstants {
     //public static final  String DEFAULT_NODE_URL="http://testnet.asch.io:4096";
    public static final  String DEFAULT_MAGIC="594fe0f3";
 
+    public static final  String TESTNET_MAGIC="594fe0f3";
+    public static final  String MAINNET_MAGIC="5f5b3cf5";
+
 //   public static final  String DEFAULT_NODE_URL="http://mainnet.asch.cn";
 //   public static final  String DEFAULT_MAGIC="5f5b3cf5";
 
