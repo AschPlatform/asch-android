@@ -232,10 +232,11 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             moreEasyPopup.dismiss();
             Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
             startActivity(intent);
-        } else if (view.getId() == R.id.transactions_ll) {
-            moreEasyPopup.dismiss();
-            BaseActivity.start(getActivity(), TransactionsActivity.class, new Bundle());
         }
+//        else if (view.getId() == R.id.transactions_ll) {
+//            moreEasyPopup.dismiss();
+//            BaseActivity.start(getActivity(), TransactionsActivity.class, new Bundle());
+//        }
     }
 
     private void showPopupMenu(View view, int offsetX, int offsetY) {
@@ -254,10 +255,10 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         View contentView = moreEasyPopup.getContentView();
         View scanItem = contentView.findViewById(R.id.scan_ll);
         View receiveItem = contentView.findViewById(R.id.receive_ll);
-        View billItem = contentView.findViewById(R.id.transactions_ll);
+        //View billItem = contentView.findViewById(R.id.transactions_ll);
         scanItem.setOnClickListener(this);
         receiveItem.setOnClickListener(this);
-        billItem.setOnClickListener(this);
+        //billItem.setOnClickListener(this);
     }
 
     @Override
