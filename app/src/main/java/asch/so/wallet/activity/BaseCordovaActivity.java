@@ -19,7 +19,7 @@ public class BaseCordovaActivity extends CordovaActivity {
         if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
             moveTaskToBack(true);
         }
-        String launchUrl = "file:///android_asset/www/index.html";
+        String launchUrl = "file:///android_asset/www0/index.html";
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
     }

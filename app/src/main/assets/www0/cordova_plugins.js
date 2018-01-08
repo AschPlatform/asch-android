@@ -23,14 +23,23 @@ module.exports = [
     "merges": [
       "navigator.notification"
     ]
-  }
+  },
+     {
+       "id": "cordova-plugin-dapp.dapp",
+       "file": "plugins/cordova-plugin-dapp/www/dapp.js",
+       "pluginId": "cordova-plugin-dapp",
+       "merges": [
+         "navigator.dapp"
+       ]
+     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
   "cordova-plugin-whitelist": "1.3.3",
   "cordova-plugin-device": "1.1.7",
-  "cordova-plugin-dialogs": "1.3.4"
+  "cordova-plugin-dialogs": "1.3.4",
+  "cordova-plugin-dapp": "1.0.0"
 };
 // BOTTOM OF METADATA
 });
