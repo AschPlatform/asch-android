@@ -57,7 +57,7 @@ def build=[
 project.ext {
 
     config=[
-            isTest:true,
+            isTest:false,
             buildType:build["debug"]
     ]
 
@@ -72,6 +72,17 @@ project.ext {
 //            versionCode      : 9,
 //            versionName      : "1.0.9"
 //    ]
+//    android = [
+//            compileSdkVersion: 26,
+//            buildToolsVersion: "26.0.3",
+//            applicationId    : "asch.so.wallet",
+//            applicationIdTest    : "asch.so.wallet.test",
+//            minSdkVersion    : 16,
+//            targetSdkVersion : 26,
+//            versionCode      : 16,
+//            versionName      : "1.0.10"
+//    ]
+
     android = [
             compileSdkVersion: 26,
             buildToolsVersion: "26.0.3",
@@ -79,8 +90,8 @@ project.ext {
             applicationIdTest    : "asch.so.wallet.test",
             minSdkVersion    : 16,
             targetSdkVersion : 26,
-            versionCode      : 16,
-            versionName      : "1.0.10"
+            versionCode      : 11,
+            versionName      : "1.1.0"
     ]
 
     aschsdk = [

@@ -5,6 +5,8 @@ apply plugin: 'realm-android'
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.3'
+    String isTest= rootProject.ext.config.isTest?"true":"false"
+
     String appName = rootProject.ext.config.isTest?"@string/app_name_test":"@string/app_name"
    String application_id= rootProject.ext.config.isTest?rootProject.ext.android.applicationIdTest:rootProject.ext.android.applicationId
 
@@ -63,7 +65,7 @@ android {
     buildTypes {
         debug {
             buildConfigField("boolean", "LOG_DEBUG", "true")
-            buildConfigField("boolean", "TEST", "true")
+            buildConfigField("boolean", "TEST", isTest)
             //resValue "string", "app_name", "ASCH钱包Test"
             //addManifestPlaceholders([APP_NAME: appName])
             //buildConfigField 'com.baronzhang.android.library.util.StethoHelper', 'STETHO', 'new com.baronzhang.android.weather.util.stetho.DebugStethoHelper()'
@@ -76,7 +78,7 @@ android {
 
         release {
             buildConfigField("boolean", "LOG_DEBUG", "false")
-            buildConfigField("boolean", "TEST", "true")
+            buildConfigField("boolean", "TEST", isTest)
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //addManifestPlaceholders([APP_NAME: appName])
