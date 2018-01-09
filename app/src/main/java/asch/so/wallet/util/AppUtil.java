@@ -29,6 +29,7 @@ import asch.so.wallet.AppConstants;
 import asch.so.wallet.BuildConfig;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.MainTabActivity;
+import asch.so.wallet.model.entity.Transaction;
 import es.dmoral.toasty.Toasty;
 import so.asch.sdk.impl.AschConst;
 
@@ -205,6 +206,79 @@ public class AppUtil {
 
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
+    }
+
+    public static int getResIdFromCode(Transaction.Type type){
+        switch (type){
+            case Transfer:
+            {
+                return R.string.general_transfer;
+            }
+            case Signature:
+            {
+                return R.string.set_second_secret;
+            }
+            case Delegate:
+            {
+                return R.string.register_delegate;
+            }
+            case Vote:
+            {
+                return R.string.vote_transaction;
+            }
+            case MultiSignature:
+            {
+                return R.string.multi_signature;
+            }
+            case Dapp:
+            {
+                return R.string.dapp_transaction;
+            }
+            case InTransfer:
+            {
+                return R.string.in_transfer;
+            }
+            case OutTransfer:
+            {
+                return R.string.out_transfer;
+            }
+            case Store:
+            {
+                return R.string.store_transaction;
+            }
+            case UIAIssuer:
+            {
+                return R.string.uia_issuer;
+            }
+            case UIAAsset:
+            {
+                return R.string.uia_asset;
+            }
+            case UIAFlags:
+            {
+                return R.string.uia_flags;
+            }
+            case UIA_ACL:
+            {
+                return R.string.uia_acl;
+            }
+            case UIAIssue:
+            {
+                return R.string.uia_issue_asset;
+            }
+            case UIATransfer:
+            {
+                return R.string.uia_transfer;
+            }
+            case Lock:
+            {
+                return R.string.lock_transaction;
+            }
+            default:
+                break;
+
+        }
+        return 0;
     }
 
 }

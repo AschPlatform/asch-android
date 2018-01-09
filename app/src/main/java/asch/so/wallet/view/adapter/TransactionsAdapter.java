@@ -44,7 +44,7 @@ public class TransactionsAdapter extends BaseQuickAdapter<Transaction, Transacti
         boolean isSender=getAccount().getAddress().equals(transaction.getSenderId());
         setTransferIcon(viewHolder.transferIcon,transaction.getType(),isSender);
         viewHolder.transactionTv.setText(transaction.getId());
-        int resId=getResIdFromCode(Transaction.Type.fromCode(transaction.getType()));
+        int resId=AppUtil.getResIdFromCode(Transaction.Type.fromCode(transaction.getType()));
         String transactionType=context.getResources().getString(resId);
         viewHolder.amountTv.setText(transactionType);
 //        viewHolder.amountTv.setText(Transaction.Type.fromCode(transaction.getType()).getName());
@@ -53,78 +53,6 @@ public class TransactionsAdapter extends BaseQuickAdapter<Transaction, Transacti
         viewHolder.dateTv.setText(ago);
     }
 
-    private int getResIdFromCode(Transaction.Type type){
-        switch (type){
-            case Transfer:
-            {
-                return R.string.general_transfer;
-            }
-            case Signature:
-            {
-                return R.string.set_second_secret;
-            }
-            case Delegate:
-            {
-                return R.string.register_delegate;
-            }
-            case Vote:
-            {
-                return R.string.vote_transaction;
-            }
-            case MultiSignature:
-            {
-                return R.string.multi_signature;
-            }
-            case Dapp:
-            {
-                return R.string.dapp_transaction;
-            }
-            case InTransfer:
-            {
-                return R.string.in_transfer;
-            }
-            case OutTransfer:
-            {
-                return R.string.out_transfer;
-            }
-            case Store:
-            {
-                return R.string.store_transaction;
-            }
-            case UIAIssuer:
-            {
-                return R.string.uia_issuer;
-            }
-            case UIAAsset:
-            {
-                return R.string.uia_asset;
-            }
-            case UIAFlags:
-            {
-                return R.string.uia_flags;
-            }
-            case UIA_ACL:
-            {
-                return R.string.uia_acl;
-            }
-            case UIAIssue:
-            {
-                return R.string.uia_issue_asset;
-            }
-            case UIATransfer:
-            {
-                return R.string.uia_transfer;
-            }
-            case Lock:
-            {
-                return R.string.lock_transaction;
-            }
-            default:
-                break;
-
-        }
-        return 0;
-    }
 
     private void setTransferIcon(ImageView imageView, int type, boolean isSender){
         if ( TransactionType.Transfer.getCode()==type || TransactionType.UIATransfer.getCode()==type){

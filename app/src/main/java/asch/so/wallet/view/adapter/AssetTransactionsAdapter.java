@@ -51,14 +51,10 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
         viewHolder.transactionTv.setText(transaction.getId());
         boolean isSender=getAccount().getAddress().equals(transaction.getSenderId());
         setTransferIcon(viewHolder.transferIcon,transaction.getType(),isSender);
+        int resId=AppUtil.getResIdFromCode(Transaction.Type.fromCode(transaction.getType()));
+        String transactionType=context.getResources().getString(resId);
+        viewHolder.amountTv.setText(transactionType);
         viewHolder.amountTv.setText(transaction.getBanlanceShow(isSender));
-//       if ( TransactionType.Transfer.getCode()==transaction.getType()){
-//           viewHolder.amountTv.setText(String.format("%s%.3f", isSender?"-":"+",transaction.getAmount()/ (double)AschConst.COIN)+" XAS");
-//       }else if (TransactionType.UIATransfer.getCode()==transaction.getType()){
-//           UIATransferAsset asset=(UIATransferAsset)transaction.getAssetInfo();
-//           viewHolder.amountTv.setText(String.format("%s%.3f", isSender?"-":"+",Float.parseFloat(asset.getUiaTransfer().getAmountShow()))+" "+asset.getUiaTransfer().getCurrency());
-//
-//       }
         CharSequence ago= AppUtil.getRelativeTimeSpanString(context, transaction.dateFromAschTimestamp().getTime());
         viewHolder.dateTv.setText(ago);
 //        String ago=timeAgo.getTimeAgo(transaction.dateFromAschTimestamp());

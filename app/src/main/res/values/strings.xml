@@ -251,6 +251,6 @@
     <string name="error_vote_ok_count">投票给受托人，每次最多可以投33人</string>
     <string name="error_vote_cancel_count">取消给受投人的投票，每次最多可以同时取消33人</string>
     <string name="vote_cancel_to_trustee">取消给受托人的投票</string>
-
+    <string name="no_data">暂无数据</string>
 
 </resources>
