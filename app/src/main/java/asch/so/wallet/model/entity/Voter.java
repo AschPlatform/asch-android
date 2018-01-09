@@ -1,5 +1,10 @@
 package asch.so.wallet.model.entity;
 
+import java.math.BigDecimal;
+
+import asch.so.wallet.util.AppUtil;
+import so.asch.sdk.impl.AschConst;
+
 /**
  * Created by kimziv on 2017/11/29.
  */
@@ -48,12 +53,21 @@ public class Voter {
         return balance;
     }
 
+    public String getBalanceShow() {
+        return balance==0?"0": AppUtil.decimalFormat(AppUtil.decimalFromBigint(balance, AschConst.CORE_COIN_PRECISION));
+    }
+
     public void setBalance(long balance) {
         this.balance = balance;
     }
 
     public float getWeight() {
         return weight;
+    }
+
+    public String getWeightShow(){
+        BigDecimal w = new BigDecimal(Float.toString(weight));
+      return   AppUtil.decimalFormat(w);
     }
 
     public void setWeight(float weight) {

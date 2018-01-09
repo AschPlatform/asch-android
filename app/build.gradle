@@ -153,6 +153,7 @@ dependencies {
     compile project(':base')
     compile project(':widget')
     compile project(':asch-java')
+    compile project(':update-app')
     compile rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     compile rootProject.ext.dependencies["dagger"]
@@ -193,7 +194,7 @@ dependencies {
     compile rootProject.ext.dependencies["bgaBaseadapter"]
     compile rootProject.ext.dependencies["bgaPhotopicker"]
     compile rootProject.ext.dependencies["switchIcon"]
-    compile rootProject.ext.dependencies["update"]
+    //compile rootProject.ext.dependencies["update"]
     compile rootProject.ext.dependencies["okhttpUtils"]
     compile rootProject.ext.dependencies["expandablelayout"]
     compile rootProject.ext.dependencies["localeChanger"]

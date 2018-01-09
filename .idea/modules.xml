@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/asch-android.iml" filepath="$PROJECT_DIR$/asch-android.iml" />
       <module fileurl="file://$PROJECT_DIR$/asch-java/asch-java.iml" filepath="$PROJECT_DIR$/asch-java/asch-java.iml" />
       <module fileurl="file://$PROJECT_DIR$/base/base.iml" filepath="$PROJECT_DIR$/base/base.iml" />
+      <module fileurl="file://$PROJECT_DIR$/update-app/update-app.iml" filepath="$PROJECT_DIR$/update-app/update-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/widget/widget.iml" filepath="$PROJECT_DIR$/widget/widget.iml" />
     </modules>
   </component>

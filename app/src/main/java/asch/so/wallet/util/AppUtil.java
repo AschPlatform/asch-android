@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.franmontiel.localechanger.LocaleChanger;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
@@ -23,6 +25,7 @@ import com.vector.update_app.UpdateCallback;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 import asch.so.base.util.DateConvertUtils;
 import asch.so.wallet.AppConstants;
@@ -123,9 +126,9 @@ public class AppUtil {
 
 
     public static void updateApp(Activity activity) {
-        if (BuildConfig.DEBUG || BuildConfig.TEST){
-            return;
-        }
+//        if (BuildConfig.DEBUG || BuildConfig.TEST){
+//            return;
+//        }
         new UpdateAppManager
                 .Builder()
                 //当前Activity
@@ -148,6 +151,15 @@ public class AppUtil {
                         if (versionCode<=currentVersionCode){
                             updateAppBean.setUpdate("No");
                         }
+                        if (AppConstants.SUPPORTED_LOCALES.get(2).getLanguage().equals(LocaleChanger.getLocale().getLanguage())||
+                                AppConstants.SUPPORTED_LOCALES.get(1).getLanguage().equals(Locale.getDefault())){
+                            if (jsonObject.containsKey("update_log_en")){
+                                String updateLog= jsonObject.getString("update_log_en");
+                                updateAppBean.setUpdateLog(updateLog);
+                            }
+                        }
+
+
                         return updateAppBean;
                     }
 

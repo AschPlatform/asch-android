@@ -1,11 +1,12 @@
 {
   "update": "Yes",
-  "version_name":"1.0.10",
-  "version_code":10,
-  "new_version": "1.0.10(10)",
+  "version_name":"1.1.0",
+  "version_code":13,
+  "new_version": "1.1.0(13)",
   "apk_file_url": "http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/android/app-release.apk",
-  "update_log": "1，修复保持选择最后一次账户显示bug",
-  "target_size": "24M",
-  "new_md5":"295687E756F569C7159974DD493489A5",
+  "update_log": "1.增加英文版本，中文和英文切换；\n2. 增加受托人投票模块；\n3. APK安装包体大瘦身，减小7M；\n4. 修复1.0版本遗留从bug和改进；",
+  "update_log_en": "1. New added English version enables fluent switch between Chinese and English;\n2. Add voting module for delegates;\n3. A 7MB decrease in the size of installation package of APK;\n4. Bugs of version 1.0 are fixed and improvements being made;",
+  "target_size": "15.8 MB",
+  "new_md5":"85c99d3cf82e494f6b90db6d0fc6d33c",
   "constraint": false
 }

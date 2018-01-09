@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -58,7 +59,8 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         viewHolder.rateTv.setText(String.valueOf(item.getRate()));
         viewHolder.nameTv.setText(item.getUsername());
         viewHolder.addressTv.setText(item.getAddress());
-        viewHolder.balanceTv.setText(String.valueOf(item.getBalance()));
+        //viewHolder.b
+       // viewHolder.balanceTv.setText(String.valueOf(item.getBalanceShow()));
         viewHolder.publicKeyTv.setText(item.getPublicKey());
         viewHolder.productivityTv.setText(String.format("%f%%",item.getProductivity()));
         viewHolder.producedBlocksTv.setText(String.valueOf(item.getProducedblocks()));
@@ -202,10 +204,13 @@ public class MyVoteRecordAdapter extends BaseQuickAdapter<Delegate, MyVoteRecord
         ImageButton selectBtn;
         @BindView(R.id.expand_btn)
         ImageButton expandBtn;
+        @BindView(R.id.balance_ll)
+        LinearLayout balanceLl;
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this,view);
            // expandBtn.setOnClickListener(this);
+            balanceLl.setVisibility(View.GONE);
             expandBtn.setTag(false);
             selectBtn.setTag(false);
         }
