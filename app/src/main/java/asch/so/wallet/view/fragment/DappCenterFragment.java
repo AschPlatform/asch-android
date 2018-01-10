@@ -147,7 +147,7 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
     }
 
     private void showToast(){
-        AppUtil.toastInfo(getContext(),"该功能正在开发者，尽情期待...");
+        AppUtil.toastInfo(getContext(),getString(R.string.development));
     }
 
     public static List<BannerItem> BANNER_ITEMS = new ArrayList<BannerItem>(){{

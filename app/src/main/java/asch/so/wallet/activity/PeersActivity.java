@@ -17,7 +17,7 @@ public class PeersActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("节点列表");
+        setTitle(getString(R.string.vote_list));
 
         PeersFragment fragment=PeersFragment.newInstance();
 

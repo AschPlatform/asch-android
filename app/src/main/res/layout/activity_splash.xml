@@ -10,7 +10,7 @@
         pv:pv_background_color="#2E2E2E"
         pv:pv_host_text="ASCH"
         pv:pv_host_text_size="32sp"
-        pv:pv_particle_text="手机钱包"
+        pv:pv_particle_text="@string/phone_wallet"
         pv:pv_particle_text_size="20sp"
         pv:pv_text_color="#FFF" />
 

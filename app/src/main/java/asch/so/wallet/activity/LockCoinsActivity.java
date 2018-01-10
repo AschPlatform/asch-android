@@ -16,7 +16,7 @@ public class LockCoinsActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("锁仓");
+        setTitle(getString(R.string.locked));
         LockCoinsFragment fragment =LockCoinsFragment.newInstance("","");
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment, R.id.fragment_container);
     }

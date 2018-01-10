@@ -117,7 +117,7 @@ public class PeersFragment extends BaseFragment implements PeesContact.View{
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {
-            AppUtil.toastError(getContext(),exception==null?"网络错误":exception.getMessage());
+            AppUtil.toastError(getContext(),AppUtil.extractInfoFromError(getContext(),exception));
         }
         if (refreshLayout.isRefreshing()){
             refreshLayout.finishRefresh(500);

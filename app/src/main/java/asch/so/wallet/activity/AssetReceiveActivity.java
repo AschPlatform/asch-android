@@ -29,7 +29,7 @@ public class AssetReceiveActivity extends TitleToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        setTitle("二维码收款");
+        setTitle(getString(R.string.qr_receipt));
         fragment=AssetReceiveFragment.newInstance();
         Bundle bundle=getBundle();
         fragment.setArguments(bundle!=null?bundle:new Bundle());

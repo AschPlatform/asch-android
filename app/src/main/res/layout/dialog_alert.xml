@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="重要提示"
+                android:text="@string/important_note"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -75,7 +75,7 @@
             android:layout_height="40dp"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
-            android:text="确定" />
+            android:text="@string/confirm" />
 
     </LinearLayout>
 </LinearLayout>

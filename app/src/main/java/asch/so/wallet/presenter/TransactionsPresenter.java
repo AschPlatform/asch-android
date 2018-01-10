@@ -12,6 +12,7 @@ import java.util.List;
 import asch.so.base.adapter.page.IPage;
 import asch.so.base.adapter.page.Page1;
 import asch.so.base.view.Throwable;
+import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.TransactionsContract;
 import asch.so.wallet.model.entity.Account;
@@ -105,7 +106,7 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        view.displayError(new Throwable("网络错误"));
+                        view.displayError(new Throwable(context.getString(R.string.net_error)));
                         pager.finishLoad(true);
                     }
 

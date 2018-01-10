@@ -62,7 +62,7 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
                 bundle.putString("clazz",FirstStartActivity.class.getName());
                 start(this,AccountCreateActivity.class,bundle);
             }else {
-                AppUtil.toastWarning(this,"请仔细阅读并同意服务条款");
+                AppUtil.toastWarning(this,getString(R.string.read_service));
             }
 
         }else if (view==importBtn){

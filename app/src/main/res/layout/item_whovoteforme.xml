@@ -21,6 +21,7 @@
         >
         <LinearLayout
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
@@ -29,7 +30,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="地址"
+                android:text="@string/address"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -37,14 +38,14 @@
                 android:id="@+id/address_tv"
                 android:gravity="right|center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@null"
-                android:text="A54GMWrhviUwfd5YweH6uXykYvsu5V4sqC"
+                android:text="A54GMWrhviUwfd5YweH6uXykYvsu5V4sqCdddddddddddHHHASDASDFHHH"
                 android:textSize="12sp"
                 android:textColor="#333333"
-                android:maxLines="2" />
+                android:maxLines="3" />
         </LinearLayout>
         <View
             android:layout_width="match_parent"
@@ -62,7 +63,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="用户名"
+                android:text="@string/user_name"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -96,7 +97,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="权重"
+                android:text="@string/weight"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -121,6 +122,7 @@
             />
         <LinearLayout
             android:orientation="horizontal"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
@@ -129,7 +131,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="余额"
+                android:text="@string/balance"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -159,7 +161,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="公钥"
+                android:text="@string/public_key"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />

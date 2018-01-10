@@ -1,6 +1,7 @@
 package asch.so.wallet.view.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.TestData;
+import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
@@ -90,16 +92,42 @@ public class NodeURLSettingFragment extends BaseFragment implements View.OnClick
             case  R.id.item_save:
             {
                 String url =urltEt.getText().toString().trim();
-                if (Validator.check(getContext(), Validator.Type.URL,url,"节点URL格式不对"))
+                if (Validator.check(getContext(), Validator.Type.URL,url,getString(R.string.node_url_error)))
                 {
-                    AppConfig.putNodeURL(url);
-                    TestData.configAschSDK();
-                    getActivity().finish();
-                    AppUtil.toastSuccess(getContext(),"保存成功");
+                    if (!url.equals(AppConfig.getNodeURL()))
+                    {
+                        AppConfig.putNodeURL(url);
+                        AppUtil.toastSuccess(getContext(),getString(R.string.save_success));
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                AppUtil.restartApp(getContext());
+                            }
+                        },2500);
+
+                    }else {
+                        AppUtil.toastSuccess(getContext(),getString(R.string.save_success));
+                        getActivity().finish();
+                    }
+
+
                 }
             }
             break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+//    public static void configAschSDK(){
+//
+//        String url = AppConfig.getNodeURL();
+//        AschSDK.Config.initBIP39(Wallet.getInstance().getMnemonicCode());
+//        AschSDK.Config.setAschServer(TextUtils.isEmpty(url) ? AppConstants.DEFAULT_NODE_URL : url);
+//        if (url.contains("mainnet")){
+//            AschSDK.Config.setMagic(AppConstants.MAINNET_MAGIC);
+//        }else {
+//            AschSDK.Config.setMagic(AppConstants.TESTNET_MAGIC);
+//        }
+//    }
 }

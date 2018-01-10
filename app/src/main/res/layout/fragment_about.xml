@@ -12,12 +12,24 @@
     android:src="@mipmap/ic_launcher"
     />
     <TextView
-        android:id="@+id/version_tv"
+        android:id="@+id/website"
         android:layout_below="@id/logo"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ASCH移动钱包V1.0.0"
+        android:textSize="13sp"
+        android:autoLink="all"
+        android:text="@string/website"
+        />
+    <TextView
+        android:id="@+id/version_tv"
+        android:layout_below="@id/website"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="@string/version"
         />
 </RelativeLayout>

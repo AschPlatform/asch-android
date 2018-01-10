@@ -98,9 +98,9 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
         setContentView(R.layout.activity_qrcode_scan);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("扫一扫");
+        toolbar.setTitle(getString(R.string.scan));
         toolbar.setRightVisible(true);
-        toolbar.setRightText("相册");
+        toolbar.setRightText(getString(R.string.photo));
         toolbar.setOnOptionItemClickListener(new BaseToolbar.OnOptionItemClickListener() {
             @Override
             public void onOptionItemClick(View v) {
@@ -140,7 +140,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                     .build();
             startActivityForResult(photoPickerIntent, REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY);
         } else {
-            EasyPermissions.requestPermissions(this, "图片选择需要以下权限:\n\n1.访问设备上的照片\n\n2.拍照", REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.photo_permission_content), REQUEST_CODE_CHOOSE_QRCODE_FROM_GALLERY, perms);
         }
     }
 
@@ -230,7 +230,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
             }
             break;
             case ScanAddressToPaste: {
-                if (!Validator.check(this, Validator.Type.QRCodeUrl, result, "无效地址")) {
+                if (!Validator.check(this, Validator.Type.QRCodeUrl, result, getString(R.string.address_invalid))) {
                     zbarView.startSpot();
                     return;
                 }
@@ -241,7 +241,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
             }
             break;
             case ScanAddressToPay: {
-                if (!Validator.check(this, Validator.Type.QRCodeUrl, result, "无效地址")) {
+                if (!Validator.check(this, Validator.Type.QRCodeUrl, result, getString(R.string.address_invalid))) {
                     zbarView.startSpot();
                     return;
                 }
@@ -253,7 +253,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                     BaseActivity.start(this, AssetTransferActivity.class, bundle);
                     finish();
                 } catch (Exception e) {
-                    AppUtil.toastError(this, "二维码格式无效");
+                    AppUtil.toastError(this, getString(R.string.qr_invalid));
                 }
             }
             break;
@@ -264,7 +264,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
     @Override
     public void onScanQRCodeOpenCameraError() {
         //Log.e(TAG, "打开相机出错");
-        AppUtil.toastError(this, "打开相机出错");
+        AppUtil.toastError(this, getString(R.string.photo_open_error));
     }
 
 
@@ -284,7 +284,7 @@ public class QRCodeScanActivity extends BaseActivity implements QRCodeView.Deleg
                 @Override
                 protected void onPostExecute(String result) {
                     if (TextUtils.isEmpty(result)) {
-                        AppUtil.toastError(QRCodeScanActivity.this, "未发现二维码");
+                        AppUtil.toastError(QRCodeScanActivity.this, getString(R.string.qr_not_found));
                     } else {
                         processQRString(result);
                         //AppUtil.toastSuccess(QRCodeScanActivity.this, result);

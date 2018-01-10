@@ -196,7 +196,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             loadingLayout.showError();
         }else {
             if (getContext()!=null) {
-                AppUtil.toastError(getContext(), exception == null ? "网络错误" : exception.getMessage());
+                AppUtil.toastError(getContext(), AppUtil.extractInfoFromError(getContext(),exception));
             }
         }
         if (refreshLayout.isRefreshing()){
@@ -209,7 +209,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     @Override
     public void displayBalance(Balance balance) {
         amountTv.setText(balance.getBalanceString());
-        assetTv.setText(balance.getCurrency()+" 余额");
+        assetTv.setText(String.format("%s %s",balance.getCurrency(),getContext().getString(R.string.balance)));
     }
 
     @Override

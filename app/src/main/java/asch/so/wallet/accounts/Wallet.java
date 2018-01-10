@@ -22,6 +22,7 @@ import java.util.List;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
+import asch.so.wallet.R;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.CoreAsset;
 import asch.so.wallet.model.entity.FullAccount;
@@ -129,7 +130,7 @@ public class Wallet {
                     public void onError(java.lang.Throwable e) {
                        // view.displayError(new Throwable("转账失败"));
                         if (callback!=null){
-                            callback.onLoadAllAssets(allssets,new Throwable(e!=null?e.getMessage():"获取UIA资产错误"));
+                            callback.onLoadAllAssets(allssets,new Throwable(e!=null?e.getMessage():context.getString(R.string.get_uia_error)));
                         }
                     }
 

@@ -11,6 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="32sp"
-        android:text="敬请期待" />
+        android:text="@string/coming_son" />
 
 </LinearLayout>

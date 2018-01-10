@@ -41,7 +41,7 @@ public class AboutFragment extends BaseFragment {
     }
 
     private void setVersion(){
-        versionTv.setText(String.format("ASCH移动钱包V%s(%d)", AppUtils.getAppVersionName(),AppUtils.getAppVersionCode()));
+        versionTv.setText(String.format("Asch " +getString(R.string.phone_wallet)+"V%s(%d)", AppUtils.getAppVersionName(),AppUtils.getAppVersionCode()));
     }
 
 

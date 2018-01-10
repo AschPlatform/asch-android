@@ -35,7 +35,6 @@ public class PeersAdapter extends BaseQuickAdapter<PeerNode, PeersAdapter.ViewHo
         viewHolder.ipTv.setText(peerNode.getStaredIp());
         viewHolder.versionTv.setText(peerNode.getVersion());
         viewHolder.osTv.setText(peerNode.getOs());
-        viewHolder.statusTv.setText(peerNode.getState()==0?"正常":"异常");
     }
 
     public static class ViewHolder extends BaseViewHolder{

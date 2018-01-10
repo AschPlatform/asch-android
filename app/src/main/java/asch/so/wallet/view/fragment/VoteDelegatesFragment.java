@@ -140,6 +140,9 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
 
         return view;
     }
+    public void refreshData(){
+        refreshLayout.autoRefresh();
+    }
 
     @Override
     public void onDestroyView() {
@@ -177,7 +180,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
         if (adapter.getData().isEmpty()){
             loadingLayout.showError();
         }else {
-            AppUtil.toastError(getContext(),exception==null?"网络错误":exception.getMessage());
+            AppUtil.toastError(getContext(),AppUtil.extractInfoFromError(getContext(),exception));
         }
         if (refreshLayout.isRefreshing()){
             refreshLayout.finishRefresh(500);
@@ -238,7 +241,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
             if (selectedDelegates!=null && selectedDelegates.size()>0){
                 boolean hasSecondSecret=getAccount().hasSecondSecret();
                 dialog = new AllPasswdsDialog(getContext(),hasSecondSecret);
-                dialog.setTitle("投票给受托人");
+                dialog.setTitle(getContext().getString(R.string.vote_to_trustee));
                 dialog.show(new AllPasswdsDialog.OnConfirmationListenner() {
                     @Override
                     public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
@@ -251,7 +254,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
                     }
                 });
             }else {
-                AppUtil.toastError(getContext(), "请选择受托人");
+                AppUtil.toastError(getContext(), getContext().getString(R.string.please_select_delegate));
             }
         }
     }
@@ -272,19 +275,19 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
             delegates.add(entry.getValue());
         }
         if (delegates.size()==0){
-            AppUtil.toastError(getContext(),"请选择受托人");
+            AppUtil.toastError(getContext(),getContext().getString(R.string.please_select_delegate));
             return;
         }
         presenter.voteForDelegates(delegates,secret, secondSecret);
     }
 
     private void showSelectedDelegatesCount(int count){
-        statusTv.setText(String.format("已选择%d位受托人",count));
+        statusTv.setText(String.format(getContext().getString(R.string.select_vote_format),count));
     }
 
     private void clearSeletedDelegates(){
         adapter.clearSelectedDelegatesMap();
-        statusTv.setText(String.format("已选择%d位受托人",0));
+        statusTv.setText(String.format(getContext().getString(R.string.select_vote_format),0));
     }
 
     @Override
@@ -303,7 +306,7 @@ public class VoteDelegatesFragment extends BaseFragment implements VoteDelegates
     public boolean checkDelegateCount() {
         int count=  adapter.getSelectedDelegatesMap().size();
         if (count>=33){
-            AppUtil.toastWarning(getContext(),"每张票最多可以同时投33人");
+            AppUtil.toastWarning(getContext(),getContext().getString(R.string.error_vote_ok_count));
             return false;
         }
         return true;

@@ -7,7 +7,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.franmontiel.localechanger.LocaleChanger;
 import com.just.library.AgentWeb;
+
+import java.util.Locale;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.util.ActivityUtils;
@@ -32,9 +35,10 @@ public class WebActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("使用手册");
-        setRightTitle("打开浏览器");
-        WebFragment fragment=WebFragment.newInstance(AppConstants.USER_MANNUAL_URL);
+        setTitle(getString(R.string.use_explain));
+        setRightTitle(getString(R.string.open_browser));
+
+        WebFragment fragment=WebFragment.newInstance(getMannualUrl());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 
         StatusBarUtil.immersive(this);
@@ -46,9 +50,18 @@ public class WebActivity extends TitleToolbarActivity {
         //super.onRightClicked(v);
         Intent intent= new Intent();
         intent.setAction("android.intent.action.VIEW");
-        Uri uri = Uri.parse(AppConstants.USER_MANNUAL_URL);
+        Uri uri = Uri.parse(getMannualUrl());
         intent.setData(uri);
         startActivity(intent);
+    }
+
+    private String getMannualUrl(){
+        if (AppConstants.SUPPORTED_LOCALES.get(2).getLanguage().equals(LocaleChanger.getLocale().getLanguage())||
+                AppConstants.SUPPORTED_LOCALES.get(2).getLanguage().equals(Locale.getDefault())){
+            return AppConstants.USER_MANNUAL_URL_EN;
+        }else{
+          return   AppConstants.USER_MANNUAL_URL;
+        }
     }
 
     @Override

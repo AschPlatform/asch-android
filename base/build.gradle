@@ -66,4 +66,6 @@ dependencies {
     compile rootProject.ext.dependencies["ldialogs"]
 
     compile 'org.glassfish:javax.annotation:10.0-b28'
+
+    compile rootProject.ext.dependencies["localeChanger"]
 }

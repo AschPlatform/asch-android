@@ -16,7 +16,7 @@ public class TodoActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("敬请期待");
+        setTitle(getString(R.string.coming_son));
         TodoFragment fragment=  TodoFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment, R.id.fragment_container);
     }

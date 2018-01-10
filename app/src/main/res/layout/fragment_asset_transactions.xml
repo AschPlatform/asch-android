@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:llLoadingResId="@layout/common_loading"
-            app:llEmptyImage="@drawable/ic_empty"
+            app:llEmptyResId="@layout/common_no_data"
             app:llErrorImage="@drawable/ic_error"
             >
     <android.support.v7.widget.RecyclerView
@@ -57,7 +57,7 @@
             android:background="@drawable/button_transfer_bg"
             android:textColor="#333333"
             android:textSize="15sp"
-            android:text="转账"
+            android:text="@string/transfer"
             tools:ignore="HardcodedText" />
         <Button
             android:id="@+id/goto_receive_btn"
@@ -69,7 +69,7 @@
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             style="?android:attr/borderlessButtonStyle"
-            android:text="接收"
+            android:text="@string/receive"
             tools:ignore="HardcodedText" />
 
 

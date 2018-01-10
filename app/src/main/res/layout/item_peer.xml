@@ -62,7 +62,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="版本"
+                android:text="@string/version_node"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -95,7 +95,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="操作系统"
+                android:text="@string/operating_system"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -129,7 +129,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="状态"
+                android:text="@string/state"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />

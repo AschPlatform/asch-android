@@ -1,6 +1,7 @@
 package asch.so.wallet.activity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.AppUtils;
+import com.franmontiel.localechanger.LocaleChanger;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
@@ -149,6 +151,12 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
         }
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        newBase = LocaleChanger.configureBaseContext(newBase);
+        super.attachBaseContext(newBase);
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
 
@@ -239,7 +247,7 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     private void exit(){
         if (!isExit) {
             isExit = true;
-            AppUtil.toastWarning(getApplicationContext(), "再按一次退出程序");
+            AppUtil.toastWarning(getApplicationContext(), getString(R.string.out_off_hint));
             mHandler.sendEmptyMessageDelayed(0, 2000);
         } else {
             Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -278,7 +286,7 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     private void requestCodeQRCodePermissions() {
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (!EasyPermissions.hasPermissions(this, perms)) {
-            EasyPermissions.requestPermissions(this, "扫描二维码需要打开相机和散光灯的权限", REQUEST_CODE_QRCODE_PERMISSIONS, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.photo_permission), REQUEST_CODE_QRCODE_PERMISSIONS, perms);
         }
     }
 

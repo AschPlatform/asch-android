@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="apk_size">新版本大小：</string>
+    <string name="storage_permission">请授权访问存储空间权限，否则App无法更新</string>
+    <string name="is_update">是否升级到%s版本？</string>
+    <string name="start_download">开始下载</string>
+    <string name="connecting_server">正在连接服务器</string>
+    <string name="wrong_download_path">新版本下载路径错误</string>
+    <string name="downloading">正在下载：</string>
+    <string name="update_app_error">更新新版本出错，</string>
+    <string name="download_finished">下载完成，请点击安装</string>
+    <string name="update_is_empty">updateApp 不能为空</string>
+    <string name="app_updating">app正在更新</string>
+    <!--<string name="apk_size"></string>-->
+    <!--<string name="apk_size"></string>-->
+    <!--<string name="apk_size"></string>-->
+</resources>

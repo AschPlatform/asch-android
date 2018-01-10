@@ -35,7 +35,7 @@
             android:layout_centerHorizontal="false"
             android:textColor="#333333"
             android:textSize="15sp"
-            android:text="收款二维码"
+            android:text="@string/receipt_qr"
             />
 
         <TextView
@@ -89,7 +89,7 @@
                 android:layout_centerHorizontal="true"
                 android:inputType="numberDecimal"
                 android:background="@null"
-                android:hint="设置金额"
+                android:hint="@string/set_money"
                 android:textColor="#333333"
                 android:textSize="13sp"
                 android:gravity="center"
@@ -133,7 +133,7 @@
             android:textColor="#333333"
             android:gravity="center"
             android:textSize="13sp"
-            android:text="保存二维码"
+            android:text="@string/save_qr"
             tools:ignore="HardcodedText" />
     </RelativeLayout>
 
@@ -156,7 +156,7 @@
             android:layout_height="44dp"
             android:layout_weight="1"
             android:textColor="@color/white"
-            android:text="复制收款地址"
+            android:text="@string/copy_address"
             tools:ignore="HardcodedText" />
     </LinearLayout>
 

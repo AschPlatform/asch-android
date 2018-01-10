@@ -30,7 +30,7 @@ public class AccountCreateActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("创建账户");
+        setTitle(getString(R.string.create_account));
 
 
         AccountCreateFragment fragment =AccountCreateFragment.newInstance();

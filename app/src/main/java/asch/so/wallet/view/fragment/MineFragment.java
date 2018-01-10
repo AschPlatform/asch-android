@@ -33,6 +33,7 @@ import asch.so.wallet.activity.AppSettingActivity;
 import asch.so.wallet.activity.BlockInfoActivity;
 import asch.so.wallet.activity.PeersActivity;
 import asch.so.wallet.activity.TodoActivity;
+import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.activity.VoteActivity;
 import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.MineContract;
@@ -147,6 +148,11 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                         {
                             Intent intent = new Intent(getActivity(), AccountsActivity.class);
                             startActivity(intent);
+                        }
+                        break;
+                        case R.mipmap.my_bill:
+                        {
+                            BaseActivity.start(getActivity(), TransactionsActivity.class, new Bundle());
                         }
                         break;
                         case R.mipmap.my_settings:
