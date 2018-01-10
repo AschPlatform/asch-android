@@ -1,8 +1,8 @@
 {
   "update": "Yes",
   "version_name":"1.1.0",
-  "version_code":13,
-  "new_version": "1.1.0(13)",
+  "version_code":14,
+  "new_version": "1.1.0(14)",
   "apk_file_url": "http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/android/app-release.apk",
   "update_log": "1.增加英文版本，中文和英文切换；\n2. 增加受托人投票模块；\n3. APK安装包体大瘦身，减小7M；\n4. 修复1.0版本遗留从bug和改进；",
   "update_log_en": "1. New added English version enables fluent switch between Chinese and English;\n2. Add voting module for delegates;\n3. A 7MB decrease in the size of installation package of APK;\n4. Bugs of version 1.0 are fixed and improvements being made;",

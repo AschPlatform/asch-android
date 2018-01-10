@@ -152,7 +152,7 @@ public class AppUtil {
                             updateAppBean.setUpdate("No");
                         }
                         if (AppConstants.SUPPORTED_LOCALES.get(2).getLanguage().equals(LocaleChanger.getLocale().getLanguage())||
-                                AppConstants.SUPPORTED_LOCALES.get(1).getLanguage().equals(Locale.getDefault())){
+                                AppConstants.SUPPORTED_LOCALES.get(2).getLanguage().equals(Locale.getDefault())){
                             if (jsonObject.containsKey("update_log_en")){
                                 String updateLog= jsonObject.getString("update_log_en");
                                 updateAppBean.setUpdateLog(updateLog);
