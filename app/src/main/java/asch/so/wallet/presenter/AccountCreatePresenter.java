@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.LogUtils;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConfig;
+import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountCreateContract;
 import asch.so.wallet.crypto.AccountSecurity;
@@ -79,11 +80,11 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
                    @Override
                    public void onError(java.lang.Throwable e) {
                        if ("1".equals(e.getMessage())){
-                            view.displayCheckMessage("生成账户主密码失败,请重试");
+                            view.displayCheckMessage(context.getString(R.string.master_password_create_fail));
                        }else if ("2".equals(e.getMessage())){
-                           view.displayCheckMessage("此账户以及存在,请重试");
+                           view.displayCheckMessage(context.getString(R.string.accounts_exist));
                        }else if ("3".equals(e.getMessage())){
-                           view.displayError(new Throwable("账户创建失败"));
+                           view.displayError(new Throwable(context.getString(R.string.accounts_create_fail)));
                        }
                    }
 
@@ -92,7 +93,7 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
                        AccountsManager.getInstance().addAccount(account);
 //                       AppConfig.putLastAccountAddress(account.getAddress());
                        AppConfig.putLastAccountPublicKey(account.getPublicKey());
-                       view.displayCreateAccountResult(true,"账户创建成功", tmpSecret);
+                       view.displayCreateAccountResult(true,context.getString(R.string.account_create_success), tmpSecret);
                        tmpSecret=null;
                    }
                });

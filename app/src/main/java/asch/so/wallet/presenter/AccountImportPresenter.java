@@ -16,6 +16,7 @@ import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.ApplicationModule;
+import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountImportContract;
 import asch.so.wallet.crypto.AccountSecurity;
@@ -44,6 +45,7 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
     private  static  final  String TAG=AccountImportPresenter.class.getSimpleName();
     AccountImportContract.View view;
     CompositeSubscription subscriptions;
+    private Context context;
 
 
     @Inject
@@ -51,6 +53,7 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
 
     @Inject
     public AccountImportPresenter(Context ctx, AccountImportContract.View view) {
+        this.context = ctx;
         this.view = view;
         this.subscriptions=new CompositeSubscription();
     }
@@ -178,11 +181,11 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
                     @Override
                     public void onError(java.lang.Throwable e) {
                         if ("1".equals(e.getMessage())){
-                            view.displayCheckMessage("此账户已经存在");
+                            view.displayCheckMessage(context.getString(R.string.accounts_exist));
                         }else if ("2".equals(e.getMessage())){
-                            view.displayError(new Throwable("账户导入失败"));
+                            view.displayError(new Throwable(context.getString(R.string.import_fail)));
                         }else {
-                            view.displayError(new Throwable("网络连接有问题，请重试"));
+                            view.displayError(new Throwable(context.getString(R.string.net_error)));
                         }
                     }
 
@@ -195,7 +198,7 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
                         AccountsManager.getInstance().addAccount(account);
 //                        AppConfig.putLastAccountAddress(account.getAddress());
                         AppConfig.putLastAccountPublicKey(account.getPublicKey());
-                        view.displayImportAccountResult(true,"账户导入成功");
+                        view.displayImportAccountResult(true,context.getString(R.string.import_success));
                     }
                 });
         subscriptions.add(subscription);

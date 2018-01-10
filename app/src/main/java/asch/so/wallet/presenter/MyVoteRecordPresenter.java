@@ -14,6 +14,7 @@ import asch.so.base.adapter.page.IPage;
 import asch.so.base.adapter.page.Page1;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
+import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.MyVoteRecordContract;
 import asch.so.wallet.model.entity.Account;
@@ -86,7 +87,7 @@ public class MyVoteRecordPresenter implements MyVoteRecordContract.Presenter {
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        view.displayError(new Throwable("网络错误"));
+                        view.displayError(new Throwable(context.getString(R.string.net_error)));
                         pager.finishLoad(true);
                     }
 
@@ -134,13 +135,13 @@ public class MyVoteRecordPresenter implements MyVoteRecordContract.Presenter {
                     @Override
                     public void onError(java.lang.Throwable e) {
                         LogUtils.dTag(TAG,"vote result:"+e==null?"vote result error":e.toString());
-                        view.displayDownVoteResult(false, AppUtil.extractInfoFromError(e));
+                        view.displayDownVoteResult(false, AppUtil.extractInfoFromError(context, e));
                     }
 
                     @Override
                     public void onNext(AschResult result) {
                         LogUtils.dTag(TAG,"vote result:"+result.getRawJson());
-                        view.displayDownVoteResult(true, "取消投票成功");
+                        view.displayDownVoteResult(true, context.getString(R.string.cancel_vote_success));
                     }
                 });
         subscriptions.add(subscription);

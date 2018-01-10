@@ -19,12 +19,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SizeUtils;
+import com.franmontiel.localechanger.LocaleChanger;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
@@ -228,10 +232,11 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             moreEasyPopup.dismiss();
             Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
             startActivity(intent);
-        } else if (view.getId() == R.id.transactions_ll) {
-            moreEasyPopup.dismiss();
-            BaseActivity.start(getActivity(), TransactionsActivity.class, new Bundle());
         }
+//        else if (view.getId() == R.id.transactions_ll) {
+//            moreEasyPopup.dismiss();
+//            BaseActivity.start(getActivity(), TransactionsActivity.class, new Bundle());
+//        }
     }
 
     private void showPopupMenu(View view, int offsetX, int offsetY) {
@@ -250,10 +255,10 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         View contentView = moreEasyPopup.getContentView();
         View scanItem = contentView.findViewById(R.id.scan_ll);
         View receiveItem = contentView.findViewById(R.id.receive_ll);
-        View billItem = contentView.findViewById(R.id.transactions_ll);
+        //View billItem = contentView.findViewById(R.id.transactions_ll);
         scanItem.setOnClickListener(this);
         receiveItem.setOnClickListener(this);
-        billItem.setOnClickListener(this);
+        //billItem.setOnClickListener(this);
     }
 
     @Override
@@ -301,7 +306,17 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void displayAccount(Account account) {
         nameTv.setText(account.getName()==null?"":account.getName());
-        backupBtn.setText(account.isBackup()?"已备份":"请备份");
+        int width=0;
+        if (LocaleChanger.getLocale().getLanguage().contains("zh"))
+        {
+            width=ConvertUtils.dp2px(45);
+        }else{
+            width=ConvertUtils.dp2px(100);
+        }
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)backupBtn.getLayoutParams();
+        params.width =width;
+        backupBtn.setLayoutParams(params);
+        backupBtn.setText(account.isBackup()?getString(R.string.have_backup):getString(R.string.please_backup));
         IdenticonGenerator.getInstance().generateBitmap(account.getPublicKey(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {
@@ -312,7 +327,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void displayError(java.lang.Throwable ex) {
-        AppUtil.toastError(getContext(),ex==null?"网络错误":ex.getMessage());
+        AppUtil.toastError(getContext(),ex==null?getString(R.string.net_error):ex.getMessage());
         refreshLayout.finishRefresh(1000);
     }
 }

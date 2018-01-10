@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:llLoadingResId="@layout/common_loading"
-            app:llEmptyImage="@drawable/ic_empty"
+            app:llEmptyResId="@layout/common_no_data"
             app:llErrorImage="@drawable/ic_error"
             >
     <android.support.v7.widget.RecyclerView

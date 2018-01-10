@@ -102,10 +102,10 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
         String hint=hintEt.getText().toString().trim();
         String seed=seedEt.getText().toString().trim();
         if (TextUtils.isEmpty(seed)){
-            AppUtil.toastError(getContext(),"私钥不能为空");
+            AppUtil.toastError(getContext(),getString(R.string.secret_key_null));
             return;
         }
-        if (!Validator.check(getContext(), Validator.Type.Secret,seed,"私钥格式不符合BIP39规范"))
+        if (!Validator.check(getContext(), Validator.Type.Secret,seed,getString(R.string.secret_key_error)))
         {
             return;
         }
@@ -116,21 +116,21 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
 //        }
 
 
-        if (!Validator.check(getContext(), Validator.Type.Name,name,"钱包名称不符合要求"))
+        if (!Validator.check(getContext(), Validator.Type.Name,name,getString(R.string.wallet_name_invalid)))
         {
             return;
         }
 
         if (AccountsManager.getInstance().hasAccountForName(name)){
-            AppUtil.toastError(getContext(),"此账户名称已存在");
+            AppUtil.toastError(getContext(),getString(R.string.wallet_name_exist));
             return;
         }
 
-        if (!Validator.check(getContext(), Validator.Type.Password,passwd,"请输入不少于8位字符的密码")){
+        if (!Validator.check(getContext(), Validator.Type.Password,passwd,getString(R.string.password_short))){
             return;
         }
         if (!passwd.equals(passwd2)){
-            AppUtil.toastError(getContext(),"密码不一致,请重新输入");
+            AppUtil.toastError(getContext(),getString(R.string.password_inconsistency));
             return;
         }
 

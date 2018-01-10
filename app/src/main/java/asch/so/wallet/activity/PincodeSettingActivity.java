@@ -17,7 +17,7 @@ public class PincodeSettingActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("设置Pin码");
+        setTitle(getString(R.string.set_pin));
         PincodeSettingFragment fragment =PincodeSettingFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment, R.id.fragment_container);
 

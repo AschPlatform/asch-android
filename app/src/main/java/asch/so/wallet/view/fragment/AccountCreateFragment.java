@@ -101,7 +101,7 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         String passwd2=passwdEt2.getText().toString();
         String hint=hintEt.getText().toString();
 
-        if (!Validator.check(getContext(), Validator.Type.Name,name,"钱包名称不符合要求"))
+        if (!Validator.check(getContext(), Validator.Type.Name,name,getString(R.string.wallet_name_invalid)))
         {
             return;
         }
@@ -112,15 +112,15 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
 //        }
 
         if (AccountsManager.getInstance().hasAccountForName(name)){
-            AppUtil.toastError(getContext(),"此账户名称已存在");
+            AppUtil.toastError(getContext(),getString(R.string.wallet_name_exist));
             return;
         }
 
-        if (!Validator.check(getContext(), Validator.Type.Password,passwd,"请输入不少于8位字符的密码")){
+        if (!Validator.check(getContext(), Validator.Type.Password,passwd,getString(R.string.password_short))){
             return;
         }
         if (!passwd.equals(passwd2)){
-            AppUtil.toastError(getContext(),"密码不一致,请重新输入");
+            AppUtil.toastError(getContext(),getString(R.string.password_inconsistency));
             return;
         }
 
@@ -236,17 +236,17 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
 
     public void showSuccessDialog(String secret){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("安全提示")
+        builder.setTitle(getString(R.string.safety_tip))
                 .setCancelable(false)
-        .setMessage("尊敬的用户您好，当前账户已经创建成功，为了账户资金安全考虑，务必请您对账户进行备份！")
-        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        .setMessage(getString(R.string.account_creation_success))
+        .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //dialog.dismiss();
                  goBackup(secret);
             }
         })
-        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                // dialog.dismiss();

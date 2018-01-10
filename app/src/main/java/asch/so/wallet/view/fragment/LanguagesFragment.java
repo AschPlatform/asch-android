@@ -1,5 +1,6 @@
 package asch.so.wallet.view.fragment;
 
+import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,12 +13,19 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.AppUtils;
+import com.franmontiel.localechanger.LocaleChanger;
+import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
+
 import java.util.Arrays;
+import java.util.Locale;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.MainTabActivity;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.BaseRecyclerAdapter;
 import asch.so.wallet.view.adapter.SmartViewHolder;
 import butterknife.BindView;
@@ -40,7 +48,11 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
     BaseRecyclerAdapter<Item> adapter = new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), R.layout.item_languages, this) {
         @Override
         protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
-            holder.text(R.id.language_tv, model.title);
+            if (position==0){
+                holder.text(R.id.language_tv,getString(R.string.language_default));
+            }else {
+                holder.text(R.id.language_tv, model.title);
+            }
             ImageView checmarkIv=holder.itemView.findViewById(R.id.checkmark_iv);
             String code= AppConfig.getLanguage();
             if (code!=null)
@@ -51,7 +63,7 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
                     checmarkIv.setVisibility(View.INVISIBLE);
                 }
             }else {
-                if (model.code.equals("zh_cn")){
+                if (model.code.equals("default")){
                     checmarkIv.setVisibility(View.VISIBLE);
                 }else {
                     checmarkIv.setVisibility(View.INVISIBLE);
@@ -67,25 +79,38 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
         currentPostion=position;
         AppConfig.putLanguage(item.code);
         switch (item){
+            case Default:
+            {
+                LocaleChanger.setLocale(AppConstants.SUPPORTED_LOCALES.get(0));
+            }
+            break;
             case Chinese:
             {
+                LocaleChanger.setLocale(AppConstants.SUPPORTED_LOCALES.get(1));
 
             }
             break;
-//            case English:
-//            {
-//            }
-//                break;
+            case English:
+            {
+                LocaleChanger.setLocale(AppConstants.SUPPORTED_LOCALES.get(2));
+            }
+                break;
+            default:
+                break;
         }
 
-        adapter.notifyDataSetChanged();
-        getActivity().finish();
 
+        ActivityRecreationHelper.recreate(getActivity(), false);
+
+        adapter.notifyDataSetChanged();
+        //getActivity().finish();
+        AppUtil.restartApp(getContext());
     }
 
     public enum Item{
-        Chinese("zh_cn","中文",false);
-       // English("en", "English",false);
+        Default("default","默认",false),
+        Chinese("zh_cn","中文",false),
+        English("en", "English",false);
 
         public String code;
         public String title;

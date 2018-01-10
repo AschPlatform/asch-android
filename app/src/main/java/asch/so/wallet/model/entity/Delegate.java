@@ -3,6 +3,9 @@ package asch.so.wallet.model.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import asch.so.wallet.util.AppUtil;
+import so.asch.sdk.impl.AschConst;
+
 /**
  * Created by kimziv on 2017/11/29.
  */
@@ -67,6 +70,10 @@ public class Delegate implements Parcelable{
 
     public long getBalance() {
         return balance;
+    }
+
+    public String getBalanceShow() {
+        return balance==0?"0":AppUtil.decimalFormat(AppUtil.decimalFromBigint(balance,AschConst.CORE_COIN_PRECISION));
     }
 
     public void setBalance(long balance) {

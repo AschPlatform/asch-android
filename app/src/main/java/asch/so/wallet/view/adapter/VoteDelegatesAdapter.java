@@ -70,12 +70,12 @@ public class VoteDelegatesAdapter extends BaseQuickAdapter<Delegate, VoteDelegat
         viewHolder.rateTv.setText(String.valueOf(item.getRate()));
         viewHolder.nameTv.setText(item.getUsername());
         viewHolder.addressTv.setText(item.getAddress());
-        viewHolder.balanceTv.setText(String.valueOf(item.getBalance()));
+        viewHolder.balanceTv.setText(String.valueOf(item.getBalanceShow()));
         viewHolder.publicKeyTv.setText(item.getPublicKey());
-        viewHolder.productivityTv.setText(String.format("%f",item.getProductivity()));
+        viewHolder.productivityTv.setText(String.format("%f%%",item.getProductivity()));
         viewHolder.producedBlocksTv.setText(String.valueOf(item.getProducedblocks()));
         viewHolder.missedBlocksTv.setText(String.valueOf(item.getMissedblocks()));
-        viewHolder.approvalTv.setText(String.format("%f",item.getApproval()));
+        viewHolder.approvalTv.setText(String.format("%f%%",item.getApproval()));
         if (item.isVoted()){
             viewHolder.selectBtn.setBackgroundResource(R.mipmap.item_disable);
             viewHolder.selectBtn.setClickable(false);

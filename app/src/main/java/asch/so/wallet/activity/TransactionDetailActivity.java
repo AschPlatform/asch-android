@@ -16,7 +16,7 @@ public class TransactionDetailActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("交易详情");
+        setTitle(getString(R.string.transaction_details));
         TransactionDetailFragment fragment =TransactionDetailFragment.newInstance();
         fragment.setArguments(getBundle());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment, R.id.fragment_container);

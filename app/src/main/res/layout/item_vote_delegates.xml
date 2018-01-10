@@ -74,7 +74,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="排名"
+                android:text="@string/ranking"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -107,7 +107,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="受投人"
+                android:text="@string/depository"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -141,7 +141,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="地址"
+                android:text="@string/address"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -180,6 +180,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/balance_ll"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -189,7 +190,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="余额"
+                android:text="@string/balance"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -219,7 +220,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="公钥"
+                android:text="@string/public_key"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -246,7 +247,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="生产率"
+                android:text="@string/productivity"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -273,7 +274,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="生产块数"
+                android:text="@string/production_block"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -300,7 +301,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="丢失块数"
+                android:text="@string/miss_block"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -327,7 +328,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="得票率"
+                android:text="@string/percentage_vote"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />

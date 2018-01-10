@@ -22,7 +22,7 @@ public class AboutActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("关于");
+        setTitle(getString(R.string.about));
 
         AboutFragment fragment=AboutFragment.newInstance();
 

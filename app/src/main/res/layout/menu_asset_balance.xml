@@ -43,7 +43,7 @@
                 android:clickable="false"
                 android:gravity="center"
                 android:textColor="@color/white"
-                android:text="扫一扫"
+                android:text="@string/scan"
                 android:textSize="14sp"/>
         </LinearLayout>
 
@@ -69,33 +69,33 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:clickable="false"
-            android:text="收款"
+            android:text="@string/receipt"
             android:textSize="14sp"/>
         </LinearLayout>
-    <LinearLayout
-        android:id="@+id/transactions_ll"
-        android:background="@drawable/menu_item_selector"
-        android:clickable="true"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginLeft="10dp"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/property_pull_down_bill"
-            />
-        <TextView
-            android:id="@+id/bill_item"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:clickable="false"
-            android:textColor="@color/white"
-            android:text="账单"
-            android:textSize="14sp"/>
-        </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:id="@+id/transactions_ll"-->
+        <!--android:background="@drawable/menu_item_selector"-->
+        <!--android:clickable="true"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<ImageView-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_width="16dp"-->
+            <!--android:layout_height="16dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:src="@mipmap/property_pull_down_bill"-->
+            <!--/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/bill_item"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:gravity="center"-->
+            <!--android:clickable="false"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:text="@string/bill"-->
+            <!--android:textSize="14sp"/>-->
+        <!--</LinearLayout>-->
     </LinearLayout>
 </com.daasuu.bl.BubbleLayout>

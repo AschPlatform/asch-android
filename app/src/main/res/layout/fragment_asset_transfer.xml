@@ -57,7 +57,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:hint="收款人账户地址（可以扫码输入）"
+                android:hint="@string/payee_address_input_hint"
                 android:textSize="15sp"
                 android:textColor="#333333"
                 android:cursorVisible="true"
@@ -88,7 +88,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
                     android:background="@null"
-                    android:hint="转账金额"
+                    android:hint="@string/transfer_amount"
                     android:textSize="15sp"
                     android:textColor="#333333"
                     android:inputType="numberDecimal"
@@ -129,7 +129,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:hint="二级密码"
+                android:hint="@string/secondary_password"
                 android:textSize="15sp"
                 android:textColor="#333333"
                 android:inputType="textPassword"
@@ -154,7 +154,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:hint="备注"
+                android:hint="@string/remark"
                 android:textSize="15sp"
                 android:textColor="#333333"
                 android:inputType="text"
@@ -178,7 +178,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:hint="网络费用"
+                android:hint="@string/cost_hint"
                 android:textSize="15sp"
                 android:textColor="#333333"
                 android:inputType="none"
@@ -186,7 +186,7 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-                android:text="0.1XAS（交易费）"
+                android:text="@string/transaction_fee"
                 android:maxLines="1" />
             <View
                 android:layout_width="match_parent"
@@ -206,7 +206,7 @@
             android:layout_height="44dp"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
-            android:text="下一步" />
+            android:text="@string/next" />
 
         <FrameLayout
             android:layout_width="match_parent"

@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:text="创建账户"
+            android:text="@string/create_account"
             tools:ignore="HardcodedText" />
     </LinearLayout>
     <LinearLayout
@@ -52,7 +52,7 @@
             android:layout_weight="1"
             android:textColor="@color/white"
             android:textSize="15sp"
-            android:text="导入账户"
+            android:text="@string/import_account"
             tools:ignore="HardcodedText" />
     </LinearLayout>
 
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textSize="13sp"
-            android:text="默认阅读并同意阅读条款"
+            android:text="@string/terms_service"
             />
     </LinearLayout>
 

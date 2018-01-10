@@ -18,7 +18,7 @@ public class NodeURLSettingActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("设置节点URL");
+        setTitle(getString(R.string.set_node_url));
 
         NodeURLSettingFragment fragment =NodeURLSettingFragment.newInstance();
 

@@ -11,14 +11,6 @@
         layout="@layout/layout_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-    <!--<com.flyco.tablayout.SlidingTabLayout-->
-        <!--android:id="@+id/tablayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="48dp"-->
-        <!--android:background="#3F9FE0"-->
-        <!--tl:tl_textAllCaps="true"-->
-        <!--tl:tl_textsize="14sp"/>-->
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"

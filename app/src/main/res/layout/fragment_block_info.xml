@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:llLoadingResId="@layout/loading_default"
-        app:llEmptyImage="@drawable/ic_empty"
+        app:llEmptyResId="@layout/common_no_data"
         app:llErrorImage="@drawable/ic_error"
         >
     <LinearLayout
@@ -36,7 +36,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="最后区块高度"
+                android:text="@string/last_block_height"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -69,7 +69,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:text="最后区块时间"
+                android:text="@string/last_block_time"
                 android:textSize="15sp"
                 android:textColor="#999999"
                 android:maxLines="1" />
@@ -106,7 +106,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
                     android:background="@null"
-                    android:text="版本信息"
+                    android:text="@string/versions_info"
                     android:textSize="15sp"
                     android:textColor="#999999"
                     android:maxLines="1" />
@@ -172,7 +172,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
                     android:background="@null"
-                    android:text="网络"
+                    android:text="net"
                     android:textSize="15sp"
                     android:textColor="#999999"
                     android:maxLines="1" />

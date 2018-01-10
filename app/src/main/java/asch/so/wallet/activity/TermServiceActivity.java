@@ -16,7 +16,7 @@ public class TermServiceActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("服务条款");
+        setTitle(getString(R.string.service_term));
         TermServiceFragment fragment=TermServiceFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.fragment_container);
     }

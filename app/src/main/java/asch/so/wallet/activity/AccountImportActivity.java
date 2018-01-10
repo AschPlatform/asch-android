@@ -43,7 +43,7 @@ public class AccountImportActivity extends TitleToolbarActivity implements  Easy
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        setTitle("导入账户");
+        setTitle(getString(R.string.import_account));
         fragment = AccountImportFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 
@@ -112,7 +112,7 @@ public class AccountImportActivity extends TitleToolbarActivity implements  Easy
     private void requestCodeQRCodePermissions() {
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (!EasyPermissions.hasPermissions(this, perms)) {
-            EasyPermissions.requestPermissions(this, "扫描二维码需要打开相机和散光灯的权限", REQUEST_CODE_QRCODE_PERMISSIONS, perms);
+            EasyPermissions.requestPermissions(this, getString(R.string.photo_permission), REQUEST_CODE_QRCODE_PERMISSIONS, perms);
         }
     }
 }

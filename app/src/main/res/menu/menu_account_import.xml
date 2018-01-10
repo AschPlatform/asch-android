@@ -6,5 +6,5 @@
         android:id="@+id/item_scan_qrcode"
         android:icon="@mipmap/account_scan"
         app:showAsAction="always"
-        android:title="扫码" />
+        android:title="@string/scan_code" />
 </menu>

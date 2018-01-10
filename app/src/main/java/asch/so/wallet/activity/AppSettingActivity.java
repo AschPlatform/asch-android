@@ -18,7 +18,7 @@ public class AppSettingActivity extends TitleToolbarActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // setContentView(R.layout.activity_base);
-        setTitle("设置");
+        setTitle(getString(R.string.set));
         AppSettingFragment fragment = AppSettingFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
     }

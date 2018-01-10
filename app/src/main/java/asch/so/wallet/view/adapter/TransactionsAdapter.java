@@ -44,11 +44,15 @@ public class TransactionsAdapter extends BaseQuickAdapter<Transaction, Transacti
         boolean isSender=getAccount().getAddress().equals(transaction.getSenderId());
         setTransferIcon(viewHolder.transferIcon,transaction.getType(),isSender);
         viewHolder.transactionTv.setText(transaction.getId());
-        viewHolder.amountTv.setText(Transaction.Type.fromCode(transaction.getType()).getName());
+        int resId=AppUtil.getResIdFromCode(Transaction.Type.fromCode(transaction.getType()));
+        String transactionType=context.getResources().getString(resId);
+        viewHolder.amountTv.setText(transactionType);
+//        viewHolder.amountTv.setText(Transaction.Type.fromCode(transaction.getType()).getName());
 //        String ago=timeAgo.getTimeAgo(transaction.dateFromAschTimestamp());
         CharSequence ago= AppUtil.getRelativeTimeSpanString(context, transaction.dateFromAschTimestamp().getTime());
         viewHolder.dateTv.setText(ago);
     }
+
 
     private void setTransferIcon(ImageView imageView, int type, boolean isSender){
         if ( TransactionType.Transfer.getCode()==type || TransactionType.UIATransfer.getCode()==type){

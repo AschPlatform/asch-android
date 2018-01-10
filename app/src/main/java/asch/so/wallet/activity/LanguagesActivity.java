@@ -16,7 +16,7 @@ public class LanguagesActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("语言选择");
+        setTitle(getString(R.string.language_select));
         LanguagesFragment fragment=LanguagesFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment, R.id.fragment_container);
 

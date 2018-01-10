@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--<string name="password_repeat">confirm password</string>-->
+    <!--<string name="transaction_cost">transaction costs</string>-->
+    <!--<string name="depositary">depositary</string>-->
+
+    <string name="app_name">ASCH Wallet</string>
+    <string name="app_name_test">ASCH Wallet Test</string>
+    <string name="term_service_title">
+	Risk statement about users’ secret key
+	</string>
+    <string name="term_service">
+	\n
+
+	Dear users：\n\n
+
+	\t the system will automatically generate an Asch address for you, when you choose to login to be a user of Asch chain, and you are then deemed by the Asch chain to  have read, understood and completely agreed with all contents of this risk statement.
+
+	Once you register to be a user and create an account, you will get a secret key and must save it by yourself. If you forget the secret key, your asset on Asch chain will be lost forever and it cannot be found back. You shall be liable personally for any obligation and loss for losing the secret key. There is no rights and obligation for Asch to store or save your secret key in any form. And it is not impossible for Asch to obtain or divulge your private key.
+	\n\n
+
+	\t Please make sure that you have remembered and saved your secret key so as to avoid unnecessary trouble.\n\n
+
+	Please be well known\n\n
+
+	Asch chain\n
+	</string>
+    <string name="title_activity_vote">Vote Activity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="phone_wallet">Mobile Wallet</string>
+    <string name="confirm">confirm</string>
+    <string name="cancel">cancel</string>
+    <string name="create_account">Create Account</string>
+    <string name="import_account">Import Account</string>
+    <string name="terms_service">Read acquiescently and agree to the above terms and conditions</string>
+    <string name="service_term">Service Term</string>
+    <string name="read_service">Please read carefully and agree to the service terms</string>
+    <string name="photo_permission">Scanning the QR code requires the permission of the camera and floodlight</string>
+    <string name="photo_permission_content">
+	 choosing photos requires the following permissions:
+
+	1. accessing photos from the device
+
+	2.photographing</string>
+    <string name="secret_key">Secret Key</string>
+    <string name="secret_key_hint">Secret key（BIP39）,which can be scanned to input</string>
+    <string name="secret_key_null">Secret key cannot be vacant</string>
+    <string name="secret_key_error">The format of secret key is unmatched with BIP39</string>
+    <string name="wallet_name_invalid">Wallet name doesn’t meet the requirement</string>
+    <string name="wallet_name">Wallet Name</string>
+    <string name="wallet_name_input">Wallet Name</string>
+    <string name="wallet_name_exist">The wallet name exists</string>
+    <string name="password_short">Password(no less than eight characters)</string>
+    <string name="password_inconsistency">The password is inconsistent, please input again</string>
+    <string name="password_input_hint">Password</string>
+    <string name="password_repeat"> Confirm password</string>
+    <string name="password_hint">Password hint(may not fill）</string>
+    <string name="account_hint"><font size="12">Account name(only letters, figures and underscore character)</font></string>
+    <string name="remark_hint">Remark: Please backup your password. This account does not have the function of finding password. Password is used for cryptography to protect secret key and the strength is very important.</string>
+    <string name="safety_tip">Safety tips</string>
+    <string name="account_creation_success">Dear users, the account is created successfully. In order to protect the assets’ safety, please backup your account!</string>
+    <string name="out_off_hint">Click to log out</string>
+    <string name="assets">Assets</string>
+    <string name="find_out">Discovery</string>
+    <string name="mine">Mine</string>
+    <string name="please_backup">Please Backup</string>
+    <string name="have_backup">You had a backup</string>
+    <string name="net_error">Net error</string>
+    <string name="xas_balance">XAS balance</string>
+    <string name="back">Back</string>
+    <string name="close">Close</string>
+    <string name="title">Title</string>
+    <string name="development">The function is developing</string>
+    <string name="kmc">KMC</string>
+    <string name="cctime">CCTime</string>
+    <string name="node_vote">Node Vote</string>
+    <string name="vote">Vote</string>
+    <string name="account_management">Account management</string>
+    <string name="set">Setting</string>
+    <string name="contact_person">Contact</string>
+    <string name="block_details">Block Details</string>
+    <string name="about">About</string>
+    <string name="account_create_success">The new account is created  successfully</string>
+    <string name="backup_account">Please backup account</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="backup_how">How to backup account</string>
+    <string name="master_password_create_fail">Fail to generate master password, please try again</string>
+    <string name="accounts_exist">The account is existed</string>
+    <string name="accounts_create_fail">Fail to create the account</string>
+    <string name="mnemonic_backup">Backup mnemonic</string>
+    <string name="important_note">Important notes</string>
+    <string name="copy">Copy</string>
+    <string name="sure_copy">It has been copied on the pasteboard. Please backup in a safe place!</string>
+    <string name="note_content">The mnemonic word is used to recover account and can be backup one time. Please write down and save in a safe place! </string>
+    <string name="sure_backup">Please confirm whether the mnemonic word has been backed up in a safe place. There is only one chance to backup. If you have backed up,please click “confirm”, or click ‘cancel’!</string>
+    <string name="import_fail">Fail to import account</string>
+    <string name="import_success">Success to import account</string>
+    <string name="scan">Scan</string>
+    <string name="receipt">Receipt</string>
+    <string name="bill">Bill</string>
+    <string name="management_wallet">Manage Wallet</string>
+    <string name="photo">Photo</string>
+    <string name="qr_invalid">QR format is invalid</string>
+    <string name="address_invalid">Invalid address</string>
+    <string name="qr_not_found">QR code is not found</string>
+    <string name="bar_code_direction"> Automatically scan when the code is in the bar</string>
+    <string name="qr_code_direction">Automatically scan when the code is in the bar</string>
+    <string name="photo_open_error">Something wrong with the camera</string>
+    <string name="transfer">Transfer</string>
+    <string name="receive">Receive</string>
+    <string name="asset_transfer">Asset Transfer</string>
+    <string name="payee_address_input_hint">Payee account address(supporting QR input)</string>
+    <string name="transfer_amount">Transfer Amount</string>
+    <string name="secondary_password">Secondary Password</string>
+    <string name="remark">Memo</string>
+    <string name="cost_hint">Internet Cost</string>
+    <string name="transaction_fee">0.1XAS（Transaction fee）</string>
+    <string name="next">Next</string>
+    <string name="select_coin">Please select coins.</string>
+    <string name="address_same">Receiving address and sending address can not be the same</string>
+    <string name="invalid_money">Invalid amount </string>
+    <string name="money_not_enough">Account balance is not enough</string>
+    <string name="secondary_password_error">Secondary password is wrong</string>
+    <string name="account_password_error">Account password is wrong</string>
+    <string name="receipt_rq_error">Receipt QR code is wrong</string>
+    <string name="transfer_to">Transfer to </string>
+    <string name="account_input_title">Account password</string>
+    <string name="account_input">Account password</string>
+    <string name="account_pwd_hint">Account password</string>
+    <string name="transfer_success">Transferring is successful</string>
+    <string name="asset_get_error">It is wrong to get asset</string>
+    <string name="qr_receipt">QR Receipt</string>
+    <string name="receipt_qr">Receipt by QR</string>
+    <string name="set_money">Set Money</string>
+    <string name="save_qr">Save QR</string>
+    <string name="copy_address">Copy receipt address</string>
+    <string name="transaction_record">Transaction record</string>
+    <string name="transaction_details">Transaction details</string>
+    <string name="transaction_id">Transaction ID</string>
+    <string name="transaction_type">Transaction Type</string>
+    <string name="transaction_time">Transaction Time</string>
+    <string name="transaction_sender">Sender</string>
+    <string name="transaction_receiver">Receiver</string>
+    <string name="transaction_money">Money</string>
+    <string name="transaction_cost">Transaction Fee</string>
+    <string name="sure_time">Confirmation</string>
+    <string name="block_id">Block ID</string>
+    <string name="all_account">All Accounts</string>
+    <string name="language_select">Language</string>
+    <string name="node_url">Node URL</string>
+    <string name="set_node_url">Setting node URL</string>
+    <string name="set_pin">Setting Pin code</string>
+    <string name="zh_cn">Chinese</string>
+    <string name="node_url_error">The URL format of node is wrong</string>
+    <string name="save_success">Save successfully</string>
+    <string name="save">Save</string>
+    <string name="wallet_node_url">Wallet node URL</string>
+    <string name="wallet_url_input_hint">Input wallet node URL</string>
+    <string name="set_wallet_url_default">Set wallet URL</string>
+    <string name="pin_input_hint">Please input six digit  password</string>
+    <string name="use_explain">User Manuals</string>
+    <string name="about_us">About Us</string>
+    <string name="open_browser">Browser</string>
+    <string name="node_list">Node List</string>
+    <string name="vote_record">Vote Record</string>
+    <string name="vote_me"> Who voted me</string>
+    <string name="block_info">Block information</string>
+    <string name="last_block_height">Last block height</string>
+    <string name="last_block_time">Last block time</string>
+    <string name="versions_info">Version information</string>
+    <string name="version_node">Version</string>
+    <string name="net">Net</string>
+    <string name="get_uia_error">It is wrong to get UIA asset</string>
+    <string name="account_have_backup">The account has backup.</string>
+    <string name="password_error">The password is wrong, please input again</string>
+    <string name="only_one_account">Only one account for the wallet, so can not be deleted</string>
+    <string name="delete_success">Delete successfully</string>
+    <string name="account_input_tip">Account name (only letters, digits  anr underscore character)</string>
+    <string name="personal_center">Personal Center</string>
+    <string name="forget_pin">Forget pin code?</string>
+    <string name="pin_tip">Click‘confirm’ to create a new pin code.\n\n if you remember your pin code, click ‘cancel’ to back.?</string>
+    <string name="locked">Lock</string>
+    <string name="locked_fail"> Fail to lock</string>
+    <string name="locked_success">Lock successfully</string>
+    <string name="vote_list">Vote List</string>
+    <string name="coming_son">It is coming soon</string>
+    <string name="balance_get_error">It is wrong to get balance</string>
+    <string name="saved_phone">Saved to photo</string>
+    <string name="save_error">Fail to save</string>
+    <string name="create_qr_fail">Fail to generate English QR</string>
+    <string name="cancel_vote_fail">Fail to cancel vote</string>
+    <string name="cancel_vote">Cancel Vote</string>
+    <string name="cancel_vote_success">Cancel vote successfully</string>
+    <string name="vote_fail">Fail to vote</string>
+    <string name="vote_success">Vote Successfully</string>
+    <string name="copy_success">Copy Successfully</string>
+    <string name="loading">Loading.</string>
+    <string name="vote_to_trustee">Vote to delegates</string>
+    <string name="input_secondary_password">Secondary password</string>
+    <string name="version">ASCH phone walletV1.0.0</string>
+    <string name="all_balance">All Balance</string>
+    <string name="balance">Balance</string>
+    <string name="public_key">Public Key</string>
+    <string name="address">Address</string>
+    <string name="not_set"> Not Set</string>
+    <string name="lock_state">Lock state</string>
+    <string name="state">State</string>
+    <string name="not_lock">Not Lock</string>
+    <string name="input_height">Input Height</string>
+    <string name="select_vote"> 0 delegate have been selected</string>
+    <string name="transfer_record">Transfer Record</string>
+    <string name="operating_system">Operating System</string>
+    <string name="ranking">Ranking</string>
+    <string name="depository">Delegates</string>
+    <string name="productivity">Productivity</string>
+    <string name="production_block">Production Block</string>
+    <string name="miss_block">Miss Block</string>
+    <string name="percentage_vote">Vote Percentage</string>
+    <string name="user_name">User Name</string>
+    <string name="weight">Weight</string>
+    <string name="refresh">Refresh</string>
+    <string name="scan_code">Scan Code</string>
+    <string name="language_default">Auto</string>
+
+    <string name="general_transfer">General Transfer</string>
+    <string name="set_second_secret">Setting secondary password</string>
+    <string name="register_delegate">Registering Delegates</string>
+    <string name="vote_transaction">Vote</string>
+    <string name="multi_signature">Multi Signature</string>
+    <string name="dapp_transaction">DApp</string>
+    <string name="in_transfer">Dapp Recharge</string>
+    <string name="out_transfer">Dapp Withdraw</string>
+    <string name="store_transaction">Haystack</string>
+    <string name="uia_issuer">Issuer Register</string>
+    <string name="uia_asset">Asset Register</string>
+    <string name="uia_flags">Setting ACL model</string>
+    <string name="uia_acl">Updating ACL</string>
+    <string name="uia_issue_asset">Issuing Asset</string>
+    <string name="uia_transfer">Main-chain UIA transfer</string>
+    <string name="lock_transaction">Lock</string>
+
+
+    <string name="error_server">Server Error</string>
+    <string name="error_network">Network connection failed, please check your network settings</string>
+    <string name="error_balance_insufficient">Insufficient balance</string>
+    <string name="error_vote_cancel">Some delegates selected by you have already been canceled the votes, please refresh and proceed after the block confirmation</string>
+    <string name="error_vote_ok"> Some delegates selected by you have already been voted, please refresh and proceed after the block confirmation</string>
+    <string name="error_params">Server error, please check your parameters</string>
+
+    <string name="please_select_delegate">Please select the delegate</string>
+    <string name="select_vote_format">%d delegates have been selected </string>
+    <string name="error_vote_ok_count">Vote for the delegates, up to 33 persons each time</string>
+    <string name="error_vote_cancel_count">Cancel the vote for the delegates, up to 33 persons each time</string>
+    <string name="vote_cancel_to_trustee">Cancel the vote for the delegates</string>
+    <string name="no_data">No Data</string>
+    <string name="website">https://www.asch.io</string>
+</resources>

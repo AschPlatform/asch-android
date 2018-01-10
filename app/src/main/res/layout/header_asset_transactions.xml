@@ -37,7 +37,7 @@
             android:ellipsize="middle"
             android:textColor="@color/white"
             android:textSize="13sp"
-            android:text="XAS余额" />
+            android:text="@string/xas_balance" />
     </LinearLayout>
 
 <LinearLayout
@@ -54,7 +54,7 @@
         android:layout_marginLeft="10dp"
         android:textColor="#333333"
         android:textSize="13sp"
-        android:text="转账记录"
+        android:text="@string/transfer_record"
         />
 </LinearLayout>
 </RelativeLayout>

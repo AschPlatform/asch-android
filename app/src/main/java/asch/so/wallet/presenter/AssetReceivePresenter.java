@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 import asch.so.base.view.Throwable;
+import asch.so.wallet.R;
 import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.contract.AssetReceiveContract;
 import asch.so.wallet.model.entity.BaseAsset;
@@ -72,9 +73,9 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 if (msg.what==1){
-                    AppUtil.toastSuccess(context,"已保存到相册");
+                    AppUtil.toastSuccess(context,context.getString(R.string.saved_phone));
                 }else {
-                    AppUtil.toastError(context,"保存失败");
+                    AppUtil.toastError(context,context.getString(R.string.save_error));
                 }
             }
         };
@@ -105,7 +106,7 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
                 if (bitmap != null) {
                    view.displayQrCode(bitmap);
                 } else {
-                    AppUtil.toastError(context, "生成英文二维码失败");
+                    AppUtil.toastError(context, context.getString(R.string.create_qr_fail));
                 }
             }
         }.execute();
@@ -126,7 +127,7 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
             @Override
             public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
                 if (exception!=null){
-                    view.displayError(new Throwable("获取资产错误"));
+                    view.displayError(new Throwable(context.getString(R.string.asset_get_error)));
                 }else {
                     view.displayAssets(assetsMap);
                 }

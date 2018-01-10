@@ -19,7 +19,7 @@
     android:textColor="#333333"
     android:textSize="15sp"
     android:layout_marginLeft="10dp"
-    android:text="创建账户"
+    android:text="@string/create_account"
     />
 </LinearLayout>
     <View
@@ -39,7 +39,7 @@
             android:layout_marginLeft="10dp"
             android:textColor="#333333"
             android:textSize="15sp"
-            android:text="导入账户"
+            android:text="@string/import_account"
             />
     </LinearLayout>
 </LinearLayout>

@@ -5,19 +5,19 @@
     <item
         android:id="@+id/item_scan"
         android:icon="@mipmap/ic_news_gray"
-        android:title="扫一扫"
+        android:title="@string/scan"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/item_receive"
         android:icon="@mipmap/ic_news_gray"
-        android:title="收款"
+        android:title="@string/receipt"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/item_transactions"
         android:icon="@mipmap/ic_news_gray"
-        android:title="账单"
+        android:title="@string/bill"
         app:showAsAction="always"
         />
 </menu>

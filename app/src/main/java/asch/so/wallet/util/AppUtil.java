@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -15,6 +17,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.franmontiel.localechanger.LocaleChanger;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
@@ -22,11 +25,14 @@ import com.vector.update_app.UpdateCallback;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 import asch.so.base.util.DateConvertUtils;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.BuildConfig;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.MainTabActivity;
+import asch.so.wallet.model.entity.Transaction;
 import es.dmoral.toasty.Toasty;
 import so.asch.sdk.impl.AschConst;
 
@@ -68,7 +74,7 @@ public class AppUtil {
 //        clipboardManager.setText(content);
 //        //clipboardManager.setPrimaryClip(clipData);
 //        AppUtil.toastSuccess(context,"复制成功");
-        copyText(context,content,"复制成功");
+        copyText(context,content,context.getString(R.string.copy_success));
     }
 
     public static void copyText(Context context, String content, String msg){
@@ -120,9 +126,9 @@ public class AppUtil {
 
 
     public static void updateApp(Activity activity) {
-        if (BuildConfig.DEBUG || BuildConfig.TEST){
-            return;
-        }
+//        if (BuildConfig.DEBUG || BuildConfig.TEST){
+//            return;
+//        }
         new UpdateAppManager
                 .Builder()
                 //当前Activity
@@ -145,6 +151,15 @@ public class AppUtil {
                         if (versionCode<=currentVersionCode){
                             updateAppBean.setUpdate("No");
                         }
+                        if (AppConstants.SUPPORTED_LOCALES.get(2).getLanguage().equals(LocaleChanger.getLocale().getLanguage())||
+                                AppConstants.SUPPORTED_LOCALES.get(2).getLanguage().equals(Locale.getDefault())){
+                            if (jsonObject.containsKey("update_log_en")){
+                                String updateLog= jsonObject.getString("update_log_en");
+                                updateAppBean.setUpdateLog(updateLog);
+                            }
+                        }
+
+
                         return updateAppBean;
                     }
 
@@ -178,22 +193,104 @@ public class AppUtil {
         return animator;
     }
 
-    public static String extractInfoFromError(Throwable ex){
+    public static String extractInfoFromError(Context context, Throwable ex){
         if (ex==null){
-            return "服务器错误";
+            return context.getString(R.string.error_server);
         }
         String error=ex.getMessage();
         if (error.contains("Failed to connect")){
-            return "网络连接失败，请检查你网络设置";
+            return context.getString(R.string.error_network);
         }else if (error.contains("Insufficient balance")){
-            return "余额不足";
+            return context.getString(R.string.error_balance_insufficient);
         }else if (error.contains("Failed to remove vote")){
-            return "您选择的部分受托人已经取消投票，请区块确认后刷新再操作";
+            return context.getString(R.string.error_vote_cancel);
         }else if (error.contains("Failed to add vote")){
-            return "您选择的部分受托人已经投过票，请区块确认后刷新再操作";
+            return context.getString(R.string.error_vote_ok);
         }else {
-            return "服务器错误，请检查您填写的信息是否正确";
+            return context.getString(R.string.error_params);
         }
+    }
+
+    public static void restartApp(Context context){
+        Intent intent = new Intent(context, MainTabActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(intent);
+
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
+    }
+
+    public static int getResIdFromCode(Transaction.Type type){
+        switch (type){
+            case Transfer:
+            {
+                return R.string.general_transfer;
+            }
+            case Signature:
+            {
+                return R.string.set_second_secret;
+            }
+            case Delegate:
+            {
+                return R.string.register_delegate;
+            }
+            case Vote:
+            {
+                return R.string.vote_transaction;
+            }
+            case MultiSignature:
+            {
+                return R.string.multi_signature;
+            }
+            case Dapp:
+            {
+                return R.string.dapp_transaction;
+            }
+            case InTransfer:
+            {
+                return R.string.in_transfer;
+            }
+            case OutTransfer:
+            {
+                return R.string.out_transfer;
+            }
+            case Store:
+            {
+                return R.string.store_transaction;
+            }
+            case UIAIssuer:
+            {
+                return R.string.uia_issuer;
+            }
+            case UIAAsset:
+            {
+                return R.string.uia_asset;
+            }
+            case UIAFlags:
+            {
+                return R.string.uia_flags;
+            }
+            case UIA_ACL:
+            {
+                return R.string.uia_acl;
+            }
+            case UIAIssue:
+            {
+                return R.string.uia_issue_asset;
+            }
+            case UIATransfer:
+            {
+                return R.string.uia_transfer;
+            }
+            case Lock:
+            {
+                return R.string.lock_transaction;
+            }
+            default:
+                break;
+
+        }
+        return 0;
     }
 
 }

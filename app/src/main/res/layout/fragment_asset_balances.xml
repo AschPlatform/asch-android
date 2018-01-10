@@ -81,14 +81,15 @@
                 ​
                 <Button
                     android:id="@+id/backup_btn"
-                    android:layout_width="40dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginBottom="4dp"
                     android:gravity="center"
                     android:background="@drawable/backup_bg"
-                    android:text="请备份"
+                    android:text="@string/please_backup"
                     android:textSize="10sp"
+                    android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     />
             </LinearLayout>
@@ -134,7 +135,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        android:text="XAS 余额"
+                        android:text="@string/xas_balance"
                         />
                 </LinearLayout>
             </LinearLayout>
@@ -145,11 +146,11 @@
                 android:background="@android:color/transparent"
                 android:paddingTop="@dimen/toolBarPaddingTop"
                 app:backIcon="@mipmap/back"
-                app:backText="返回"
+                app:backText="@string/back"
                 app:backTextAppearance="?attr/actionMenuTextAppearance"
                 app:backTextColor="@android:color/white"
                 app:backVisible="false"
-                app:closeText="关闭"
+                app:closeText="@string/close"
                 app:closeTextAppearance="?attr/actionMenuTextAppearance"
                 app:closeTextColor="@android:color/white"
                 app:closeVisible="false"
@@ -203,11 +204,11 @@
         android:paddingTop="@dimen/toolBarPaddingTop"
         android:visibility="visible"
         app:backIcon="@mipmap/back"
-        app:backText="返回"
+        app:backText="@string/back"
         app:backTextAppearance="?attr/actionMenuTextAppearance"
         app:backTextColor="@android:color/white"
         app:backVisible="false"
-        app:closeText="关闭"
+        app:closeText="@string/close"
         app:closeTextAppearance="?attr/actionMenuTextAppearance"
         app:closeTextColor="@android:color/white"
         app:closeVisible="false"

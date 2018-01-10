@@ -16,6 +16,7 @@ import java.util.Map;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
+import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.contract.AssetTransferContract;
@@ -108,7 +109,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                         public void onError(java.lang.Throwable e) {
                             if ("1".equals(e.getMessage()))
                             {
-                                view.displayPasswordValidMessage(false,"账户密码不正确");
+                                view.displayPasswordValidMessage(false,context.getString(R.string.account_password_error));
                             }else{
                                 view.displayError(e);
                             }
@@ -118,7 +119,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
                         @Override
                         public void onNext(AschResult aschResult) {
                             LogUtils.iTag(TAG, "+++++++"+aschResult.getRawJson());
-                            view.displayTransferResult(true,"转账成功");
+                            view.displayTransferResult(true,context.getString(R.string.transfer_success));
                         }
                     });
          subscriptions.add(subscription);
@@ -132,7 +133,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
             @Override
             public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
                 if (exception!=null){
-                    view.displayError(new Throwable("获取资产错误"));
+                    view.displayError(new Throwable(context.getString(R.string.asset_get_error)));
                 }else {
                     Iterator<Map.Entry<String,BaseAsset>> it=assetsMap.entrySet().iterator();
                     LinkedHashMap<String, BaseAsset> map=new LinkedHashMap<>();

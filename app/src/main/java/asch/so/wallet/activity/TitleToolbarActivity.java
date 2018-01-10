@@ -49,11 +49,11 @@ public class TitleToolbarActivity extends BaseActivity {
             }
         });
         setSupportActionBar(toolbar);
-        setBackTitle("返回");
+        setBackTitle(getString(R.string.back));
     }
 
     protected void setBackTitle(String title){
-        toolbar.setBackText(title==null?"返回":title);
+        toolbar.setBackText(title==null?getString(R.string.back):title);
         toolbar.setBackVisible(true);
     }
 

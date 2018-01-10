@@ -27,7 +27,7 @@ public class BlockInfoActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("区块信息");
+        setTitle(getString(R.string.block_info));
 
         BlockInfoFragment fragment =BlockInfoFragment.newInstance();
 

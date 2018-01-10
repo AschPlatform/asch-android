@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:llLoadingResId="@layout/common_loading"
-            app:llEmptyImage="@drawable/ic_empty"
+            app:llEmptyResId="@layout/common_no_data"
             app:llErrorImage="@drawable/ic_error"
             >
             <android.support.v7.widget.RecyclerView
@@ -57,7 +57,7 @@
                 android:gravity="center_vertical"
                 android:textSize="15sp"
                 android:textColor="#333333"
-                android:text="已选择0位受托人"
+                android:text="@string/select_vote"
                 />
         </LinearLayout>
 
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:text="投票"
+                android:text="@string/vote"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp" />
         </LinearLayout>

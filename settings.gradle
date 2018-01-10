@@ -1,1 +1,1 @@
-include ':app', ':base', ':widget', ':asch-java', ':CordovaLib'
+include ':app', ':base', ':widget', ':asch-java', ':CordovaLib', ':update-app'

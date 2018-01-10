@@ -8,6 +8,7 @@ import com.blankj.utilcode.util.LogUtils;
 import java.util.Observer;
 
 import asch.so.base.view.Throwable;
+import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
@@ -75,7 +76,7 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
                     @Override
                     public void onError(java.lang.Throwable e) {
                         LogUtils.dTag("xasObservable error:",e.toString());
-                        view.displayError(new Throwable("获取余额错误"));
+                        view.displayError(new Throwable(context.getString(R.string.balance_get_error)));
                     }
 
                     @Override

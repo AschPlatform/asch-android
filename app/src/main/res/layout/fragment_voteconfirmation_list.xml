@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="请输入账户密码"
+                android:text="@string/account_input_title"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -74,7 +74,7 @@
                 android:cursorVisible="true"
                 android:inputType="textPassword"
                 android:textSize="15sp"
-                android:hint="请输入当前账户密码"
+                android:hint="@string/account_pwd_hint"
                 android:maxLines="1"
                 android:textColor="#333333" />
 
@@ -90,7 +90,7 @@
             android:layout_height="40dp"
             android:textColor="#FFFFFF"
             android:textSize="15sp"
-            android:text="确定" />
+            android:text="@string/confirm" />
     </LinearLayout>
 </LinearLayout>
 
