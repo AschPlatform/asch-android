@@ -41,22 +41,22 @@ postArticle : function(title, url, text, tags, onSuccess, onError){
 
 // dapp自定义合约，发布评论
 postComment : function(aid, pid, content, onSuccess, onError){
- exec(onSuccess, onError, PLUGIN_NAME, "postArticle", [currency, amount, fee, message]);
+ exec(onSuccess, onError, PLUGIN_NAME, "postComment", [currency, amount, fee, message]);
 },
 
 // dapp自定义合约，给文章进行投票
 voteArticle : function(aid, amount, onSuccess, onError){
- exec(onSuccess, onError, PLUGIN_NAME, "postArticle", [currency, amount, fee, message]);
+ exec(onSuccess, onError, PLUGIN_NAME, "voteArticle", [currency, amount, fee, message]);
 },
 
 // dapp自定义合约，对评论进行打赏
 likeComment : function(cid, amount, onSuccess, onError){
- exec(onSuccess, onError, PLUGIN_NAME, "postArticle", [currency, amount, fee, message]);
+ exec(onSuccess, onError, PLUGIN_NAME, "likeComment", [currency, amount, fee, message]);
 },
 
 // dapp自定义合约，举报文章
 report : function(ttopic, value, onSuccess, onError){
- exec(onSuccess, onError, PLUGIN_NAME, "postArticle", [currency, amount, fee, message]);
+ exec(onSuccess, onError, PLUGIN_NAME, "report", [currency, amount, fee, message]);
 }
 
 };
