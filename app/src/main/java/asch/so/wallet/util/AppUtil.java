@@ -126,9 +126,9 @@ public class AppUtil {
 
 
     public static void updateApp(Activity activity) {
-//        if (BuildConfig.DEBUG || BuildConfig.TEST){
-//            return;
-//        }
+        if (BuildConfig.DEBUG || BuildConfig.TEST){
+            return;
+        }
         new UpdateAppManager
                 .Builder()
                 //当前Activity

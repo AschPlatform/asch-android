@@ -1,20 +1,25 @@
 package asch.so.wallet.cordova;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.widget.AllPasswdsDialog;
 import rx.Observable;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 
@@ -24,7 +29,7 @@ import so.asch.sdk.AschSDK;
 
 public class DAppPlugin extends CordovaPlugin {
     public final  static String TAG= DAppPlugin.class.getSimpleName();
-
+    private AllPasswdsDialog dialog;
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
@@ -34,7 +39,16 @@ public class DAppPlugin extends CordovaPlugin {
         if (action.equals("authorize")) {
             authorize();
         }else if (action.equals("deposit")){
-
+            String dappID=args.getString(0);
+            String currency=args.getString(1);
+            long amount=args.getLong(2);
+            String message =args.getString(3);
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    deposit(dappID,currency,amount,message,callbackContext);
+                }
+            });
         }else if (action.equals("withdraw")){
 
         }else if (action.equals("innerTransfer")){
@@ -81,6 +95,7 @@ public class DAppPlugin extends CordovaPlugin {
         });
     }
 
+
     /**** create observables ****/
 
     public Observable createDepositObservable(String dappID, String currency, long amount, String message, String secret, String secondSecret) {
@@ -101,14 +116,52 @@ public class DAppPlugin extends CordovaPlugin {
     }
 
 
-    public void coreDeposit(){
+    private void deposit(String dappID, String currency, long amount, String message, CallbackContext callbackContext){
 
-        long amount=0;
-        String msg="";
-        String secret="";
-        String secondSecret="";
-        Observable observable=createDepositObservable("","",amount,msg,secret,secondSecret);
+        showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+            @Override
+            public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                if (TextUtils.isEmpty(errMsg)){
+                    coreDeposit(dappID,currency,amount,message,secret,secondSecret,callbackContext);
+                }else {
+                    // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    AppUtil.toastError(cordova.getContext(), "账户密码错误");
 
+                }
+            }
+        });
+    }
+
+
+    public void coreDeposit(String dappID, String currency, long amount, String message, String secret, String secondSecret, CallbackContext callbackContext){
+//
+        Observable observable=createDepositObservable(dappID,currency,amount,message,secret,secondSecret);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<AschResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        AppUtil.toastError(cordova.getContext(), "充值失败");
+                        //callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    }
+
+                    @Override
+                    public void onNext(AschResult aschResult) {
+                        String rawJson = aschResult.getRawJson();
+                        Log.i(TAG, "+++++++" + rawJson);
+                       // callBack.onCallBack(rawJson);
+                       // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, aschResult.getRawJson()));
+                        AppUtil.toastSuccess(cordova.getContext(), "充值成功");
+                        dismissDialog();
+
+                    }
+                });
     }
 
     public void coreWithdraw(){
@@ -145,5 +198,20 @@ public class DAppPlugin extends CordovaPlugin {
 
     public void cctimeReport(){
 
+    }
+
+
+    private void showPasswordDialog(AllPasswdsDialog.OnConfirmationListenner confirmationListenner){
+        boolean hasSecondSecret=getAccount().hasSecondSecret();
+        dialog = new AllPasswdsDialog(this.cordova.getContext(),hasSecondSecret);
+        dialog.setTitle(this.cordova.getContext().getString(R.string.account_input_title));
+        dialog.show(confirmationListenner);
+    }
+
+    private void dismissDialog(){
+      if (dialog!=null){
+          dialog.dismiss();
+          dialog=null;
+      }
     }
 }

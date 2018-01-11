@@ -198,6 +198,7 @@ dependencies {
     compile rootProject.ext.dependencies["bgaPhotopicker"]
     compile rootProject.ext.dependencies["switchIcon"]
     //compile rootProject.ext.dependencies["update"]
+
     compile rootProject.ext.dependencies["okhttpUtils"]
     compile rootProject.ext.dependencies["filedownloader"]
     compile rootProject.ext.dependencies["expandablelayout"]

@@ -56,7 +56,12 @@
         function myFunction()
         {
 
-          navigator.dapp.authorize(null, null);
+          //navigator.dapp.authorize(null, null);
+          var dappID='d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1';
+          var currency='CCTime.XCT';
+          var amount=123456789;
+          var message='test';
+          navigator.dapp.deposit(null,null,dappID, currency, amount, message);
         <!--function onConfirm(buttonIndex) {-->
     <!--alert('You selected button ' + buttonIndex);-->
 <!--}-->

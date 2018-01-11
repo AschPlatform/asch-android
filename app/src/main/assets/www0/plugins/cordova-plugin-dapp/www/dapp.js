@@ -16,8 +16,8 @@ module.exports = {
 },
 
 //充值
-    deposit : function(onSuccess, onError){
- exec(onSuccess, onError, PLUGIN_NAME, "deposit", []);
+    deposit : function(onSuccess, onError, dappID, currency, amount, message){
+ exec(onSuccess, onError, PLUGIN_NAME, "deposit", [ dappID, currency, amount, message]);
 },
 
 //提现

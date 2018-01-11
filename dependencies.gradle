@@ -58,7 +58,7 @@ def build=[
 project.ext {
 
     config=[
-            isTest:false,
+            isTest:true,
             buildType:build["debug"]
     ]
 
