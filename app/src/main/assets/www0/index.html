@@ -40,6 +40,8 @@
         <div class="app">
             <h1>Apache Cordova</h1>
             <button type="button" onclick="myFunction()">Try it</button>
+            <br>
+            <button type="button" onclick="widthdraw()">Withdraw</button>
 
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
@@ -53,6 +55,17 @@
         <script type="text/javascript" src="plugins/cordova-plugin-dialogs/www/notification.js"></script>
         <script type="text/javascript" src="plugins/cordova-plugin-dapp/www/dapp.js"></script>
         <script>
+         function widthdraw()
+        {
+
+          var dappID='d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1';
+          var currency='CCTime.XCT';
+          var amount=12345678;
+          var message='test';
+          var fee=100000000;
+          navigator.dapp.withdraw(null,null,dappID, currency, amount, message, fee);
+          }
+
         function myFunction()
         {
 

@@ -1,5 +1,6 @@
 package so.asch.sdk.transaction;
 
+import so.asch.sdk.ContractType;
 import so.asch.sdk.Transaction;
 import so.asch.sdk.TransactionType;
 import so.asch.sdk.impl.AschConst;
@@ -122,16 +123,24 @@ public class TransactionBuilder {
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
     }
 
-    /**
-     * Dapp inner transaction
-     * @param fee
-     * @param type
-     * @param args
-     * @param secret
-     * @return
-     * @throws SecurityException
-     */
-    public TransactionInfo buildInnerTransaction(long fee, TransactionType type, String [] args, String secret) throws SecurityException{
+//    /**
+//     * Dapp inner transaction
+//     * @param fee
+//     * @param type
+//     * @param args
+//     * @param secret
+//     * @return
+//     * @throws SecurityException
+//     */
+//    public TransactionInfo buildInnerTransaction(long fee, TransactionType type, String [] args, String secret) throws SecurityException{
+//        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+//
+//        TransactionInfo transaction= newTransaction(TransactionType.InTransfer,0,fee,keyPair.getPublic())
+//                .setOption(new OptionInfo(fee,type,args));
+//        return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),null);
+//    }
+
+    public TransactionInfo buildDAppTransaction(long fee, ContractType type, String [] args, String secret) throws SecurityException{
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
 
         TransactionInfo transaction= newTransaction(TransactionType.InTransfer,0,fee,keyPair.getPublic())
@@ -206,6 +215,41 @@ public class TransactionBuilder {
             case Lock:
                 //new TransactionInfo()
 
+                break;
+        }
+        return null;
+    }
+
+
+    protected TransactionInfo newDappTransaction(ContractType type, long amount, long fee, PublicKey publicKey, String dappID, OptionInfo optionInfo) throws SecurityException{
+        switch (type){
+            case CoreDeposit:
+                break;
+            case CoreWithdrawal:
+            {
+//                return new TransactionInfo()
+//                        .setTransactionType(type)
+//                        .setAmount(amount)
+//                        .setFee(fee)
+//                        .setTimestamp(getSecurity().getTransactionTimestamp())
+//                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
+            }
+                break;
+            case CoreTransfer:
+                break;
+            case CoreSetNickname:
+                break;
+
+
+            case CCTimePostArticle:
+                break;
+            case CCTimePostComment:
+                break;
+            case CCTimeVoteArticle:
+                break;
+            case CCTimeLikeComment:
+                break;
+            case CCTimeReport:
                 break;
         }
         return null;

@@ -1,6 +1,7 @@
 package so.asch.sdk.impl;
 
 import so.asch.sdk.AschResult;
+import so.asch.sdk.ContractType;
 import so.asch.sdk.Dapp;
 import so.asch.sdk.Transaction;
 import so.asch.sdk.TransactionType;
@@ -45,18 +46,19 @@ public class DappService extends AschRESTService implements Dapp {
     }
 
     @Override
-    public AschResult withdraw(String dappID, long fee,  String[] args, String secret, String secondSecret) {
+    public AschResult withdraw(String dappID,  String currency, long amount, long fee, String secret, String secondSecret) {
 
         try {
             Argument.notNullOrEmpty(dappID, "invalid dappID");
             Argument.require(Validation.isValidFee(fee), "invalid fee");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            Argument.optional(secondSecret, Validation.isValidSecret(secondSecret), "invalid second secret");
+            //Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
 
+             String[] args={currency, String.valueOf(amount)};
             TransactionInfo transaction = getTransactionBuilder()
-                    .buildInnerTransaction(fee, TransactionType.InTransfer,args,secret);
+                    .buildDAppTransaction(fee, ContractType.CoreWithdrawal,args,secret);
             System.out.println("====== transaction:"+transaction.toString());
-            return broadcastTransaction(transaction);
+            return broadcastDAppTransaction(dappID, transaction);
         }
         catch (Exception ex){
             return fail(ex);

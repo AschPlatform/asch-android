@@ -22,6 +22,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
+import so.asch.sdk.impl.AschConst;
 
 /**
  * Created by kimziv on 2017/12/27.
@@ -50,7 +51,17 @@ public class DAppPlugin extends CordovaPlugin {
                 }
             });
         }else if (action.equals("withdraw")){
-
+            String dappID=args.getString(0);
+            String currency=args.getString(1);
+            long amount=args.getLong(2);
+            String message =args.getString(3);
+            //long fee=args.getLong(4);
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    withdraw(dappID,currency,amount,message,callbackContext);
+                }
+            });
         }else if (action.equals("innerTransfer")){
 
         }else if (action.equals("setNickname")){
@@ -116,6 +127,25 @@ public class DAppPlugin extends CordovaPlugin {
     }
 
 
+    public Observable createWithdrawObservable(String dappID, String currency, long amount, String message, String secret, String secondSecret) {
+
+        return Observable.create(new Observable.OnSubscribe<AschResult>() {
+
+            @Override
+            public void call(Subscriber<? super AschResult> subscriber) {
+                AschResult result = AschSDK.Dapp.withdraw(dappID, currency, amount, AschConst.Fees.DAPP_WITHDRAW, secret, secondSecret);
+                if (result != null && result.isSuccessful()) {
+                    subscriber.onNext(result);
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(result != null ? result.getException() : new Exception("result is null"));
+                }
+            }
+        });
+    }
+
+
+
     private void deposit(String dappID, String currency, long amount, String message, CallbackContext callbackContext){
 
         showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
@@ -123,6 +153,22 @@ public class DAppPlugin extends CordovaPlugin {
             public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
                 if (TextUtils.isEmpty(errMsg)){
                     coreDeposit(dappID,currency,amount,message,secret,secondSecret,callbackContext);
+                }else {
+                    // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    AppUtil.toastError(cordova.getContext(), "账户密码错误");
+
+                }
+            }
+        });
+    }
+
+    private void withdraw(String dappID, String currency, long amount, String message, CallbackContext callbackContext){
+
+        showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+            @Override
+            public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                if (TextUtils.isEmpty(errMsg)){
+                    coreWithdraw(dappID,currency,amount,message,secret,secondSecret,callbackContext);
                 }else {
                     // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
                     AppUtil.toastError(cordova.getContext(), "账户密码错误");
@@ -164,8 +210,34 @@ public class DAppPlugin extends CordovaPlugin {
                 });
     }
 
-    public void coreWithdraw(){
+    public void coreWithdraw(String dappID, String currency, long amount, String message, String secret, String secondSecret, CallbackContext callbackContext){
+        Observable observable=createWithdrawObservable(dappID,currency,amount,message,secret,secondSecret);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<AschResult>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        AppUtil.toastError(cordova.getContext(), "提现失败");
+                        //callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    }
+
+                    @Override
+                    public void onNext(AschResult aschResult) {
+                        String rawJson = aschResult.getRawJson();
+                        Log.i(TAG, "+++++++" + rawJson);
+                        // callBack.onCallBack(rawJson);
+                        // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, aschResult.getRawJson()));
+                        AppUtil.toastSuccess(cordova.getContext(), "提现成功");
+                        dismissDialog();
+
+                    }
+                });
     }
 
     public void coreTransfer(){

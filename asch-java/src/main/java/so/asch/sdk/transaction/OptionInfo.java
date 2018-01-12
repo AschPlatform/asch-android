@@ -3,6 +3,7 @@ package so.asch.sdk.transaction;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 
+import so.asch.sdk.ContractType;
 import so.asch.sdk.TransactionType;
 
 /**
@@ -14,13 +15,13 @@ public class OptionInfo {
     //转账手续费
     private  Long fee;
     //交易类型
-    private TransactionType type;
+    private ContractType type;
     //参数
     //@JSONField
     private String[] args;
 
 
-    public OptionInfo(Long fee, TransactionType type, String[] args) {
+    public OptionInfo(Long fee, ContractType type, String[] args) {
         this.fee = fee;
         this.type = type;
         this.args = args;
@@ -34,11 +35,11 @@ public class OptionInfo {
         this.fee = fee;
     }
 
-    public TransactionType getType() {
+    public ContractType getType() {
         return type;
     }
 
-    public void setType(TransactionType type) {
+    public void setType(ContractType type) {
         this.type = type;
     }
 

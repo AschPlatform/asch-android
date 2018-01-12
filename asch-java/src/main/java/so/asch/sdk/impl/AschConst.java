@@ -38,6 +38,7 @@ public final class AschConst {
         public static final long MULTI_SIGNATURE =500000000;
         public static final long DELEGATE = 10000000000L;
         public static final long DAPP = 10000000000L;
+        public static final long DAPP_WITHDRAW = 100000000L;
     }
 
 

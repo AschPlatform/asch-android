@@ -75,6 +75,19 @@ public final class RESTOkHttp {
         return response;
     }
 
+    protected static Response rawPut(String url, String requestBody, Map<String,String> customeHeads, String charset ) throws IOException{
+        OkHttpClient httpClient = getHttpClient();
+        RequestBody body =createReqestBody(requestBody, charset);
+        Request.Builder builder=new Request.Builder();
+        addCustomeHeads(customeHeads, builder);
+        Request request = builder.url(url)
+                .put(body)
+                .build();
+
+        Response response = httpClient.newCall(request).execute();
+        return response;
+    }
+
     protected static String getResponseContent(Response response) throws IOException{
 
         if (null == response)
@@ -144,6 +157,42 @@ public final class RESTOkHttp {
     }
 
     public static String post(String url, ParameterMap parameters ) throws IOException {
+        String parametersString = parameters == null ? "" : parameters.toJSONString();
+        return post(url, parametersString, null, null);
+    }
+
+    public static String put(String url, String parameters,  Map<String, String> customeHeaders, String charset) throws IOException{
+        try {
+            Response response = rawPut(url, parameters, customeHeaders, charset);
+            return getResponseContent(response);
+        }
+        catch (IOException ex){
+            String errorInfo = String.format("Exception when put,url:%s,data:%s", url, parameters);
+            // logger.error(errorInfo, ex);
+            System.out.println(errorInfo);
+            ex.printStackTrace();
+            throw ex;
+        }
+    }
+
+    public static String put(String url, ParameterMap parameters, Map<String,String> customeHeads, String charset) throws IOException {
+        String parametersString = parameters == null ? "" : parameters.toJSONString();
+        return post(url, parametersString, customeHeads, charset);
+    }
+
+    public static String put(String url, String parameters, Map<String,String> customeHeads ) throws IOException {
+        return post(url, parameters, customeHeads, null);
+    }
+
+    public static String put(String url, ParameterMap parameters, Map<String,String> customeHeads ) throws IOException {
+        return post(url, parameters, customeHeads, null);
+    }
+
+    public static String put(String url, String parameters ) throws IOException {
+        return post(url, parameters, null, null);
+    }
+
+    public static String put(String url, ParameterMap parameters ) throws IOException {
         String parametersString = parameters == null ? "" : parameters.toJSONString();
         return post(url, parametersString, null, null);
     }

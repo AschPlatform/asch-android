@@ -106,6 +106,16 @@ public abstract class AschRESTService implements AschInterface{
         }
     }
 
+    protected AschResult putMagic(String relativeUrl, ParameterMap parameters){
+        try{
+            String jsonString =  RESTOkHttp.put(getFullUrl(relativeUrl), parameters, getCustomeHeaders(), null);
+            return AschResult.FromJsonString(jsonString);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
     protected AschResult postMagic(String relativeUrl, String parameters){
         try{
             String jsonString =  RESTOkHttp.post(getFullUrl(relativeUrl), parameters, getCustomeHeaders(), null);
@@ -127,6 +137,18 @@ public abstract class AschRESTService implements AschInterface{
             return postMagic(AschServiceUrls.Peer.BROADCAST_TRANSACTION, transactionParameter );
         //}
 
+    }
+
+    protected AschResult broadcastDAppTransaction(String dappID, TransactionInfo transaction){
+        ParameterMap transactionParameter = new ParameterMap()
+                .put("transaction", transaction);
+//        if (transaction.getAsset() instanceof InTransferAssetInfo){
+//            InTransferAssetInfo assetInfo =(InTransferAssetInfo) transaction.getAsset();
+//            String dappId = assetInfo.getInTransfer().getDappId();
+//
+//        }else {
+        return putMagic(String.format(AschServiceUrls.Dapp.TRANSCATIONS_SIGNED_FORMAT,dappID), transactionParameter );
+        //}
     }
 
     protected AschResult fail(Exception ex){

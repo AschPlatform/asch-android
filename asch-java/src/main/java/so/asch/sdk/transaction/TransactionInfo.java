@@ -252,6 +252,104 @@ public class TransactionInfo {
         return result;
     }
 
+
+    public byte[] getDappBytes(boolean skipSignature , boolean skipSignSignature){
+        //1 + 4 + 32 + 32 + 8 + 8 + 64 + 64
+        //type(1)|timestamp(4)|senderPublicKey(32)|requesterPublicKey(32)|recipientId(8)|amount(8)|
+        //message(?)|asset(?)|setSignature(64)|signSignature(64)
+
+        ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.LITTLE_ENDIAN);
+        switch (transactionType){
+            case Transfer:
+            {
+                buffer.put(getType().byteValue())
+                        .putInt(getTimestamp())
+                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                        .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
+                        .put(getRecipientIdBuffer())
+                        .putLong(getAmount())
+                        .put(getMessageBuffer())
+                        .put(getAsset().assetBytes());
+
+            }
+            break;
+            case Signature:
+                break;
+            case Delegate:
+                break;
+            case Vote:
+            {
+                buffer.put(getType().byteValue())
+                        .putInt(getTimestamp())
+                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                        .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
+                        .put(getRecipientIdBuffer())
+                        .putLong(getAmount())
+                        .put(getMessageBuffer())
+                        .put(getAsset().assetBytes());
+            }
+            break;
+            case MultiSignature:
+                break;
+            case Dapp:
+                break;
+            case InTransfer:
+            {
+                buffer.put(getType().byteValue())
+                        .putInt(getTimestamp())
+                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                        .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
+                        .put(getRecipientIdBuffer())
+                        .putLong(getAmount())
+                        .put(getMessageBuffer())
+                        .put(getAsset().assetBytes());
+
+            }
+            break;
+            case OutTransfer:
+                break;
+            case Store:
+                break;
+            case UIAIssuer:
+                break;
+            case UIAAsset:
+                break;
+            case UIAFlags:
+                break;
+            case UIA_ACL:
+                break;
+            case UIAIssue:
+                break;
+            case UIATransfer:
+            {
+                buffer.put(getType().byteValue())
+                        .putInt(getTimestamp())
+                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                        .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
+                        .put(getRecipientIdBuffer())
+                        .putLong(getAmount())
+                        .put(getMessageBuffer())
+                        .put(getAsset().assetBytes());
+            }
+            break;
+            case Lock:
+                break;
+        }
+        if (!skipSignature){
+            buffer.put(Decoding.unsafeDecodeHex(getSignature()));
+        }
+
+        if (!skipSignSignature){
+            buffer.put(Decoding.unsafeDecodeHex(getSignSignature()));
+        }
+
+        buffer.flip();
+        byte[] result = new byte[buffer.remaining()];
+        buffer.get(result);
+        System.out.println("TransactionInfo bytes:"+ Encoding.hex(result));
+        return result;
+    }
+
     public byte[] getBytes2(boolean skipSignature , boolean skipSignSignature){
 
         ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.BIG_ENDIAN);

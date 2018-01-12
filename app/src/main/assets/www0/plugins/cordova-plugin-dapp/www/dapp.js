@@ -21,8 +21,8 @@ module.exports = {
 },
 
 //提现
-withdraw:function(currency, amount, fee, message, onSuccess, onError){
- exec(onSuccess, onError, PLUGIN_NAME, "withdraw", [currency, amount, fee, message]);
+withdraw:function(onSuccess, onError, dappID, currency, amount, message, fee){
+ exec(onSuccess, onError, PLUGIN_NAME, "withdraw", [dappID, currency, amount, message, fee]);
 },
 //内部转账
 innerTransfer : function(currency, amount, fee, message, targetAddress, onSuccess, onError){
