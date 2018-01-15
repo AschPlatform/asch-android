@@ -66,7 +66,7 @@ public enum ContractType {
     private int code;
     private String name;
 
-    public int getCode(){
+    public Integer getCode(){
         return this.code;
     }
     public String getName(){

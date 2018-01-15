@@ -2,9 +2,11 @@ package so.asch.sdk.security;
 
 import so.asch.sdk.transaction.TransactionInfo;
 
+import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.SignatureException;
 
 /**
  * Created by eagle on 17-7-18.
@@ -21,6 +23,8 @@ public interface SecurityStrategy {
     String generateSecret();
 
     boolean isValidSecret(String secret);
+
+    String signBytes(byte[] transactionBytes , PrivateKey privateKey) throws SecurityException;
 
     String Signature(TransactionInfo transaction, PrivateKey privateKey) throws SecurityException;
 

@@ -1,5 +1,8 @@
 package so.asch.sdk.transaction;
 
+import android.util.DebugUtils;
+import android.util.Log;
+
 import so.asch.sdk.ContractType;
 import so.asch.sdk.Transaction;
 import so.asch.sdk.TransactionType;
@@ -16,6 +19,8 @@ import java.security.PublicKey;
 import static so.asch.sdk.TransactionType.Transfer;
 
 public class TransactionBuilder {
+
+    private static final String TAG=TransactionBuilder.class.getSimpleName();
 
     public TransactionInfo buildVote(String[] upvotePublicKeys, String[] downvotePublicKeys,
                                      String secret, String secondSecret ) throws SecurityException {
@@ -143,9 +148,8 @@ public class TransactionBuilder {
     public TransactionInfo buildDAppTransaction(long fee, ContractType type, String [] args, String secret) throws SecurityException{
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
 
-        TransactionInfo transaction= newTransaction(TransactionType.InTransfer,0,fee,keyPair.getPublic())
-                .setOption(new OptionInfo(fee,type,args));
-        return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),null);
+        TransactionInfo transaction= newDAppTransaction(fee,type, args , keyPair.getPublic());
+        return signatureDAppTransaction(transaction, keyPair.getPrivate());
     }
 
     public TransactionInfo buildInTransfer(String dappID, String currency, long amount,String  secret, String secondSecret) throws SecurityException{
@@ -221,20 +225,19 @@ public class TransactionBuilder {
     }
 
 
-    protected TransactionInfo newDappTransaction(ContractType type, long amount, long fee, PublicKey publicKey, String dappID, OptionInfo optionInfo) throws SecurityException{
+    protected TransactionInfo newDAppTransaction(long fee, ContractType type, String [] args, PublicKey publicKey) throws SecurityException{
         switch (type){
             case CoreDeposit:
                 break;
             case CoreWithdrawal:
-            {
-//                return new TransactionInfo()
-//                        .setTransactionType(type)
-//                        .setAmount(amount)
-//                        .setFee(fee)
-//                        .setTimestamp(getSecurity().getTransactionTimestamp())
-//                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
-            }
-                break;
+               OptionInfo optionInfo =  new OptionInfo(fee, type, args);
+                return new TransactionInfo()
+                        .setFee(fee)
+                        .setTimestamp(getSecurity().getTransactionTimestamp())
+                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey))
+                        .setContractType(type)
+                        .setArgs(optionInfo.getArgsJson())
+                        .setOption(optionInfo);
             case CoreTransfer:
                 break;
             case CoreSetNickname:
@@ -266,6 +269,15 @@ public class TransactionBuilder {
         }
 
         transaction.setTransactionId(getSecurity().generateTransactionId(transaction));
+        return transaction;
+    }
+
+    protected TransactionInfo signatureDAppTransaction(TransactionInfo transaction,
+                                                                PrivateKey privateKey) throws SecurityException{
+        byte[] bytes = transaction.getBytes(true,true);
+        String signature = getSecurity().signBytes(bytes,privateKey);
+        Log.d(TAG,"signatureDAppTransaction:"+signature);
+        transaction.setSignature(signature);
         return transaction;
     }
 

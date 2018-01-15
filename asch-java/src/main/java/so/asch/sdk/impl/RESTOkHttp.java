@@ -177,24 +177,24 @@ public final class RESTOkHttp {
 
     public static String put(String url, ParameterMap parameters, Map<String,String> customeHeads, String charset) throws IOException {
         String parametersString = parameters == null ? "" : parameters.toJSONString();
-        return post(url, parametersString, customeHeads, charset);
+        return put(url, parametersString, customeHeads, charset);
     }
 
     public static String put(String url, String parameters, Map<String,String> customeHeads ) throws IOException {
-        return post(url, parameters, customeHeads, null);
+        return put(url, parameters, customeHeads, null);
     }
 
     public static String put(String url, ParameterMap parameters, Map<String,String> customeHeads ) throws IOException {
-        return post(url, parameters, customeHeads, null);
+        return put(url, parameters, customeHeads, null);
     }
 
     public static String put(String url, String parameters ) throws IOException {
-        return post(url, parameters, null, null);
+        return put(url, parameters, null, null);
     }
 
     public static String put(String url, ParameterMap parameters ) throws IOException {
         String parametersString = parameters == null ? "" : parameters.toJSONString();
-        return post(url, parametersString, null, null);
+        return put(url, parametersString, null, null);
     }
 
     public static Response rawGet(String url, String queryString) throws IOException{

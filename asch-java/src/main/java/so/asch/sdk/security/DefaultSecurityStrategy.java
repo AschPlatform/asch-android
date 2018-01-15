@@ -11,10 +11,13 @@ import so.asch.sdk.security.ripemd.RipeMD160;
 import so.asch.sdk.transaction.TransactionInfo;
 
 import java.math.BigInteger;
+import java.nio.Buffer;
+import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.MessageDigest;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.SignatureException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -120,6 +123,16 @@ public class DefaultSecurityStrategy implements SecurityStrategy{
     @Override
     public boolean isValidSecret(String secret) {
         return Bip39.getInstance().isValidMnemonicCode(secret);
+    }
+
+    public String signBytes(byte[] transactionBytes , PrivateKey privateKey) throws SecurityException {
+        try {
+            byte[] hash = sha256Hash(transactionBytes);
+            // byte[] signature = Ed25519.signature(hash, privateKey);
+            return Encoding.hex(Ed25519.signature(hash, privateKey));
+        }catch (Exception ex){
+            throw new SecurityException("signBytes failed", ex);
+        }
     }
 
     @Override

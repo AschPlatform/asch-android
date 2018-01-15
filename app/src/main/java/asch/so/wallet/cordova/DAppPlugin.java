@@ -120,7 +120,7 @@ public class DAppPlugin extends CordovaPlugin {
                     subscriber.onNext(result);
                     subscriber.onCompleted();
                 } else {
-                    subscriber.onError(result != null ? result.getException() : new Exception("result is null"));
+                    subscriber.onError(result != null ? result.getException() : new Throwable("result is null"));
                 }
             }
         });
@@ -138,7 +138,7 @@ public class DAppPlugin extends CordovaPlugin {
                     subscriber.onNext(result);
                     subscriber.onCompleted();
                 } else {
-                    subscriber.onError(result != null ? result.getException() : new Exception("result is null"));
+                    subscriber.onError(result != null ? result.getException() : new Throwable("result is null"));
                 }
             }
         });

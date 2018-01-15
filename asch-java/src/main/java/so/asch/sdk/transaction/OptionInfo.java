@@ -38,7 +38,6 @@ public class OptionInfo {
     public ContractType getType() {
         return type;
     }
-
     public void setType(ContractType type) {
         this.type = type;
     }
@@ -52,6 +51,17 @@ public class OptionInfo {
     }
 
     public String getArgsJson(){
-       return JSON.toJSONString(args);
+        StringBuilder builder=new StringBuilder();
+        builder.append("[");
+        for (String arg :
+                args) {
+            builder.append(String.format("\"%s\"",arg));
+            if (!arg.equals(args[args.length-1])){
+                builder.append(", ");
+            }
+        }
+        builder.append("]");
+       //String argsJson = JSON.toJSONString(args);
+       return builder.toString();
     }
 }

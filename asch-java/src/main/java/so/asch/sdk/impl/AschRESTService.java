@@ -1,5 +1,6 @@
 package so.asch.sdk.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -140,8 +141,12 @@ public abstract class AschRESTService implements AschInterface{
     }
 
     protected AschResult broadcastDAppTransaction(String dappID, TransactionInfo transaction){
+
+        JSONObject transactionJson = (JSONObject) JSONObject.toJSON(transaction);
+        transactionJson.put("fee",String.valueOf(transaction.getFee()));
+        transactionJson.put("type",transaction.getContractType().getCode());
         ParameterMap transactionParameter = new ParameterMap()
-                .put("transaction", transaction);
+                .put("transaction", transactionJson);
 //        if (transaction.getAsset() instanceof InTransferAssetInfo){
 //            InTransferAssetInfo assetInfo =(InTransferAssetInfo) transaction.getAsset();
 //            String dappId = assetInfo.getInTransfer().getDappId();
