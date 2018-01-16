@@ -25,13 +25,13 @@ withdraw:function(onSuccess, onError, dappID, currency, amount, message, fee){
  exec(onSuccess, onError, PLUGIN_NAME, "withdraw", [dappID, currency, amount, message, fee]);
 },
 //内部转账
-innerTransfer : function(currency, amount, fee, message, targetAddress, onSuccess, onError){
- exec(onSuccess, onError, PLUGIN_NAME, "innerTransfer", [currency, amount, fee, message]);
+innerTransfer : function(onSuccess, onError, dappID, currency, targetAddress, amount, fee, message){
+ exec(onSuccess, onError, PLUGIN_NAME, "innerTransfer", [dappID, currency, targetAddress, amount, message, fee]);
 },
 
 //设置昵称
-setNickname : function(nickname, fee, message, onSuccess, onError){
- exec(onSuccess, onError, PLUGIN_NAME, "setNickname", [currency, amount, fee, message]);
+setNickname : function(onSuccess, onError, dappID, nickname, fee){
+ exec(onSuccess, onError, PLUGIN_NAME, "setNickname", [dappID, nickname, fee]);
 },
 
 // dapp自定义合约，发布文章

@@ -66,13 +66,43 @@ public class DappService extends AschRESTService implements Dapp {
     }
 
     @Override
-    public AschResult innerTransfer(String dappID, String currency, String recipientId, long amount, String message, String secret, String secondSecret) {
-        return null;
+    public AschResult innerTransfer(String dappID, String currency, String targetAddress, long amount, long fee, String message, String secret, String secondSecret) {
+        try {
+            Argument.notNullOrEmpty(dappID, "invalid dappID");
+            Argument.notNullOrEmpty(currency, "invalid currency");
+            Argument.notNullOrEmpty(targetAddress, "invalid address");
+            Argument.require(Validation.isValidFee(fee), "invalid fee");
+            Argument.require(Validation.isValidSecret(secret), "invalid secret");
+            //Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
+
+            String[] args={currency, String.valueOf(amount), targetAddress};
+            TransactionInfo transaction = getTransactionBuilder()
+                    .buildDAppTransaction(fee, ContractType.CoreTransfer,args,secret);
+            System.out.println("====== transaction:"+transaction.toString());
+            return broadcastDAppTransaction(dappID, transaction);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
     }
 
     @Override
-    public AschResult setNickname(String dappID, String nickname) {
-        return null;
+    public AschResult setNickname(String dappID, String nickname, long fee, String secret, String secondSecret) {
+        try {
+            Argument.notNullOrEmpty(dappID, "invalid dappID");
+            Argument.notNullOrEmpty(nickname, "invalid currency");
+            Argument.require(Validation.isValidSecret(secret), "invalid secret");
+            Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
+
+            String[] args={ nickname };
+            TransactionInfo transaction = getTransactionBuilder()
+                    .buildDAppTransaction(fee, ContractType.CoreSetNickname, args, secret);
+            System.out.println("====== transaction:"+transaction.toString());
+            return broadcastDAppTransaction(dappID, transaction);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
     }
 
     @Override

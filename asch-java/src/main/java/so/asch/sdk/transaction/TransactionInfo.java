@@ -283,97 +283,58 @@ public class TransactionInfo {
         //1 + 4 + 32 + 32 + 8 + 8 + 64 + 64
         //type(1)|timestamp(4)|senderPublicKey(32)|requesterPublicKey(32)|recipientId(8)|amount(8)|
         //message(?)|asset(?)|setSignature(64)|signSignature(64)
-
-        switch (optionInfo.getType()){
-            case CoreDeposit:
-                break;
-            case CoreWithdrawal:
-            {
-
-                buffer.putInt(getTimestamp())
-                        .put(getDappTransactionFee())
-                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
-                        .putInt(getDappTransactionType())
-                        .put(getDappArgsBuffer());
-            }
-               break;
-            case CoreTransfer:
-                break;
-            case CoreSetNickname:
-                break;
-
-
-            case CCTimePostArticle:
-                break;
-            case CCTimePostComment:
-                break;
-            case CCTimeVoteArticle:
-                break;
-            case CCTimeLikeComment:
-                break;
-            case CCTimeReport:
-                break;
-        }
+        buffer.putInt(getTimestamp())
+                .put(getDappTransactionFee())
+                .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                .putInt(getDappTransactionType())
+                .put(getDappArgsBuffer());
+//        switch (optionInfo.getType()){
+//            case CoreDeposit:
+//                break;
+//            case CoreWithdrawal:
+//            {
+//
+//                buffer.putInt(getTimestamp())
+//                        .put(getDappTransactionFee())
+//                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+//                        .putInt(getDappTransactionType())
+//                        .put(getDappArgsBuffer());
+//            }
+//               break;
+//            case CoreTransfer:
+//            {
+//                buffer.putInt(getTimestamp())
+//                        .put(getDappTransactionFee())
+//                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+//                        .putInt(getDappTransactionType())
+//                        .put(getDappArgsBuffer());
+//            }
+//                break;
+//            case CoreSetNickname:
+//                break;
+//            case CCTimePostArticle:
+//                break;
+//            case CCTimePostComment:
+//                break;
+//            case CCTimeVoteArticle:
+//                break;
+//            case CCTimeLikeComment:
+//                break;
+//            case CCTimeReport:
+//                break;
+//            default:
+//            {
+//                buffer.putInt(getTimestamp())
+//                        .put(getDappTransactionFee())
+//                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+//                        .putInt(getDappTransactionType())
+//                        .put(getDappArgsBuffer());
+//            }
+//                break;
+//        }
         return buffer;
     }
 
-    public byte[] getBytes2(boolean skipSignature , boolean skipSignSignature){
-
-        ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.BIG_ENDIAN);
-        switch (transactionType){
-            case Transfer:
-                break;
-            case Signature:
-                break;
-            case Delegate:
-                break;
-            case Vote:
-                break;
-            case MultiSignature:
-                break;
-            case Dapp:
-                break;
-            case InTransfer:
-            {
-                buffer.putInt(getTimestamp())
-                        .put(getDappTransactionFee())
-                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
-                        .put(getType().byteValue())
-                        .put(getDappArgsBuffer());
-            }
-            break;
-            case OutTransfer:
-                break;
-            case Store:
-                break;
-            case UIAIssuer:
-                break;
-            case UIAAsset:
-                break;
-            case UIAFlags:
-                break;
-            case UIA_ACL:
-                break;
-            case UIAIssue:
-                break;
-            case UIATransfer:
-                break;
-            case Lock:
-                break;
-        }
-        if (!skipSignature){
-            buffer.put(Decoding.unsafeDecodeHex(getSignature()));
-        }
-
-        if (!skipSignSignature){
-            buffer.put(Decoding.unsafeDecodeHex(getSignSignature()));
-        }
-
-        buffer.flip();
-        byte[] result = new byte[buffer.remaining()];
-        buffer.get(result);
-        return result;
-    }
 
     private byte[] getRecipientIdBuffer(){
         if (null == recipientId)  return new byte[8];

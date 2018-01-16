@@ -41,7 +41,14 @@
             <h1>Apache Cordova</h1>
             <button type="button" onclick="myFunction()">Try it</button>
             <br>
+            <br>
             <button type="button" onclick="widthdraw()">Withdraw</button>
+            <br>
+            <br>
+            <button type="button" onclick="innerTransfer()">innerTransfer</button>
+            <br>
+            <br>
+            <button type="button" onclick="setNickname()">setNickname</button>
 
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
@@ -65,6 +72,26 @@
           var fee=10000000;
           navigator.dapp.withdraw(null,null,dappID, currency, amount, message, fee);
           }
+
+        function innerTransfer()
+        {
+
+          var dappID='d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1';
+          var currency='CCTime.XCT';
+          var amount=12345678;
+          var message='test';
+          var fee=10000000;
+          var targetAddress='AAmTPHrenFQdZHnUGqhE3qV9nr8BP5SzWx';
+          navigator.dapp.innerTransfer(null,null,dappID, currency, targetAddress, amount, message, fee);
+         }
+
+       function setNickname()
+        {
+          var dappID='d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1';
+          var nickname='kim_test';
+          var fee=10000000;
+          navigator.dapp.setNickname(null,null,dappID, nickname, fee);
+         }
 
         function myFunction()
         {

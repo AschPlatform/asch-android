@@ -106,7 +106,7 @@ public interface Dapp extends AschInterface{
 //    名称	类型	说明
 //    success	boole	是否成功获得response数据
 //    transactionId	string	内部转账交易id
-    AschResult innerTransfer(String dappID, String currency, String recipientId, long amount, String message, String secret, String secondSecret);
+    AschResult innerTransfer(String dappID, String currency, String targetAddress, long amount, long fee, String message, String secret, String secondSecret);
 
     //    3.1.1.3 dapp设置昵称,type=4
 //
@@ -123,7 +123,7 @@ public interface Dapp extends AschInterface{
 //    名称	类型	说明
 //    success	boole	是否成功获得response数据
 //    transactionId	string	设置昵称的交易id
-    AschResult setNickname(String dappID, String nickname);
+    AschResult setNickname(String dappID, String nickname, long fee, String secret, String secondSecret);
 
 //    3.2 获取未确认的交易
 //

@@ -226,36 +226,45 @@ public class TransactionBuilder {
 
 
     protected TransactionInfo newDAppTransaction(long fee, ContractType type, String [] args, PublicKey publicKey) throws SecurityException{
-        switch (type){
-            case CoreDeposit:
-                break;
-            case CoreWithdrawal:
-               OptionInfo optionInfo =  new OptionInfo(fee, type, args);
-                return new TransactionInfo()
-                        .setFee(fee)
-                        .setTimestamp(getSecurity().getTransactionTimestamp())
-                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey))
-                        .setContractType(type)
-                        .setArgs(optionInfo.getArgsJson())
-                        .setOption(optionInfo);
-            case CoreTransfer:
-                break;
-            case CoreSetNickname:
-                break;
 
-
-            case CCTimePostArticle:
-                break;
-            case CCTimePostComment:
-                break;
-            case CCTimeVoteArticle:
-                break;
-            case CCTimeLikeComment:
-                break;
-            case CCTimeReport:
-                break;
-        }
-        return null;
+        OptionInfo optionInfo =  new OptionInfo(fee, type, args);
+        return new TransactionInfo()
+                .setFee(fee)
+                .setTimestamp(getSecurity().getTransactionTimestamp())
+                .setSenderPublicKey(getSecurity().encodePublicKey(publicKey))
+                .setContractType(type)
+                .setArgs(optionInfo.getArgsJson())
+                .setOption(optionInfo);
+//        switch (type){
+//            case CoreDeposit:
+//                break;
+//            case CoreWithdrawal:
+//               OptionInfo optionInfo =  new OptionInfo(fee, type, args);
+//                return new TransactionInfo()
+//                        .setFee(fee)
+//                        .setTimestamp(getSecurity().getTransactionTimestamp())
+//                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey))
+//                        .setContractType(type)
+//                        .setArgs(optionInfo.getArgsJson())
+//                        .setOption(optionInfo);
+//            case CoreTransfer:
+//                break;
+//            case CoreSetNickname:
+//                break;
+//
+//
+//            case CCTimePostArticle:
+//                break;
+//            case CCTimePostComment:
+//                break;
+//            case CCTimeVoteArticle:
+//                break;
+//            case CCTimeLikeComment:
+//                break;
+//            case CCTimeReport:
+//                break;
+//        }
+//        return null;
     }
 
 

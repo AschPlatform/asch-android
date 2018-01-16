@@ -62,9 +62,34 @@ public class DAppPlugin extends CordovaPlugin {
                     withdraw(dappID,currency,amount,message,callbackContext);
                 }
             });
-        }else if (action.equals("innerTransfer")){
+        }else if (action.equals("innerTransfer")){//currency, amount, fee, message, targetAddress
+            String dappID=args.getString(0);
+            String currency=args.getString(1);
+            String targetAddress=args.getString(2);
+            long amount=args.getLong(3);
+            String message =args.getString(4);
+            long fee=args.getLong(5);
 
+
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    transfer(dappID,currency,targetAddress,amount,message,fee,callbackContext);
+                }
+            });
         }else if (action.equals("setNickname")){
+
+            String dappID=args.getString(0);
+            String nickname=args.getString(1);
+            long fee=args.getLong(2);
+
+
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    setNickname(dappID, nickname, fee, callbackContext);
+                }
+            });
 
         }else if (action.equals("postArticle")){
 
@@ -144,6 +169,40 @@ public class DAppPlugin extends CordovaPlugin {
         });
     }
 
+    public Observable createTransferObservable(String dappID, String currency, String targetAddress, long amount, String message, long fee, String secret, String secondSecret) {
+
+        return Observable.create(new Observable.OnSubscribe<AschResult>() {
+
+            @Override
+            public void call(Subscriber<? super AschResult> subscriber) {
+                AschResult result = AschSDK.Dapp.innerTransfer(dappID, currency, targetAddress, amount, AschConst.Fees.DAPP_TRANSFER,message, secret, secondSecret);
+                if (result != null && result.isSuccessful()) {
+                    subscriber.onNext(result);
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(result != null ? result.getException() : new Throwable("result is null"));
+                }
+            }
+        });
+    }
+
+    public Observable createSetNicknameObservable(String dappID, String nickname, long fee, String secret, String secondSecret) {
+
+        return Observable.create(new Observable.OnSubscribe<AschResult>() {
+
+            @Override
+            public void call(Subscriber<? super AschResult> subscriber) {
+                AschResult result = AschSDK.Dapp.setNickname(dappID, nickname, fee, secret, secondSecret);
+                if (result != null && result.isSuccessful()) {
+                    subscriber.onNext(result);
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(result != null ? result.getException() : new Throwable("result is null"));
+                }
+            }
+        });
+    }
+
 
 
     private void deposit(String dappID, String currency, long amount, String message, CallbackContext callbackContext){
@@ -169,6 +228,39 @@ public class DAppPlugin extends CordovaPlugin {
             public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
                 if (TextUtils.isEmpty(errMsg)){
                     coreWithdraw(dappID,currency,amount,message,secret,secondSecret,callbackContext);
+                }else {
+                    // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    AppUtil.toastError(cordova.getContext(), "账户密码错误");
+
+                }
+            }
+        });
+    }
+
+
+    private void transfer(String dappID, String currency, String targetAddress, long amount, String message, long fee, CallbackContext callbackContext){
+
+        showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+            @Override
+            public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                if (TextUtils.isEmpty(errMsg)){
+                    coreTransfer(dappID,currency, targetAddress,amount, message, fee, secret, secondSecret, callbackContext);
+                }else {
+                    // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    AppUtil.toastError(cordova.getContext(), "账户密码错误");
+
+                }
+            }
+        });
+    }
+
+    private void setNickname(String dappID, String nickname, long fee, CallbackContext callbackContext){
+
+        showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+            @Override
+            public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                if (TextUtils.isEmpty(errMsg)){
+                    coreSetNickname(dappID,nickname,fee,secret, secondSecret,callbackContext);
                 }else {
                     // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
                     AppUtil.toastError(cordova.getContext(), "账户密码错误");
@@ -240,12 +332,64 @@ public class DAppPlugin extends CordovaPlugin {
                 });
     }
 
-    public void coreTransfer(){
+    public void coreTransfer(String dappID, String currency, String targetAddress, long amount, String message, long fee, String secret, String secondSecret, CallbackContext callbackContext){
+        Observable observable=createTransferObservable(dappID, currency, targetAddress, amount, message, fee, secret, secondSecret);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<AschResult>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        AppUtil.toastError(cordova.getContext(), "内部转账失败");
+                        //callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    }
+
+                    @Override
+                    public void onNext(AschResult aschResult) {
+                        String rawJson = aschResult.getRawJson();
+                        Log.i(TAG, "+++++++" + rawJson);
+                        // callBack.onCallBack(rawJson);
+                        // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, aschResult.getRawJson()));
+                        AppUtil.toastSuccess(cordova.getContext(), "内部转账成功");
+                        dismissDialog();
+
+                    }
+                });
     }
 
-    public void coreSetNickname(){
+    public void coreSetNickname(String dappID, String nickname, long fee, String secret, String secondSecret, CallbackContext callbackContext){
+        Observable observable=createSetNicknameObservable(dappID, nickname, fee, secret, secondSecret);
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<AschResult>() {
+                    @Override
+                    public void onCompleted() {
 
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        AppUtil.toastError(cordova.getContext(), "设置昵称失败");
+                        //callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    }
+
+                    @Override
+                    public void onNext(AschResult aschResult) {
+                        String rawJson = aschResult.getRawJson();
+                        Log.i(TAG, "+++++++" + rawJson);
+                        // callBack.onCallBack(rawJson);
+                        // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, aschResult.getRawJson()));
+                        AppUtil.toastSuccess(cordova.getContext(), "设置昵称成功");
+                        dismissDialog();
+
+                    }
+                });
     }
 
     //------------------------
