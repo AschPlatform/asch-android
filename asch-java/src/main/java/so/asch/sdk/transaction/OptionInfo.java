@@ -57,7 +57,7 @@ public class OptionInfo {
                 args) {
             builder.append(String.format("\"%s\"",arg));
             if (!arg.equals(args[args.length-1])){
-                builder.append(", ");
+                builder.append(",");
             }
         }
         builder.append("]");

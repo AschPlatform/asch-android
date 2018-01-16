@@ -1,6 +1,13 @@
 package so.asch.sdk.impl;
 
+import com.alibaba.fastjson.JSON;
+
+import org.json.JSONObject;
+
+import java.security.KeyPair;
+
 import so.asch.sdk.AschResult;
+import so.asch.sdk.AschSDK;
 import so.asch.sdk.ContractType;
 import so.asch.sdk.Dapp;
 import so.asch.sdk.Transaction;
@@ -53,11 +60,12 @@ public class DappService extends AschRESTService implements Dapp {
             Argument.require(Validation.isValidFee(fee), "invalid fee");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
             //Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
-
+//            String publicKey=AschSDK.Helper.getPublicKey(secret);
+//            String address= AschFactory.getInstance().getSecurity().getAddress(publicKey);
              String[] args={currency, String.valueOf(amount)};
             TransactionInfo transaction = getTransactionBuilder()
                     .buildDAppTransaction(fee, ContractType.CoreWithdrawal,args,secret);
-            System.out.println("====== transaction:"+transaction.toString());
+            System.out.println("====== transaction:"+ JSON.toJSONString(transaction));
             return broadcastDAppTransaction(dappID, transaction);
         }
         catch (Exception ex){

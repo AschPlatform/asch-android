@@ -25,7 +25,7 @@ withdraw:function(onSuccess, onError, dappID, currency, amount, message, fee){
  exec(onSuccess, onError, PLUGIN_NAME, "withdraw", [dappID, currency, amount, message, fee]);
 },
 //内部转账
-innerTransfer : function(onSuccess, onError, dappID, currency, targetAddress, amount, fee, message){
+innerTransfer : function(onSuccess, onError, dappID, currency, targetAddress, amount, message, fee){
  exec(onSuccess, onError, PLUGIN_NAME, "innerTransfer", [dappID, currency, targetAddress, amount, message, fee]);
 },
 

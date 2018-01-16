@@ -145,6 +145,8 @@ public abstract class AschRESTService implements AschInterface{
         JSONObject transactionJson = (JSONObject) JSONObject.toJSON(transaction);
         transactionJson.put("fee",String.valueOf(transaction.getFee()));
         transactionJson.put("type",transaction.getContractType().getCode());
+        transactionJson.remove("option");
+        transactionJson.remove("contractType");
         ParameterMap transactionParameter = new ParameterMap()
                 .put("transaction", transactionJson);
 //        if (transaction.getAsset() instanceof InTransferAssetInfo){
