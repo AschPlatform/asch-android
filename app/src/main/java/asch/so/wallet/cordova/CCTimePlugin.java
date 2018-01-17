@@ -65,7 +65,104 @@ public class CCTimePlugin extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+
+        if (Action.PostArticle.getName().equals(action)){
+
+        }else if (Action.PostComment.getName().equals(action)){
+
+        }else if (Action.VoteArticle.getName().equals(action)){
+
+        }else if (Action.LikeComment.getName().equals(action)){
+
+        }else if (Action.Report.getName().equals(action)){
+
+        }
+
         return super.execute(action, args, callbackContext);
+    }
+
+    /**
+     1.1 发布文章
+     合约编号：1000
+     合约参数：
+     title 文章标题，非空，最长256字符
+     url 文章url，最长256字符
+     text 发表内容，最长4096字符
+     tags 文章标签，非空，最长20字符，多个词语用逗号分隔
+     注意：url与text必须有一个为空
+     *
+     * @param title
+     * @param url
+     * @param text
+     * @param tags
+     */
+    public void postArticle(String title, String url, String text, String tags){
+
+    }
+
+    /**
+     *
+     1.2 发表评论
+     合约编号：1001
+
+     合约参数：
+
+     aid 文章编号
+     pid 回复评论编号，可选
+     content 回复内容，非空，最长4096字符
+
+     * @param aid
+     * @param pid
+     * @param content
+     */
+    public void postComment(String aid, String pid, String content){
+
+    }
+
+    /**
+     1.3 给文章投票
+     合约编号：1002
+
+     合约参数：
+
+     aid 文章编号
+     amount 投票数额‘，大于等于100000
+     * @param aid
+     * @param amount
+     */
+    public void voteArticle(String aid, long amount){
+
+    }
+
+    /**
+     1.4 给评论打赏
+     合约编号：1003
+
+     合约参数：
+
+     cid 评论编号
+     amount 打赏数额，大于等于100000
+
+     * @param cid
+     * @param amount
+     */
+    public void likeComment(String cid, long amount){
+
+    }
+
+    /**
+     1.5 举报文章或评论
+     合约编号：1004
+
+     合约参数：
+
+     topic 只能为1或2. 1表示举报文章，2表示举报评论
+     value 举报的文章或评论id
+     * @param topic
+     * @param value
+     */
+    public void report(int topic, String value){
+
     }
 
 }
