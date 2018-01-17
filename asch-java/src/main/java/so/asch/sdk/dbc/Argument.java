@@ -29,6 +29,13 @@ public class Argument {
             throw new ContractException(String.format("Argument %s can not be NULL", argumentName ));
     }
 
+    public static void notNullOrEmpty(String[] arguments, String argumentName)throws ContractException {
+        if (arguments == null)
+            throw new ContractException(String.format("Argument '%s' can not be NULL", argumentName ));
+        if (arguments.length == 0)
+            throw new ContractException(String.format("Argument '%s' can not be Empty", argumentName ));
+    }
+
     public static void notNullOrEmpty(byte[] argument, String argumentName)throws ContractException {
         if (argument == null)
             throw new ContractException(String.format("Argument '%s' can not be NULL", argumentName ));

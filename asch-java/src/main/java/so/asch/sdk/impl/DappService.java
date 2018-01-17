@@ -59,9 +59,6 @@ public class DappService extends AschRESTService implements Dapp {
             Argument.notNullOrEmpty(dappID, "invalid dappID");
             Argument.require(Validation.isValidFee(fee), "invalid fee");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            //Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
-//            String publicKey=AschSDK.Helper.getPublicKey(secret);
-//            String address= AschFactory.getInstance().getSecurity().getAddress(publicKey);
              String[] args={currency, String.valueOf(amount)};
             TransactionInfo transaction = getTransactionBuilder()
                     .buildDAppTransaction(fee, ContractType.CoreWithdrawal,args,secret);
@@ -103,6 +100,23 @@ public class DappService extends AschRESTService implements Dapp {
             Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
 
             String[] args={ nickname };
+            TransactionInfo transaction = getTransactionBuilder()
+                    .buildDAppTransaction(fee, ContractType.CoreSetNickname, args, secret);
+            System.out.println("====== transaction:"+transaction.toString());
+            return broadcastDAppTransaction(dappID, transaction);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
+    @Override
+    public AschResult invokeContract(String dappID, int type, long fee, String[] args, String secret) {
+        try {
+            Argument.notNullOrEmpty(dappID, "invalid dappID");
+            Argument.notNullOrEmpty(args,"args can not be null or empty");
+            Argument.require(Validation.isValidSecret(secret), "invalid secret");
+
             TransactionInfo transaction = getTransactionBuilder()
                     .buildDAppTransaction(fee, ContractType.CoreSetNickname, args, secret);
             System.out.println("====== transaction:"+transaction.toString());

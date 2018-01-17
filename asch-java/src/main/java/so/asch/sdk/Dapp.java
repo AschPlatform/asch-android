@@ -125,6 +125,18 @@ public interface Dapp extends AschInterface{
 //    transactionId	string	设置昵称的交易id
     AschResult setNickname(String dappID, String nickname, long fee, String secret, String secondSecret);
 
+
+    /**
+     * 调用合约
+     * @param dappID
+     * @param type
+     * @param fee
+     * @param args
+     * @param secret
+     * @return
+     */
+    AschResult invokeContract(String dappID, int type, long fee, String[] args, String secret);
+
 //    3.2 获取未确认的交易
 //
 //    接口地址：/api/dapps/dappID/transactions/unconfirmed
