@@ -1,5 +1,7 @@
 package asch.so.wallet.cordova;
 
+import android.text.TextUtils;
+
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaArgs;
 import org.apache.cordova.CordovaPlugin;
@@ -9,7 +11,20 @@ import org.json.JSONException;
 import java.util.HashMap;
 import java.util.Map;
 
+import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Transaction;
+import asch.so.wallet.util.AppUtil;
+import asch.so.wallet.view.widget.AllPasswdsDialog;
+import rx.Observable;
+import rx.Scheduler;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import so.asch.sdk.AschResult;
+import so.asch.sdk.AschSDK;
+import so.asch.sdk.impl.AschConst;
 
 /**
  * Created by kimziv on 2018/1/17.
@@ -18,6 +33,7 @@ import asch.so.wallet.model.entity.Transaction;
 public class CCTimePlugin extends CordovaPlugin {
 
     private static final String TAG=CCTimePlugin.class.getSimpleName();
+    private AllPasswdsDialog dialog;
 
     public enum Action{
         PostArticle(1000,"cctime.postArticle"),
@@ -66,19 +82,114 @@ public class CCTimePlugin extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
+        if(this.cordova.getActivity().isFinishing()) return true;
+
         if (Action.PostArticle.getName().equals(action)){
-
+            String dappID=args.getString(0);
+            long fee=args.getLong(1);
+            String title=args.getString(2);
+            String url=args.getString(3);
+            String text=args.getString(4);
+            String tags =args.getString(5);
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+                        @Override
+                        public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                                postArticle(dappID, fee, title, url, text, tags, secret, callbackContext);
+                        }
+                    });
+                }
+            });
         }else if (Action.PostComment.getName().equals(action)){
-
+            String dappID=args.getString(0);
+            long fee=args.getLong(1);
+            String aid=args.getString(2);
+            String pid=args.getString(3);
+            String content=args.getString(4);
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+                        @Override
+                        public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                            postComment(dappID,fee, aid,pid,content, secret, callbackContext);
+                        }
+                    });
+                }
+            });
         }else if (Action.VoteArticle.getName().equals(action)){
-
+            String dappID=args.getString(0);
+            long fee=args.getLong(1);
+            String aid=args.getString(2);
+            long amount=args.getLong(3);
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+                        @Override
+                        public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                            voteArticle(dappID,fee, aid,amount,secret,callbackContext);
+                        }
+                    });
+                }
+            });
         }else if (Action.LikeComment.getName().equals(action)){
-
+            String dappID=args.getString(0);
+            long fee=args.getLong(1);
+            String cid=args.getString(2);
+            long amount=args.getLong(3);
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+                        @Override
+                        public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                            likeComment(dappID,fee, cid,amount,secret,callbackContext);
+                        }
+                    });
+                }
+            });
         }else if (Action.Report.getName().equals(action)){
-
+            String dappID=args.getString(0);
+            long fee=args.getLong(1);
+            int topic=args.getInt(2);
+            String value=args.getString(3);
+            cordova.getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+                        @Override
+                        public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                            report(dappID,fee, topic,value,secret,callbackContext);
+                        }
+                    });
+                }
+            });
         }
+        //callbackContext.success();
+        return true;
+    }
 
-        return super.execute(action, args, callbackContext);
+
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
+    }
+
+
+    private void showPasswordDialog(AllPasswdsDialog.OnConfirmationListenner confirmationListenner){
+        boolean hasSecondSecret=getAccount().hasSecondSecret();
+        dialog = new AllPasswdsDialog(this.cordova.getContext(),hasSecondSecret);
+        dialog.setTitle(this.cordova.getContext().getString(R.string.account_input_title));
+        dialog.show(confirmationListenner);
+    }
+
+    private void dismissDialog(){
+        if (dialog!=null){
+            dialog.dismiss();
+            dialog=null;
+        }
     }
 
     /**
@@ -96,8 +207,9 @@ public class CCTimePlugin extends CordovaPlugin {
      * @param text
      * @param tags
      */
-    public void postArticle(String title, String url, String text, String tags){
-
+    public void postArticle(String dappID, long fee, String title, String url, String text, String tags, String secret, CallbackContext callbackContext){
+        String[] args={title,url,text,tags};
+        invokeContract(dappID, Action.PostArticle.getType(),fee, args,secret, callbackContext);
     }
 
     /**
@@ -115,8 +227,9 @@ public class CCTimePlugin extends CordovaPlugin {
      * @param pid
      * @param content
      */
-    public void postComment(String aid, String pid, String content){
-
+    public void postComment(String dappID, long fee, String aid, String pid, String content, String secret, CallbackContext callbackContext){
+        String[] args={aid,pid,content};
+        invokeContract(dappID, Action.PostComment.getType(),fee, args,secret, callbackContext);
     }
 
     /**
@@ -130,8 +243,9 @@ public class CCTimePlugin extends CordovaPlugin {
      * @param aid
      * @param amount
      */
-    public void voteArticle(String aid, long amount){
-
+    public void voteArticle(String dappID, long fee, String aid, long amount, String secret, CallbackContext callbackContext){
+        String[] args={aid,String.valueOf(amount)};
+        invokeContract(dappID, Action.VoteArticle.getType(),fee, args,secret, callbackContext);
     }
 
     /**
@@ -146,8 +260,9 @@ public class CCTimePlugin extends CordovaPlugin {
      * @param cid
      * @param amount
      */
-    public void likeComment(String cid, long amount){
-
+    public void likeComment(String dappID, long fee, String cid, long amount, String secret, CallbackContext callbackContext){
+        String[] args={cid,String.valueOf(amount)};
+        invokeContract(dappID, Action.LikeComment.getType(),fee, args,secret, callbackContext);
     }
 
     /**
@@ -161,8 +276,46 @@ public class CCTimePlugin extends CordovaPlugin {
      * @param topic
      * @param value
      */
-    public void report(int topic, String value){
+    public void report(String dappID, long fee, int topic, String value, String secret, CallbackContext callbackContext){
+        String[] args={String.valueOf(topic), value};
+        invokeContract(dappID, Action.Report.getType(),fee, args,secret, callbackContext);
+    }
 
+
+    private void invokeContract(String dappID, int type, long fee, String[] args, String secret, CallbackContext callbackContext){
+        Observable.create(new Observable.OnSubscribe<AschResult>() {
+
+            @Override
+            public void call(Subscriber<? super AschResult> subscriber) {
+                AschResult result = AschSDK.Dapp.invokeContract(dappID, type, fee,args, secret);
+                if (result != null && result.isSuccessful()) {
+                    subscriber.onNext(result);
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(new Throwable(result!=null?result.getError():"result is null"));
+                }
+            }
+        }).subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+        .unsubscribeOn(Schedulers.io())
+        .subscribe(new Subscriber<AschResult>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                AppUtil.toastError(cordova.getContext(), e.getMessage());
+            }
+
+            @Override
+            public void onNext(AschResult result) {
+
+                AppUtil.toastSuccess(cordova.getContext(), "操作成功");
+                dismissDialog();
+            }
+        });
     }
 
 }
