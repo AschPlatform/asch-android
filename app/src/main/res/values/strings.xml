@@ -254,5 +254,6 @@
     <string name="no_data">暂无数据</string>
     <string name="website">https://www.asch.cn</string>
 
+    <string name="opreation_success">操作成功</string>
 
 </resources>

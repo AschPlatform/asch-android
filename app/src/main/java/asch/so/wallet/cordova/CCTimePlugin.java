@@ -307,15 +307,21 @@ public class CCTimePlugin extends CordovaPlugin {
             @Override
             public void onError(Throwable e) {
                 AppUtil.toastError(cordova.getContext(), e.getMessage());
+                callbackContext.error(e.getMessage());
             }
 
             @Override
             public void onNext(AschResult result) {
 
-                AppUtil.toastSuccess(cordova.getContext(), "操作成功");
+                AppUtil.toastSuccess(cordova.getContext(), getString(R.string.opreation_success));
                 dismissDialog();
+                callbackContext.success();
             }
         });
+    }
+
+    private String getString(int resId){
+      return  cordova.getContext().getString(resId);
     }
 
 }

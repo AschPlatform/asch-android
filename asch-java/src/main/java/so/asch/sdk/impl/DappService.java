@@ -118,7 +118,7 @@ public class DappService extends AschRESTService implements Dapp {
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
 
             TransactionInfo transaction = getTransactionBuilder()
-                    .buildDAppTransaction(fee, ContractType.CoreSetNickname, args, secret);
+                    .buildDAppTransaction(fee, ContractType.fromCode(type), args, secret);
             System.out.println("====== transaction:"+transaction.toString());
             return broadcastDAppTransaction(dappID, transaction);
         }

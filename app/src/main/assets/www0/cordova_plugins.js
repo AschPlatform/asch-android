@@ -24,14 +24,22 @@ module.exports = [
       "navigator.notification"
     ]
   },
-     {
-       "id": "cordova-plugin-dapp.dapp",
-       "file": "plugins/cordova-plugin-dapp/www/dapp.js",
-       "pluginId": "cordova-plugin-dapp",
-       "merges": [
-         "navigator.dapp"
-       ]
-     }
+   {
+     "id": "cordova-plugin-dapp.dapp",
+     "file": "plugins/cordova-plugin-dapp/www/dapp.js",
+     "pluginId": "cordova-plugin-dapp",
+     "merges": [
+       "navigator.dapp"
+     ]
+   },
+   {
+     "id": "cordova-plugin-cctime.cctime",
+     "file": "plugins/cordova-plugin-cctime/www/cctime.js",
+     "pluginId": "cordova-plugin-cctime",
+     "merges": [
+       "navigator.cctime"
+     ]
+   }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
@@ -39,7 +47,8 @@ module.exports.metadata =
   "cordova-plugin-whitelist": "1.3.3",
   "cordova-plugin-device": "1.1.7",
   "cordova-plugin-dialogs": "1.3.4",
-  "cordova-plugin-dapp": "1.0.0"
+  "cordova-plugin-dapp": "1.0.0",
+  "cordova-plugin-cctime": "1.0.0"
 };
 // BOTTOM OF METADATA
 });

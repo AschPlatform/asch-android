@@ -50,6 +50,10 @@
             <br>
             <button type="button" onclick="setNickname()">setNickname</button>
 
+             <br>
+            <br>
+            <button type="button" onclick="postArticle()">postArticle</button>
+
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
@@ -61,7 +65,40 @@
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="plugins/cordova-plugin-dialogs/www/notification.js"></script>
         <script type="text/javascript" src="plugins/cordova-plugin-dapp/www/dapp.js"></script>
+        <script type="text/javascript" src="plugins/cordova-plugin-cctime/www/cctime.js"></script>
         <script>
+        
+        function postArticle()
+        {
+ 		 var dappID='d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1';
+ 		 var fee=10000000;
+          var title='a title test';
+          var url="";
+          var text='a text test';
+          var tags='test, post';
+          navigator.cctime.postArticle(null,null, dappID, fee, title, url, text, tags);
+        }
+
+         function postComment()
+        {
+
+        }
+
+         function voteArticle()
+        {
+
+        }
+
+         function likeComment()
+        {
+
+        }
+
+         function report()
+        {
+
+        }
+
          function widthdraw()
         {
 
@@ -71,7 +108,7 @@
           var message='test';
           var fee=10000000;
           navigator.dapp.withdraw(null,null,dappID, currency, amount, message, fee);
-          }
+         }
 
         function innerTransfer()
         {
