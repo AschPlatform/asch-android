@@ -53,6 +53,18 @@
              <br>
             <br>
             <button type="button" onclick="postArticle()">postArticle</button>
+            <br>
+            <br>
+            <button type="button" onclick="postComment()">postComment</button>
+            <br>
+            <br>
+            <button type="button" onclick="voteArticle()">voteArticle</button>
+            <br>
+            <br>
+            <button type="button" onclick="likeComment()">likeComment</button>
+            <br>
+            <br>
+            <button type="button" onclick="report()">report</button>
 
             <div id="deviceready" class="blink">
                 <p class="event listening">Connecting to Device</p>
@@ -81,22 +93,39 @@
 
          function postComment()
         {
-
+         var dappID='d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1';
+ 		 var fee=10000000;
+          var aid='120';
+          var pid="";
+          var content='a comment test from android dapp ';
+          navigator.cctime.postComment(null,null, dappID, fee, aid, pid, content);
         }
 
          function voteArticle()
         {
-
+        var dappID='d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1';
+ 		 var fee=10000000;
+          var aid='120';
+          var amount=300000000;
+          navigator.cctime.voteArticle(null,null,  dappID, fee, aid, amount);
         }
 
          function likeComment()
         {
-
+         var dappID='d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1';
+ 		 var fee=10000000;
+          var cid='177';
+          var amount=200000000;
+          navigator.cctime.likeComment(null,null, dappID, fee, cid, amount);
         }
 
          function report()
         {
-
+           var dappID='d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1';
+ 		 var fee=10000000;
+          var topic=1;
+          var value='119';
+          navigator.cctime.report(null,null, dappID, fee, topic, value);
         }
 
          function widthdraw()

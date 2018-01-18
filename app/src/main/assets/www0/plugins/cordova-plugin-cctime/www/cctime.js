@@ -77,7 +77,7 @@ topic 只能为1或2. 1表示举报文章，2表示举报评论
 value 举报的文章或评论id
 */
 report : function(onSuccess, onError, dappID, fee, topic, value){
- exec(onSuccess, onError, PLUGIN_NAME, "cctime.report", [fee, topic, value]);
+ exec(onSuccess, onError, PLUGIN_NAME, "cctime.report", [dappID, fee, topic, value]);
 },
 
 /**
