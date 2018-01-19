@@ -46,7 +46,7 @@ public class DAppCenterActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(getString(R.string.vote));
+        setTitle(getString(R.string.dapps));
         mTitles = new String[]{getString(R.string.dapps_list), getString(R.string.my_dapps)};
         ButterKnife.bind(this);
 

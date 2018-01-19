@@ -51,32 +51,16 @@ public class DappCenterPresenter implements DappCenterContract.Presenter{
         dapp3.setCategory("system");
         dapp3.setDescription(context.getString(R.string.personal_center));
 
-//
-
-//        Dapp dapp=new Dapp();
-//        dapp.setName("CCTime");
-//        dapp.setCategory("news");
-//        dapp.setDescription("decentralized news channel.");
-//
-//        Dapp dapp2=new Dapp();
-//        dapp2.setName("孔明屋");
-//        dapp2.setCategory("news");
-//        dapp2.setDescription("去中心化预测市场");
-//
-//        Dapp dapp3=new Dapp();
-//        dapp3.setName("浏览器");
-//        dapp3.setCategory("news");
-//        dapp3.setDescription("区块浏览器");
-//
-//        Dapp dapp4=new Dapp();
-//        dapp4.setName("投票");
-//        dapp4.setCategory("news");
-//        dapp4.setDescription("去中心化投票");
+        Dapp dapp4=new Dapp();
+        dapp3.setName(context.getString(R.string.cctime));
+        dapp3.setCategory("cctime");
+        dapp3.setDescription(context.getString(R.string.cctime));
 
         ArrayList<Dapp> data=new ArrayList<>();
         data.add(dapp);
         data.add(dapp2);
         data.add(dapp3);
+        data.add(dapp4);
         this.view.displayDappList(data);
 
     }
