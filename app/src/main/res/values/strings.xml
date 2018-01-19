@@ -255,5 +255,6 @@
     <string name="website">https://www.asch.cn</string>
 
     <string name="opreation_success">操作成功</string>
-
+    <string name="dapps_list">应用列表</string>
+    <string name="my_dapps">我的应用</string>
 </resources>
