@@ -3,6 +3,7 @@ package asch.so.wallet.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -64,6 +65,7 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
         ButterKnife.bind(this,view);
         presenter=new DappsPresenter(getContext(),this);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {

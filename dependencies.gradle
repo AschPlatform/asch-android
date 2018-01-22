@@ -42,6 +42,7 @@ def updateVersion="3.3.8"
 def okhttpUtilsVersion="3.8.0"
 def filedownloaderVersion="1.6.9"
 def localeChangerVersion="0.9.1"
+def progressButtonVersion="v1.2.7"
 
 def env=[
         dev:"dev",
@@ -194,7 +195,8 @@ project.ext {
             "update"                        :"com.qianwen:update-app:${updateVersion}",
             "okhttpUtils"                  :"com.qianwen:okhttp-utils:${okhttpUtilsVersion}",
             "filedownloader"                :"com.liulishuo.filedownloader:library:${filedownloaderVersion}",
-            "localeChanger"                 :"com.github.franmontiel:LocaleChanger:${localeChangerVersion}"
+            "localeChanger"                 :"com.github.franmontiel:LocaleChanger:${localeChangerVersion}",
+            "progressButton"                :"com.github.jiang111:CProgressButton:${progressButtonVersion}"
 
     ]
 }

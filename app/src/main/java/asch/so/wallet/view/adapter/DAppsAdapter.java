@@ -30,6 +30,8 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
         helper.descriptionTv.setText(item.getName());
     }
 
+
+
     public static class ViewHolder extends BaseViewHolder {
         @BindView(R.id.name_tv)
         TextView nameTv;

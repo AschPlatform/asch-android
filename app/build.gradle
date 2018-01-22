@@ -204,6 +204,7 @@ dependencies {
     compile rootProject.ext.dependencies["expandablelayout"]
     compile rootProject.ext.dependencies["expandablelayout"]
     compile rootProject.ext.dependencies["localeChanger"]
+    compile rootProject.ext.dependencies["progressButton"]
 }
 
 //def rename_andd_moveout_apk(orignalFile, buildType) {

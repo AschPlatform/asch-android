@@ -18,7 +18,7 @@ import io.realm.RealmObject;
  }
  */
 
-public class Dapp {
+public class Dapp extends RealmObject{
     private int category;
     private String name;
     private String description;
@@ -26,7 +26,7 @@ public class Dapp {
     private int type;
     private String link;
     private String icon;
-    private String[] delegates;
+    //private String[] delegates;
     private int unlockDelegates;
     private String transactionId;
 
@@ -86,13 +86,13 @@ public class Dapp {
         this.icon = icon;
     }
 
-    public String[] getDelegates() {
-        return delegates;
-    }
-
-    public void setDelegates(String[] delegates) {
-        this.delegates = delegates;
-    }
+//    public String[] getDelegates() {
+//        return delegates;
+//    }
+//
+//    public void setDelegates(String[] delegates) {
+//        this.delegates = delegates;
+//    }
 
     public int getUnlockDelegates() {
         return unlockDelegates;
