@@ -38,22 +38,22 @@ public class DappCenterPresenter implements DappCenterContract.Presenter{
 
         Dapp dapp=new Dapp();
         dapp.setName(context.getString(R.string.node_vote));
-        dapp.setCategory("system");
+        dapp.setCategory(1);
         dapp.setDescription(context.getString(R.string.node_vote));
 
         Dapp dapp2=new Dapp();
         dapp2.setName(context.getString(R.string.vote_list));
-        dapp2.setCategory("system");
+        dapp2.setCategory(1);
         dapp2.setDescription(context.getString(R.string.vote_list));
 
         Dapp dapp3=new Dapp();
         dapp3.setName(context.getString(R.string.personal_center));
-        dapp3.setCategory("system");
+        dapp3.setCategory(2);
         dapp3.setDescription(context.getString(R.string.personal_center));
 
         Dapp dapp4=new Dapp();
         dapp3.setName(context.getString(R.string.cctime));
-        dapp3.setCategory("cctime");
+        dapp3.setCategory(1);
         dapp3.setDescription(context.getString(R.string.cctime));
 
         ArrayList<Dapp> data=new ArrayList<>();

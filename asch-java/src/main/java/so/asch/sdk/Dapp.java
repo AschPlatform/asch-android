@@ -1,6 +1,8 @@
 package so.asch.sdk;
 
 import so.asch.sdk.dto.query.BlockQueryParameters;
+import so.asch.sdk.dto.query.DappQueryParameters;
+import so.asch.sdk.dto.query.PeerQueryParameters;
 import so.asch.sdk.dto.query.TransactionQueryParameters;
 
 /**
@@ -136,6 +138,14 @@ public interface Dapp extends AschInterface{
      * @return
      */
     AschResult invokeContract(String dappID, int type, long fee, String[] args, String secret);
+
+
+    /**
+     * 查询DAPP
+     * @param parameters
+     * @return
+     */
+    AschResult queryDapps(DappQueryParameters parameters);
 
 //    3.2 获取未确认的交易
 //

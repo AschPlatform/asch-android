@@ -85,6 +85,7 @@ public final class AschServiceUrls {
     final static class Dapp{
         static final String BROADCAST_TRANSACTION = "/peer/transactions";
         static final String TRANSCATIONS_SIGNED_FORMAT = "/api/dapps/%s/transactions/signed";
+        static final String QUERY_DAPPS = "/api/dapps";
     }
 
 }

@@ -142,6 +142,12 @@ public class Validation {
         return queryParameters != null;
     }
 
+    public static boolean isValidDappQueryParameters(DappQueryParameters queryParameters){
+        //TODO: validate queryParameters
+        return queryParameters != null;
+    }
+
+
     private static boolean isValidQueryParameters(QueryParameters queryParameters){
         return queryParameters != null &&
                 isValidLimit(queryParameters.getLimit());

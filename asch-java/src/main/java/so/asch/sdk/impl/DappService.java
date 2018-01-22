@@ -14,6 +14,7 @@ import so.asch.sdk.Transaction;
 import so.asch.sdk.TransactionType;
 import so.asch.sdk.dbc.Argument;
 import so.asch.sdk.dto.query.BlockQueryParameters;
+import so.asch.sdk.dto.query.DappQueryParameters;
 import so.asch.sdk.dto.query.TransactionQueryParameters;
 import so.asch.sdk.transaction.TransactionInfo;
 
@@ -123,6 +124,18 @@ public class DappService extends AschRESTService implements Dapp {
             return broadcastDAppTransaction(dappID, transaction);
         }
         catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
+    @Override
+    public AschResult queryDapps(DappQueryParameters parameters) {
+        try {
+            Argument.require(Validation.isValidDappQueryParameters(parameters), "invalid parameters");
+
+            return get(AschServiceUrls.Dapp.QUERY_DAPPS, parametersFromObject(parameters));
+        }
+        catch (Exception ex) {
             return fail(ex);
         }
     }

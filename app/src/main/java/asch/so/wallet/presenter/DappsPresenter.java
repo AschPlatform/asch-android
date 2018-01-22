@@ -24,6 +24,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
+import so.asch.sdk.dto.query.DappQueryParameters;
 import so.asch.sdk.dto.query.PeerQueryParameters;
 
 /**
@@ -81,11 +82,11 @@ public class DappsPresenter implements DappsContract.Presenter {
         int limit = pageSize;
         //String address = getAccount().getAddress();
         Subscription subscription = Observable.create((Observable.OnSubscribe<List<Dapp>>) subscriber -> {
-            PeerQueryParameters params = new PeerQueryParameters()
+            DappQueryParameters params = new DappQueryParameters()
                     //.orderByDescending("t_timestamp")
                     .setOffset(offset)
                     .setLimit(limit);
-            AschResult result = AschSDK.Peer.queryPeers(params);
+            AschResult result = AschSDK.Dapp.queryDapps(params);
             if (result.isSuccessful()) {
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                 JSONArray peersJsonArray = resultJSONObj.getJSONArray("dapps");
