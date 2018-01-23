@@ -30,6 +30,9 @@ public class Dapp extends RealmObject{
     private int unlockDelegates;
     private String transactionId;
 
+    private transient int taskId;
+    private transient String path;
+
     public int getCategory() {
         return category;
     }
@@ -100,5 +103,29 @@ public class Dapp extends RealmObject{
 
     public void setUnlockDelegates(int unlockDelegates) {
         this.unlockDelegates = unlockDelegates;
+    }
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    public int getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

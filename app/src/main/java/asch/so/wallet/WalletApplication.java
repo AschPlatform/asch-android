@@ -15,6 +15,10 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.franmontiel.localechanger.LocaleChanger;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
+import com.liulishuo.filedownloader.FileDownloader;
+import com.liulishuo.filedownloader.connection.FileDownloadUrlConnection;
+import com.liulishuo.filedownloader.util.FileDownloadLog;
+import com.liulishuo.filedownloader.util.FileDownloadUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreater;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
@@ -27,6 +31,7 @@ import com.vector.update_app.UpdateAppManager;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.Proxy;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -92,6 +97,7 @@ public class WalletApplication extends MultiDexApplication {
         initRealm();
         initLockManager();
         IdenticonGenerator.init(this);
+        setupDownloader();
        // initLockScreenListener();
     }
 
@@ -153,6 +159,47 @@ public class WalletApplication extends MultiDexApplication {
         lockManager.getAppLock().setTimeout(1000);
         lockManager.getAppLock().setLogoId(R.mipmap.ic_launcher);
         lockManager.getAppLock().setShouldShowForgot(false);
+    }
+
+
+    private void setupDownloader(){
+        FileDownloadLog.NEED_LOG = BuildConfig.LOG_DEBUG;
+        FileDownloader.setupOnApplicationOnCreate(this)
+                .connectionCreator(new FileDownloadUrlConnection
+                        .Creator(new FileDownloadUrlConnection.Configuration()
+                        .connectTimeout(15_000) // set connection timeout.
+                        .readTimeout(15_000) // set read timeout.
+                        .proxy(Proxy.NO_PROXY) // set proxy
+                ))
+                .commit();
+
+//        // below codes just for monitoring thread pools in the FileDownloader:
+//        IThreadDebugger debugger = ThreadDebugger.install(
+//                ThreadDebuggers.create() /** The ThreadDebugger with known thread Categories **/
+//                        // add Thread Category
+//                        .add("OkHttp").add("okio").add("Binder")
+//                        .add(FileDownloadUtils.getThreadPoolName("Network"), "Network")
+//                        .add(FileDownloadUtils.getThreadPoolName("Flow"), "FlowSingle")
+//                        .add(FileDownloadUtils.getThreadPoolName("EventPool"), "Event")
+//                        .add(FileDownloadUtils.getThreadPoolName("LauncherTask"), "LauncherTask")
+//                        .add(FileDownloadUtils.getThreadPoolName("ConnectionBlock"), "Connection")
+//                        .add(FileDownloadUtils.getThreadPoolName("RemitHandoverToDB"), "RemitHandoverToDB")
+//                        .add(FileDownloadUtils.getThreadPoolName("BlockCompleted"), "BlockCompleted"),
+//
+//                2000, /** The frequent of Updating Thread Activity information **/
+//
+//                new ThreadDebugger.ThreadChangedCallback() {
+//                    /**
+//                     * The threads changed callback
+//                     **/
+//                    @Override
+//                    public void onChanged(IThreadDebugger debugger) {
+//                        // callback this method when the threads in this application has changed.
+//                        Log.d(TAG, debugger.drawUpEachThreadInfoDiff());
+//                        Log.d(TAG, debugger.drawUpEachThreadSizeDiff());
+//                        Log.d(TAG, debugger.drawUpEachThreadSize());
+//                    }
+//                });
     }
 
     private void configLog(){

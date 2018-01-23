@@ -33,6 +33,7 @@ public class TasksDBContraller {
 
         TaskModel model = new TaskModel();
         model.setId(id);
+        model.setDappID(dapp.getTransactionId());
         model.setPath(path);
         model.setDapp(dapp);
         model.setUrl(dapp.getLink());

@@ -141,6 +141,18 @@ public class TasksManager {
         return null;
     }
 
+    public TaskModel getTaskByDappId(String dappId){
+        if (dappId==null){
+            return null;
+        }
+        for (TaskModel model:modelList){
+            if (dappId.equals(model.getDapp().getTransactionId())){
+                return model;
+            }
+        }
+        return null;
+    }
+
     /**
      * @param status Download Status
      * @return has already downloaded
