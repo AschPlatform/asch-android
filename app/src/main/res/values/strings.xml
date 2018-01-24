@@ -259,9 +259,13 @@
     <string name="my_dapps">我的应用</string>
     <string name="dapps">应用</string>
 
+    <string name="download">下载</string>
     <string name="start">开始</string>
     <string name="pause">暂停</string>
+    <string name="continued">继续</string>
     <string name="delete">删除</string>
+    <string name="install">安装</string>
+    <string name="open">打开</string>
 
     <string name="tasks_manager_demo_name" formatted="false">任务: %d</string>
     <string name="tasks_manager_demo_status_loading">状态: 加载中...</string>

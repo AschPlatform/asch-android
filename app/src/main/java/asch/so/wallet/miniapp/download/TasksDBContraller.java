@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.wallet.model.entity.Account;
@@ -18,11 +19,14 @@ import io.realm.RealmResults;
 public class TasksDBContraller {
 
 
-    public List<TaskModel> getAllTasks() {
+    public ArrayList<TaskModel> getAllTasks() {
 
         RealmResults<TaskModel> results = getRealm().where(TaskModel.class).findAll();
-
-        return results;
+        ArrayList<TaskModel> tasks= new ArrayList<>();
+        for (TaskModel taskModel:results){
+            tasks.add(taskModel);
+        }
+        return tasks;
     }
 
     public TaskModel addTask(final Dapp dapp, final String path) {

@@ -11,6 +11,8 @@ import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.wallet.model.entity.Dapp;
@@ -30,7 +32,7 @@ public class TasksManager {
     }
 
     private TasksDBContraller dbController;
-    private List<TaskModel> modelList;
+    private ArrayList<TaskModel> modelList;
 
     private TasksManager() {
         dbController = new TasksDBContraller();

@@ -75,6 +75,7 @@ public class DownloadProgressButton extends AppCompatTextView {
     public static final int STATE_DOWNLOADING = 1;//下载之中
     public static final int STATE_PAUSE = 2;//暂停下载
     public static final int STATE_FINISH = 3;//下载完成
+    public static final int STATE_INSTALLED = 4;//安装完成
 
     public static final int STYLE_BALL_PULSE = 1;
     public static final int STYLE_BALL_JUMP = 2;
@@ -223,6 +224,10 @@ public class DownloadProgressButton extends AppCompatTextView {
                 mBackgroundPaint.setColor(mBackgroundColor);
                 canvas.drawRoundRect(mBackgroundBounds, mButtonRadius, mButtonRadius, mBackgroundPaint);
                 break;
+            case STATE_INSTALLED:
+                mBackgroundPaint.setColor(mBackgroundColor);
+                canvas.drawRoundRect(mBackgroundBounds, mButtonRadius, mButtonRadius, mBackgroundPaint);
+                break;
         }
     }
 
@@ -275,6 +280,11 @@ public class DownloadProgressButton extends AppCompatTextView {
                 mTextPaint.setColor(mTextCoverColor);
                 canvas.drawText(mCurrentText.toString(), (getMeasuredWidth() - textWidth) / 2, y, mTextPaint);
                 drawLoadingBall(canvas);
+                break;
+            case STATE_INSTALLED:
+                mTextPaint.setShader(null);
+                mTextPaint.setColor(mTextCoverColor);
+                canvas.drawText(mCurrentText.toString(), (getMeasuredWidth() - textWidth) / 2, y, mTextPaint);
                 break;
 
         }

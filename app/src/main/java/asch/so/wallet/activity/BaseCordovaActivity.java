@@ -1,6 +1,7 @@
 package asch.so.wallet.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import org.apache.cordova.CordovaActivity;
 
@@ -19,7 +20,8 @@ public class BaseCordovaActivity extends CordovaActivity {
         if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
             moveTaskToBack(true);
         }
-        String launchUrl = "file:///android_asset/www/index.html";
+        String launchUrl=extras.getString("url");
+         //launchUrl = TextUtils.isEmpty(launchUrl)? "file:///android_asset/www/index.html":"file://"+launchUrl;
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
     }

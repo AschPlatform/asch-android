@@ -1,8 +1,12 @@
 package asch.so.wallet.view.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ConvertUtils;
@@ -17,12 +21,16 @@ import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
 import java.io.File;
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
 import asch.so.wallet.R;
+import asch.so.wallet.activity.BaseCordovaActivity;
 import asch.so.wallet.miniapp.download.TaskModel;
 import asch.so.wallet.miniapp.download.TasksManager;
+import asch.so.wallet.miniapp.unzip.UnZip;
 import asch.so.wallet.model.entity.Dapp;
+import asch.so.wallet.util.AppUtil;
 import asch.so.widget.downloadbutton.DownloadProgressButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +43,8 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
     private static final String TAG=DAppsAdapter.class.getSimpleName();
     private Context context;
     private HashMap<String,TaskModel> tasksMap;
+    private static final  String DOWNLOAD_PATH = FileDownloadUtils.getDefaultSaveRootPath() + File.separator + "tmpdir1";
+    private BaseDownloadTask downloadTask;
 
     public DAppsAdapter(Context context) {
         super(R.layout.item_dapps);
@@ -52,43 +62,141 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
                 handleState(holder,item);
             }
         });
-
-        if (TasksManager.getImpl().isReady()) {
-            if (tasksMap.containsKey(item.getTransactionId())){
-
-            TaskModel model=tasksMap.get(item.getTransactionId());
-            final int status = TasksManager.getImpl().getStatus(model.getId(), model.getPath());
-            if (status == FileDownloadStatus.pending || status == FileDownloadStatus.started ||
-                    status == FileDownloadStatus.connected) {
-                // start task, but file not created yet
-                holder.updateDownloading(status, TasksManager.getImpl().getSoFar(model.getId())
-                        , TasksManager.getImpl().getTotal(model.getId()));
-            } else if (!new File(model.getPath()).exists() &&
-                    !new File(FileDownloadUtils.getTempPath(model.getPath())).exists()) {
-                // not exist file
-                holder.updateNotDownloaded(status, 0, 0);
-            } else if (TasksManager.getImpl().isDownloaded(status)) {
-                // already downloaded and exist
-                holder.updateDownloaded();
-            } else if (status == FileDownloadStatus.progress) {
-                // downloading
-                holder.updateDownloading(status, TasksManager.getImpl().getSoFar(model.getId())
-                        , TasksManager.getImpl().getTotal(model.getId()));
-            } else {
-
-                // not start
-                holder.updateNotDownloaded(status, TasksManager.getImpl().getSoFar(model.getId())
-                        , TasksManager.getImpl().getTotal(model.getId()));
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new File(DOWNLOAD_PATH).delete();
+                holder.downloadBtn.setMaxProgress(1);
+                holder.downloadBtn.setProgress(0);
+                holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
+                holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
             }
+        });
 
-            }else{
+//        if (TasksManager.getImpl().isReady()) {
+//            if (tasksMap.containsKey(item.getTransactionId())){
+//
+//            TaskModel model=tasksMap.get(item.getTransactionId());
+//            final int status = TasksManager.getImpl().getStatus(model.getId(), model.getPath());
+//            if (status == FileDownloadStatus.pending || status == FileDownloadStatus.started ||
+//                    status == FileDownloadStatus.connected) {
+//                // start task, but file not created yet
+//                holder.updateDownloading(status, TasksManager.getImpl().getSoFar(model.getId())
+//                        , TasksManager.getImpl().getTotal(model.getId()));
+//            } else if (!new File(model.getPath()).exists() &&
+//                    !new File(FileDownloadUtils.getTempPath(model.getPath())).exists()) {
+//                // not exist file
+//                holder.updateNotDownloaded(status, 0, 0);
+//            } else if (TasksManager.getImpl().isDownloaded(status)) {
+//                // already downloaded and exist
+//                holder.updateDownloaded();
+//            } else if (status == FileDownloadStatus.progress) {
+//                // downloading
+//                holder.updateDownloading(status, TasksManager.getImpl().getSoFar(model.getId())
+//                        , TasksManager.getImpl().getTotal(model.getId()));
+//            } else {
+//
+//                // not start
+//                holder.updateNotDownloaded(status, TasksManager.getImpl().getSoFar(model.getId())
+//                        , TasksManager.getImpl().getTotal(model.getId()));
+//            }
+//
+//            }else{
+//
+//            }
+//        } else {
+////            holder.taskStatusTv.setText(R.string.tasks_manager_demo_status_loading);
+//            holder.downloadBtn.setText(R.string.tasks_manager_demo_status_loading);
+//            //holder.downloadBtn.setEnabled(false);
+//        }
+    }
 
-            }
-        } else {
-//            holder.taskStatusTv.setText(R.string.tasks_manager_demo_status_loading);
-            holder.downloadBtn.setText(R.string.tasks_manager_demo_status_loading);
-            //holder.downloadBtn.setEnabled(false);
-        }
+
+    private BaseDownloadTask createDownloadTask(ViewHolder holder, Dapp item) {
+        final String url="http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/test/www.zip";
+        boolean isDir = true;
+        String path = DOWNLOAD_PATH;
+
+        return FileDownloader.getImpl().create(url)
+                .setPath(path, isDir)
+                .setCallbackProgressTimes(300)
+                .setMinIntervalUpdateSpeed(400)
+                .setTag(holder)
+                .setListener(new FileDownloadSampleListener() {
+
+                    @Override
+                    protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        super.pending(task, soFarBytes, totalBytes);
+                       // ((ViewHolder) task.getTag()).updatePending(task);
+                    }
+
+                    @Override
+                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        super.progress(task, soFarBytes, totalBytes);
+                        final float percent = soFarBytes / (float) totalBytes;
+                        holder.downloadBtn.setState(DownloadProgressButton.STATE_DOWNLOADING);
+                        holder.downloadBtn.setMaxProgress(100);
+                        holder.downloadBtn.setProgress((int) (percent * 100));
+                        holder.downloadBtn.setCurrentText(mContext.getString(R.string.pause));
+                        Log.d(TAG, String.format("progress sofar: %d total: %d", soFarBytes, totalBytes));
+                       // ((ViewHolder) task.getTag()).updateProgress(soFarBytes, totalBytes,
+                               // task.getSpeed());
+                    }
+
+                    @Override
+                    protected void error(BaseDownloadTask task, Throwable e) {
+                        super.error(task, e);
+                        Log.d(TAG, String.format("error %s", e.toString()));
+                        //((ViewHolder) task.getTag()).updateError(e, task.getSpeed());
+                    }
+
+                    @Override
+                    protected void connected(BaseDownloadTask task, String etag, boolean isContinue, int soFarBytes, int totalBytes) {
+                        super.connected(task, etag, isContinue, soFarBytes, totalBytes);
+                        Log.d(TAG, String.format("connected ..."));
+                       // ((ViewHolder) task.getTag()).updateConnected(etag, task.getFilename());
+                    }
+
+                    @Override
+                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                        super.paused(task, soFarBytes, totalBytes);
+                        Log.d(TAG, "paused !!!");
+                        final float percent = soFarBytes / (float) totalBytes;
+                        holder.downloadBtn.setState(DownloadProgressButton.STATE_PAUSE);
+                        holder.downloadBtn.setMaxProgress(100);
+                        holder.downloadBtn.setProgress((int) (percent * 100));
+                        holder.downloadBtn.setCurrentText(mContext.getString(R.string.continued));
+                       // ((ViewHolder) task.getTag()).updatePaused(task.getSpeed());
+                    }
+
+                    @Override
+                    protected void completed(BaseDownloadTask task) {
+                        super.completed(task);
+                        Log.d(TAG, "completed !!!");
+                       holder.downloadBtn.setMaxProgress(1);
+                       holder.downloadBtn.setProgress(1);
+                       holder.downloadBtn.setState(DownloadProgressButton.STATE_FINISH);
+                       holder.downloadBtn.setCurrentText(mContext.getString(R.string.install));
+                       String path =  task.getPath()+File.separator+task.getFilename();
+                        String outputDir =  task.getPath()+File.separator+"output";
+                      unzipFile( new File(path), new File(outputDir));
+                       new Handler().postDelayed(new Runnable() {
+                           @Override
+                           public void run() {
+                              holder.downloadBtn.setState(DownloadProgressButton.STATE_INSTALLED);
+                               holder.downloadBtn.setCurrentText(mContext.getString(R.string.open));
+                           }
+                       },2000);
+                        //AppUtil.toastSuccess(context, "下载成功...");
+                        //((ViewHolder) task.getTag()).updateCompleted(task);
+                    }
+
+                    @Override
+                    protected void warn(BaseDownloadTask task) {
+                        super.warn(task);
+                       // ((ViewHolder) task.getTag()).updateWarn();
+                    }
+                });
     }
 
     private void handleState(ViewHolder holder, Dapp dapp){
@@ -96,37 +204,50 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
         switch (state){
             case DownloadProgressButton.STATE_NORMAL:
             {
-                final TaskModel model = TasksManager.getImpl().get(holder.getPos());
-                final BaseDownloadTask task = FileDownloader.getImpl().create(model.getUrl())
-                        .setPath(model.getPath())
-                        .setCallbackProgressTimes(100)
-                        .setListener(taskDownloadListener);
-
-                TasksManager.getImpl()
-                        .addTaskForViewHolder(task);
-
-                TasksManager.getImpl()
-                        .updateViewHolder(holder.getId(), holder);
-
-                task.start();
+                downloadTask = createDownloadTask(holder,dapp);
+                downloadTask.start();
             }
                 break;
             case DownloadProgressButton.STATE_DOWNLOADING:
             {
-                //FileDownloader.getImpl().pause()
+               downloadTask.pause();
             }
                 break;
             case DownloadProgressButton.STATE_PAUSE:
             {
-                TasksManager.getImpl().getTaskByDappId(dapp.getTransactionId());
+               downloadTask.start();
             }
                 break;
             case DownloadProgressButton.STATE_FINISH:
             {
+               // AppUtil.toastSuccess(mContext, "开始安装");
 
             }
                 break;
+            case DownloadProgressButton.STATE_INSTALLED:
+            {
+                String path =  downloadTask.getPath()+File.separator+"output"+File.separator+"www/index.html";
+                gotoDapp("file://"+path);
+                 AppUtil.toastSuccess(mContext, "打开应用...");
+
+            }
+            break;
+
         }
+    }
+
+    private void gotoDapp(String path){
+        Intent intent=new Intent(mContext,BaseCordovaActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("url",path);
+        intent.putExtras(bundle);
+        mContext.startActivity(intent);
+    }
+
+    protected void unzipFile( File zipFile, File destination ) {
+        UnZip decomp = new UnZip( zipFile.getPath(),
+                destination.getPath() + File.separator );
+        decomp.unzip();
     }
 
 
@@ -239,6 +360,8 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
         TextView descriptionTv;
         @BindView(R.id.download_btn)
         DownloadProgressButton downloadBtn;
+        @BindView(R.id.delete_btn)
+        Button deleteBtn;
 
         /**
          * viewHolder position

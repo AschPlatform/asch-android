@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="71dp"
+    android:layout_height="80dp"
     android:gravity="center"
     android:padding="10dp">
 
@@ -45,16 +45,26 @@
     </LinearLayout>
     <LinearLayout
         android:gravity="center_vertical"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <asch.so.widget.downloadbutton.DownloadProgressButton
             android:id="@+id/download_btn"
             android:layout_marginLeft="10dp"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
+            android:layout_width="70dp"
+            android:layout_height="24dp"
             android:textSize="12sp"
             app:progress_btn_ball_style="STYLE_BALL_PULSE"
             app:progress_btn_border_width="2dp" />
+         <Button
+             android:id="@+id/delete_btn"
+             android:background="@drawable/bg_white_rect_circle_border"
+             android:layout_marginLeft="10dp"
+             android:layout_width="70dp"
+             android:layout_height="24dp"
+             android:textSize="12sp"
+             android:text="@string/delete"
+             />
     </LinearLayout>
 
 </LinearLayout>
