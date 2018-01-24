@@ -18,6 +18,14 @@ import io.realm.RealmResults;
 
 public class TasksDBContraller {
 
+    private final static class HolderClass {
+        private final static TasksDBContraller INSTANCE
+                = new TasksDBContraller();
+    }
+
+    public static TasksDBContraller getImpl() {
+        return TasksDBContraller.HolderClass.INSTANCE;
+    }
 
     public ArrayList<TaskModel> getAllTasks() {
 
@@ -48,6 +56,27 @@ public class TasksDBContraller {
             }
         });
         return model;
+    }
+
+    public TaskModel addTask(final TaskModel task) {
+        if ( task==null) {
+            return null;
+        }
+//        final int id = FileDownloadUtils.generateId(dapp.getLink(), path);
+//
+//        TaskModel model = new TaskModel();
+//        model.setId(id);
+//        model.setDappID(dapp.getTransactionId());
+//        model.setPath(path);
+//        model.setDapp(dapp);
+//        model.setUrl(dapp.getLink());
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                realm.insertOrUpdate(task);
+            }
+        });
+        return task;
     }
 
     public void deleteTask(){

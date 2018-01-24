@@ -14,6 +14,7 @@ import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.DownloadTask;
 import com.liulishuo.filedownloader.FileDownloadListener;
 import com.liulishuo.filedownloader.FileDownloadSampleListener;
 import com.liulishuo.filedownloader.FileDownloader;
@@ -27,6 +28,7 @@ import java.util.HashMap;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.BaseCordovaActivity;
 import asch.so.wallet.miniapp.download.TaskModel;
+import asch.so.wallet.miniapp.download.TasksDBContraller;
 import asch.so.wallet.miniapp.download.TasksManager;
 import asch.so.wallet.miniapp.unzip.UnZip;
 import asch.so.wallet.model.entity.Dapp;
@@ -56,6 +58,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
     protected void convert(ViewHolder holder, Dapp item) {
         holder.nameTv.setText(item.getName());
         holder.descriptionTv.setText(item.getName());
+        holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
         holder.downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,7 +169,6 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
                         holder.downloadBtn.setMaxProgress(100);
                         holder.downloadBtn.setProgress((int) (percent * 100));
                         holder.downloadBtn.setCurrentText(mContext.getString(R.string.continued));
-                       // ((ViewHolder) task.getTag()).updatePaused(task.getSpeed());
                     }
 
                     @Override
@@ -180,6 +182,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
                        String path =  task.getPath()+File.separator+task.getFilename();
                         String outputDir =  task.getPath()+File.separator+"output";
                       unzipFile( new File(path), new File(outputDir));
+                      addInstalledAppToDB(item,downloadTask);
                        new Handler().postDelayed(new Runnable() {
                            @Override
                            public void run() {
@@ -216,6 +219,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
             case DownloadProgressButton.STATE_PAUSE:
             {
                downloadTask.start();
+               downloadTask.getId();
             }
                 break;
             case DownloadProgressButton.STATE_FINISH:
@@ -229,7 +233,6 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
                 String path =  downloadTask.getPath()+File.separator+"output"+File.separator+"www/index.html";
                 gotoDapp("file://"+path);
                  AppUtil.toastSuccess(mContext, "打开应用...");
-
             }
             break;
 
@@ -248,6 +251,16 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
         UnZip decomp = new UnZip( zipFile.getPath(),
                 destination.getPath() + File.separator );
         decomp.unzip();
+    }
+
+    private void addInstalledAppToDB(Dapp dapp, BaseDownloadTask task){
+        TaskModel model = new TaskModel();
+        model.setId(task.getId());
+        model.setDappID(dapp.getTransactionId());
+        model.setPath(task.getPath()+File.separator+dapp.getTransactionId());
+        model.setDapp(dapp);
+        model.setUrl(dapp.getLink());
+        TasksDBContraller.getImpl().addTask(model);
     }
 
 
@@ -395,7 +408,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
 
             downloadBtn.setShowBorder(true);
             downloadBtn.setButtonRadius( ConvertUtils.dp2px(20));
-            downloadBtn.setCurrentText("安装");
+            //downloadBtn.setCurrentText("");
         }
 
         public void update(final int id, final int position) {
