@@ -338,6 +338,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
 
             tag.updateDownloading(FileDownloadStatus.connected, soFarBytes
                     , totalBytes);
+
             //tag.taskStatusTv.setText(R.string.tasks_manager_demo_status_connected);
         }
 
@@ -348,8 +349,6 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
             if (tag == null) {
                 return;
             }
-
-
             tag.updateDownloading(FileDownloadStatus.progress, soFarBytes
                     , totalBytes);
         }

@@ -14,7 +14,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:contentDescription="@string/app_name"
-        android:src="@mipmap/xas_icon"
+        android:src="@mipmap/icon_cctime"
         tools:background="#fff0f0f0"/>
 
     <LinearLayout
