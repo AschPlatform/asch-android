@@ -2,14 +2,16 @@ package asch.so.wallet.miniapp.download;
 
 import asch.so.wallet.model.entity.Dapp;
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by kimziv on 2018/1/22.
  */
 
 public class TaskModel extends RealmObject {
-    private int id;
+    @PrimaryKey
     private String dappID;
+    private int id;
     private String name;
     private String url;
     private String path;

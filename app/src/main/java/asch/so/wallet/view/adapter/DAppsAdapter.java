@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -21,12 +22,15 @@ import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 
 import asch.so.wallet.R;
 import asch.so.wallet.activity.BaseCordovaActivity;
+import asch.so.wallet.event.DAppChangeEvent;
 import asch.so.wallet.miniapp.download.TaskModel;
 import asch.so.wallet.miniapp.download.TasksDBContraller;
 import asch.so.wallet.miniapp.download.TasksManager;
@@ -68,11 +72,22 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new File(DOWNLOAD_PATH).delete();
-                holder.downloadBtn.setMaxProgress(1);
-                holder.downloadBtn.setProgress(0);
-                holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
-                holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
+                TasksDBContraller.getImpl().deleteTaskByDappId(item.getTransactionId(), new TasksDBContraller.OnDeleteTaskListener() {
+                    @Override
+                    public void onDeleteTask(TaskModel taskModel) {
+                        boolean ret= FileUtils.deleteDir(new File(DOWNLOAD_PATH));
+                        if (ret){
+                            EventBus.getDefault().post(new DAppChangeEvent());
+                        }
+                        AppUtil.toastInfo(mContext,ret?"删除成功":"删除失败");
+
+                        holder.downloadBtn.setMaxProgress(1);
+                        holder.downloadBtn.setProgress(0);
+                        holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
+                        holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
+                    }
+                });
+
             }
         });
 
@@ -179,9 +194,9 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
                        holder.downloadBtn.setProgress(1);
                        holder.downloadBtn.setState(DownloadProgressButton.STATE_FINISH);
                        holder.downloadBtn.setCurrentText(mContext.getString(R.string.install));
-                       String path =  task.getPath()+File.separator+task.getFilename();
-                        String outputDir =  task.getPath()+File.separator+"output";
-                      unzipFile( new File(path), new File(outputDir));
+//                       String path =  task.getPath()+File.separator+task.getFilename();
+//                        String outputDir =  task.getPath()+File.separator+"output";
+//                      unzipFile( new File(path), new File(outputDir));
                       addInstalledAppToDB(item,downloadTask);
                        new Handler().postDelayed(new Runnable() {
                            @Override
@@ -230,8 +245,10 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
                 break;
             case DownloadProgressButton.STATE_INSTALLED:
             {
-                String path =  downloadTask.getPath()+File.separator+"output"+File.separator+"www/index.html";
-                gotoDapp("file://"+path);
+               TaskModel model = TasksDBContraller.getImpl().getTaskByDappId(dapp.getTransactionId());
+                //String path =  downloadTask.getPath()+File.separator+"output"+File.separator+"www/index.html";
+                String path ="file://"+model.getPath()+File.separator+"www/index.html";
+                gotoDapp(path);
                  AppUtil.toastSuccess(mContext, "打开应用...");
             }
             break;
@@ -254,13 +271,25 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
     }
 
     private void addInstalledAppToDB(Dapp dapp, BaseDownloadTask task){
+        String path =  task.getPath()+File.separator+task.getFilename();
+        String outputDir = task.getPath()+File.separator+dapp.getTransactionId();
+        unzipFile( new File(path), new File(outputDir));
+
         TaskModel model = new TaskModel();
         model.setId(task.getId());
         model.setDappID(dapp.getTransactionId());
-        model.setPath(task.getPath()+File.separator+dapp.getTransactionId());
+        model.setName(dapp.getName());
+        model.setPath(outputDir);
         model.setDapp(dapp);
         model.setUrl(dapp.getLink());
-        TasksDBContraller.getImpl().addTask(model);
+        TasksDBContraller.getImpl().addTask(model, new TasksDBContraller.OnAddTaskListener() {
+            @Override
+            public void onAddTask(TaskModel taskModel) {
+                EventBus.getDefault().post(new DAppChangeEvent());
+            }
+        });
+
+
     }
 
 
