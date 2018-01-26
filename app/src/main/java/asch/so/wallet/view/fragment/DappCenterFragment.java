@@ -105,6 +105,9 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
                       // BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
                         //BaseActivity.start(getActivity(), BaseCordovaActivity.class,null);
                         Intent intent=new Intent(getContext(),BaseCordovaActivity.class);
+                        Bundle bundle=new Bundle();
+                        bundle.putString("url","file:///android_asset/www/index.html");
+                        intent.putExtras(bundle);
                         startActivity(intent);
                     }
                     break;

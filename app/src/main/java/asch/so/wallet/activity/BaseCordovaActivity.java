@@ -21,7 +21,7 @@ public class BaseCordovaActivity extends CordovaActivity {
             moveTaskToBack(true);
         }
         String launchUrl=extras.getString("url");
-         //launchUrl = TextUtils.isEmpty(launchUrl)? "file:///android_asset/www/index.html":"file://"+launchUrl;
+         //launchUrl = TextUtils.isEmpty(launchUrl)? "file:///android_asset/www0/index.html":"file://"+launchUrl;
         // Set by <content src="index.html" /> in config.xml
         loadUrl(launchUrl);
     }
