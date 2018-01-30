@@ -104,7 +104,8 @@ public class CCTimePlugin extends CordovaPlugin {
             });
         }else if (Action.PostComment.getName().equals(action)){
             String dappID=args.getString(0);
-            long fee=args.getLong(1);
+            //long fee=args.getLong(1);
+            long fee=Long.parseLong(args.getString(1));
             String aid=args.getString(2);
             String pid=args.getString(3);
             String content=args.getString(4);
@@ -121,9 +122,11 @@ public class CCTimePlugin extends CordovaPlugin {
             });
         }else if (Action.VoteArticle.getName().equals(action)){
             String dappID=args.getString(0);
-            long fee=args.getLong(1);
+            //long fee=args.getLong(1);
+            long fee=Long.parseLong(args.getString(1));
             String aid=args.getString(2);
             long amount=args.getLong(3);
+            //long amount=Long.parseLong(args.getString(3));
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

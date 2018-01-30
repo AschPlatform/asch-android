@@ -91,7 +91,8 @@ public class DAppPlugin extends CordovaPlugin {
                 }
             });
 
-        }else if (action.equals("postArticle")){
+        }
+        else if (action.equals("postArticle")){
 
         }else if (action.equals("postComment")){
 
