@@ -8,6 +8,8 @@ import android.support.annotation.IntRange;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
+import asch.so.widget.R;
+
 /**
  * Created by deadline on 2017/1/11.
  * 根据用户点击状态设置不同的图片
