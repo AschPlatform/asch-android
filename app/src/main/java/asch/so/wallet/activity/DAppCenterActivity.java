@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
 
@@ -27,7 +29,7 @@ import butterknife.ButterKnife;
 public class DAppCenterActivity extends TitleToolbarActivity {
     private static final String TAG=DAppCenterActivity.class.getSimpleName();
     @BindView(R.id.tablayout)
-    SlidingTabLayout tablayout;
+    SegmentTabLayout tablayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
@@ -62,14 +64,28 @@ public class DAppCenterActivity extends TitleToolbarActivity {
         mFagments.add(installedDAppsFragment);
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-        tablayout.setViewPager(viewPager, mTitles);
+        tablayout.setTabData(mTitles);
+//        tablayout.setViewPager(viewPager, mTitles);
+        tablayout.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                viewPager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+
+            }
+        });
+
         //viewPager.setOffscreenPageLimit(0);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
                 switch (position){
                     case 0:{
-                        //dAppsFragment.refreshData();
+
                     }
                     break;
                     case  1:{
@@ -81,7 +97,7 @@ public class DAppCenterActivity extends TitleToolbarActivity {
 
             @Override
             public void onPageSelected(int position) {
-
+                tablayout.setCurrentTab(position);
             }
 
             @Override
