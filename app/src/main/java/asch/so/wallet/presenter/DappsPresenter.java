@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import asch.so.base.adapter.page.IPage;
@@ -90,8 +91,10 @@ public class DappsPresenter implements DappsContract.Presenter {
             if (result.isSuccessful()) {
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                 JSONArray peersJsonArray = resultJSONObj.getJSONArray("dapps");
-                List<Dapp> peers = JSON.parseArray(peersJsonArray.toJSONString(), Dapp.class);
-                subscriber.onNext(peers);
+                List<Dapp> dapps = JSON.parseArray(peersJsonArray.toJSONString(), Dapp.class);
+                ArrayList<Dapp> filteredDapps=new ArrayList<Dapp>();
+                filteredDapps.add(dapps.get(0));
+                subscriber.onNext(filteredDapps);
                 subscriber.onCompleted();
             } else {
                 subscriber.onError(result.getException());
