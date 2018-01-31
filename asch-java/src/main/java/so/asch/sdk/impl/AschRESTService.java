@@ -140,6 +140,18 @@ public abstract class AschRESTService implements AschInterface{
 
     }
 
+    protected AschResult broadcastArgsTransaction(TransactionInfo transaction){
+        JSONObject transactionJson = (JSONObject) JSONObject.toJSON(transaction);
+        transactionJson.remove("args");
+        transactionJson.remove("option");
+        transactionJson.remove("contractType");
+        transactionJson.put("type",transaction.getTransactionType().getCode());
+        transactionJson.put("args",transaction.getOption().getArgs());
+        ParameterMap transactionParameter = new ParameterMap()
+                .put("transaction", transactionJson);
+        return postMagic(AschServiceUrls.Peer.BROADCAST_TRANSACTION, transactionParameter );
+    }
+
     protected AschResult broadcastDAppTransaction(String dappID, TransactionInfo transaction){
 
         JSONObject transactionJson = (JSONObject) JSONObject.toJSON(transaction);

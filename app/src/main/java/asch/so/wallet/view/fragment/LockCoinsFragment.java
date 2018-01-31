@@ -14,6 +14,7 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.LockCoinsContract;
 import asch.so.wallet.presenter.LockCoinsPresenter;
+import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -92,8 +93,8 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     @Override
     public void onClick(View v) {
         if (v==okBtn){
-
-            //presenter.lockCoins();
+            String height= blockHeightEt.getText().toString().trim();
+            presenter.lockCoins(Long.parseLong(height),"spatial slush action typical emerge feature confirm edge game desk orphan burst","123456Aa");
         }
     }
 
@@ -107,12 +108,12 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+//        if (context instanceof OnFragmentInteractionListener) {
+//            mListener = (OnFragmentInteractionListener) context;
+//        } else {
+//            throw new RuntimeException(context.toString()
+//                    + " must implement OnFragmentInteractionListener");
+//        }
     }
 
     @Override
@@ -128,12 +129,12 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
 
     @Override
     public void displayError(Throwable exception) {
-
+        AppUtil.toastError(getContext(),exception.getMessage());
     }
 
     @Override
     public void displayLockCoinsResult(boolean success, String msg) {
-
+        AppUtil.toastSuccess(getContext(),msg);
     }
 
     /**

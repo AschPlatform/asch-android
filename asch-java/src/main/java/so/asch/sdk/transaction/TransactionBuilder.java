@@ -66,6 +66,24 @@ public class TransactionBuilder {
 
     }
 
+    public TransactionInfo buildLock(long height,String secret, String secondSecret) throws  SecurityException{
+        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+        KeyPair secondKeyPair = getSecurity().generateKeyPair(secondSecret);
+        String[] args={String.valueOf(height)};
+
+        TransactionInfo transaction =  newArgsTransaction(
+                TransactionType.Lock,
+                0L,
+                AschConst.Fees.LOCK,
+                null,
+                args,
+                keyPair.getPublic())
+                ;
+
+        return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
+
+    }
+
     public TransactionInfo buildMultiSignature(int minAccount, int lifetime, String[] addKeys, String[] removeKeys,
                                                String secret, String secondSecret) throws SecurityException{
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
@@ -217,9 +235,11 @@ public class TransactionBuilder {
                         .setTimestamp(getSecurity().getTransactionTimestamp())
                         .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
             case Lock:
-                //new TransactionInfo()
-
-                break;
+                return new TransactionInfo()
+                        .setTransactionType(type)
+                        .setFee(fee)
+                        .setTimestamp(getSecurity().getTransactionTimestamp())
+                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
         }
         return null;
     }
@@ -235,37 +255,20 @@ public class TransactionBuilder {
                 .setContractType(type)
                 .setArgs(optionInfo.getArgsJson())
                 .setOption(optionInfo);
-//        switch (type){
-//            case CoreDeposit:
-//                break;
-//            case CoreWithdrawal:
-//               OptionInfo optionInfo =  new OptionInfo(fee, type, args);
-//                return new TransactionInfo()
-//                        .setFee(fee)
-//                        .setTimestamp(getSecurity().getTransactionTimestamp())
-//                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey))
-//                        .setContractType(type)
-//                        .setArgs(optionInfo.getArgsJson())
-//                        .setOption(optionInfo);
-//            case CoreTransfer:
-//                break;
-//            case CoreSetNickname:
-//                break;
-//
-//
-//            case CCTimePostArticle:
-//                break;
-//            case CCTimePostComment:
-//                break;
-//            case CCTimeVoteArticle:
-//                break;
-//            case CCTimeLikeComment:
-//                break;
-//            case CCTimeReport:
-//                break;
-//        }
-//        return null;
     }
+
+    protected TransactionInfo newArgsTransaction(TransactionType type, long amount ,long fee, String recipientId, String[] args,  PublicKey publicKey) throws SecurityException{
+
+        OptionInfo optionInfo =  new OptionInfo(fee, ContractType.None, args);
+        return new TransactionInfo()
+                .setTransactionType(type)
+                .setAmount(amount)
+                .setFee(fee)
+                .setTimestamp(getSecurity().getTransactionTimestamp())
+                .setSenderPublicKey(getSecurity().encodePublicKey(publicKey))
+                .setOption(optionInfo);
+    }
+
 
 
     protected TransactionInfo signatureAndGenerateTransactionId(TransactionInfo transaction,
@@ -283,6 +286,15 @@ public class TransactionBuilder {
 
     protected TransactionInfo signatureDAppTransaction(TransactionInfo transaction,
                                                                 PrivateKey privateKey) throws SecurityException{
+        byte[] bytes = transaction.getBytes(true,true);
+        String signature = getSecurity().signBytes(bytes,privateKey);
+        Log.d(TAG,"signatureDAppTransaction:"+signature);
+        transaction.setSignature(signature);
+        return transaction;
+    }
+
+    protected TransactionInfo signatureArgsTransaction(TransactionInfo transaction,
+                                                       PrivateKey privateKey) throws SecurityException{
         byte[] bytes = transaction.getBytes(true,true);
         String signature = getSecurity().signBytes(bytes,privateKey);
         Log.d(TAG,"signatureDAppTransaction:"+signature);

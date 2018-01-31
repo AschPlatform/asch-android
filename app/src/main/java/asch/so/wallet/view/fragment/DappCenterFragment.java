@@ -30,6 +30,7 @@ import asch.so.wallet.activity.AccountInfoActivity;
 import asch.so.wallet.activity.BaseCordovaActivity;
 import asch.so.wallet.activity.DAppCenterActivity;
 import asch.so.wallet.activity.DappActivity;
+import asch.so.wallet.activity.LockCoinsActivity;
 import asch.so.wallet.activity.PeersActivity;
 import asch.so.wallet.activity.VoteActivity;
 import asch.so.wallet.contract.DappCenterContract;
@@ -96,7 +97,7 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
                         break;
                     case 1:
                     {
-                        BaseActivity.start(getActivity(),PeersActivity.class,null);
+                        BaseActivity.start(getActivity(),LockCoinsActivity.class,null);
                     }
                         break;
                     case 2:

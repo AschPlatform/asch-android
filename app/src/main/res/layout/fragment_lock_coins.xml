@@ -24,7 +24,7 @@
             android:paddingLeft="6dp"
             android:background="@drawable/dialog_input_bg"
             android:cursorVisible="true"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:textSize="15sp"
             android:hint="@string/input_height"
             android:maxLines="1"

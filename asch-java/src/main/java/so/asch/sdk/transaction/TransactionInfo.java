@@ -182,7 +182,7 @@ public class TransactionInfo {
         //message(?)|asset(?)|setSignature(64)|signSignature(64)
 
         ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.LITTLE_ENDIAN);
-        if (optionInfo==null){
+        if (optionInfo==null||optionInfo.getType()==ContractType.None){
             switch (transactionType){
                 case Transfer:
                 {
@@ -257,6 +257,16 @@ public class TransactionInfo {
                 }
                 break;
                 case Lock:
+                {
+                    buffer.put(getType().byteValue())
+                            .putInt(getTimestamp())
+                            .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                            .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
+                            .put(getRecipientIdBuffer())
+                            .putLong(getAmount())
+                            .put(getArgsBuffer());
+
+                }
                     break;
             }
         }else {
@@ -367,6 +377,22 @@ public class TransactionInfo {
 
     private byte[] getDappArgsBuffer(){
         return optionInfo==null?new byte[0]:optionInfo.getArgsJson().getBytes();
+    }
+
+    private byte[] getArgsBuffer(){
+        byte[] result=new byte[0];
+
+        if (optionInfo!=null && optionInfo.getArgs()!=null && optionInfo.getArgs().length>0){
+            ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE)
+                    .order(ByteOrder.LITTLE_ENDIAN);
+            for (String arg:optionInfo.getArgs()){
+                buffer.put(arg.getBytes());
+            }
+            buffer.flip();
+            result = new byte[buffer.remaining()];
+            buffer.get(result);
+        }
+        return result;
     }
 
 }

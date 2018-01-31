@@ -52,6 +52,7 @@ import so.asch.sdk.dbc.ContractException;
  */
 public enum ContractType {
     //core contracts
+    None(-1, "none"),
     CoreDeposit(1, "core.deposit"),
     CoreWithdrawal(2, "core.withdrawal"),
     CoreTransfer(3, "core.transfer"),
