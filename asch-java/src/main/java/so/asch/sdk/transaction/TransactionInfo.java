@@ -198,6 +198,16 @@ public class TransactionInfo {
                 }
                 break;
                 case Signature:
+                {
+                    buffer.put(getType().byteValue())
+                            .putInt(getTimestamp())
+                            .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
+                            .put(Decoding.unsafeDecodeHex(getRequesterPublicKey()))
+                            .put(getRecipientIdBuffer())
+                            .putLong(getAmount())
+                            .put(getMessageBuffer())
+                            .put(getAsset().assetBytes());
+                }
                     break;
                 case Delegate:
                     break;

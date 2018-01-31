@@ -52,8 +52,8 @@ public class LockCoinsPresenter implements LockCoinsContract.Presenter {
     public void lockCoins(long height, String secret, String secondSecret) {
 
         Subscription subscription = Observable.create((Observable.OnSubscribe<AschResult>) subscriber -> {
-            AschResult result = AschSDK.Account.lockCoins(height,secret,secondSecret);
-                    //vote(pubKeys,null,secret,secondSecret);
+//            AschResult result = AschSDK.Account.lockCoins(height,secret,secondSecret);
+            AschResult result = AschSDK.Signature.setSignature(secret,secondSecret,null,null);
             if (result.isSuccessful()) {
                 subscriber.onNext(result);
                 subscriber.onCompleted();

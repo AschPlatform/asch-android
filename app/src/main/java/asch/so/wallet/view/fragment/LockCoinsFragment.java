@@ -94,7 +94,7 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     public void onClick(View v) {
         if (v==okBtn){
             String height= blockHeightEt.getText().toString().trim();
-            presenter.lockCoins(Long.parseLong(height),"spatial slush action typical emerge feature confirm edge game desk orphan burst","123456Aa");
+            presenter.lockCoins(Long.parseLong(height),"kick leopard someone tag chat track net denial heavy voice dilemma canvas","123456Aa");
         }
     }
 

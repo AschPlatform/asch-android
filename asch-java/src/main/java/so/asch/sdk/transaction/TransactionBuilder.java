@@ -192,7 +192,12 @@ public class TransactionBuilder {
                         .setTimestamp(getSecurity().getTransactionTimestamp())
                         .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
             case Signature:
-                break;
+                return new TransactionInfo()
+                        .setTransactionType(type)
+                        .setAmount(amount)
+                        .setFee(fee)
+                        .setTimestamp(getSecurity().getTransactionTimestamp())
+                        .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
             case Delegate:
                 break;
             case Vote:

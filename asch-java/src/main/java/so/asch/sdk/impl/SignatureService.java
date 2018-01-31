@@ -14,12 +14,6 @@ public class SignatureService extends AschRESTService implements Signature {
             Argument.require(Validation.isValidSecondSecret(secondSecret), "invalid secondSecret");
             Argument.optional(multiSignAccountPublicKey, Validation.isValidPublicKey(publicKey), "invalid multiSignAccountPublicKey");
 
-//            AschResult parameters = new AschResult()
-//                    .fluentPut("secret", secret)
-//                    .fluentPut("publicKey", publicKey)
-//                    .fluentPut("secondSecret", secondSecret)
-//                    .fluentPut("multisigAccountPublicKey", multiSignAccountPublicKey); //注意名称要与asch源码一致!!!
-
             TransactionInfo transaction = getTransactionBuilder()
                     .buildSignature(secret, secondSecret);
 

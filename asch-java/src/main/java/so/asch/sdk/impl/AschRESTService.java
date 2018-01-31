@@ -128,8 +128,16 @@ public abstract class AschRESTService implements AschInterface{
     }
 
     protected AschResult broadcastTransaction(TransactionInfo transaction){
+        JSONObject transactionJson = (JSONObject) JSONObject.toJSON(transaction);
+        transactionJson.remove("args");
+        transactionJson.remove("option");
+        transactionJson.remove("contractType");
+        transactionJson.remove("transactionType");
+        transactionJson.put("type",transaction.getTransactionType().getCode());
+        String json=transactionJson.toJSONString();
+        System.out.println("json:"+json+"\n\n");
         ParameterMap transactionParameter = new ParameterMap()
-                .put("transaction", transaction);
+                .put("transaction", transactionJson);
 //        if (transaction.getAsset() instanceof InTransferAssetInfo){
 //            InTransferAssetInfo assetInfo =(InTransferAssetInfo) transaction.getAsset();
 //            String dappId = assetInfo.getInTransfer().getDappId();
@@ -145,7 +153,7 @@ public abstract class AschRESTService implements AschInterface{
         transactionJson.remove("args");
         transactionJson.remove("option");
         transactionJson.remove("contractType");
-        transactionJson.put("type",transaction.getTransactionType().getCode());
+       transactionJson.put("type",transaction.getTransactionType().getCode());
         transactionJson.put("args",transaction.getOption().getArgs());
         ParameterMap transactionParameter = new ParameterMap()
                 .put("transaction", transactionJson);
