@@ -267,15 +267,30 @@
     <string name="install">安装</string>
     <string name="open">打开</string>
 
-    <string name="tasks_manager_demo_name" formatted="false">任务: %d</string>
-    <string name="tasks_manager_demo_status_loading">状态: 加载中...</string>
-    <string name="tasks_manager_demo_status_pending">状态: 队列中</string>
-    <string name="tasks_manager_demo_status_started">状态: 开始下载</string>
-    <string name="tasks_manager_demo_status_connected">状态: 已连接上</string>
-    <string name="tasks_manager_demo_status_progress">状态: 下载中...</string>
-    <string name="tasks_manager_demo_status_downloading" formatted="false">状态: 正在下载 %d</string>
-    <string name="tasks_manager_demo_status_error">状态: 出错</string>
-    <string name="tasks_manager_demo_status_paused">状态: 暂停</string>
-    <string name="tasks_manager_demo_status_completed">状态: 下载完成</string>
-    <string name="tasks_manager_demo_status_not_downloaded">状态: 未下载</string>
+    <string name="dapp_detail">应用详情</string>
+    <string name="dapp_info">信息</string>
+    <string name="dapp_price">资费</string>
+    <string name="dapp_size">应用大小</string>
+    <string name="dapp_verion">版本号</string>
+    <string name="dapp_datetime">发布时间</string>
+    <string name="dapp_developer">开发者</string>
+    <string name="dapp_des">应用介绍</string>
+    <string name="dapp_free">免费</string>
+    <string name="asch_company_name">北京阿希链科技有限公司</string>
+    <string name="dapp_des_content">CCTime（Cryptocurrency Time 加密货币时代）是一个基于阿希（ASCH）侧链技术开发的分布式社会新闻分享与交流平台。
+它的创意来源于Hacker News。Hacker News是Y Combinator旗下的一个新闻频道，主要关注于计算机科学与创业话题的新闻分享、评论与交流。
+    </string>
+
+
+    <!--<string name="tasks_manager_demo_name" formatted="false">任务: %d</string>-->
+    <!--<string name="tasks_manager_demo_status_loading">状态: 加载中...</string>-->
+    <!--<string name="tasks_manager_demo_status_pending">状态: 队列中</string>-->
+    <!--<string name="tasks_manager_demo_status_started">状态: 开始下载</string>-->
+    <!--<string name="tasks_manager_demo_status_connected">状态: 已连接上</string>-->
+    <!--<string name="tasks_manager_demo_status_progress">状态: 下载中...</string>-->
+    <!--<string name="tasks_manager_demo_status_downloading" formatted="false">状态: 正在下载 %d</string>-->
+    <!--<string name="tasks_manager_demo_status_error">状态: 出错</string>-->
+    <!--<string name="tasks_manager_demo_status_paused">状态: 暂停</string>-->
+    <!--<string name="tasks_manager_demo_status_completed">状态: 下载完成</string>-->
+    <!--<string name="tasks_manager_demo_status_not_downloaded">状态: 未下载</string>-->
 </resources>

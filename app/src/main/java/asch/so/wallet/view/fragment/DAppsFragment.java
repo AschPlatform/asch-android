@@ -1,5 +1,6 @@
 package asch.so.wallet.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -18,6 +20,7 @@ import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.DAppDetailActivity;
 import asch.so.wallet.contract.DappsContract;
 import asch.so.wallet.model.entity.Dapp;
 import asch.so.wallet.presenter.DappsPresenter;
@@ -81,6 +84,16 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
             }
         });
         refreshLayout.autoRefresh();
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (position==0){
+                    Intent intent=new Intent(getContext(),DAppDetailActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
         return view;
     }
 
