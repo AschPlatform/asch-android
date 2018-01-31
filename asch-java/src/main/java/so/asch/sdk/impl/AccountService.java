@@ -132,7 +132,7 @@ public class AccountService extends so.asch.sdk.impl.AschRESTService implements 
         try {
             //Argument.require(Validation.isv);
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
-            Argument.require(Validation.isValidSecondSecret(secondSecret), "invalid secondSecret");
+            Argument.optional(secondSecret,Validation.isValidSecondSecret(secondSecret), "invalid secondSecret");
 
             TransactionInfo transaction  = getTransactionBuilder().buildLock(height,secret,secondSecret);
             return broadcastArgsTransaction(transaction);

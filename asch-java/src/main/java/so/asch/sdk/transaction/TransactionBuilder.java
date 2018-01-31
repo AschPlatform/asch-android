@@ -68,7 +68,6 @@ public class TransactionBuilder {
 
     public TransactionInfo buildLock(long height,String secret, String secondSecret) throws  SecurityException{
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
-        KeyPair secondKeyPair = getSecurity().generateKeyPair(secondSecret);
         String[] args={String.valueOf(height)};
 
         TransactionInfo transaction =  newArgsTransaction(
