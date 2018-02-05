@@ -27,6 +27,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
+import java.util.List;
 
 import asch.so.wallet.R;
 import asch.so.wallet.activity.BaseCordovaActivity;
@@ -63,6 +64,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
         holder.nameTv.setText(item.getName());
         holder.descriptionTv.setText(item.getName());
         holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
+        TaskModel task=TasksDBContraller.getImpl().getTaskByDappId(item.getTransactionId());
         holder.downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -91,42 +93,21 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
             }
         });
 
-//        if (TasksManager.getImpl().isReady()) {
-//            if (tasksMap.containsKey(item.getTransactionId())){
-//
-//            TaskModel model=tasksMap.get(item.getTransactionId());
-//            final int status = TasksManager.getImpl().getStatus(model.getId(), model.getPath());
-//            if (status == FileDownloadStatus.pending || status == FileDownloadStatus.started ||
-//                    status == FileDownloadStatus.connected) {
-//                // start task, but file not created yet
-//                holder.updateDownloading(status, TasksManager.getImpl().getSoFar(model.getId())
-//                        , TasksManager.getImpl().getTotal(model.getId()));
-//            } else if (!new File(model.getPath()).exists() &&
-//                    !new File(FileDownloadUtils.getTempPath(model.getPath())).exists()) {
-//                // not exist file
-//                holder.updateNotDownloaded(status, 0, 0);
-//            } else if (TasksManager.getImpl().isDownloaded(status)) {
-//                // already downloaded and exist
-//                holder.updateDownloaded();
-//            } else if (status == FileDownloadStatus.progress) {
-//                // downloading
-//                holder.updateDownloading(status, TasksManager.getImpl().getSoFar(model.getId())
-//                        , TasksManager.getImpl().getTotal(model.getId()));
-//            } else {
-//
-//                // not start
-//                holder.updateNotDownloaded(status, TasksManager.getImpl().getSoFar(model.getId())
-//                        , TasksManager.getImpl().getTotal(model.getId()));
-//            }
-//
-//            }else{
-//
-//            }
-//        } else {
-////            holder.taskStatusTv.setText(R.string.tasks_manager_demo_status_loading);
-//            holder.downloadBtn.setText(R.string.tasks_manager_demo_status_loading);
-//            //holder.downloadBtn.setEnabled(false);
-//        }
+       if (task!=null){
+           final int status = TasksManager.getImpl().getStatus(task.getId(), task.getPath());
+           if (status == FileDownloadStatus.paused) {
+               long sofar = TasksManager.getImpl().getSoFar(task.getId());
+               long total = TasksManager.getImpl().getTotal(task.getId());
+               final float percent = sofar
+                       / (float) total;
+               holder.downloadBtn.setMaxProgress(100);
+               holder.downloadBtn.setProgress((int) (percent * 100));
+
+               holder.downloadBtn.setState(DownloadProgressButton.STATE_PAUSE);
+               holder.downloadBtn.setCurrentText(mContext.getString(R.string.continued));
+           }
+       }
+
     }
 
 
@@ -197,7 +178,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
 //                       String path =  task.getPath()+File.separator+task.getFilename();
 //                        String outputDir =  task.getPath()+File.separator+"output";
 //                      unzipFile( new File(path), new File(outputDir));
-                      addInstalledAppToDB(item,downloadTask);
+                      //addInstalledAppToDB(item,downloadTask);
                        new Handler().postDelayed(new Runnable() {
                            @Override
                            public void run() {
@@ -224,6 +205,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
             {
                 downloadTask = createDownloadTask(holder,dapp);
                 downloadTask.start();
+                addInstalledAppToDB(dapp,downloadTask);
             }
                 break;
             case DownloadProgressButton.STATE_DOWNLOADING:
@@ -233,8 +215,11 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
                 break;
             case DownloadProgressButton.STATE_PAUSE:
             {
-               downloadTask.start();
-               downloadTask.getId();
+                downloadTask = createDownloadTask(holder,dapp);
+                downloadTask.start();
+               // TasksManager.getImpl().get()
+               //downloadTask.start();
+               //downloadTask.getId();
             }
                 break;
             case DownloadProgressButton.STATE_FINISH:
@@ -273,7 +258,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
     private void addInstalledAppToDB(Dapp dapp, BaseDownloadTask task){
         String path =  task.getPath()+File.separator+task.getFilename();
         String outputDir = task.getPath()+File.separator+dapp.getTransactionId();
-        unzipFile( new File(path), new File(outputDir));
+        //unzipFile( new File(path), new File(outputDir));
 
         TaskModel model = new TaskModel();
         model.setId(task.getId());

@@ -16,7 +16,15 @@ public class TaskModel extends RealmObject {
     private String url;
     private String path;
     private Dapp dapp;
+    private int status;
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public int getId() {
         return id;

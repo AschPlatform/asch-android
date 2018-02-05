@@ -2,15 +2,11 @@ package asch.so.wallet.presenter;
 
 import android.content.Context;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-
 import java.util.List;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
-import asch.so.wallet.contract.InstalledDappsContract;
+import asch.so.wallet.contract.DAppDetailContract;
 import asch.so.wallet.miniapp.download.TaskModel;
 import asch.so.wallet.miniapp.download.TasksDBContraller;
 import asch.so.wallet.model.entity.Dapp;
@@ -20,27 +16,23 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-import so.asch.sdk.AschResult;
-import so.asch.sdk.AschSDK;
-import so.asch.sdk.dto.query.DappQueryParameters;
 
 /**
- * Created by kimziv on 2018/1/24.
+ * Created by kimziv on 2018/2/5.
  */
 
-public class InstalledDappsPresenter implements InstalledDappsContract.Presenter {
+public class DAppDetailPresenter implements DAppDetailContract.Presenter {
+
     private Context context;
-    private InstalledDappsContract.View view;
+    private DAppDetailContract.View view;
     private CompositeSubscription subscriptions;
 
-    public InstalledDappsPresenter(Context context, InstalledDappsContract.View view) {
+    public DAppDetailPresenter(Context context, DAppDetailContract.View view) {
         this.context = context;
         this.view = view;
+        this.view.setPresenter(this);
         this.subscriptions=new CompositeSubscription();
-        view.setPresenter(this);
     }
-
-
 
     @Override
     public void subscribe() {
@@ -52,20 +44,21 @@ public class InstalledDappsPresenter implements InstalledDappsContract.Presenter
         this.subscriptions.clear();
     }
 
-    private List<TaskModel> queryDapps(){
-      return   TasksDBContraller.getImpl().getAllTasks();
+    private TaskModel queryDappByDAppId(String dappId){
+       return TasksDBContraller.getImpl().getTaskByDappId(dappId);
     }
 
     @Override
-    public void loadInstalledDapps() {
-        List<TaskModel> dapps=queryDapps();
-        Subscription subscription = Observable.create((Observable.OnSubscribe<List<TaskModel>>) subscriber -> {
-            subscriber.onNext(dapps);
+    public void loadDApp(String dappId) {
+       TaskModel task=queryDappByDAppId(dappId);
+
+        Subscription subscription = Observable.create((Observable.OnSubscribe<TaskModel>) subscriber -> {
+            subscriber.onNext(task);
             subscriber.onCompleted();
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<TaskModel>>() {
+                .subscribe(new Subscriber<TaskModel>() {
                     @Override
                     public void onCompleted() {
 
@@ -77,13 +70,10 @@ public class InstalledDappsPresenter implements InstalledDappsContract.Presenter
                     }
 
                     @Override
-                    public void onNext(List<TaskModel> dapps) {
-                        view.displayInstalledDapps(dapps);
+                    public void onNext(TaskModel task) {
+                        view.displayDApp(task);
                     }
                 });
         subscriptions.add(subscription);
     }
-
-
-
 }

@@ -18,6 +18,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.List;
 
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.DAppDetailActivity;
@@ -88,7 +89,13 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (position==0){
+
+                    //BaseActivity.start(getActivity(),DAppDetailActivity.class,);
+                    Dapp dapp=(Dapp) adapter.getItem(position);
                     Intent intent=new Intent(getContext(),DAppDetailActivity.class);
+                    Bundle bundle=new Bundle();
+                    bundle.putString("dapp_id",dapp.getTransactionId());
+                    intent.putExtras(bundle);
                     startActivity(intent);
                 }
             }
