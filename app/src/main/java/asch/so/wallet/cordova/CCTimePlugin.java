@@ -310,6 +310,7 @@ public class CCTimePlugin extends CordovaPlugin {
             @Override
             public void onError(Throwable e) {
                 AppUtil.toastError(cordova.getContext(), e.getMessage());
+                dismissDialog();
                 callbackContext.error(e.getMessage());
             }
 

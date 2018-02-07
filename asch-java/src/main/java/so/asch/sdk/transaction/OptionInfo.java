@@ -53,10 +53,10 @@ public class OptionInfo {
     public String getArgsJson(){
         StringBuilder builder=new StringBuilder();
         builder.append("[");
-        for (String arg :
-                args) {
+        for (int i = 0; i < args.length; i++) {
+            String arg=args[i];
             builder.append(String.format("\"%s\"",arg));
-            if (!arg.equals(args[args.length-1])){
+            if (i!=(args.length-1)){
                 builder.append(",");
             }
         }

@@ -92,7 +92,7 @@ public class DAppPlugin extends CordovaPlugin {
             });
 
         }
-        callbackContext.success();
+        //callbackContext.success();
         return true;
     }
 
@@ -153,7 +153,8 @@ public class DAppPlugin extends CordovaPlugin {
                     subscriber.onNext(result);
                     subscriber.onCompleted();
                 } else {
-                    subscriber.onError(result != null ? result.getException() : new Throwable("result is null"));
+//                    subscriber.onError(result != null ? result.getException() : new Throwable("result is null"));
+                    subscriber.onError(result != null ? new Throwable(result.getRawJson()) : new Throwable("result is null"));
                 }
             }
         });
@@ -220,6 +221,11 @@ public class DAppPlugin extends CordovaPlugin {
                     coreWithdraw(dappID,currency,amount,message,secret,secondSecret,callbackContext);
                 }else {
                     // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    //callbackContext.error("账户密码不正确");
+                   // PluginResult pluginResult = new PluginResult(PluginResult.Status.ERROR, "账户密码不正确");
+                    //pluginResult.setKeepCallback(false);
+
+                    //callbackContext.sendPluginResult(pluginResult);
                     AppUtil.toastError(cordova.getContext(), "账户密码错误");
 
                 }
@@ -306,6 +312,8 @@ public class DAppPlugin extends CordovaPlugin {
                     @Override
                     public void onError(Throwable e) {
                         AppUtil.toastError(cordova.getContext(), "提现失败");
+                        callbackContext.error(e.getMessage());
+                        dismissDialog();
                         //callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
                     }
 
@@ -313,6 +321,7 @@ public class DAppPlugin extends CordovaPlugin {
                     public void onNext(AschResult aschResult) {
                         String rawJson = aschResult.getRawJson();
                         Log.i(TAG, "+++++++" + rawJson);
+                        callbackContext.success();
                         // callBack.onCallBack(rawJson);
                         // callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK, aschResult.getRawJson()));
                         AppUtil.toastSuccess(cordova.getContext(), "提现成功");
@@ -380,30 +389,6 @@ public class DAppPlugin extends CordovaPlugin {
 
                     }
                 });
-    }
-
-    //------------------------
-    //Local Methods-- cctime
-    //------------------------
-
-    public void cctimePostArticle(){
-
-    }
-
-    public void cctimePostComment(){
-
-    }
-
-    public void cctimeVoteArticle(){
-
-    }
-
-    public void cctimeLikeComment(){
-
-    }
-
-    public void cctimeReport(){
-
     }
 
 
