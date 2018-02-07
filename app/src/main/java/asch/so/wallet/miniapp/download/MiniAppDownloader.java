@@ -5,4 +5,5 @@ package asch.so.wallet.miniapp.download;
  */
 
 public class MiniAppDownloader {
+
 }

@@ -138,6 +138,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
                         holder.downloadBtn.setProgress((int) (percent * 100));
                         holder.downloadBtn.setCurrentText(mContext.getString(R.string.pause));
                         Log.d(TAG, String.format("progress sofar: %d total: %d", soFarBytes, totalBytes));
+
                        // ((ViewHolder) task.getTag()).updateProgress(soFarBytes, totalBytes,
                                // task.getSpeed());
                     }

@@ -39,7 +39,7 @@ public class DAppPlugin extends CordovaPlugin {
 
         if (action.equals("authorize")) {
             authorize();
-        }else if (action.equals("deposit")){
+        }else if (action.equals("core.deposit")){
             String dappID=args.getString(0);
             String currency=args.getString(1);
             long amount=args.getLong(2);
@@ -50,7 +50,7 @@ public class DAppPlugin extends CordovaPlugin {
                     deposit(dappID,currency,amount,message,callbackContext);
                 }
             });
-        }else if (action.equals("withdraw")){
+        }else if (action.equals("core.withdrawal")){
             String dappID=args.getString(0);
             String currency=args.getString(1);
             long amount=args.getLong(2);
@@ -62,7 +62,7 @@ public class DAppPlugin extends CordovaPlugin {
                     withdraw(dappID,currency,amount,message,callbackContext);
                 }
             });
-        }else if (action.equals("innerTransfer")){//currency, amount, fee, message, targetAddress
+        }else if (action.equals("core.transfer")){//currency, amount, fee, message, targetAddress
             String dappID=args.getString(0);
             String currency=args.getString(1);
             String targetAddress=args.getString(2);
@@ -77,7 +77,7 @@ public class DAppPlugin extends CordovaPlugin {
                     transfer(dappID,currency,targetAddress,amount,message,fee,callbackContext);
                 }
             });
-        }else if (action.equals("setNickname")){
+        }else if (action.equals("core.setNickname")){
 
             String dappID=args.getString(0);
             String nickname=args.getString(1);
@@ -90,17 +90,6 @@ public class DAppPlugin extends CordovaPlugin {
                     setNickname(dappID, nickname, fee, callbackContext);
                 }
             });
-
-        }
-        else if (action.equals("postArticle")){
-
-        }else if (action.equals("postComment")){
-
-        }else if (action.equals("voteArticle")){
-
-        }else if (action.equals("likeComment")){
-
-        }else if (action.equals("report")){
 
         }
         callbackContext.success();
