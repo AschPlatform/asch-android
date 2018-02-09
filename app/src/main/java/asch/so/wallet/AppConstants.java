@@ -12,6 +12,7 @@ public class AppConstants {
 
     public static final String XAS_NAME = "XAS";
     public static final int PRECISION = 8;
+    public static final long XAS_CIRCULATION = 100000000;
     public static final String DIGITS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // public static final  String DEFAULT_NODE_URL="http://101.200.84.232:4097";//"http://192.168.2.124:4096";//
     public static final String DEFAULT_MAIN_NODE_URL = "http://mainnet.asch.cn";

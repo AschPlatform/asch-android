@@ -56,6 +56,10 @@ public class Validation {
                 );
     }
 
+    public static boolean isValidDAppId(String dappid){
+        return (dappid != null && dappid.length()>0);
+    }
+
     public static boolean isValidAmount(int amount){
         //TODO:validate amount
         return amount > 0 && amount <100000000;

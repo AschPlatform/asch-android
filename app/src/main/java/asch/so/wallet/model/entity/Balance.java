@@ -16,6 +16,8 @@ import asch.so.wallet.util.AppUtil;
 		"quantity": "1000000",
 		"writeoff": 1
  */
+
+
 public class Balance {
     private String currency;
     private String balance;

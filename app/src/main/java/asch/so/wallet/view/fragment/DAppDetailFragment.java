@@ -1,5 +1,6 @@
 package asch.so.wallet.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.DAppBalanceActivity;
 import asch.so.wallet.contract.DAppDetailContract;
 import asch.so.wallet.miniapp.download.TaskModel;
 import asch.so.wallet.model.entity.Dapp;
@@ -28,10 +30,10 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
     TextView nameTv;
     @BindView(R.id.description_tv)
     TextView descriptionTv;
-    @BindView(R.id.download_btn)
-    DownloadProgressButton downloadBtn;
-    @BindView(R.id.delete_btn)
-    Button deleteBtn;
+    @BindView(R.id.deposit_btn)
+    Button depositBtn;
+    @BindView(R.id.balance_btn)
+    Button balanceBtn;
     private DAppDetailContract.Presenter presenter;
     private String dappId;
 
@@ -57,6 +59,18 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_dapp_detail,container,false);
         ButterKnife.bind(this,rootView);
+
+        balanceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), DAppBalanceActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("dapp_id",dappId);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
         presenter.loadDApp(dappId);
         return rootView;
     }

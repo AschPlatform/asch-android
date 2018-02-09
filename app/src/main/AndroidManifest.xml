@@ -113,6 +113,9 @@
         <activity
             android:name=".activity.DAppDetailActivity"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".activity.DAppBalanceActivity"
+            android:theme="@style/AppTheme"></activity>
 
     </application>
 

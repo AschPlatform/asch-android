@@ -147,6 +147,9 @@ public interface Dapp extends AschInterface{
      */
     AschResult queryDapps(DappQueryParameters parameters);
 
+
+    AschResult queryDappBalances(String dappId);
+
 //    3.2 获取未确认的交易
 //
 //    接口地址：/api/dapps/dappID/transactions/unconfirmed

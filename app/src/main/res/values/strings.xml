@@ -281,6 +281,11 @@
 它的创意来源于Hacker News。Hacker News是Y Combinator旗下的一个新闻频道，主要关注于计算机科学与创业话题的新闻分享、评论与交流。
     </string>
 
+    <string name="support_currency">币种</string>
+    <string name="circulation">当前流通量</string>
+    <string name="dapp_balance">DAPP余额</string>
+    <string name="dapp_balance_detail">余额详情</string>
+    <string name="deposit">充值</string>
 
     <!--<string name="tasks_manager_demo_name" formatted="false">任务: %d</string>-->
     <!--<string name="tasks_manager_demo_status_loading">状态: 加载中...</string>-->

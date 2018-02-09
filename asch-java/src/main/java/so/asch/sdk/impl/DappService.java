@@ -141,6 +141,18 @@ public class DappService extends AschRESTService implements Dapp {
     }
 
     @Override
+    public AschResult queryDappBalances(String dappId) {
+        try {
+            Argument.require(Validation.isValidDAppId(dappId), "invalid dapp id");
+
+            return get(String.format(AschServiceUrls.Dapp.QUERY_DAPP_BALANCES_FORMAT,dappId));
+        }
+        catch (Exception ex) {
+            return fail(ex);
+        }
+    }
+
+    @Override
     public AschResult queryUnconfirmedTransactions(String dappID) {
         return null;
     }

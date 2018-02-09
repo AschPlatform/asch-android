@@ -71,29 +71,43 @@
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-                <asch.so.widget.downloadbutton.DownloadProgressButton
-                    android:id="@+id/download_btn"
-
-                    android:layout_marginBottom="2dp"
-                    android:layout_width="70dp"
-                    android:layout_height="24dp"
-                    android:padding="0dp"
-                    android:textSize="12sp"
-                    app:progress_btn_ball_style="STYLE_BALL_PULSE"
-                    app:progress_btn_border_width="2dp" />
                 <asch.so.widget.statebutton.StateButton
-                    android:id="@+id/delete_btn"
+                    android:id="@+id/deposit_btn"
                     android:layout_marginTop="2dp"
                     android:layout_width="68dp"
                     android:layout_height="22dp"
                     android:textSize="10sp"
-                    android:text="@string/delete"
+                    android:text="@string/deposit"
                     android:padding="0dp"
                     app:sb_radius="12dp"
                     app:round="true"
                     app:animationDuration="200"
-                    app:normalTextColor="#949494"
-                    app:normalBackgroundColor="#f1f0f6"
+                    app:normalTextColor="#FFFFFF"
+                    app:normalBackgroundColor="@color/button_bg_nor"
+                    />
+                <!--<asch.so.widget.downloadbutton.DownloadProgressButton-->
+                    <!--android:id="@+id/download_btn"-->
+
+                    <!--android:layout_marginBottom="2dp"-->
+                    <!--android:layout_width="70dp"-->
+                    <!--android:layout_height="24dp"-->
+                    <!--android:padding="0dp"-->
+                    <!--android:textSize="12sp"-->
+                    <!--app:progress_btn_ball_style="STYLE_BALL_PULSE"-->
+                    <!--app:progress_btn_border_width="2dp" />-->
+                <asch.so.widget.statebutton.StateButton
+                    android:id="@+id/balance_btn"
+                    android:layout_marginTop="2dp"
+                    android:layout_width="68dp"
+                    android:layout_height="22dp"
+                    android:textSize="10sp"
+                    android:text="@string/dapp_balance_detail"
+                    android:padding="0dp"
+                    app:sb_radius="12dp"
+                    app:round="true"
+                    app:animationDuration="200"
+                    app:normalTextColor="#FFFFFF"
+                    app:normalBackgroundColor="@color/button_bg_nor"
                     />
             </LinearLayout>
 
