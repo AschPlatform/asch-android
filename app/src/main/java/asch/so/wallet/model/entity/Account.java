@@ -33,6 +33,10 @@ public class Account extends RealmObject{
     //密码提示
     private  String hint;
 
+    //账户临时存储密码
+    @Ignore
+    private String tmpPasswd;
+
     private String encryptSeed;
 
     private String encryptPasswd;
@@ -183,6 +187,14 @@ public class Account extends RealmObject{
 
     public void setEnryptSecondSecret(String enryptSecondSecret) {
         this.enryptSecondSecret = enryptSecondSecret;
+    }
+
+    public String getTmpPasswd() {
+        return tmpPasswd;
+    }
+
+    public void setTmpPasswd(String tmpPasswd) {
+        this.tmpPasswd = tmpPasswd;
     }
 
     @Override

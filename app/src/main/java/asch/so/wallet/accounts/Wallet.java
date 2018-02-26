@@ -49,6 +49,8 @@ public class Wallet {
     private LinkedHashMap<String,BaseAsset> allssets;
     private static final String UIA_ASSETS_CACHE_KEY=AppConfig.getNodeURL()+"UIA_ASSETS_CACHE_KEY";
 
+    public static final String ACCOUNT_LOCK_TIMEOUT_CACHE_KEY=AppConfig.getNodeURL()+"ACCOUNT_LOCK_TIMEOUT_CACHE_KEY";
+
     public Wallet(Context ctx) {
         this.context=ctx;
         this.allssets=new LinkedHashMap<>();

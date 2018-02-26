@@ -44,7 +44,7 @@ def filedownloaderVersion="1.6.9"
 def localeChangerVersion="0.9.1"
 def progressButtonVersion="v1.2.7"
 def eventbusVersion="3.1.1"
-
+def switchbuttonVersion="2.0.0"
 def env=[
         dev:"dev",
         test:"test",
@@ -198,7 +198,8 @@ project.ext {
             "filedownloader"                :"com.liulishuo.filedownloader:library:${filedownloaderVersion}",
             "localeChanger"                 :"com.github.franmontiel:LocaleChanger:${localeChangerVersion}",
             "progressButton"                :"com.github.jiang111:CProgressButton:${progressButtonVersion}",
-            "eventbus"                      :"org.greenrobot:eventbus:${eventbusVersion}"
+            "eventbus"                      :"org.greenrobot:eventbus:${eventbusVersion}",
+            "switchbutton"                  :"com.kyleduo.switchbutton:library:${switchbuttonVersion}"
 
     ]
 }

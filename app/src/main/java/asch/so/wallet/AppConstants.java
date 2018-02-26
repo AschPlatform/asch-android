@@ -39,6 +39,7 @@ public class AppConstants {
 
     public static final int DB_SCHEME_VERSION = 2;
     public static final int DEFAULT_CACHE_TIMEOUT = 30 * 60;//单位秒
+    public static final int DEFAULT_ACCOUNT_LOCK_CACHE_TIMEOUT = 60 * 60;//单位秒
 
     public static final String DEBUG_TAG = "Debug";
     public static final String RELEASE_TAG = "Release";

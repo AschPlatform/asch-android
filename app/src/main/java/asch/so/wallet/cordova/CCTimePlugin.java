@@ -16,7 +16,7 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.util.AppUtil;
-import asch.so.wallet.view.widget.AllPasswdsDialog;
+import asch.so.wallet.view.widget.DAppPasswordDialog;
 import rx.Observable;
 import rx.Scheduler;
 import rx.Subscriber;
@@ -33,7 +33,7 @@ import so.asch.sdk.impl.AschConst;
 public class CCTimePlugin extends CordovaPlugin {
 
     private static final String TAG=CCTimePlugin.class.getSimpleName();
-    private AllPasswdsDialog dialog;
+    private DAppPasswordDialog dialog;
 
     public enum Action{
         PostArticle(1000,"cctime.postArticle"),
@@ -94,9 +94,9 @@ public class CCTimePlugin extends CordovaPlugin {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+                    showPasswordDialog(new DAppPasswordDialog.OnConfirmationListenner() {
                         @Override
-                        public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                        public void callback(DAppPasswordDialog dialog, String secret, String errMsg) {
                                 postArticle(dappID, fee, title, url, text, tags, secret, callbackContext);
                         }
                     });
@@ -112,9 +112,9 @@ public class CCTimePlugin extends CordovaPlugin {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+                    showPasswordDialog(new DAppPasswordDialog.OnConfirmationListenner() {
                         @Override
-                        public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                        public void callback(DAppPasswordDialog dialog, String secret, String errMsg) {
                             postComment(dappID,fee, aid,pid,content, secret, callbackContext);
                         }
                     });
@@ -130,9 +130,9 @@ public class CCTimePlugin extends CordovaPlugin {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+                    showPasswordDialog(new DAppPasswordDialog.OnConfirmationListenner() {
                         @Override
-                        public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                        public void callback(DAppPasswordDialog dialog, String secret, String errMsg) {
                             voteArticle(dappID,fee, aid,amount,secret,callbackContext);
                         }
                     });
@@ -146,9 +146,9 @@ public class CCTimePlugin extends CordovaPlugin {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+                    showPasswordDialog(new DAppPasswordDialog.OnConfirmationListenner() {
                         @Override
-                        public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                        public void callback(DAppPasswordDialog dialog, String secret, String errMsg) {
                             likeComment(dappID,fee, cid,amount,secret,callbackContext);
                         }
                     });
@@ -162,9 +162,9 @@ public class CCTimePlugin extends CordovaPlugin {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    showPasswordDialog(new AllPasswdsDialog.OnConfirmationListenner() {
+                    showPasswordDialog(new DAppPasswordDialog.OnConfirmationListenner() {
                         @Override
-                        public void callback(AllPasswdsDialog dialog, String secret, String secondSecret, String errMsg) {
+                        public void callback(DAppPasswordDialog dialog, String secret, String errMsg) {
                             report(dappID,fee, topic,value,secret,callbackContext);
                         }
                     });
@@ -181,9 +181,9 @@ public class CCTimePlugin extends CordovaPlugin {
     }
 
 
-    private void showPasswordDialog(AllPasswdsDialog.OnConfirmationListenner confirmationListenner){
+    private void showPasswordDialog(DAppPasswordDialog.OnConfirmationListenner confirmationListenner){
         boolean hasSecondSecret=getAccount().hasSecondSecret();
-        dialog = new AllPasswdsDialog(this.cordova.getContext(),hasSecondSecret);
+        dialog = new DAppPasswordDialog(this.cordova.getContext());
         dialog.setTitle(this.cordova.getContext().getString(R.string.account_input_title));
         dialog.show(confirmationListenner);
     }
