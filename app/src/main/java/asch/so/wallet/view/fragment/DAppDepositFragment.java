@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -64,8 +65,6 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
 
     DAppDepositContract.Presenter presenter;
 
-    @BindView(R.id.target_et)
-    EditText targetEt;
     @BindView(R.id.ammount_et)
     EditText amountEt;
     @BindView(R.id.memo_et)
@@ -89,13 +88,13 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
     private SecondPasswdDialog secondPasswdDialog;
     private BaseAsset selectedAsset;
     private String currency=null;
-    private AssetTransferActivity.Action action;
+    private String dappId=null;
 
-    public static AssetTransferFragment newInstance() {
+    public static DAppDepositFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        AssetTransferFragment fragment = new AssetTransferFragment();
+        DAppDepositFragment fragment = new DAppDepositFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -103,12 +102,9 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        action= AssetTransferActivity.Action.valueOf(getArguments().getInt("action"));
         balance= JSON.parseObject(getArguments().getString("balance"),Balance.class);
-        String uri = getArguments().getString("qrcode_uri");
-        parseQRUri(uri);
+        dappId=getArguments().getString("dapp_id");
         presenter =new DAppDepositPresenter(getContext(),this);
-        setHasOptionsMenu(true);
     }
 
     private Account getAccount(){
@@ -127,29 +123,24 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView=inflater.inflate(R.layout.fragment_asset_transfer,container,false);
+        View rootView=inflater.inflate(R.layout.fragment_dapp_deposit,container,false);
         ButterKnife.bind(this,rootView);
 
         hideKeyboard();
 
-        if (qrCodeURL!=null){
-            targetEt.setText(qrCodeURL.getAddress());
-            amountEt.setText(qrCodeURL.getAmount());
-            String assetName = qrCodeURL.getCurrency();
-            this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
-        }else {
-            // AppUtil.toastError(getContext(),"收款二维码有错误");
-        }
+//        if (qrCodeURL!=null){
+//            targetEt.setText(qrCodeURL.getAddress());
+//            amountEt.setText(qrCodeURL.getAmount());
+//            String assetName = qrCodeURL.getCurrency();
+//            this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
+//        }else {
+//            // AppUtil.toastError(getContext(),"收款二维码有错误");
+//        }
 
         Balance balanceRemain=getBalance();
-        //float realBalance = balanceRemain!=null?balanceRemain.getDecimalBalance().floatValue():-1;
-        //if (realBalance>=0){
         balanceTv.setText(balanceRemain==null?"":balanceRemain.getBalanceString());
-        //}else {
-        //   balanceTv.setText("");
-        //}
 
-        targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));
+        //targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));
         if (hasSecondPasswd()){
             secondPasswdLl.setVisibility(View.VISIBLE);
         }else {
@@ -160,7 +151,7 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
             @Override
             public void onClick(View view) {
 
-                String targetAddress= targetEt.getText().toString().trim();
+                //String targetAddress= targetEt.getText().toString().trim();
                 String ammountStr=amountEt.getText().toString().trim();
                 String message=memoEt.getText().toString();
                 String secondSecret=secondPasswdEt.getText().toString().trim();
@@ -172,14 +163,14 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
                     return;
                 }
 
-                if (!Validator.check(getContext(), Validator.Type.Address,targetAddress,getString(R.string.address_invalid))){
-                    return;
-                }
+//                if (!Validator.check(getContext(), Validator.Type.Address,targetAddress,getString(R.string.address_invalid))){
+//                    return;
+//                }
 
-                if (targetAddress.equals(getAccount().getAddress())){
-                    AppUtil.toastError(getContext(),getString(R.string.address_same));
-                    return;
-                }
+//                if (targetAddress.equals(getAccount().getAddress())){
+//                    AppUtil.toastError(getContext(),getString(R.string.address_same));
+//                    return;
+//                }
 
                 if (!Validator.check(getContext(), Validator.Type.Amount,ammountStr,getString(R.string.invalid_money))){
                     return;
@@ -201,12 +192,9 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
                     }
                 }
 
-                showConfirmationDialog(targetAddress, ammountStr, currency,secondSecret, new TransferConfirmationDialog.OnConfirmListener() {
+                showConfirmationDialog(dappId, ammountStr, currency,secondSecret, new TransferConfirmationDialog.OnConfirmListener() {
                     @Override
                     public void onConfirm(TransferConfirmationDialog dialog) {
-                        //long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
-                        //int precision=selectedAsset.getPrecision();
-                        //long amount = AppUtil.scaledAmountFromDecimal(Float.parseFloat(ammountStr),precision);
                         Account currentAccount =AccountsManager.getInstance().getCurrentAccount();
                         if (currentAccount!=null)
                         {
@@ -215,7 +203,7 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
                                 public void callback(SecondPasswdDialog dialog, String password) {
                                     if (Validator.check(getContext(), Validator.Type.Password,password,getString(R.string.account_password_error)))
                                     {
-                                        presenter.transfer(currency,targetAddress,amount,message,null,hasSecondPwd?secondSecret:null,password);
+                                        presenter.transfer(dappId,currency,amount,message,null,hasSecondPwd?secondSecret:null,password);
                                         showHUD();
                                     }
                                 }
@@ -265,27 +253,27 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
         }
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_asset_transfer,menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item_scan_qrcode:
-            {
-                Intent intent =new Intent(getActivity(), QRCodeScanActivity.class);
-                Bundle bundle=new Bundle();
-                bundle.putInt("action", QRCodeScanActivity.Action.ScanAddressToPaste.value);
-                intent.putExtras(bundle);
-                startActivityForResult(intent, 11);
-            }
-            break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.menu_asset_transfer,menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.item_scan_qrcode:
+//            {
+//                Intent intent =new Intent(getActivity(), QRCodeScanActivity.class);
+//                Bundle bundle=new Bundle();
+//                bundle.putInt("action", QRCodeScanActivity.Action.ScanAddressToPaste.value);
+//                intent.putExtras(bundle);
+//                startActivityForResult(intent, 11);
+//            }
+//            break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
 
     @Override
@@ -304,7 +292,7 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
     public void displayAssets(LinkedHashMap<String,BaseAsset> assetsMap){
         LogUtils.dTag(TAG,"++++assets:"+assetsMap.toString());
         List<String> nameList=new ArrayList<>(assetsMap.keySet());
-        int selectIndex= nameList.indexOf(currency);
+        //int selectIndex= nameList.indexOf(currency);
         BaseAsset asset=assetsMap.get(currency);
         selectedAsset=asset;
         if (asset==null){
@@ -314,7 +302,18 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         assetsSpinner.setAdapter(adapter);
-        assetsSpinner.setSelection(selectIndex,true);
+       // assetsSpinner.setSelection(selectIndex,true);
+        assetsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                currency=adapter.getItem(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
     }
@@ -363,41 +362,5 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
                 getActivity().finish();
             }
         }, 200);
-    }
-
-    private void parseQRUri(String uri){
-        try {
-            if (Validation.isValidAddress(uri)){
-                qrCodeURL=new QRCodeURL();
-                qrCodeURL.setAmount("");
-                qrCodeURL.setCurrency(AschConst.CORE_COIN_NAME);
-                qrCodeURL.setAddress(uri);
-            }else {
-                qrCodeURL=QRCodeURL.decodeQRCodeURL(uri);
-            }
-
-        }catch (Exception e){
-            qrCodeURL=null;
-            e.printStackTrace();
-        }
-    }
-
-    public void setTargetAddress(String uri){
-        parseQRUri(uri);
-        if (qrCodeURL!=null){
-            targetEt.setText(qrCodeURL.getAddress());
-            amountEt.setText(qrCodeURL.getAmount());
-            String assetName = qrCodeURL.getCurrency();
-            if (TextUtils.isEmpty(assetName)){
-                presenter.loadAssets(currency,true);
-            }else {
-                //this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
-                this.currency= assetName;
-            }
-
-        }else {
-            AppUtil.toastError(getContext(),getString(R.string.receipt_rq_error));
-        }
-        presenter.loadAssets(currency,false);
     }
 }

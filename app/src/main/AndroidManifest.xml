@@ -70,7 +70,6 @@
         <activity
             android:name=".activity.AssetReceiveActivity"
             android:windowSoftInputMode="adjustPan|adjustResize"></activity>
-        <activity android:name=".activity.DappContainerActivity"></activity>
         <activity android:name=".activity.DappActivity"></activity>
         <activity android:name=".activity.WebActivity"></activity>
         <activity android:name=".activity.TransactionsActivity"></activity>
@@ -117,6 +116,9 @@
             android:name=".activity.DAppBalanceActivity"
             android:theme="@style/AppTheme"></activity>
 
+        <activity android:name=".activity.DAppDepositActivity"
+                  android:windowSoftInputMode="adjustPan|adjustResize"
+                  android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

@@ -286,7 +286,8 @@
     <string name="dapp_balance">DAPP余额</string>
     <string name="dapp_balance_detail">余额详情</string>
     <string name="deposit">充值</string>
-
+    <string name="dapp_deposit">DApp充值</string>
+    <string name="deposit_success">充值成功</string>
     <!--<string name="tasks_manager_demo_name" formatted="false">任务: %d</string>-->
     <!--<string name="tasks_manager_demo_status_loading">状态: 加载中...</string>-->
     <!--<string name="tasks_manager_demo_status_pending">状态: 队列中</string>-->

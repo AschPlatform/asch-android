@@ -12,6 +12,8 @@ import android.widget.TextView;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.DAppBalanceActivity;
+import asch.so.wallet.activity.DAppDepositActivity;
+import asch.so.wallet.contract.DAppDepositContract;
 import asch.so.wallet.contract.DAppDetailContract;
 import asch.so.wallet.miniapp.download.TaskModel;
 import asch.so.wallet.model.entity.Dapp;
@@ -59,6 +61,18 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_dapp_detail,container,false);
         ButterKnife.bind(this,rootView);
+
+        depositBtn.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(getContext(), DAppDepositActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("dapp_id",dappId);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
 
         balanceBtn.setOnClickListener(new View.OnClickListener() {
             @Override

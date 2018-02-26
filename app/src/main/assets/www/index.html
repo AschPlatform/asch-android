@@ -1,9 +1,18 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui"><meta name=apple-mobile-web-app-capable content=yes><meta name=apple-mobile-web-app-status-bar-style content=black><meta name=full-screen content=yes><meta name=browsermode content=application><meta name=x5-orientation content=portrait><meta name=x5-fullscreen content=true><meta name=x5-page-mode content=app><title>CCTime</title><link href=app.1c6ab5cb269eedd611de59ec9567f4f5.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=cordova.js></script><script type=text/javascript src=plugins/cordova-plugin-dapp/www/dapp.js></script><script type=text/javascript src=plugins/cordova-plugin-cctime/www/cctime.js></script><script type=text/javascript>function getQueryString(name) {
-    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null) {
-        return unescape(r[2]);
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui"><meta name=apple-mobile-web-app-capable content=yes><meta name=apple-mobile-web-app-status-bar-style content=black><meta name=full-screen content=yes><meta name=browsermode content=application><meta name=x5-orientation content=portrait><meta name=x5-fullscreen content=true><meta name=x5-page-mode content=app><title>CCTime</title><script type=text/javascript>function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
     }
-    return null;
-}
-alert(getQueryString("address"));</script><script type=text/javascript src=manifest.87edd105800e97ddc1aa.js></script><script type=text/javascript src=vendor.fb404fac9cedf5f79249.js></script><script type=text/javascript src=app.7ccc25cd86115df7a383.js></script></body></html>
+    window.userAddress = getQueryString("address")
+    // alert(getQueryString("address"));</script><link href=app.1c6ab5cb269eedd611de59ec9567f4f5.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=cordova.js></script><script type=text/javascript src=plugins/cordova-plugin-dapp/www/dapp.js></script><script type=text/javascript src=plugins/cordova-plugin-cctime/www/cctime.js></script><script type=text/javascript>function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+    // alert(getQueryString("address"));</script><script type=text/javascript src=manifest.80d6112c9e82bac48549.js></script><script type=text/javascript src=vendor.fb404fac9cedf5f79249.js></script><script type=text/javascript src=app.3de9a01d9f38740d83ff.js></script></body></html>

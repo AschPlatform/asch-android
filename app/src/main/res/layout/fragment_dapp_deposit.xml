@@ -45,32 +45,6 @@
                 />
         </LinearLayout>
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="57dp"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:background="@android:color/white"
-            >
-            <EditText
-                android:id="@+id/target_et"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="10dp"
-                android:background="@null"
-                android:hint="@string/payee_address_input_hint"
-                android:textSize="15sp"
-                android:textColor="#333333"
-                android:cursorVisible="true"
-                android:focusable="true"
-                android:inputType="text"
-                android:maxLines="1" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/divider_color"
-                />
-        </LinearLayout>
-        <LinearLayout
             android:background="@android:color/white"
             android:layout_width="match_parent"
             android:layout_height="57dp"
@@ -147,6 +121,7 @@
             android:layout_height="57dp"
             android:orientation="vertical"
             android:gravity="center_vertical"
+            android:visibility="gone"
             >
             <EditText
                 android:id="@+id/memo_et"

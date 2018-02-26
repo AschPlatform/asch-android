@@ -62,7 +62,7 @@ public class DAppDepositPresenter implements DAppDepositContract.Presenter {
     }
 
     @Override
-    public void transfer(String currency, String dappId, long amount, String message, String secret, String secondSecret, String password) {
+    public void transfer(String dappId, String currency, long amount, String message, String secret, String secondSecret, String password) {
         String encryptSecret=getAccount().getEncryptSeed();
          Subscription subscription= Observable.create(new Observable.OnSubscribe<AschResult>(){
 
@@ -73,20 +73,13 @@ public class DAppDepositPresenter implements DAppDepositContract.Presenter {
                         subscriber.onError(new Throwable("1"));
                         return;
                     }
-                    AschResult result=null;
-                    if (AppConstants.XAS_NAME.equals(currency)){
-                         result = AschSDK.Account.transfer(dappId,amount,message,decryptSecret,secondSecret);
-                    }else {
-                        result = AschSDK.UIA.transfer(currency,dappId,amount,message,decryptSecret,secondSecret);
-                    }
+                    AschResult result=AschSDK.Dapp.deposit(dappId,currency,amount,message,decryptSecret,secondSecret);
                     LogUtils.dTag(TAG,"transfer result:"+result==null?"null":result.getRawJson());
                     if (result!=null && result.isSuccessful()){
                         subscriber.onNext(result);
                         subscriber.onCompleted();
                     }else {
                         subscriber.onError(new Throwable(result.getError()));
-//                        subscriber.onError(new Throwable("2"));
-                       // subscriber.onError(result!=null?result.getException():new Exception("result is null"));
                     }
                 }
             }).subscribeOn(Schedulers.io())
@@ -112,7 +105,7 @@ public class DAppDepositPresenter implements DAppDepositContract.Presenter {
                         @Override
                         public void onNext(AschResult aschResult) {
                             LogUtils.iTag(TAG, "+++++++"+aschResult.getRawJson());
-                            view.displayTransferResult(true,context.getString(R.string.transfer_success));
+                            view.displayTransferResult(true,context.getString(R.string.deposit_success));
                         }
                     });
          subscriptions.add(subscription);
@@ -144,19 +137,19 @@ public class DAppDepositPresenter implements DAppDepositContract.Presenter {
         subscriptions.add(subscription);
     }
 
-    private int getSelectedIndex(List<UIAAsset> assets, String currency){
-        int index=0;
-        if (currency!=null && assets!=null){
-            for (int i = 0; i < assets.size(); i++) {
-                if (currency.equals(assets.get(i).getName()))
-                {
-                    index=i+1;
-                    break;
-                }
-            }
-        }
-        return index;
-    }
+//    private int getSelectedIndex(List<UIAAsset> assets, String currency){
+//        int index=0;
+//        if (currency!=null && assets!=null){
+//            for (int i = 0; i < assets.size(); i++) {
+//                if (currency.equals(assets.get(i).getName()))
+//                {
+//                    index=i+1;
+//                    break;
+//                }
+//            }
+//        }
+//        return index;
+//    }
 
     private boolean hasAsset(String currency){
         return (getAccount()!=null && getAccount().getFullAccount()!=null && getAccount().getFullAccount().hasAsset(currency));
