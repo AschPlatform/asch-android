@@ -26,6 +26,7 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.activity.AccountInfoActivity;
 import asch.so.wallet.activity.BaseCordovaActivity;
 import asch.so.wallet.activity.DAppCenterActivity;
@@ -105,9 +106,11 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
                         //showToast();
                       // BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
                         //BaseActivity.start(getActivity(), BaseCordovaActivity.class,null);
+                        String address=getAccount().getAddress();
                         Intent intent=new Intent(getContext(),BaseCordovaActivity.class);
                         Bundle bundle=new Bundle();
                         bundle.putString("url","file:///android_asset/www/index.html");
+                        bundle.putString("address",address);
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
@@ -155,6 +158,10 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
 //        adapter.addHeaderView(banner);
         presenter.loadDappList();
         return rootView;
+    }
+
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
     }
 
     private void showToast(){
