@@ -109,29 +109,6 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_mine, container,false);
         ButterKnife.bind(this,rootView);
-//        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//            boolean misAppbarExpand = true;
-//            @Override
-//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//
-//                int scrollRange = appBarLayout.getTotalScrollRange();
-//                Log.v(TAG,"verticalOffset:"+verticalOffset+", scrollRange:"+scrollRange);
-//                float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
-//                toolbar.setAlpha((1-fraction));
-//                toolbar.setBackgroundResource(R.mipmap.toolbar);
-//
-//                if (fraction < 0.1 && misAppbarExpand) {
-//                    misAppbarExpand = false;
-//                    //addIconIv.setAlpha(1.0f);
-//                    //topBalanceTv.setAlpha(1.0f);
-//                }
-//                if (fraction > 0.8 && !misAppbarExpand) {
-//                    misAppbarExpand = true;
-//                    // addIconIv.setAlpha(0);
-//                    //topBalanceTv.setAlpha(0);
-//                }
-//            }
-//        });
 
         mineRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         mineRcv.setItemAnimator(new DefaultItemAnimator());
