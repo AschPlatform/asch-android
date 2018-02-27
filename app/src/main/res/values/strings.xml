@@ -180,6 +180,8 @@
     <string name="locked">锁仓</string>
     <string name="locked_fail">锁仓失败</string>
     <string name="locked_success">锁仓成功</string>
+    <string name="invalid_lock_height">锁仓高度无效</string>
+    <string name="input_locked_Height">请输入锁仓高度</string>
     <string name="vote_list">节点列表</string>
     <string name="coming_son">敬请期待</string>
     <string name="balance_get_error">获取余额错误</string>
@@ -245,6 +247,7 @@
     <string name="error_vote_ok">您选择的部分受托人已经投过票，请区块确认后刷新再操作</string>
     <!--<string name="error_params_post">服务器错误，请检查您填写的信息是否正确</string>-->
     <string name="error_params">服务器错误，请检查您参数是否正确</string>
+    <string name="set_second_secret_success">二级密码设置成功</string>
 
     <string name="please_select_delegate">请选择受托人</string>
     <string name="select_vote_format">已选择%d位受托人</string>
@@ -290,15 +293,19 @@
     <string name="deposit_success">充值成功</string>
     <string name="please_input_account_password">请输入账户密码</string>
     <string name="passwd_lock_hint">是否1小时内免密码输入</string>
-    <!--<string name="tasks_manager_demo_name" formatted="false">任务: %d</string>-->
-    <!--<string name="tasks_manager_demo_status_loading">状态: 加载中...</string>-->
-    <!--<string name="tasks_manager_demo_status_pending">状态: 队列中</string>-->
-    <!--<string name="tasks_manager_demo_status_started">状态: 开始下载</string>-->
-    <!--<string name="tasks_manager_demo_status_connected">状态: 已连接上</string>-->
-    <!--<string name="tasks_manager_demo_status_progress">状态: 下载中...</string>-->
-    <!--<string name="tasks_manager_demo_status_downloading" formatted="false">状态: 正在下载 %d</string>-->
-    <!--<string name="tasks_manager_demo_status_error">状态: 出错</string>-->
-    <!--<string name="tasks_manager_demo_status_paused">状态: 暂停</string>-->
-    <!--<string name="tasks_manager_demo_status_completed">状态: 下载完成</string>-->
-    <!--<string name="tasks_manager_demo_status_not_downloaded">状态: 未下载</string>-->
+
+    <string name="have_set">已设置</string>
+    <string name="have_lock">已锁仓</string>
+    <string name="set_lock_msg">设置锁仓信息</string>
+    <string name="last_height">当前高度</string>
+    <string name="set_height">设置高度</string>
+    <string name="set_date">设置时间</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="lock_warning">超出最大锁仓高度</string>
+    <string name="lock_warning_2">低于当前已锁仓高度</string>
+    <string name="input_second_secret_hint">请输入8到16位字母和数字组合</string>
+    <string name="lock_clear">解锁</string>
+
 </resources>
