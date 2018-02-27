@@ -98,7 +98,6 @@
         <activity android:name=".activity.LockCoinsActivity"
             android:theme="@style/AppTheme"
             >
-
         </activity>
 
         <activity android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
@@ -108,6 +107,13 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
 
+        <activity
+            android:name=".activity.DAppCenterActivity"
+            android:theme="@style/AppTheme"></activity>
+
+        <activity
+            android:name=".activity.SecondSecretActivity"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
