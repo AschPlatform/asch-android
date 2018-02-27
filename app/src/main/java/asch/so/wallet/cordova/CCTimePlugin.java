@@ -30,61 +30,16 @@ import so.asch.sdk.impl.AschConst;
  * Created by kimziv on 2018/1/17.
  */
 
-public class CCTimePlugin extends CordovaPlugin {
+public class CCTimePlugin extends BasePlugin {
 
     private static final String TAG=CCTimePlugin.class.getSimpleName();
-    private DAppPasswordDialog dialog;
-
-    public enum Action{
-        PostArticle(1000,"cctime.postArticle"),
-        PostComment(1001,"cctime.postComment"),
-        VoteArticle(1002,"cctime.voteArticle"),
-        LikeComment(1003,"cctime.likeComment"),
-        Report(1004,"cctime.report")
-        ;
-
-        private static final Map<Integer,Action> allActions = new HashMap<>();
-        static{
-            for( Action action : Action.values()){
-                allActions.put(action.getType(), action);
-            }
-        }
-
-        private int type;
-        private String name;
-
-        Action(int type, String name) {
-            this.type=type;
-            this.name = name;
-        }
-
-        public int getType() {
-            return type;
-        }
-
-        public void setType(int type) {
-            this.type = type;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public static Action fromType(int type){
-            return allActions.get(type);
-        }
-    }
 
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
         if(this.cordova.getActivity().isFinishing()) return true;
 
-        if (Action.PostArticle.getName().equals(action)){
+        if (DAppContract.PostArticle.getName().equals(action)){
             String dappID=args.getString(0);
             long fee=args.getLong(1);
             String title=args.getString(2);
@@ -102,7 +57,7 @@ public class CCTimePlugin extends CordovaPlugin {
                     });
                 }
             });
-        }else if (Action.PostComment.getName().equals(action)){
+        }else if (DAppContract.PostComment.getName().equals(action)){
             String dappID=args.getString(0);
             //long fee=args.getLong(1);
             long fee=Long.parseLong(args.getString(1));
@@ -120,7 +75,7 @@ public class CCTimePlugin extends CordovaPlugin {
                     });
                 }
             });
-        }else if (Action.VoteArticle.getName().equals(action)){
+        }else if (DAppContract.VoteArticle.getName().equals(action)){
             String dappID=args.getString(0);
             //long fee=args.getLong(1);
             long fee=Long.parseLong(args.getString(1));
@@ -138,7 +93,7 @@ public class CCTimePlugin extends CordovaPlugin {
                     });
                 }
             });
-        }else if (Action.LikeComment.getName().equals(action)){
+        }else if (DAppContract.LikeComment.getName().equals(action)){
             String dappID=args.getString(0);
             long fee=args.getLong(1);
             String cid=args.getString(2);
@@ -154,7 +109,7 @@ public class CCTimePlugin extends CordovaPlugin {
                     });
                 }
             });
-        }else if (Action.Report.getName().equals(action)){
+        }else if (DAppContract.Report.getName().equals(action)){
             String dappID=args.getString(0);
             long fee=args.getLong(1);
             int topic=args.getInt(2);
@@ -175,26 +130,6 @@ public class CCTimePlugin extends CordovaPlugin {
         return true;
     }
 
-
-    private Account getAccount(){
-        return AccountsManager.getInstance().getCurrentAccount();
-    }
-
-
-    private void showPasswordDialog(DAppPasswordDialog.OnConfirmationListenner confirmationListenner){
-        boolean hasSecondSecret=getAccount().hasSecondSecret();
-        dialog = new DAppPasswordDialog(this.cordova.getContext());
-        dialog.setTitle(this.cordova.getContext().getString(R.string.account_input_title));
-        dialog.show(confirmationListenner);
-    }
-
-    private void dismissDialog(){
-        if (dialog!=null){
-            dialog.dismiss();
-            dialog=null;
-        }
-    }
-
     /**
      1.1 发布文章
      合约编号：1000
@@ -212,7 +147,7 @@ public class CCTimePlugin extends CordovaPlugin {
      */
     public void postArticle(String dappID, long fee, String title, String url, String text, String tags, String secret, CallbackContext callbackContext){
         String[] args={title,url,text,tags};
-        invokeContract(dappID, Action.PostArticle.getType(),fee, args,secret, callbackContext);
+        invokeContract(dappID, DAppContract.PostArticle.getType(),fee, args,secret, callbackContext);
     }
 
     /**
@@ -232,7 +167,7 @@ public class CCTimePlugin extends CordovaPlugin {
      */
     public void postComment(String dappID, long fee, String aid, String pid, String content, String secret, CallbackContext callbackContext){
         String[] args={aid,pid,content};
-        invokeContract(dappID, Action.PostComment.getType(),fee, args,secret, callbackContext);
+        invokeContract(dappID, DAppContract.PostComment.getType(),fee, args,secret, callbackContext);
     }
 
     /**
@@ -248,7 +183,7 @@ public class CCTimePlugin extends CordovaPlugin {
      */
     public void voteArticle(String dappID, long fee, String aid, long amount, String secret, CallbackContext callbackContext){
         String[] args={aid,String.valueOf(amount)};
-        invokeContract(dappID, Action.VoteArticle.getType(),fee, args,secret, callbackContext);
+        invokeContract(dappID, DAppContract.VoteArticle.getType(),fee, args,secret, callbackContext);
     }
 
     /**
@@ -265,7 +200,7 @@ public class CCTimePlugin extends CordovaPlugin {
      */
     public void likeComment(String dappID, long fee, String cid, long amount, String secret, CallbackContext callbackContext){
         String[] args={cid,String.valueOf(amount)};
-        invokeContract(dappID, Action.LikeComment.getType(),fee, args,secret, callbackContext);
+        invokeContract(dappID, DAppContract.LikeComment.getType(),fee, args,secret, callbackContext);
     }
 
     /**
@@ -281,51 +216,9 @@ public class CCTimePlugin extends CordovaPlugin {
      */
     public void report(String dappID, long fee, int topic, String value, String secret, CallbackContext callbackContext){
         String[] args={String.valueOf(topic), value};
-        invokeContract(dappID, Action.Report.getType(),fee, args,secret, callbackContext);
+        invokeContract(dappID, DAppContract.Report.getType(),fee, args,secret, callbackContext);
     }
 
 
-    private void invokeContract(String dappID, int type, long fee, String[] args, String secret, CallbackContext callbackContext){
-        Observable.create(new Observable.OnSubscribe<AschResult>() {
-
-            @Override
-            public void call(Subscriber<? super AschResult> subscriber) {
-                AschResult result = AschSDK.Dapp.invokeContract(dappID, type, fee,args, secret);
-                if (result != null && result.isSuccessful()) {
-                    subscriber.onNext(result);
-                    subscriber.onCompleted();
-                } else {
-                    subscriber.onError(new Throwable(result!=null?result.getError():"result is null"));
-                }
-            }
-        }).subscribeOn(Schedulers.io())
-          .observeOn(AndroidSchedulers.mainThread())
-        .unsubscribeOn(Schedulers.io())
-        .subscribe(new Subscriber<AschResult>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                AppUtil.toastError(cordova.getContext(), e.getMessage());
-                dismissDialog();
-                callbackContext.error(e.getMessage());
-            }
-
-            @Override
-            public void onNext(AschResult result) {
-
-                AppUtil.toastSuccess(cordova.getContext(), getString(R.string.opreation_success));
-                dismissDialog();
-                callbackContext.success();
-            }
-        });
-    }
-
-    private String getString(int resId){
-      return  cordova.getContext().getString(resId);
-    }
 
 }

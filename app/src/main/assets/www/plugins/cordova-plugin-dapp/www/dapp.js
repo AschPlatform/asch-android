@@ -17,21 +17,21 @@ module.exports = {
 
 //充值
     deposit : function(onSuccess, onError, dappID, currency, amount, message){
- exec(onSuccess, onError, PLUGIN_NAME, "deposit", [ dappID, currency, amount, message]);
+ exec(onSuccess, onError, PLUGIN_NAME, "core.deposit", [ dappID, currency, amount, message]);
 },
 
 //提现
 withdraw:function(onSuccess, onError, dappID, currency, amount, message, fee){
- exec(onSuccess, onError, PLUGIN_NAME, "withdraw", [dappID, currency, amount, message, fee]);
+ exec(onSuccess, onError, PLUGIN_NAME, "core.withdrawal", [dappID, currency, amount, message, fee]);
 },
 //内部转账
 innerTransfer : function(onSuccess, onError, dappID, currency, targetAddress, amount, message, fee){
- exec(onSuccess, onError, PLUGIN_NAME, "innerTransfer", [dappID, currency, targetAddress, amount, message, fee]);
+ exec(onSuccess, onError, PLUGIN_NAME, "core.transfer", [dappID, currency, targetAddress, amount, message, fee]);
 },
 
 //设置昵称
 setNickname : function(onSuccess, onError, dappID, nickname, fee){
- exec(onSuccess, onError, PLUGIN_NAME, "setNickname", [dappID, nickname, fee]);
+ exec(onSuccess, onError, PLUGIN_NAME, "core.setNickname", [dappID, nickname, fee]);
 }
 
 };
