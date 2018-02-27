@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import org.apache.cordova.CordovaActivity;
 
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.view.widget.AuthorizeDialog;
 import asch.so.wallet.view.widget.DAppPasswordDialog;
 
@@ -26,7 +28,7 @@ public class BaseCordovaActivity extends CordovaActivity {
             moveTaskToBack(true);
         }
         String launchUrl=extras.getString("url");
-        String address=extras.getString("address");
+        String address=getAccount().getAddress();//extras.getString("address");
         loadUrl(String.format("%s?address=%s",launchUrl,address));
         showAuthorizeDialog();
     }
@@ -46,5 +48,9 @@ public class BaseCordovaActivity extends CordovaActivity {
                 finish();
             }
         });
+    }
+
+    private Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
     }
 }
