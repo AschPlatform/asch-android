@@ -1,18 +1,15 @@
 package asch.so.wallet.presenter;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.blankj.utilcode.util.LogUtils;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
-import asch.so.wallet.contract.LockCoinsContract;
+import asch.so.wallet.contract.SecondSecretContract;
 import asch.so.wallet.model.entity.Account;
-import asch.so.wallet.model.entity.Delegate;
-import asch.so.wallet.model.entity.FullAccount;
-import asch.so.wallet.view.fragment.LockCoinsFragment;
+import asch.so.wallet.util.AppUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -21,25 +18,23 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
+import so.asch.sdk.impl.Validation;
 
 /**
- * Created by kimziv on 2017/12/13.
+ * Created by haizeiwang on 2018/1/21.
  */
 
-public class LockCoinsPresenter implements LockCoinsContract.Presenter {
-    private static final String TAG = LockCoinsFragment.class.getSimpleName();
+public class SecondSecretPresenter implements SecondSecretContract.Presenter{
+    private SecondSecretContract.View view;
     private Context context;
-    private LockCoinsContract.View view;
     private CompositeSubscription subscriptions;
 
-    public LockCoinsPresenter(Context context, LockCoinsContract.View view) {
-        this.context = context;
-        this.view = view;
-        this.view.setPresenter(this);
+    public SecondSecretPresenter(Context context, SecondSecretContract.View view){
+        this.context=context;
+        this.view=view;
+        view.setPresenter(this);
         this.subscriptions=new CompositeSubscription();
     }
-
-
 
     @Override
     public void subscribe() {
@@ -52,19 +47,24 @@ public class LockCoinsPresenter implements LockCoinsContract.Presenter {
     }
 
     @Override
-    public void lockCoins(long height, String accountPasswd, String secondSecret) {
+    public void storeSecondPassword(String accountPasswd, String secondSecret) {
         String encryptSecret = getAccount().getEncryptSeed();
 
         Subscription subscription = Observable.create((Observable.OnSubscribe<AschResult>) subscriber -> {
-            String secret = Account.decryptSecret(accountPasswd, encryptSecret);
-            AschResult result = AschSDK.Account.lockCoins(height,secret,secondSecret);
-            if (result.isSuccessful()) {
-                subscriber.onNext(result);
-                getAccount().getFullAccount().getAccount().setLockHeight(height);
-                subscriber.onCompleted();
+            String decryptSecret = Account.decryptSecret(accountPasswd, encryptSecret);
+            if (!Validation.isValidSecret(decryptSecret)) {
+                subscriber.onError(new Throwable(context.getString(R.string.account_password_error)));
             } else {
-                subscriber.onError(new Throwable(result.getError()));
+                AschResult result = AschSDK.Signature.setSignature(decryptSecret,secondSecret,null,null);
+                if (result.isSuccessful()) {
+                    getAccount().getFullAccount().getAccount().setSecondSignature(true);
+                    subscriber.onNext(result);
+                    subscriber.onCompleted();
+                } else {
+                    subscriber.onError(new Throwable(result.getError()));
+                }
             }
+
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -81,19 +81,13 @@ public class LockCoinsPresenter implements LockCoinsContract.Presenter {
 
                     @Override
                     public void onNext(AschResult result) {
-                        view.displayLockCoinsResult(true, context.getString(R.string.locked_success));
+                        view.displaySetSecondSecretResult(true, context.getString(R.string.set_second_secret_success));
                     }
                 });
         subscriptions.add(subscription);
     }
 
-    @Override
-    public void loadBlockInfo() {
-        this.view.displayBlockInfo(getAccount());
-    }
-
-
-    public Account getAccount() {
+    private Account getAccount() {
         return AccountsManager.getInstance().getCurrentAccount();
     }
 }

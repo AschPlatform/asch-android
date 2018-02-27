@@ -4,21 +4,31 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.LockCoinsActivity;
+import asch.so.wallet.activity.SecondSecretActivity;
 import asch.so.wallet.contract.AccountInfoContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountInfoPresenter;
 import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.text.format.DateUtils.FORMAT_SHOW_TIME;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,6 +55,8 @@ public class AccountInfoFragment extends BaseFragment implements AccountInfoCont
     TextView secondPasswdBtn;
     @BindView(R.id.lock_coins_btn)
     TextView lockCoinsBtn;
+    @BindView(R.id.tv_lock_date)
+    TextView tv_lock_date;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -89,22 +101,25 @@ public class AccountInfoFragment extends BaseFragment implements AccountInfoCont
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_account_info, container, false);
         ButterKnife.bind(this,rootView);
         secondPasswdBtn.setOnClickListener(this);
         lockCoinsBtn.setOnClickListener(this);
-        presenter.loadAccountInfo();
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.loadAccountInfo();
+    }
 
     @Override
     public void onClick(View v) {
         if (v==secondPasswdBtn){
-            AppUtil.toastInfo(getContext(), secondPasswdBtn.getText().toString());
+            BaseActivity.start(getActivity(),SecondSecretActivity.class,null);
         }else  if (v==lockCoinsBtn){
-            AppUtil.toastInfo(getContext(), lockCoinsBtn.getText().toString());
+            BaseActivity.start(getActivity(),LockCoinsActivity.class,null);
         }
     }
 
@@ -143,6 +158,11 @@ public class AccountInfoFragment extends BaseFragment implements AccountInfoCont
     }
 
     @Override
+    public void dispLockInfo(String date) {
+        tv_lock_date.setText(date+" "+getString(R.string.lock_clear));
+    }
+
+    @Override
     public void displayAccountInfo(Account account) {
         setAccountInfo(account);
     }
@@ -153,22 +173,15 @@ public class AccountInfoFragment extends BaseFragment implements AccountInfoCont
         pubkeyTv.setText(account.getPublicKey());
         addressTv.setText(account.getAddress());
         boolean isSetSecondPasswd=account.hasSecondSecret();
-        secondPasswdBtn.setText(isSetSecondPasswd?"已设置":"未设置");
+        secondPasswdBtn.setText(isSetSecondPasswd?getString(R.string.have_set):getString(R.string.not_set));
         secondPasswdBtn.setEnabled(!isSetSecondPasswd);
         boolean isLocked=account.hasLockCoins();
-        lockCoinsBtn.setText(isLocked?"已锁仓":"未锁仓");
-        lockCoinsBtn.setEnabled(!isLocked);
+        lockCoinsBtn.setText(isLocked?getString(R.string.have_lock):getString(R.string.not_lock));
     }
 
+
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     *
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

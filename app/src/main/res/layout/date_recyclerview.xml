@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/date_pop_bg"
+    android:adjustViewBounds="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layoutManager="LinearLayoutManager"
+    tools:listitem="@layout/date_pop_item" />

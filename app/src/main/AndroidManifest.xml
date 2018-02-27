@@ -119,6 +119,9 @@
         <activity android:name=".activity.DAppDepositActivity"
                   android:windowSoftInputMode="adjustPan|adjustResize"
                   android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".activity.SecondSecretActivity"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

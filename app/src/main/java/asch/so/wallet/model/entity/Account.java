@@ -163,6 +163,7 @@ public class Account extends RealmObject{
         return false;
     }
 
+
     public boolean hasLockCoins(){
         if (getFullAccount()!=null && getFullAccount().getAccount()!=null)
         {
@@ -172,6 +173,7 @@ public class Account extends RealmObject{
         }
         return false;
     }
+
 
     public String getSecondSecret() {
         return secondSecret;
