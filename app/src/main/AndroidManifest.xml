@@ -111,6 +111,9 @@
             android:name=".activity.DAppCenterActivity"
             android:theme="@style/AppTheme"></activity>
 
+        <activity
+            android:name=".activity.SecondSecretActivity"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

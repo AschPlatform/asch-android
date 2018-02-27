@@ -2,10 +2,28 @@ package asch.so.wallet.presenter;
 
 import android.content.Context;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.blankj.utilcode.util.LogUtils;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import asch.so.base.view.Throwable;
+import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountInfoContract;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.FullAccount;
+import asch.so.wallet.util.AppUtil;
+import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+import so.asch.sdk.AschResult;
+import so.asch.sdk.AschSDK;
 
 /**
  * Created by kimziv on 2017/12/11.
@@ -37,6 +55,48 @@ public class AccountInfoPresenter implements AccountInfoContract.Presenter {
     @Override
     public void loadAccountInfo() {
         this.view.displayAccountInfo(getAccount());
+        if(getAccount().hasLockCoins()){
+            getLastHeight();
+        }
+    }
+
+    public void getLastHeight() {
+        Subscription subscription = Observable.create((Observable.OnSubscribe<AschResult>) subscriber -> {
+            AschResult result = AschSDK.Block.getHeight();
+            if (result != null && result.isSuccessful()) {
+                subscriber.onNext(result);
+                subscriber.onCompleted();
+            } else {
+                subscriber.onError(result.getException());
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<AschResult>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(java.lang.Throwable e) {
+                        view.displayError(e);
+                    }
+
+                    @Override
+                    public void onNext(AschResult result) {
+                        JSONObject obj = JSON.parseObject(result.getRawJson());
+                        if(obj.getBoolean("success")){
+                            int lastHeight = obj.getIntValue("height");
+                            getAccount().getFullAccount().getLatestBlock().setHeight(lastHeight);
+                            long lockHeight = getAccount().getFullAccount().getAccount().getLockHeight();
+                            Calendar calendar = AppUtil.getDateByHeight(lockHeight-lastHeight);
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                            view.dispLockInfo(sdf.format(calendar.getTime()));
+                        }
+                    }
+                });
+        subscriptions.add(subscription);
     }
 
     private Account getAccount(){

@@ -56,13 +56,13 @@ public class MinePresenter implements MineContract.Presenter, java.util.Observer
         list.add(new MineSection(new MineItem(R.mipmap.my_account_managment,context.getString(R.string.account_management))) );
         list.add(new MineSection(new MineItem(R.mipmap.my_bill,context.getString(R.string.bill))) );
         list.add(new MineSection(new MineItem(R.mipmap.my_block_info,context.getString(R.string.block_details))));
+        list.add(new MineSection(new MineItem(R.mipmap.personal_center,context.getString(R.string.personal_center))));
 
         list.add(new MineSection(true,"Section 2"));
         list.add(new MineSection(new MineItem(R.mipmap.my_settings,context.getString(R.string.set))));
 
         list.add(new MineSection(new MineItem(R.mipmap.my_user,context.getString(R.string.use_explain))));
         list.add(new MineSection(new MineItem(R.mipmap.my_users,context.getString(R.string.about_us))));
-
 
         view.displayItems(list);
     }
