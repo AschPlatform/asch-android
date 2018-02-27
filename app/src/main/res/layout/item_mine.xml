@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:layout_margin="4dp"
+    android:layout_margin="0dp"
+    android:background="@color/white"
     android:foreground="?android:attr/selectableItemBackground"
     tools:ignore="RtlHardcoded"
     >
 
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <ImageView
@@ -17,9 +19,9 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="10dp"
         android:layout_centerVertical="true"
-    android:layout_width="20dp"
-    android:layout_height="20dp"
-    android:src="@mipmap/ic_launcher"
+    android:layout_width="28dp"
+    android:layout_height="28dp"
+    android:src="@mipmap/my_account_managment"
     />
         <TextView
             android:id="@+id/item_title_tv"

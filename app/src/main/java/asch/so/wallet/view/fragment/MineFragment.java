@@ -32,6 +32,7 @@ import asch.so.wallet.activity.AccountInfoActivity;
 import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.AppSettingActivity;
 import asch.so.wallet.activity.BlockInfoActivity;
+import asch.so.wallet.activity.LockCoinsActivity;
 import asch.so.wallet.activity.PeersActivity;
 import asch.so.wallet.activity.TodoActivity;
 import asch.so.wallet.activity.TransactionsActivity;
@@ -62,30 +63,6 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     TextView addressTv;
     @BindView(R.id.ident_icon)
     ImageView identicon;
-//    @BindView(R.id.app_bar_mine)
-//    AppBarLayout appBarLayout;
-//    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
-
-
-
-    public enum Item{
-       AccountManagement("","账户管理",true),
-        AppSetting("","设置",true),
-        Contacts("","联系人",true),
-        BlockInfo("","区块详情",true),
-        About("","关于",true);
-
-        public String icon;
-        public String title;
-        public boolean hasArrow;
-
-        Item(String icon, String title, boolean hasArrow) {
-            this.icon = icon;
-            this.title = title;
-            this.hasArrow = hasArrow;
-        }
-    }
 
     private List<MineSection> itemList=new ArrayList<>();
     private MineAdapter adapter =new MineAdapter(itemList);
@@ -133,24 +110,19 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                             BaseActivity.start(getActivity(), TransactionsActivity.class, new Bundle());
                         }
                         break;
-                        case R.mipmap.my_settings:
+                        case R.mipmap.personal_center:
                         {
-                            BaseActivity.start(getActivity(),AppSettingActivity.class,null);
+                            BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
                         }
                         break;
-                        case R.mipmap.my_users:
-                        {
-                            BaseActivity.start(getActivity(),AboutActivity.class,null);
-                        }
-                        break;
-                        case  R.mipmap.my_user:
-                        {
-                            BaseActivity.start(getActivity(),WebActivity.class,null);
-                        }
-                        break;
-                        case  R.mipmap.my_bell:
+                        case R.mipmap.node_vote:
                         {
                             BaseActivity.start(getActivity(),VoteActivity.class,null);
+                        }
+                        break;
+                        case  R.mipmap.vote_list:
+                        {
+                            BaseActivity.start(getActivity(),PeersActivity.class,null);
                         }
                         break;
                         case  R.mipmap.my_block_info:
@@ -158,9 +130,20 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                             BaseActivity.start(getActivity(),BlockInfoActivity.class,null);
                         }
                         break;
-                        case  R.mipmap.personal_center:
+                        case  R.mipmap.my_settings:
                         {
-                            BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
+                            BaseActivity.start(getActivity(),AppSettingActivity.class,null);
+
+                        }
+                        break;
+                        case  R.mipmap.user_manual:
+                        {
+                            BaseActivity.start(getActivity(),WebActivity.class,null);
+                        }
+                        break;
+                        case  R.mipmap.about_us:
+                        {
+                            BaseActivity.start(getActivity(),AboutActivity.class,null);
                         }
                         break;
                         default:

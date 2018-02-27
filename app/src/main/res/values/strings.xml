@@ -255,7 +255,7 @@
     <string name="error_vote_cancel_count">取消给受投人的投票，每次最多可以同时取消33人</string>
     <string name="vote_cancel_to_trustee">取消给受托人的投票</string>
     <string name="no_data">暂无数据</string>
-    <string name="website">https://www.asch.cn</string>
+    <string name="website">http://www.asch.cn</string>
 
     <string name="opreation_success">操作成功</string>
     <string name="dapps_list">应用列表</string>
