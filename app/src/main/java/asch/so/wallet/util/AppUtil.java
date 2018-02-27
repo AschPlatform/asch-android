@@ -25,6 +25,7 @@ import com.vector.update_app.UpdateCallback;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 import asch.so.base.util.DateConvertUtils;
@@ -66,6 +67,13 @@ public class AppUtil {
                 |DateUtils.FORMAT_ABBREV_MONTH
                 ;
         return DateUtils.getRelativeTimeSpanString(millis,System.currentTimeMillis(),DateUtils.MINUTE_IN_MILLIS,flags);
+    }
+
+    public static Calendar getDateByHeight(long differHeight){
+        long time = System.currentTimeMillis() + differHeight*10*1000;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        return calendar;
     }
 
     public static void copyText(Context context, String content){
@@ -126,9 +134,9 @@ public class AppUtil {
 
 
     public static void updateApp(Activity activity) {
-//        if (BuildConfig.DEBUG || BuildConfig.TEST){
-//            return;
-//        }
+        if (BuildConfig.DEBUG || BuildConfig.TEST){
+            return;
+        }
         new UpdateAppManager
                 .Builder()
                 //当前Activity

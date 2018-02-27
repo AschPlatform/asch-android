@@ -180,6 +180,8 @@
     <string name="locked">锁仓</string>
     <string name="locked_fail">锁仓失败</string>
     <string name="locked_success">锁仓成功</string>
+    <string name="invalid_lock_height">锁仓高度无效</string>
+    <string name="input_locked_Height">请输入锁仓高度</string>
     <string name="vote_list">节点列表</string>
     <string name="coming_son">敬请期待</string>
     <string name="balance_get_error">获取余额错误</string>
@@ -245,6 +247,7 @@
     <string name="error_vote_ok">您选择的部分受托人已经投过票，请区块确认后刷新再操作</string>
     <!--<string name="error_params_post">服务器错误，请检查您填写的信息是否正确</string>-->
     <string name="error_params">服务器错误，请检查您参数是否正确</string>
+    <string name="set_second_secret_success">二级密码设置成功</string>
 
     <string name="please_select_delegate">请选择受托人</string>
     <string name="select_vote_format">已选择%d位受托人</string>
@@ -253,5 +256,24 @@
     <string name="vote_cancel_to_trustee">取消给受托人的投票</string>
     <string name="no_data">暂无数据</string>
     <string name="website">https://www.asch.cn</string>
+
+    <string name="opreation_success">操作成功</string>
+    <string name="dapps_list">应用列表</string>
+    <string name="my_dapps">我的应用</string>
+    <string name="dapps">应用</string>
+
+    <string name="have_set">已设置</string>
+    <string name="have_lock">已锁仓</string>
+    <string name="set_lock_msg">设置锁仓信息</string>
+    <string name="last_height">当前高度</string>
+    <string name="set_height">设置高度</string>
+    <string name="set_date">设置时间</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="lock_warning">超出最大锁仓高度</string>
+    <string name="lock_warning_2">低于当前已锁仓高度</string>
+    <string name="input_second_secret_hint">请输入8到16位字母和数字组合</string>
+    <string name="lock_clear">解锁</string>
 
 </resources>

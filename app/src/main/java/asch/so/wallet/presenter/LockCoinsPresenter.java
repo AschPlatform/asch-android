@@ -7,8 +7,11 @@ import com.blankj.utilcode.util.LogUtils;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.LockCoinsContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Delegate;
+import asch.so.wallet.model.entity.FullAccount;
 import asch.so.wallet.view.fragment.LockCoinsFragment;
 import rx.Observable;
 import rx.Subscriber;
@@ -49,13 +52,15 @@ public class LockCoinsPresenter implements LockCoinsContract.Presenter {
     }
 
     @Override
-    public void lockCoins(long height, String secret, String secondSecret) {
+    public void lockCoins(long height, String accountPasswd, String secondSecret) {
+        String encryptSecret = getAccount().getEncryptSeed();
 
         Subscription subscription = Observable.create((Observable.OnSubscribe<AschResult>) subscriber -> {
+            String secret = Account.decryptSecret(accountPasswd, encryptSecret);
             AschResult result = AschSDK.Account.lockCoins(height,secret,secondSecret);
-                    //vote(pubKeys,null,secret,secondSecret);
             if (result.isSuccessful()) {
                 subscriber.onNext(result);
+                getAccount().getFullAccount().getAccount().setLockHeight(height);
                 subscriber.onCompleted();
             } else {
                 subscriber.onError(new Throwable(result.getError()));
@@ -71,18 +76,24 @@ public class LockCoinsPresenter implements LockCoinsContract.Presenter {
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        LogUtils.dTag(TAG,"vote result:"+e==null?"vote result error":e.toString());
-                        view.displayLockCoinsResult(false,e==null?context.getString(R.string.locked_fail):e.toString());
+                        view.displayError(e);
                     }
 
                     @Override
                     public void onNext(AschResult result) {
-                        LogUtils.dTag(TAG,"vote result:"+result.getRawJson());
                         view.displayLockCoinsResult(true, context.getString(R.string.locked_success));
                     }
                 });
         subscriptions.add(subscription);
     }
 
+    @Override
+    public void loadBlockInfo() {
+        this.view.displayBlockInfo(getAccount());
+    }
 
+
+    public Account getAccount() {
+        return AccountsManager.getInstance().getCurrentAccount();
+    }
 }

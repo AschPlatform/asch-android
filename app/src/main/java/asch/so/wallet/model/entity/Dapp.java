@@ -4,24 +4,37 @@ import io.realm.RealmObject;
 
 /**
  * Created by kimziv on 2017/10/11.
+ * {
+ "name": "asch-dapp-cctime",
+ "description": "Decentralized news channel",
+ "tags": "asch,dapp,demo,cctime",
+ "link": "https://github.com/AschPlatform/asch-dapp-cctime/archive/master.zip",
+ "type": 0,
+ "category": 1,
+ "icon": "http://o7dyh3w0x.bkt.clouddn.com/hello.png",
+ "delegates": ["8b1c24a0b9ba9b9ccf5e35d0c848d582a2a22cca54d42de8ac7b2412e7dc63d4", "aa7dcc3afd151a549e826753b0547c90e61b022adb26938177904a73fc4fee36", "e29c75979ac834b871ce58dc52a6f604f8f565dea2b8925705883b8c001fe8ce", "55ad778a8ff0ce4c25cb7a45735c9e55cf1daca110cfddee30e789cb07c8c9f3", "982076258caab20f06feddc94b95ace89a2862f36fea73fa007916ab97e5946a"],
+ "unlockDelegates": 3,
+ "transactionId": "d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1"
+ }
  */
 
-public class Dapp extends RealmObject {
-    private String category;
+public class Dapp extends RealmObject{
+    private int category;
     private String name;
     private String description;
     private String tags;
-    private String type;
+    private int type;
     private String link;
     private String icon;
-    private String delegates;
-    private String unlockDelegates;
+    //private String[] delegates;
+    private int unlockDelegates;
+    private String transactionId;
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(int category) {
         this.category = category;
     }
 
@@ -49,11 +62,11 @@ public class Dapp extends RealmObject {
         this.tags = tags;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -73,19 +86,19 @@ public class Dapp extends RealmObject {
         this.icon = icon;
     }
 
-    public String getDelegates() {
-        return delegates;
-    }
+//    public String[] getDelegates() {
+//        return delegates;
+//    }
+//
+//    public void setDelegates(String[] delegates) {
+//        this.delegates = delegates;
+//    }
 
-    public void setDelegates(String delegates) {
-        this.delegates = delegates;
-    }
-
-    public String getUnlockDelegates() {
+    public int getUnlockDelegates() {
         return unlockDelegates;
     }
 
-    public void setUnlockDelegates(String unlockDelegates) {
+    public void setUnlockDelegates(int unlockDelegates) {
         this.unlockDelegates = unlockDelegates;
     }
 }

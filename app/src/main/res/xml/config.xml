@@ -15,6 +15,9 @@
     <feature name="DAppPlugin">
         <param name="android-package" value="asch.so.wallet.cordova.DAppPlugin"/>
     </feature>
+    <feature name="CCTimePlugin">
+        <param name="android-package" value="asch.so.wallet.cordova.CCTimePlugin"/>
+    </feature>
     <name>HelloCordova</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
