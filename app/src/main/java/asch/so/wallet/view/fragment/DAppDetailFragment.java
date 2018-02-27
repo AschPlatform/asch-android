@@ -9,15 +9,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.File;
+
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.activity.BaseCordovaActivity;
 import asch.so.wallet.activity.DAppBalanceActivity;
 import asch.so.wallet.activity.DAppDepositActivity;
 import asch.so.wallet.contract.DAppDepositContract;
 import asch.so.wallet.contract.DAppDetailContract;
 import asch.so.wallet.miniapp.download.TaskModel;
+import asch.so.wallet.miniapp.download.TasksDBContraller;
 import asch.so.wallet.model.entity.Dapp;
 import asch.so.wallet.presenter.DAppDetailPresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.widget.downloadbutton.DownloadProgressButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,6 +41,8 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
     Button depositBtn;
     @BindView(R.id.balance_btn)
     Button balanceBtn;
+    @BindView(R.id.open_dapp_btn)
+    Button openDappBtn;
     private DAppDetailContract.Presenter presenter;
     private String dappId;
 
@@ -85,9 +92,31 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
             }
         });
 
+        openDappBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TaskModel model = TasksDBContraller.getImpl().getTaskByDappId(dappId);
+                //String path =  downloadTask.getPath()+File.separator+"output"+File.separator+"www/index.html";
+                String path ="file://"+model.getPath()+ File.separator+"www/index.html";
+                gotoDapp(path);
+                AppUtil.toastSuccess(getContext(), "打开应用...");
+            }
+        });
+
         presenter.loadDApp(dappId);
+
         return rootView;
     }
+
+
+    private void gotoDapp(String path){
+        Intent intent=new Intent(getContext(),BaseCordovaActivity.class);
+        Bundle bundle=new Bundle();
+        bundle.putString("url",path);
+        intent.putExtras(bundle);
+        getActivity().startActivity(intent);
+    }
+
 
 
     @Override

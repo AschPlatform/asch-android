@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Switch;
 
@@ -28,6 +29,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.loader.ImageLoader;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +46,8 @@ import asch.so.wallet.activity.LockCoinsActivity;
 import asch.so.wallet.activity.PeersActivity;
 import asch.so.wallet.activity.VoteActivity;
 import asch.so.wallet.contract.DappCenterContract;
+import asch.so.wallet.miniapp.download.TaskModel;
+import asch.so.wallet.miniapp.download.TasksDBContraller;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Dapp;
 import asch.so.wallet.model.entity.FullAccount;
@@ -153,7 +157,10 @@ public class DappCenterFragment extends BaseFragment{
 
             }
         });
+
+
     }
+
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {

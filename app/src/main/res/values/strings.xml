@@ -307,5 +307,8 @@
     <string name="lock_warning_2">低于当前已锁仓高度</string>
     <string name="input_second_secret_hint">请输入8到16位字母和数字组合</string>
     <string name="lock_clear">解锁</string>
-
+    <string name="open_dapp">打开应用</string>
+    <string name="authorize">授权</string>
+    <string name="dapp_authorize">DApp授权</string>
+    <string name="dapp_authorize_alert">CCTime申请该应用在此账户的操作权限</string>
 </resources>

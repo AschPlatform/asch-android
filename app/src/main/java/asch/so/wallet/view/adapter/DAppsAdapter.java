@@ -179,7 +179,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
 //                       String path =  task.getPath()+File.separator+task.getFilename();
 //                        String outputDir =  task.getPath()+File.separator+"output";
 //                      unzipFile( new File(path), new File(outputDir));
-                      //addInstalledAppToDB(item,downloadTask);
+                      addInstalledAppToDB(item,downloadTask);
                        new Handler().postDelayed(new Runnable() {
                            @Override
                            public void run() {
@@ -206,7 +206,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
             {
                 downloadTask = createDownloadTask(holder,dapp);
                 downloadTask.start();
-                addInstalledAppToDB(dapp,downloadTask);
+                //addInstalledAppToDB(dapp,downloadTask);
             }
                 break;
             case DownloadProgressButton.STATE_DOWNLOADING:
@@ -259,7 +259,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
     private void addInstalledAppToDB(Dapp dapp, BaseDownloadTask task){
         String path =  task.getPath()+File.separator+task.getFilename();
         String outputDir = task.getPath()+File.separator+dapp.getTransactionId();
-        //unzipFile( new File(path), new File(outputDir));
+        unzipFile( new File(path), new File(outputDir));
 
         TaskModel model = new TaskModel();
         model.setId(task.getId());
