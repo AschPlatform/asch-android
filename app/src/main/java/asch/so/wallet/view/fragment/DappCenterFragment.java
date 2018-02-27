@@ -3,17 +3,26 @@ package asch.so.wallet.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Switch;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.flyco.tablayout.SegmentTabLayout;
+import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
@@ -41,6 +50,7 @@ import asch.so.wallet.model.entity.FullAccount;
 import asch.so.wallet.presenter.DappCenterPresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.DappsCenterAdapter;
+import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -50,21 +60,21 @@ import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
  * Created by kimziv on 2017/10/11.
  */
 
-public class DappCenterFragment extends BaseFragment implements DappCenterContract.View{
+public class DappCenterFragment extends BaseFragment{
     private static final String TAG = DappCenterFragment.class.getSimpleName();
 
-//    @BindView(R.id.toolbar)
-//    Toolbar toolbar;
-    @BindView(R.id.refreshLayout)
-    RefreshLayout refreshLayout;
-    @BindView(R.id.dapp_list_rv)
-    RecyclerView dappListRv;
+    @BindView(R.id.toolbar)
+    TitleToolbar toolbar;
+    @BindView(R.id.tablayout)
+    SegmentTabLayout tablayout;
+    @BindView(R.id.view_pager)
+    ViewPager viewPager;
 
-    DappCenterContract.Presenter presenter;
-
-   // private List<Dapp> dappList=new ArrayList<>();
-    private DappsCenterAdapter adapter=new DappsCenterAdapter();
-
+    private  MyPagerAdapter adapter;
+    private DAppsFragment dAppsFragment;
+    private InstalledDAppsFragment installedDAppsFragment;
+    private ArrayList<Fragment> mFagments = new ArrayList<>();
+    private String[] mTitles;
 
     public static DappCenterFragment newInstance() {
         
@@ -75,143 +85,96 @@ public class DappCenterFragment extends BaseFragment implements DappCenterContra
         return fragment;
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //setTitle(getString(R.string.dapps));
+        mTitles = new String[]{getString(R.string.dapps_list), getString(R.string.my_dapps)};
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView=inflater.inflate(R.layout.fragment_dapp_center,container,false);
+        View rootView=inflater.inflate(R.layout.activity_dapp_center,container,false);
         ButterKnife.bind(this,rootView);
+        initView();
+        return rootView;
+    }
 
-        presenter=new DappCenterPresenter(getContext(),this);
+    private void initView() {
+        toolbar.setBackVisible(false);
+        toolbar.setTitle(getString(R.string.dapps));
+        dAppsFragment=DAppsFragment.newInstance();
+        installedDAppsFragment=InstalledDAppsFragment.newInstance();
 
-        dappListRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        dappListRv.setItemAnimator(new DefaultItemAnimator());
-        dappListRv.addItemDecoration(new DividerItemDecoration(getContext(), VERTICAL));
-        dappListRv.setAdapter(adapter);
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mFagments.add(dAppsFragment);
+        mFagments.add(installedDAppsFragment);
+        adapter = new  MyPagerAdapter(getFragmentManager());
+        viewPager.setAdapter(adapter);
+        tablayout.setTabData(mTitles);
+//        tablayout.setViewPager(viewPager, mTitles);
+
+        tablayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+            public void onTabSelect(int position) {
+                viewPager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+
+            }
+        });
+
+        //viewPager.setOffscreenPageLimit(0);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
                 switch (position){
                     case 0:{
-                        //showToast();
-                        BaseActivity.start(getActivity(),VoteActivity.class,null);
-                    }
-                        break;
-                    case 1:
-                    {
-                        BaseActivity.start(getActivity(),LockCoinsActivity.class,null);
-                    }
-                        break;
-                    case 2:
-                    {
-                        //showToast();
-                      // BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
-                        //BaseActivity.start(getActivity(), BaseCordovaActivity.class,null);
-                        String address=getAccount().getAddress();
-                        Intent intent=new Intent(getContext(),BaseCordovaActivity.class);
-                        Bundle bundle=new Bundle();
-                        bundle.putString("url","file:///android_asset/www/index.html");
-                        bundle.putString("address",address);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+
                     }
                     break;
-                    case 3:
-                    {
-                        Intent intent=new Intent(getContext(),DAppCenterActivity.class);
-                        startActivity(intent);
+                    case  1:{
+                        // installedDAppsFragment.refreshData();
                     }
                     break;
                 }
             }
+
+            @Override
+            public void onPageSelected(int position) {
+                tablayout.setCurrentTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
         });
-//        adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
-//                Intent intent=new Intent(getActivity(), DappActivity.class);
-//                startActivity(intent);
-//               // deposit(TestData.dappID,"dujunhui.ZICHAN",100000003,null,TestData.secret,null);
-//            }
-//        });
-
-//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh(final RefreshLayout refreshlayout) {
-//                refreshlayout.getLayout().postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (adapter.getItemCount() < 2) {
-//                           presenter.loadDappList();
-//                        }
-//                        refreshlayout.finishRefresh();
-//                    }
-//                },2000);
-//            }
-//        });
-
-//
-//        //添加Header
-//        View header = LayoutInflater.from(getContext()).inflate(R.layout.banner_dapp_center, dappListRv, false);
-//        Banner banner = (Banner) header;
-//        banner.setImageLoader(new GlideImageLoader());
-//        banner.setImages(BANNER_ITEMS);
-//        banner.start();
-//        adapter.addHeaderView(banner);
-        presenter.loadDappList();
-        return rootView;
     }
 
-    private Account getAccount(){
-        return AccountsManager.getInstance().getCurrentAccount();
-    }
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
-    private void showToast(){
-        AppUtil.toastInfo(getContext(),getString(R.string.development));
-    }
 
-    public static List<BannerItem> BANNER_ITEMS = new ArrayList<BannerItem>(){{
-        add(new BannerItem("CCTime", R.mipmap.mine_header_bg));
-        add(new BannerItem("孔明屋", R.mipmap.mine_header_bg));
-        add(new BannerItem("受托人投票", R.mipmap.mine_header_bg));
-    }};
-
-    public class GlideImageLoader extends ImageLoader {
         @Override
-        public void displayImage(Context context, Object path, ImageView imageView) {
-            imageView.setImageResource(((BannerItem) path).pic);
-        }
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
-
-    @Override
-    public void setPresenter(DappCenterContract.Presenter presenter) {
-        this.presenter=presenter;
-    }
-
-    @Override
-    public void displayError(java.lang.Throwable exception) {
-
-    }
-
-    @Override
-    public void displayDappList(List<Dapp> dapps) {
-        adapter.replaceData(dapps);
-    }
-
-    public static class BannerItem {
-
-        public int pic;
-        public String title;
-
-        public BannerItem() {
+        public int getCount() {
+            return mFagments.size();
         }
 
-        public BannerItem(String title, int pic) {
-            this.pic = pic;
-            this.title = title;
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitles[position];
         }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFagments.get(position);
+        }
+
     }
 }

@@ -1,117 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/page_bg">
-    <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
-        <!--android:layout_height="?attr/actionBarSize"-->
-        <!--android:background="?attr/colorPrimary"-->
-        <asch.so.widget.toolbar.TitleToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/toolBarHeight"
-            android:background="@mipmap/toolbar"
-            android:paddingTop="@dimen/toolBarPaddingTop"
-            android:fitsSystemWindows="true"
-            app:backIcon="@mipmap/back"
-            app:backText="@string/back"
-            app:backTextAppearance="?attr/actionMenuTextAppearance"
-            app:backTextColor="@android:color/white"
-            app:backVisible="false"
-            app:closeText="@string/close"
-            app:closeTextAppearance="?attr/actionMenuTextAppearance"
-            app:closeTextColor="@android:color/white"
-            app:closeVisible="false"
-            app:subtitle=""
-            app:subtitleTextAppearance="@style/Subtitle_Appearance"
-            app:subtitleVisible="false"
-            app:title="@string/find_out"
-            app:titleTextAppearance="@style/Title_Appearance"
-            app:titleTextColor="@android:color/white"
-            app:title_gravity="center" />
-        <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/toolbar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="?attr/actionBarSize"-->
-        <!--android:background="?attr/colorPrimary"-->
-        <!--app:layout_scrollFlags="scroll|enterAlways|snap"-->
-        <!--app:popupTheme="@style/AppTheme.PopupOverlay" />-->
+        android:layout_height="wrap_content" />
 
-    </android.support.design.widget.AppBarLayout>
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
+    <com.flyco.tablayout.SegmentTabLayout
+        android:id="@+id/tablayout"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:srlPrimaryColor="@color/colorPrimary"
-        app:srlAccentColor="@android:color/white"
-        app:srlEnableHeaderTranslationContent="false"
-        app:srlEnablePreviewInEditMode="false"
-        app:srlEnableNestedScrolling="false">
-        <!--android:layout_marginTop="?attr/actionBarSize"-->
-        <com.scwang.smartrefresh.header.MaterialHeader
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-           />
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/dapp_list_rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:background="@android:color/white"
-            tools:listitem="@layout/item_dapp_center"/>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        android:layout_height="32dp"
+        android:background="@color/white"
+        tl:tl_bar_color="#ffffff"
+        tl:tl_indicator_color="#2785f1"
+        tl:tl_indicator_corner_radius="4dp"
+        tl:tl_tab_padding="0dp"
+        />
 
-    <!--<com.github.mmin18.widget.RealtimeBlurView-->
-        <!--android:id="@+id/blurview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="?attr/actionBarSize"-->
-        <!--app:realtimeBlurRadius="10dp"-->
-        <!--app:realtimeOverlayColor="#cc0094ff"/>-->
+    <!--<com.flyco.tablayout.SlidingTabLayout-->
+    <!--android:id="@+id/tablayout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="48dp"-->
+    <!--android:background="#EEEEEE"-->
+    <!--tl:tl_divider_color="#1A000000"-->
+    <!--tl:tl_divider_padding="13dp"-->
+    <!--tl:tl_divider_width="1dp"-->
+    <!--tl:tl_indicator_color="@color/tab_checked"-->
+    <!--tl:tl_indicator_height="1.5dp"-->
+    <!--tl:tl_indicator_width_equal_title="true"-->
+    <!--tl:tl_tab_padding="22dp"-->
+    <!--tl:tl_tab_space_equal="true"-->
+    <!--tl:tl_textsize="13sp"-->
+    <!--tl:tl_textSelectColor="@color/tab_checked"-->
+    <!--tl:tl_textUnselectColor="#66000000"-->
+    <!--tl:tl_underline_color="#1A000000"-->
+    <!--tl:tl_underline_height="1dp"/>-->
 
-    <!--<include layout="@layout/layout_app_bar"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_width="match_parent"-->
-        <!--/>-->
-    <!--<android.support.v7.widget.Toolbar style="@style/AppTheme.Toolbar"-->
-        <!--android:id="@+id/toolbar"-->
-        <!--android:background="@android:color/transparent"-->
-        <!--app:title="应用中心"/>-->
-
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
 
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical"-->
-    <!--&gt;-->
-    <!--<include-->
-        <!--layout="@layout/layout_app_bar"-->
-        <!--android:id="@+id/app_bar"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentTop="true"-->
-        <!--/>-->
-<!--<android.support.v7.widget.RecyclerView-->
-    <!--android:id="@+id/dapp_list_rv"-->
-    <!--android:layout_below="@+id/app_bar"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:choiceMode="singleChoice"-->
-    <!--android:divider="@android:color/transparent"-->
-    <!--android:dividerHeight="0dp"-->
-    <!--&gt;-->
-
-<!--</android.support.v7.widget.RecyclerView>-->
-<!--</RelativeLayout>-->
