@@ -7,4 +7,12 @@
         return null;
     }
     window.userAddress = getQueryString("address")
-    // alert(getQueryString("address"));</script><link href=app.1c6ab5cb269eedd611de59ec9567f4f5.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=cordova.js></script><script type=text/javascript src=plugins/cordova-plugin-dapp/www/dapp.js></script><script type=text/javascript src=plugins/cordova-plugin-cctime/www/cctime.js></script><script type=text/javascript src=manifest.4e77d541c203e9b02534.js></script><script type=text/javascript src=vendor.fb404fac9cedf5f79249.js></script><script type=text/javascript src=app.5da0799763a5428c6208.js></script></body></html>
+    // alert(getQueryString("address"));</script><link href=app.1c6ab5cb269eedd611de59ec9567f4f5.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=cordova.js></script><script type=text/javascript src=plugins/cordova-plugin-dapp/www/dapp.js></script><script type=text/javascript src=plugins/cordova-plugin-cctime/www/cctime.js></script><script type=text/javascript>function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    }
+    // alert(getQueryString("address"));</script><script type=text/javascript src=manifest.b22bf860ab0db899d269.js></script><script type=text/javascript src=vendor.fb404fac9cedf5f79249.js></script><script type=text/javascript src=app.a66ce13f67240a66d5cf.js></script></body></html>

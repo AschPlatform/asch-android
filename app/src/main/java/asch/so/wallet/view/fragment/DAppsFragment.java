@@ -16,6 +16,8 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
@@ -111,6 +113,20 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        //EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //EventBus.getDefault().unregister(this);
+    }
+
+
+
+    @Override
     public void setPresenter(DappsContract.Presenter presenter) {
         this.presenter=presenter;
     }
@@ -146,4 +162,6 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
         adapter.addData(dapps);
         refreshLayout.finishLoadmore(500);
     }
+
+
 }
