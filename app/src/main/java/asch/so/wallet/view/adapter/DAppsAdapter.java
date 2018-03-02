@@ -81,16 +81,17 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
             @Override
             public void onClick(View v) {
 
-                boolean ret= FileUtils.deleteDir(new File(downloader.getInstalledPath()));
-                if (ret){
+                boolean ret= FileUtils.deleteDir(downloader.getInstalledPath());
+                boolean ret2=FileUtils.deleteFile(downloader.getPath());
+                if (ret && ret2){
                     EventBus.getDefault().post(new DAppChangeEvent());
+                    AppUtil.toastInfo(mContext,ret?"删除成功":"删除失败");
+                    holder.downloadBtn.setMaxProgress(1);
+                    holder.downloadBtn.setProgress(0);
+                    holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
+                    holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
+                    holder.deleteBtn.setVisibility(View.INVISIBLE);
                 }
-                AppUtil.toastInfo(mContext,ret?"删除成功":"删除失败");
-                holder.downloadBtn.setMaxProgress(1);
-                holder.downloadBtn.setProgress(0);
-                holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
-                holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
-                holder.deleteBtn.setVisibility(View.INVISIBLE);
             }
         });
 
