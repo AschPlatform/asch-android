@@ -4,7 +4,7 @@ import java.util.List;
 
 import asch.so.base.presenter.BasePresenter;
 import asch.so.base.view.BaseView;
-import asch.so.wallet.model.entity.Dapp;
+import asch.so.wallet.model.entity.DApp;
 
 /**
  * Created by kimziv on 2017/10/11.
@@ -12,7 +12,7 @@ import asch.so.wallet.model.entity.Dapp;
 
 public interface DappCenterContract {
     interface View extends BaseView<Presenter>{
-        void displayDappList(List<Dapp> dapps);
+        void displayDappList(List<DApp> DApps);
     }
 
     interface Presenter extends BasePresenter{

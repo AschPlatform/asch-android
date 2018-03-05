@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,8 +26,7 @@ import asch.so.wallet.R;
 import asch.so.wallet.activity.DAppDetailActivity;
 import asch.so.wallet.contract.InstalledDappsContract;
 import asch.so.wallet.event.DAppChangeEvent;
-import asch.so.wallet.miniapp.download.TaskModel;
-import asch.so.wallet.model.entity.Dapp;
+import asch.so.wallet.model.entity.DApp;
 import asch.so.wallet.presenter.InstalledDappsPresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.InstalledDAppsAdapter;
@@ -90,10 +88,10 @@ public class InstalledDAppsFragment extends BaseFragment implements InstalledDap
                 if (position==0){
 
                     //BaseActivity.start(getActivity(),DAppDetailActivity.class,);
-                    TaskModel task=(TaskModel) adapter.getItem(position);
+                    DApp dapp=(DApp) adapter.getItem(position);
                     Intent intent=new Intent(getContext(),DAppDetailActivity.class);
                     Bundle bundle=new Bundle();
-                    bundle.putString("dapp_id",task.getDapp().getTransactionId());
+                    bundle.putString("dapp_id",dapp.getTransactionId());
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
@@ -151,7 +149,7 @@ public class InstalledDAppsFragment extends BaseFragment implements InstalledDap
     }
 
     @Override
-    public void displayInstalledDapps(List<TaskModel> dapps) {
+    public void displayInstalledDapps(List<DApp> dapps) {
         if (dapps.isEmpty()) {
             loadingLayout.showEmpty();
         }else {

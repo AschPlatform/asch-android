@@ -11,26 +11,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.DAppDetailActivity;
 import asch.so.wallet.contract.DappsContract;
-import asch.so.wallet.model.entity.Dapp;
+import asch.so.wallet.event.DAppChangeEvent;
+import asch.so.wallet.model.entity.DApp;
+import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.presenter.DappsPresenter;
-import asch.so.wallet.presenter.PeersPresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.DAppsAdapter;
-import asch.so.wallet.view.adapter.PeersAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ezy.ui.layout.LoadingLayout;
@@ -92,11 +94,10 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (position==0){
 
-                    //BaseActivity.start(getActivity(),DAppDetailActivity.class,);
-                    Dapp dapp=(Dapp) adapter.getItem(position);
-                    Intent intent=new Intent(getContext(),DAppDetailActivity.class);
+                    DApp dapp =(DApp) adapter.getItem(position);
                     Bundle bundle=new Bundle();
-                    bundle.putString("dapp_id",dapp.getTransactionId());
+                    bundle.putString("dapp_id", dapp.getTransactionId());
+                    Intent intent=new Intent(getContext(),DAppDetailActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }
@@ -104,6 +105,11 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
         });
 
         return view;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(DAppChangeEvent event) {
+        presenter.loadFirstPageDapps();
     }
 
     @Override
@@ -115,13 +121,13 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
     @Override
     public void onStart() {
         super.onStart();
-        //EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        //EventBus.getDefault().unregister(this);
+        EventBus.getDefault().unregister(this);
     }
 
 
@@ -147,19 +153,19 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
     }
 
     @Override
-    public void displayFirstPageDapps(List<Dapp> dapps) {
-        if (dapps.isEmpty()) {
+    public void displayFirstPageDapps(List<DApp> DApps) {
+        if (DApps.isEmpty()) {
             loadingLayout.showEmpty();
         }else {
             loadingLayout.showContent();
         }
-        adapter.replaceData(dapps);
+        adapter.replaceData(DApps);
         refreshLayout.finishRefresh(500);
     }
 
     @Override
-    public void displayMorePageDapps(List<Dapp> dapps) {
-        adapter.addData(dapps);
+    public void displayMorePageDapps(List<DApp> DApps) {
+        adapter.addData(DApps);
         refreshLayout.finishLoadmore(500);
     }
 

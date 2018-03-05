@@ -3,25 +3,28 @@ package asch.so.wallet.view.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.FileUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.liulishuo.filedownloader.DownloadTask;
+import com.liulishuo.filedownloader.model.FileDownloadStatus;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
-import java.util.List;
 
 import asch.so.wallet.R;
 import asch.so.wallet.activity.BaseCordovaActivity;
-import asch.so.wallet.miniapp.download.TaskModel;
-import asch.so.wallet.miniapp.download.TasksDBContraller;
-import asch.so.wallet.model.entity.Dapp;
+import asch.so.wallet.event.DAppChangeEvent;
+import asch.so.wallet.miniapp.download.Downloader;
+import asch.so.wallet.miniapp.download.DownloadsDB;
+import asch.so.wallet.miniapp.download.DownloadsManager;
+import asch.so.wallet.model.entity.DApp;
+import asch.so.wallet.util.AppUtil;
 import asch.so.widget.downloadbutton.DownloadProgressButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,7 +33,7 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2018/1/19.
  */
 
-public class InstalledDAppsAdapter extends BaseQuickAdapter<TaskModel, InstalledDAppsAdapter.ViewHolder> {
+public class InstalledDAppsAdapter extends BaseQuickAdapter<DApp, InstalledDAppsAdapter.ViewHolder> {
 
     private Context context;
 
@@ -48,28 +51,50 @@ public class InstalledDAppsAdapter extends BaseQuickAdapter<TaskModel, Installed
     }
 
     @Override
-    protected void convert(ViewHolder holder, TaskModel item) {
-        Dapp dapp=item.getDapp();
+    protected void convert(ViewHolder holder, DApp dapp) {
+
+       // Downloader downloader= DownloadsManager.getImpl().getDownloader(dapp);
 
         holder.nameTv.setText(dapp.getName());
         holder.descriptionTv.setText(dapp.getName());
         holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
         holder.downloadBtn.setCurrentText(mContext.getString(R.string.open));
+        //holder.deleteBtn.setVisibility(dapp.getStatus()== FileDownloadStatus.completed?View.VISIBLE:View.INVISIBLE);
         holder.downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String path ="file://"+item.getPath()+File.separator+"www/index.html";
-                gotoDapp(path);
+                String path= dapp.getInstalledPath();
+                if (FileUtils.isFileExists(path) && FileUtils.isDir(path)){
+                    String wwwPath ="file://"+dapp.getInstalledPath()+File.separator+"www/index.html";
+                    gotoDapp(wwwPath);
+                }else {
+                    AppUtil.toastInfo(mContext,"请先下载安装, 再使用");
+                }
+
             }
         });
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                new File(DOWNLOAD_PATH).delete();
-//                holder.downloadBtn.setMaxProgress(1);
-//                holder.downloadBtn.setProgress(0);
-//                holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
-//                holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
+
+                boolean ret= FileUtils.deleteDir(dapp.getInstalledPath());
+                boolean ret2=FileUtils.deleteFile(dapp.getDownloadPath());
+                if (ret && ret2){
+                   //
+
+//                    holder.downloadBtn.setMaxProgress(1);
+//                    holder.downloadBtn.setProgress(0);
+//                    holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
+//                    holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
+//                    holder.deleteBtn.setVisibility(View.INVISIBLE);
+                    DownloadsDB.getImpl().deleteDApp(dapp.getTransactionId(), new DownloadsDB.OnDeleteDAppListener() {
+                        @Override
+                        public void onDeleteDApp(DApp dapp) {
+                            EventBus.getDefault().post(new DAppChangeEvent());
+                            AppUtil.toastInfo(mContext,ret?"删除成功":"删除失败");
+                        }
+                    });
+                }
             }
         });
     }

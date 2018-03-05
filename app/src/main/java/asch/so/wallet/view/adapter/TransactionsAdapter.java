@@ -1,8 +1,6 @@
 package asch.so.wallet.view.adapter;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,20 +8,14 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.text.SimpleDateFormat;
-
-import asch.so.base.util.TimeAgo;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.model.entity.Account;
-import asch.so.wallet.model.entity.Dapp;
 import asch.so.wallet.model.entity.Transaction;
-import asch.so.wallet.model.entity.UIATransferAsset;
 import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import so.asch.sdk.TransactionType;
-import so.asch.sdk.impl.AschConst;
 
 /**
  * Created by kimziv on 2017/10/18.

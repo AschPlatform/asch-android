@@ -2,14 +2,12 @@ package asch.so.wallet.presenter;
 
 import android.content.Context;
 
-import java.util.List;
-
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.DAppDetailContract;
-import asch.so.wallet.miniapp.download.TaskModel;
-import asch.so.wallet.miniapp.download.TasksDBContraller;
-import asch.so.wallet.model.entity.Dapp;
+import asch.so.wallet.miniapp.download.Downloader;
+import asch.so.wallet.miniapp.download.DownloadsDB;
+import asch.so.wallet.model.entity.DApp;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -44,21 +42,21 @@ public class DAppDetailPresenter implements DAppDetailContract.Presenter {
         this.subscriptions.clear();
     }
 
-    private TaskModel queryDappByDAppId(String dappId){
-       return TasksDBContraller.getImpl().getTaskByDappId(dappId);
+    private DApp queryDappByDAppId(String dappId){
+       return DownloadsDB.getImpl().queryDApp(dappId);
     }
 
     @Override
     public void loadDApp(String dappId) {
-       TaskModel task=queryDappByDAppId(dappId);
+        DApp task=queryDappByDAppId(dappId);
 
-        Subscription subscription = Observable.create((Observable.OnSubscribe<TaskModel>) subscriber -> {
+        Subscription subscription = Observable.create((Observable.OnSubscribe<DApp>) subscriber -> {
             subscriber.onNext(task);
             subscriber.onCompleted();
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<TaskModel>() {
+                .subscribe(new Subscriber<DApp>() {
                     @Override
                     public void onCompleted() {
 
@@ -70,8 +68,8 @@ public class DAppDetailPresenter implements DAppDetailContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(TaskModel task) {
-                        view.displayDApp(task);
+                    public void onNext(DApp dapp) {
+                        view.displayDApp(dapp);
                     }
                 });
         subscriptions.add(subscription);

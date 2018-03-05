@@ -6,7 +6,7 @@ import com.liulishuo.filedownloader.FileDownloader;
 
 import java.util.HashMap;
 
-import asch.so.wallet.model.entity.Dapp;
+import asch.so.wallet.model.entity.DApp;
 
 /**
  * Created by kimziv on 2018/3/1.
@@ -28,12 +28,12 @@ public class DownloadsManager {
         this.downloaderHashMap = new HashMap<>();
     }
 
-    public Downloader getDownloader(Dapp dapp){
-        if (downloaderHashMap.containsKey(dapp.getTransactionId())){
-            return downloaderHashMap.get(dapp.getTransactionId());
+    public Downloader getDownloader(DApp DApp){
+        if (downloaderHashMap.containsKey(DApp.getTransactionId())){
+            return downloaderHashMap.get(DApp.getTransactionId());
         }
-        Downloader downloader = new Downloader(dapp);
-        downloaderHashMap.put(dapp.getTransactionId(),downloader);
+        Downloader downloader = new Downloader(DApp);
+        downloaderHashMap.put(DApp.getTransactionId(),downloader);
         return downloader;
     }
 

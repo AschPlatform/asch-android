@@ -1,6 +1,7 @@
 package asch.so.wallet.model.entity;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by kimziv on 2017/10/11.
@@ -18,7 +19,7 @@ import io.realm.RealmObject;
  }
  */
 
-public class Dapp extends RealmObject{
+public class DApp extends RealmObject{
     private int category;
     private String name;
     private String description;
@@ -28,10 +29,21 @@ public class Dapp extends RealmObject{
     private String icon;
     //private String[] delegates;
     private int unlockDelegates;
+    @PrimaryKey
     private String transactionId;
 
-    private transient int taskId;
-    private transient String path;
+    //下载管理，新增字段
+    private  int downloadId;
+    private  String downloadUrl;
+    private  String downloadPath;
+    private  String installedPath;
+    private int status;
+    private long sofarBytes;
+    private long totalBytes;
+    private String verion;
+    private int build;
+    private int publishTimestamp;
+    private int updateTimestamp;
 
     public int getCategory() {
         return category;
@@ -113,19 +125,91 @@ public class Dapp extends RealmObject{
         this.transactionId = transactionId;
     }
 
-    public int getTaskId() {
-        return taskId;
+    public int getDownloadId() {
+        return downloadId;
     }
 
-    public void setTaskId(int taskId) {
-        this.taskId = taskId;
+    public void setDownloadId(int downloadId) {
+        this.downloadId = downloadId;
     }
 
-    public String getPath() {
-        return path;
+    public String getDownloadUrl() {
+        return downloadUrl;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
+
+    public String getDownloadPath() {
+        return downloadPath;
+    }
+
+    public void setDownloadPath(String downloadPath) {
+        this.downloadPath = downloadPath;
+    }
+
+    public String getInstalledPath() {
+        return installedPath;
+    }
+
+    public void setInstalledPath(String installedPath) {
+        this.installedPath = installedPath;
+    }
+
+    public String getVerion() {
+        return verion;
+    }
+
+    public void setVerion(String verion) {
+        this.verion = verion;
+    }
+
+    public int getBuild() {
+        return build;
+    }
+
+    public void setBuild(int build) {
+        this.build = build;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public int getPublishTimestamp() {
+        return publishTimestamp;
+    }
+
+    public void setPublishTimestamp(int publishTimestamp) {
+        this.publishTimestamp = publishTimestamp;
+    }
+
+    public int getUpdateTimestamp() {
+        return updateTimestamp;
+    }
+
+    public void setUpdateTimestamp(int updateTimestamp) {
+        this.updateTimestamp = updateTimestamp;
+    }
+
+    public long getSofarBytes() {
+        return sofarBytes;
+    }
+
+    public void setSofarBytes(long sofarBytes) {
+        this.sofarBytes = sofarBytes;
+    }
+
+    public long getTotalBytes() {
+        return totalBytes;
+    }
+
+    public void setTotalBytes(long totalBytes) {
+        this.totalBytes = totalBytes;
     }
 }

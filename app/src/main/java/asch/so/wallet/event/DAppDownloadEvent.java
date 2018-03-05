@@ -5,14 +5,24 @@ package asch.so.wallet.event;
  */
 
 public class DAppDownloadEvent {
+    private int downloadId;
     private int status;
-    private int soFarBytes;
-    private int totalBytes;
+    private long soFarBytes;
+    private long totalBytes;
 
-    public DAppDownloadEvent(int status, int soFarBytes, int totalBytes) {
+    public DAppDownloadEvent(int downloadId, int status, long soFarBytes, long totalBytes) {
+        this.downloadId=downloadId;
         this.status = status;
         this.soFarBytes = soFarBytes;
         this.totalBytes = totalBytes;
+    }
+
+    public int getDownloadId() {
+        return downloadId;
+    }
+
+    public void setDownloadId(int downloadId) {
+        this.downloadId = downloadId;
     }
 
     public int getStatus() {
@@ -23,19 +33,19 @@ public class DAppDownloadEvent {
         this.status = status;
     }
 
-    public int getSoFarBytes() {
+    public long getSoFarBytes() {
         return soFarBytes;
     }
 
-    public void setSoFarBytes(int soFarBytes) {
+    public void setSoFarBytes(long soFarBytes) {
         this.soFarBytes = soFarBytes;
     }
 
-    public int getTotalBytes() {
+    public long getTotalBytes() {
         return totalBytes;
     }
 
-    public void setTotalBytes(int totalBytes) {
+    public void setTotalBytes(long totalBytes) {
         this.totalBytes = totalBytes;
     }
 }

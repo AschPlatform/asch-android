@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.support.annotation.MainThread;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,10 +13,8 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.FileUtils;
-import com.blankj.utilcode.util.LogUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
@@ -23,34 +23,31 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
-import java.util.List;
 
 import asch.so.wallet.R;
 import asch.so.wallet.activity.BaseCordovaActivity;
 import asch.so.wallet.event.DAppChangeEvent;
 import asch.so.wallet.event.DAppDownloadEvent;
+import asch.so.wallet.miniapp.download.DownloadExtraStatus;
 import asch.so.wallet.miniapp.download.Downloader;
+import asch.so.wallet.miniapp.download.DownloadsDB;
 import asch.so.wallet.miniapp.download.DownloadsManager;
-import asch.so.wallet.miniapp.download.TaskModel;
-import asch.so.wallet.miniapp.download.TasksDBContraller;
 import asch.so.wallet.miniapp.unzip.UnZip;
-import asch.so.wallet.model.entity.Dapp;
+import asch.so.wallet.model.entity.DApp;
 import asch.so.wallet.util.AppUtil;
 import asch.so.widget.downloadbutton.DownloadProgressButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import so.asch.sdk.Dapp;
 
 /**
  * Created by kimziv on 2018/1/19.
  */
 
-public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder> {
+public class DAppsAdapter extends BaseQuickAdapter<DApp, DAppsAdapter.ViewHolder> {
     private static final String TAG=DAppsAdapter.class.getSimpleName();
     private Context context;
-    private static final  String DOWNLOAD_PATH = FileDownloadUtils.getDefaultSaveRootPath() + File.separator + "tmpdir1";
-    private static final String DOWNLOAD_URL="http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/test/www.zip";
+    private static final String DOWNLOAD_URL="http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/test/www2.zip";
 
     public DAppsAdapter(Context context) {
         super(R.layout.item_dapps);
@@ -58,59 +55,45 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
     }
 
     @Override
-    protected void convert(DAppsAdapter.ViewHolder holder, Dapp item) {
+    protected void convert(DAppsAdapter.ViewHolder holder, DApp item) {
         item.setLink(DOWNLOAD_URL);
-       registerSubcriber(holder);
+        registerSubcriber(holder);
         holder.setContext(this.context);
-        holder.nameTv.setText(item.getName());
-        holder.descriptionTv.setText(item.getName());
-        holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
-
-        //TaskModel task=TasksDBContraller.getImpl().getTaskByDappId(item.getTransactionId());
 
         Downloader downloader= DownloadsManager.getImpl().getDownloader(item);
+        DApp dapp=downloader.getDapp();
+        holder.setDapp(dapp);
         holder.setDownloader(downloader);
+        holder.nameTv.setText(dapp.getName());
+        holder.descriptionTv.setText(dapp.getName());
+
         holder.downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                handleState(holder,item, downloader);
+                handleState(holder,dapp, downloader);
             }
         });
 
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                boolean ret= FileUtils.deleteDir(downloader.getInstalledPath());
-                boolean ret2=FileUtils.deleteFile(downloader.getPath());
-                if (ret && ret2){
-                    EventBus.getDefault().post(new DAppChangeEvent());
-                    AppUtil.toastInfo(mContext,ret?"删除成功":"删除失败");
-                    holder.downloadBtn.setMaxProgress(1);
-                    holder.downloadBtn.setProgress(0);
-                    holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
-                    holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
-                    holder.deleteBtn.setVisibility(View.INVISIBLE);
-                }
+                 downloader.uninstall();
+                AppUtil.toastInfo(context,context.getString(R.string.uninstall_success));
+//                boolean ret= FileUtils.deleteDir(downloader.getInstalledPath());
+//                boolean ret2=FileUtils.deleteFile(downloader.getDownloadPath());
+//                if (ret && ret2){
+//                    EventBus.getDefault().post(new DAppChangeEvent());
+//                    AppUtil.toastInfo(mContext,ret?"删除成功":"删除失败");
+//                    holder.downloadBtn.setMaxProgress(1);
+//                    holder.downloadBtn.setProgress(0);
+//                    holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
+//                    holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
+//                   // holder.deleteBtn.setVisibility(View.INVISIBLE);
+//                }
             }
         });
 
-        holder.setDownloadCompletedListener(new ViewHolder.OnDownloadCompletedListener() {
-            @Override
-            public void onDAppDownloadCompleted(ViewHolder holder) {
-                installedApp(downloader);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        holder.downloadBtn.setState(DownloadProgressButton.STATE_INSTALLED);
-                        holder.downloadBtn.setCurrentText(context.getString(R.string.open));
-                        holder.deleteBtn.setVisibility(View.VISIBLE);
-                    }
-                },2000);
-            }
-        });
-
-        int status = downloader.getStatus();
+        int status = dapp.getStatus();
         long sofarBytes=downloader.getSoFar();
         long totalBytes=downloader.getTotal();
          holder.updateView(status, sofarBytes, totalBytes);
@@ -147,14 +130,11 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
     }
 
 
-    private void handleState(ViewHolder holder, Dapp dapp, Downloader downloader){
+    private void handleState(ViewHolder holder, DApp dapp, Downloader downloader){
         int state=holder.downloadBtn.getState();
         switch (state){
             case DownloadProgressButton.STATE_NORMAL:
             {
-               // downloadTask = createDownloadTask(holder,dapp);
-                //downloadTask.start();
-                //addInstalledAppToDB(dapp,downloadTask);
                 downloader.start();
             }
                 break;
@@ -195,17 +175,6 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
         mContext.startActivity(intent);
     }
 
-    protected void unzipFile( File zipFile, File destination ) {
-        UnZip decomp = new UnZip( zipFile.getPath(),
-                destination.getPath() + File.separator );
-        decomp.unzip();
-    }
-
-
-    private void installedApp(Downloader downloader){
-        unzipFile( new File(downloader.getPath()), new File(downloader.getInstalledPath()));
-        EventBus.getDefault().post(new DAppChangeEvent());
-    }
 
 
 
@@ -219,6 +188,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
         @BindView(R.id.delete_btn)
         Button deleteBtn;
         private Context context;
+        private DApp dapp;
         private Downloader downloader;
         private OnDownloadCompletedListener downloadCompletedListener;
 
@@ -246,6 +216,14 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
             this.downloadCompletedListener = downloadCompletedListener;
         }
 
+        public DApp getDapp() {
+            return dapp;
+        }
+
+        public void setDapp(DApp dapp) {
+            this.dapp = dapp;
+        }
+
         public ViewHolder(View view) {
             super(view);
 
@@ -258,11 +236,19 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
 
         @Subscribe(threadMode = ThreadMode.MAIN)
         public void onMessageEvent(DAppDownloadEvent event){
-           updateView(event.getStatus(),event.getSoFarBytes(),event.getTotalBytes());
+            if (downloader!=null && downloader.getDownloadId() == event.getDownloadId()) {
+                updateView(event.getStatus(), event.getSoFarBytes(), event.getTotalBytes());
+            }
         }
 
         public void updateView(int status, long sofarBytes, long totalBytes){
             switch (status){
+                case FileDownloadStatus.INVALID_STATUS:
+                {
+                    downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
+                    downloadBtn.setCurrentText(context.getString(R.string.download));
+                }
+                break;
                 case  FileDownloadStatus.connected:
                 {
 
@@ -270,12 +256,16 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
                 break;
                 case FileDownloadStatus.started:
                 {
+                    downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
+                    downloadBtn.setCurrentText(context.getString(R.string.download));
                     updateNotDownloaded(FileDownloadStatus.started,  sofarBytes, totalBytes);
                 }
                 break;
                 case FileDownloadStatus.error:
                 {
-                    //Log.d(TAG, String.format("error %s", e.toString()));
+                    downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
+                    downloadBtn.setCurrentText(context.getString(R.string.download));
+                    updateNotDownloaded(FileDownloadStatus.started,  sofarBytes, totalBytes);
                 }
                 break;
                 case FileDownloadStatus.progress:
@@ -308,25 +298,32 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
                     downloadBtn.setProgress(1);
                     downloadBtn.setState(DownloadProgressButton.STATE_FINISH);
                     downloadBtn.setCurrentText(context.getString(R.string.install));
-                    String path= downloader.getInstalledPath();
-                   if (FileUtils.isFileExists(path) && FileUtils.isDir(path)){
-                       downloadBtn.setState(DownloadProgressButton.STATE_INSTALLED);
-                       downloadBtn.setCurrentText(context.getString(R.string.open));
-                   }else {
-                       if (downloadCompletedListener!=null){
-                           downloadCompletedListener.onDAppDownloadCompleted(this);
-                       }
-                   }
-
-
+//                    downloader.install();
+//                    String path= downloader.getInstalledPath();
+//                   if (FileUtils.isFileExists(path) && FileUtils.isDir(path)){
+//                       downloadBtn.setState(DownloadProgressButton.STATE_INSTALLED);
+//                       downloadBtn.setCurrentText(context.getString(R.string.open));
+//                   }
+// else {
                 }
                 break;
-            }
-
-            if (status==FileDownloadStatus.completed){
-                deleteBtn.setVisibility(View.VISIBLE);
-            }else {
-                deleteBtn.setVisibility(View.INVISIBLE);
+                case DownloadExtraStatus.INSTALLED:
+                {
+                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            downloadBtn.setState(DownloadProgressButton.STATE_INSTALLED);
+                            downloadBtn.setCurrentText(context.getString(R.string.open));
+                        }
+                    },1600);
+                }
+                break;
+                case DownloadExtraStatus.UNINSTALLED:
+                {
+                    downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
+                    downloadBtn.setCurrentText(context.getString(R.string.download));
+                }
+                break;
             }
         }
 
@@ -362,7 +359,7 @@ public class DAppsAdapter extends BaseQuickAdapter<Dapp, DAppsAdapter.ViewHolder
 
 
         public interface OnDownloadCompletedListener{
-            void onDAppDownloadCompleted(ViewHolder holder);
+            void onDAppDownloadCompleted(ViewHolder holder, DApp dApp, Downloader downloader);
         }
 
 

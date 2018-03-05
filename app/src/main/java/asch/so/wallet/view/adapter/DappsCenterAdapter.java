@@ -1,22 +1,16 @@
 package asch.so.wallet.view.adapter;
 
-import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
-import java.util.List;
-
 import asch.so.wallet.R;
-import asch.so.wallet.model.entity.Dapp;
+import asch.so.wallet.model.entity.DApp;
 
 /**
  * Created by kimziv on 2017/10/18.
  */
 
-public class DappsCenterAdapter extends BaseQuickAdapter<Dapp, BaseViewHolder> {
+public class DappsCenterAdapter extends BaseQuickAdapter<DApp, BaseViewHolder> {
 
     public DappsCenterAdapter() {
         super(R.layout.item_dapp_center);
@@ -24,11 +18,11 @@ public class DappsCenterAdapter extends BaseQuickAdapter<Dapp, BaseViewHolder> {
 
 
     @Override
-    protected void convert(BaseViewHolder viewHolder, Dapp dapp) {
-        viewHolder.setText(R.id.name_tv, dapp.getName())
+    protected void convert(BaseViewHolder viewHolder, DApp DApp) {
+        viewHolder.setText(R.id.name_tv, DApp.getName())
 //                .setText(R.id.lmi_actor, dapp.actors)
 //                .setText(R.id.lmi_grade, dapp.grade)
-                .setText(R.id.description_tv, dapp.getDescription());
+                .setText(R.id.description_tv, DApp.getDescription());
     }
 
 }

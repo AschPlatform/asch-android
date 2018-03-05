@@ -271,7 +271,10 @@
     <string name="continued">继续</string>
     <string name="delete">删除</string>
     <string name="install">安装</string>
+    <string name="installed">已安装</string>
     <string name="open">打开</string>
+    <string name="uninstall_success">卸载成功</string>
+
 
     <string name="dapp_detail">应用详情</string>
     <string name="dapp_info">信息</string>

@@ -76,7 +76,7 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript" src="plugins/cordova-plugin-dialogs/www/notification.js"></script>
-        <script type="text/javascript" src="plugins/cordova-plugin-dapp/www/dapp.js"></script>
+        <script type="text/javascript" src="plugins/cordova-plugin-DApp/www/DApp.js"></script>
         <script type="text/javascript" src="plugins/cordova-plugin-cctime/www/cctime.js"></script>
         <script>
         
@@ -97,7 +97,7 @@
  		 var fee=10000000;
           var aid='120';
           var pid="";
-          var content='a comment test from android dapp ';
+          var content='a comment test from android DApp ';
           navigator.cctime.postComment(null,null, dappID, fee, aid, pid, content);
         }
 
@@ -136,7 +136,7 @@
           var amount=120000000;
           var message='test';
           var fee=10000000;
-          navigator.dapp.withdraw(null,null,dappID, currency, amount, message, fee);
+          navigator.DApp.withdraw(null,null,dappID, currency, amount, message, fee);
          }
 
         function innerTransfer()
@@ -148,7 +148,7 @@
           var message='test';
           var fee=10000000;
           var targetAddress='AAmTPHrenFQdZHnUGqhE3qV9nr8BP5SzWx';
-          navigator.dapp.innerTransfer(null,null,dappID, currency, targetAddress, amount, message, fee);
+          navigator.DApp.innerTransfer(null,null,dappID, currency, targetAddress, amount, message, fee);
          }
 
        function setNickname()
@@ -156,18 +156,18 @@
           var dappID='d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1';
           var nickname='kim_test';
           var fee=10000000;
-          navigator.dapp.setNickname(null,null,dappID, nickname, fee);
+          navigator.DApp.setNickname(null,null,dappID, nickname, fee);
          }
 
         function myFunction()
         {
 
-          //navigator.dapp.authorize(null, null);
+          //navigator.DApp.authorize(null, null);
           var dappID='d352263c517195a8b612260971c7af869edca305bb64b471686323817e57b2c1';
           var currency='CCTime.XCT';
           var amount=123456789;
           var message='test';
-          navigator.dapp.deposit(null,null,dappID, currency, amount, message);
+          navigator.DApp.deposit(null,null,dappID, currency, amount, message);
         <!--function onConfirm(buttonIndex) {-->
     <!--alert('You selected button ' + buttonIndex);-->
 <!--}-->

@@ -3,11 +3,10 @@ package asch.so.wallet.presenter;
 import android.content.Context;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import asch.so.wallet.R;
 import asch.so.wallet.contract.DappCenterContract;
-import asch.so.wallet.model.entity.Dapp;
+import asch.so.wallet.model.entity.DApp;
 
 /**
  * Created by kimziv on 2017/10/11.
@@ -36,31 +35,31 @@ public class DappCenterPresenter implements DappCenterContract.Presenter{
     @Override
     public void loadDappList() {
 
-        Dapp dapp=new Dapp();
-        dapp.setName(context.getString(R.string.node_vote));
-        dapp.setCategory(1);
-        dapp.setDescription(context.getString(R.string.node_vote));
+        DApp DApp =new DApp();
+        DApp.setName(context.getString(R.string.node_vote));
+        DApp.setCategory(1);
+        DApp.setDescription(context.getString(R.string.node_vote));
 
-        Dapp dapp2=new Dapp();
-        dapp2.setName(context.getString(R.string.vote_list));
-        dapp2.setCategory(1);
-        dapp2.setDescription(context.getString(R.string.vote_list));
+        DApp DApp2 =new DApp();
+        DApp2.setName(context.getString(R.string.vote_list));
+        DApp2.setCategory(1);
+        DApp2.setDescription(context.getString(R.string.vote_list));
 
-        Dapp dapp3=new Dapp();
-        dapp3.setName(context.getString(R.string.personal_center));
-        dapp3.setCategory(2);
-        dapp3.setDescription(context.getString(R.string.personal_center));
+        DApp DApp3 =new DApp();
+        DApp3.setName(context.getString(R.string.personal_center));
+        DApp3.setCategory(2);
+        DApp3.setDescription(context.getString(R.string.personal_center));
 
-        Dapp dapp4=new Dapp();
-        dapp3.setName(context.getString(R.string.cctime));
-        dapp3.setCategory(1);
-        dapp3.setDescription(context.getString(R.string.cctime));
+        DApp DApp4 =new DApp();
+        DApp3.setName(context.getString(R.string.cctime));
+        DApp3.setCategory(1);
+        DApp3.setDescription(context.getString(R.string.cctime));
 
-        ArrayList<Dapp> data=new ArrayList<>();
-        data.add(dapp);
-        data.add(dapp2);
-        data.add(dapp3);
-        data.add(dapp4);
+        ArrayList<DApp> data=new ArrayList<>();
+        data.add(DApp);
+        data.add(DApp2);
+        data.add(DApp3);
+        data.add(DApp4);
         this.view.displayDappList(data);
 
     }

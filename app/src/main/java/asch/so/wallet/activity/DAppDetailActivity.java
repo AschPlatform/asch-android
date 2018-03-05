@@ -19,7 +19,8 @@ public class DAppDetailActivity extends TitleToolbarActivity {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.dapp_detail));
         Bundle bundle=  getBundle();
-        DAppDetailFragment fragment = DAppDetailFragment.newInstance(bundle.getString("dapp_id"));
+        //DAppDetailFragment fragment = DAppDetailFragment.newInstance(bundle.getString("dapp_id"));
+        DAppDetailFragment fragment = DAppDetailFragment.newInstance(bundle);
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment, R.id.fragment_container);
     }
 

@@ -15,8 +15,7 @@ import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.DappsContract;
-import asch.so.wallet.model.entity.Dapp;
-import asch.so.wallet.model.entity.PeerNode;
+import asch.so.wallet.model.entity.DApp;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -26,7 +25,6 @@ import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 import so.asch.sdk.dto.query.DappQueryParameters;
-import so.asch.sdk.dto.query.PeerQueryParameters;
 
 /**
  * Created by kimziv on 2018/1/10.
@@ -82,7 +80,7 @@ public class DappsPresenter implements DappsContract.Presenter {
         int offset = pageIndex * pageSize;
         int limit = pageSize;
         //String address = getAccount().getAddress();
-        Subscription subscription = Observable.create((Observable.OnSubscribe<List<Dapp>>) subscriber -> {
+        Subscription subscription = Observable.create((Observable.OnSubscribe<List<DApp>>) subscriber -> {
             DappQueryParameters params = new DappQueryParameters()
                     //.orderByDescending("t_timestamp")
                     .setOffset(offset)
@@ -91,10 +89,10 @@ public class DappsPresenter implements DappsContract.Presenter {
             if (result.isSuccessful()) {
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                 JSONArray peersJsonArray = resultJSONObj.getJSONArray("dapps");
-                List<Dapp> dapps = JSON.parseArray(peersJsonArray.toJSONString(), Dapp.class);
-                ArrayList<Dapp> filteredDapps=new ArrayList<Dapp>();
-                filteredDapps.add(dapps.get(0));
-                subscriber.onNext(filteredDapps);
+                List<DApp> DApps = JSON.parseArray(peersJsonArray.toJSONString(), DApp.class);
+                ArrayList<DApp> filteredDApps =new ArrayList<DApp>();
+                filteredDApps.add(DApps.get(0));
+                subscriber.onNext(filteredDApps);
                 subscriber.onCompleted();
             } else {
                 subscriber.onError(result.getException());
@@ -102,7 +100,7 @@ public class DappsPresenter implements DappsContract.Presenter {
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<Dapp>>() {
+                .subscribe(new Subscriber<List<DApp>>() {
                     @Override
                     public void onCompleted() {
 
@@ -115,7 +113,7 @@ public class DappsPresenter implements DappsContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(List<Dapp> dapps) {
+                    public void onNext(List<DApp> dapps) {
                         if (pager.isFirstPage()) {
                             view.displayFirstPageDapps(dapps);
                         } else {

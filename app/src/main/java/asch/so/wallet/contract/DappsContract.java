@@ -4,8 +4,7 @@ import java.util.List;
 
 import asch.so.base.presenter.BasePresenter;
 import asch.so.base.view.BaseView;
-import asch.so.wallet.model.entity.Dapp;
-import asch.so.wallet.model.entity.PeerNode;
+import asch.so.wallet.model.entity.DApp;
 
 /**
  * Created by kimziv on 2018/1/10.
@@ -13,9 +12,9 @@ import asch.so.wallet.model.entity.PeerNode;
 
 public interface DappsContract {
     interface View extends BaseView<Presenter>{
-        void displayFirstPageDapps(List<Dapp> dapps);
+        void displayFirstPageDapps(List<DApp> DApps);
 
-        void displayMorePageDapps(List<Dapp> dapps);
+        void displayMorePageDapps(List<DApp> DApps);
     }
 
     interface Presenter extends BasePresenter{

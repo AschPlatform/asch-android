@@ -2,7 +2,7 @@ package asch.so.wallet.contract;
 
 import asch.so.base.presenter.BasePresenter;
 import asch.so.base.view.BaseView;
-import asch.so.wallet.miniapp.download.TaskModel;
+import asch.so.wallet.model.entity.DApp;
 
 /**
  * Created by kimziv on 2018/2/5.
@@ -11,7 +11,7 @@ import asch.so.wallet.miniapp.download.TaskModel;
 public interface DAppDetailContract {
 
     interface  View extends BaseView<Presenter>{
-        void displayDApp(TaskModel taskModel);
+        void displayDApp(DApp taskModel);
     }
 
     interface Presenter extends BasePresenter{

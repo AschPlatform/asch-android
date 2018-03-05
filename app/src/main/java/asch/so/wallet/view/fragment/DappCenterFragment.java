@@ -1,64 +1,25 @@
 package asch.so.wallet.view.fragment;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Switch;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.youth.banner.Banner;
-import com.youth.banner.loader.ImageLoader;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
-import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
-import asch.so.wallet.accounts.AccountsManager;
-import asch.so.wallet.activity.AccountInfoActivity;
-import asch.so.wallet.activity.BaseCordovaActivity;
-import asch.so.wallet.activity.DAppCenterActivity;
-import asch.so.wallet.activity.DappActivity;
-import asch.so.wallet.activity.LockCoinsActivity;
-import asch.so.wallet.activity.PeersActivity;
-import asch.so.wallet.activity.VoteActivity;
-import asch.so.wallet.contract.DappCenterContract;
-import asch.so.wallet.miniapp.download.TaskModel;
-import asch.so.wallet.miniapp.download.TasksDBContraller;
-import asch.so.wallet.model.entity.Account;
-import asch.so.wallet.model.entity.Dapp;
-import asch.so.wallet.model.entity.FullAccount;
-import asch.so.wallet.presenter.DappCenterPresenter;
-import asch.so.wallet.util.AppUtil;
-import asch.so.wallet.view.adapter.DappsCenterAdapter;
 import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 /**
  * Created by kimziv on 2017/10/11.
