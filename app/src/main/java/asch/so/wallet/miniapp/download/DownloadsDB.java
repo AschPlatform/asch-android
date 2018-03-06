@@ -22,9 +22,16 @@ public class DownloadsDB {
     }
 
 
-    public ArrayList<DApp> queryAllTasks() {
+    public ArrayList<DApp> queryAllDApps() {
 
         RealmResults<DApp> results = getRealm().where(DApp.class).findAll();
+        ArrayList<DApp> dApps= new ArrayList<>(results);
+        return dApps;
+    }
+
+    public ArrayList<DApp> queryInstalledDApps() {
+
+        RealmResults<DApp> results = getRealm().where(DApp.class).equalTo("status",DownloadExtraStatus.INSTALLED).findAll();
         ArrayList<DApp> dApps= new ArrayList<>(results);
         return dApps;
     }

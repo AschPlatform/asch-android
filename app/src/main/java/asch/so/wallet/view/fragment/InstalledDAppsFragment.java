@@ -26,6 +26,8 @@ import asch.so.wallet.R;
 import asch.so.wallet.activity.DAppDetailActivity;
 import asch.so.wallet.contract.InstalledDappsContract;
 import asch.so.wallet.event.DAppChangeEvent;
+import asch.so.wallet.event.DAppDownloadEvent;
+import asch.so.wallet.miniapp.download.DownloadExtraStatus;
 import asch.so.wallet.model.entity.DApp;
 import asch.so.wallet.presenter.InstalledDappsPresenter;
 import asch.so.wallet.util.AppUtil;
@@ -101,7 +103,13 @@ public class InstalledDAppsFragment extends BaseFragment implements InstalledDap
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(DAppChangeEvent event) {
+    public void onMessageEvent(DAppDownloadEvent event) {
+        if (event.getStatus()== DownloadExtraStatus.INSTALLED||event.getStatus()==DownloadExtraStatus.UNINSTALLED){
+            presenter.loadInstalledDapps();
+        }
+    }
+
+    public void lodaDApps(){
         presenter.loadInstalledDapps();
     }
 

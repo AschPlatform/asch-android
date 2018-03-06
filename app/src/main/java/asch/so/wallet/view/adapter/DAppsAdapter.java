@@ -79,17 +79,6 @@ public class DAppsAdapter extends BaseQuickAdapter<DApp, DAppsAdapter.ViewHolder
             public void onClick(View v) {
                  downloader.uninstall();
                 AppUtil.toastInfo(context,context.getString(R.string.uninstall_success));
-//                boolean ret= FileUtils.deleteDir(downloader.getInstalledPath());
-//                boolean ret2=FileUtils.deleteFile(downloader.getDownloadPath());
-//                if (ret && ret2){
-//                    EventBus.getDefault().post(new DAppChangeEvent());
-//                    AppUtil.toastInfo(mContext,ret?"删除成功":"删除失败");
-//                    holder.downloadBtn.setMaxProgress(1);
-//                    holder.downloadBtn.setProgress(0);
-//                    holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
-//                    holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
-//                   // holder.deleteBtn.setVisibility(View.INVISIBLE);
-//                }
             }
         });
 
@@ -298,24 +287,17 @@ public class DAppsAdapter extends BaseQuickAdapter<DApp, DAppsAdapter.ViewHolder
                     downloadBtn.setProgress(1);
                     downloadBtn.setState(DownloadProgressButton.STATE_FINISH);
                     downloadBtn.setCurrentText(context.getString(R.string.install));
-//                    downloader.install();
-//                    String path= downloader.getInstalledPath();
-//                   if (FileUtils.isFileExists(path) && FileUtils.isDir(path)){
-//                       downloadBtn.setState(DownloadProgressButton.STATE_INSTALLED);
-//                       downloadBtn.setCurrentText(context.getString(R.string.open));
-//                   }
-// else {
                 }
                 break;
                 case DownloadExtraStatus.INSTALLED:
                 {
-                    new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
+                    //new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                       // @Override
+                       // public void run() {
                             downloadBtn.setState(DownloadProgressButton.STATE_INSTALLED);
                             downloadBtn.setCurrentText(context.getString(R.string.open));
-                        }
-                    },1600);
+                       // }
+                    //},1600);
                 }
                 break;
                 case DownloadExtraStatus.UNINSTALLED:

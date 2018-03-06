@@ -83,6 +83,9 @@ public class DappCenterFragment extends BaseFragment{
             @Override
             public void onTabSelect(int position) {
                 viewPager.setCurrentItem(position);
+                if (position==1){
+                    installedDAppsFragment.lodaDApps();
+                }
             }
 
             @Override

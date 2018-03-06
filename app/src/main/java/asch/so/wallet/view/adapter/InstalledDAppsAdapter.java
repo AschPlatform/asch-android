@@ -20,6 +20,7 @@ import java.io.File;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.BaseCordovaActivity;
 import asch.so.wallet.event.DAppChangeEvent;
+import asch.so.wallet.miniapp.download.DownloadExtraStatus;
 import asch.so.wallet.miniapp.download.Downloader;
 import asch.so.wallet.miniapp.download.DownloadsDB;
 import asch.so.wallet.miniapp.download.DownloadsManager;
@@ -52,49 +53,30 @@ public class InstalledDAppsAdapter extends BaseQuickAdapter<DApp, InstalledDApps
 
     @Override
     protected void convert(ViewHolder holder, DApp dapp) {
-
-       // Downloader downloader= DownloadsManager.getImpl().getDownloader(dapp);
-
         holder.nameTv.setText(dapp.getName());
         holder.descriptionTv.setText(dapp.getName());
         holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
         holder.downloadBtn.setCurrentText(mContext.getString(R.string.open));
-        //holder.deleteBtn.setVisibility(dapp.getStatus()== FileDownloadStatus.completed?View.VISIBLE:View.INVISIBLE);
         holder.downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String path= dapp.getInstalledPath();
-                if (FileUtils.isFileExists(path) && FileUtils.isDir(path)){
-                    String wwwPath ="file://"+dapp.getInstalledPath()+File.separator+"www/index.html";
-                    gotoDapp(wwwPath);
-                }else {
-                    AppUtil.toastInfo(mContext,"请先下载安装, 再使用");
+                if (dapp.getStatus()== DownloadExtraStatus.INSTALLED){
+                    String path= dapp.getInstalledPath();
+                    if (FileUtils.isFileExists(path) && FileUtils.isDir(path)){
+                        String wwwPath ="file://"+dapp.getInstalledPath()+File.separator+"www/index.html";
+                        gotoDapp(wwwPath);
+                        return;
+                    }
                 }
-
+                AppUtil.toastInfo(mContext,"请先下载安装, 再使用");
             }
         });
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                boolean ret= FileUtils.deleteDir(dapp.getInstalledPath());
-                boolean ret2=FileUtils.deleteFile(dapp.getDownloadPath());
-                if (ret && ret2){
-                   //
-
-//                    holder.downloadBtn.setMaxProgress(1);
-//                    holder.downloadBtn.setProgress(0);
-//                    holder.downloadBtn.setState(DownloadProgressButton.STATE_NORMAL);
-//                    holder.downloadBtn.setCurrentText(mContext.getString(R.string.download));
-//                    holder.deleteBtn.setVisibility(View.INVISIBLE);
-                    DownloadsDB.getImpl().deleteDApp(dapp.getTransactionId(), new DownloadsDB.OnDeleteDAppListener() {
-                        @Override
-                        public void onDeleteDApp(DApp dapp) {
-                            EventBus.getDefault().post(new DAppChangeEvent());
-                            AppUtil.toastInfo(mContext,ret?"删除成功":"删除失败");
-                        }
-                    });
-                }
+                Downloader downloader= DownloadsManager.getImpl().getDownloader(dapp);
+                downloader.uninstall();
+                AppUtil.toastInfo(context,context.getString(R.string.uninstall_success));
             }
         });
     }

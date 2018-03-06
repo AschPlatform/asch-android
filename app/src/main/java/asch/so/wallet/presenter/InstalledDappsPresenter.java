@@ -45,7 +45,7 @@ public class InstalledDappsPresenter implements InstalledDappsContract.Presenter
     }
 
     private List<DApp> queryDapps(){
-      return  DownloadsDB.getImpl().queryAllTasks();
+      return  DownloadsDB.getImpl().queryInstalledDApps();
     }
 
     @Override

@@ -69,9 +69,6 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
     private int type;//uninstalled:0, intalled:1
 
     public static DAppDetailFragment newInstance(Bundle args) {
-        
-        //Bundle args = new Bundle();
-        
         DAppDetailFragment fragment = new DAppDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -144,14 +141,7 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
         downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (downloader!=null && downloader.getStatus()==FileDownloadStatus.completed){
-                    String path= dapp.getInstalledPath();
-                    if (FileUtils.isFileExists(path) && FileUtils.isDir(path)) {
-                        String wwwPath = "file://" + path + File.separator + "www/index.html";
-                        gotoDapp(wwwPath);
-                        AppUtil.toastSuccess(getContext(), "打开应用...");
-                    }
-                }
+                handleState(dapp,downloader);
             }
         });
 
@@ -184,6 +174,44 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
         if (downloader!=null && downloader.getDownloadId() == event.getDownloadId())
         {
             updateView(event.getStatus(),event.getSoFarBytes(),event.getTotalBytes());
+        }
+    }
+
+    private void handleState(DApp dapp, Downloader downloader){
+        int state=downloadBtn.getState();
+        switch (state){
+            case DownloadProgressButton.STATE_NORMAL:
+            {
+                downloader.start();
+            }
+            break;
+            case DownloadProgressButton.STATE_DOWNLOADING:
+            {
+                downloader.pause();
+            }
+            break;
+            case DownloadProgressButton.STATE_PAUSE:
+            {
+                downloader.resume();
+            }
+            break;
+            case DownloadProgressButton.STATE_FINISH:
+            {
+                // AppUtil.toastSuccess(mContext, "开始安装");
+
+            }
+            break;
+            case DownloadProgressButton.STATE_INSTALLED:
+            {
+                String path= dapp.getInstalledPath();
+                if (FileUtils.isFileExists(path) && FileUtils.isDir(path)) {
+                    String wwwPath = "file://" + path + File.separator + "www/index.html";
+                    gotoDapp(wwwPath);
+                    AppUtil.toastSuccess(getContext(), "打开应用...");
+                }
+            }
+            break;
+
         }
     }
 
@@ -241,13 +269,13 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
             break;
             case DownloadExtraStatus.INSTALLED:
             {
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
+//                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
                         downloadBtn.setState(DownloadProgressButton.STATE_INSTALLED);
                         downloadBtn.setCurrentText(getActivity().getString(R.string.open));
-                    }
-                },1600);
+                   // }
+               // },1600);
 
             }
             break;
@@ -341,6 +369,6 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
         descriptionTv.setText(dapp.getDescription());
         //downloadBtn.setState(DownloadProgressButton.STATE_INSTALLED);
         //downloadBtn.setCurrentText("打开应用");
-        updateView(downloader.getStatus(),  downloader.getSoFar(), downloader.getTotal());
+        updateView(dapp.getStatus(),  downloader.getSoFar(), downloader.getTotal());
     }
 }

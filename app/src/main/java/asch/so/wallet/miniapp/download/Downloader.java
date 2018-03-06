@@ -221,9 +221,9 @@ public class Downloader {
      * 恢复下载
      */
     public void resume(){
-        if (downloadTask==null) {
+        //if (downloadTask==null) {
             downloadTask = createDownloadTask(dapp,downloadListener);
-        }
+        //}
         downloadTask.start();
         DownloadsDB.getImpl().updateStatus(dapp,FileDownloadStatus.progress,null);
 

@@ -28,6 +28,8 @@ import asch.so.wallet.R;
 import asch.so.wallet.activity.DAppDetailActivity;
 import asch.so.wallet.contract.DappsContract;
 import asch.so.wallet.event.DAppChangeEvent;
+import asch.so.wallet.event.DAppDownloadEvent;
+import asch.so.wallet.miniapp.download.DownloadExtraStatus;
 import asch.so.wallet.model.entity.DApp;
 import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.presenter.DappsPresenter;
@@ -107,11 +109,6 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
         return view;
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(DAppChangeEvent event) {
-        presenter.loadFirstPageDapps();
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -121,13 +118,11 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
     @Override
     public void onStart() {
         super.onStart();
-        EventBus.getDefault().register(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        EventBus.getDefault().unregister(this);
     }
 
 
