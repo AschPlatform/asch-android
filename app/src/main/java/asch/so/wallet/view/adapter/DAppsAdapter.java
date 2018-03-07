@@ -259,7 +259,6 @@ public class DAppsAdapter extends BaseQuickAdapter<DApp, DAppsAdapter.ViewHolder
                 break;
                 case FileDownloadStatus.progress:
                 {
-                    updateDownloading(FileDownloadStatus.progress, sofarBytes, totalBytes);
                     final float percent = sofarBytes / (float) totalBytes;
                     downloadBtn.setState(DownloadProgressButton.STATE_DOWNLOADING);
                     downloadBtn.setMaxProgress(100);
@@ -269,13 +268,11 @@ public class DAppsAdapter extends BaseQuickAdapter<DApp, DAppsAdapter.ViewHolder
                 break;
                 case FileDownloadStatus.paused:
                 {
-                    updateNotDownloaded(FileDownloadStatus.paused,  sofarBytes, totalBytes);
+
                     Log.d(TAG, "paused !!!");
-                    final float percent = sofarBytes / (float) totalBytes;
                     downloadBtn.setState(DownloadProgressButton.STATE_PAUSE);
-                    downloadBtn.setMaxProgress(100);
-                    downloadBtn.setProgress((int) (percent * 100));
                     downloadBtn.setCurrentText(context.getString(R.string.continued));
+                    updateNotDownloaded(FileDownloadStatus.paused,  sofarBytes, totalBytes);
 
                 }
                 break;
@@ -327,18 +324,7 @@ public class DAppsAdapter extends BaseQuickAdapter<DApp, DAppsAdapter.ViewHolder
                 downloadBtn.setMaxProgress(1);
                 downloadBtn.setProgress(0);
             }
-
-            downloadBtn.setText(R.string.start);
         }
-
-        public void updateDownloading(final int status, final long sofar, final long total) {
-            final float percent = sofar
-                    / (float) total;
-            downloadBtn.setMaxProgress(100);
-            downloadBtn.setProgress((int) (percent * 100));
-            downloadBtn.setText(R.string.pause);
-        }
-
 
         public interface OnDownloadCompletedListener{
             void onDAppDownloadCompleted(ViewHolder holder, DApp dApp, Downloader downloader);

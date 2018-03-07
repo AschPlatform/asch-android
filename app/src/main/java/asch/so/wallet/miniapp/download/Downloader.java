@@ -1,5 +1,6 @@
 package asch.so.wallet.miniapp.download;
 
+import android.content.Context;
 import android.text.TextUtils;
 
 import com.blankj.utilcode.util.FileUtils;
@@ -7,6 +8,7 @@ import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadSampleListener;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.liulishuo.filedownloader.model.FileDownloadStatus;
+import com.liulishuo.filedownloader.util.FileDownloadHelper;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,7 +30,7 @@ import asch.so.widget.downloadbutton.DownloadProgressButton;
 
 public class Downloader {
 
-    private static final  String DOWNLOAD_ROOT_PATH = FileDownloadUtils.getDefaultSaveRootPath() + File.separator + "asch_dapps";
+    private String downloadRootDir;
     private DApp dapp;
     private BaseDownloadTask downloadTask;
     private FileDownloadSampleListener downloadListener;
@@ -42,6 +44,7 @@ public class Downloader {
      * @param dapp
      */
     public Downloader(DApp dapp) {
+        downloadRootDir=  FileDownloadHelper.getAppContext().getExternalFilesDir(null).getAbsolutePath() + File.separator + "asch_dapps";
         DApp dbDapp=DownloadsDB.getImpl().queryDApp(dapp.getTransactionId());
         if (dbDapp!=null){
             this.dapp = dbDapp;
@@ -310,7 +313,7 @@ public class Downloader {
      * @return
      */
     private String getPath(String dappId){
-        return DOWNLOAD_ROOT_PATH+File.separator+dappId+".zip";
+        return downloadRootDir+File.separator+dappId+".zip";
     }
 
 //    public String getPath(){
@@ -323,7 +326,7 @@ public class Downloader {
      * @return
      */
     private String getInstalledPath(String dappId){
-        return DOWNLOAD_ROOT_PATH+File.separator+dappId;
+        return downloadRootDir+File.separator+dappId;
     }
 
 //    public String getInstalledPath(){
