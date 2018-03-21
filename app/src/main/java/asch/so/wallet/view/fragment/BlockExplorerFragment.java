@@ -98,8 +98,13 @@ public class BlockExplorerFragment extends BaseFragment implements BlockExplorer
         mListener = null;
     }
 
+//    @Override
+//    public void setPresenter(BasePresenter presenter) {
+//
+//    }
+
     @Override
-    public void setPresenter(BasePresenter presenter) {
+    public void setPresenter(BlockExplorerContract.Presenter presenter) {
 
     }
 
@@ -108,10 +113,10 @@ public class BlockExplorerFragment extends BaseFragment implements BlockExplorer
 
     }
 
-    @Override
-    public void displayBlock(Block block) {
-
-    }
+//    @Override
+//    public void displayBlock(Block block) {
+//
+//    }
 
     @Override
     public void displayFirstPageBlocks(List<Block> transactions) {

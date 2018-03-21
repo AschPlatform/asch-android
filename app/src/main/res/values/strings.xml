@@ -1,7 +1,4 @@
-<resources
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:ignore="MissingTranslation"
-    >
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">ASCH钱包</string>
     <string name="app_name_test">ASCH钱包Test</string>
     <string name="term_service_title">
@@ -138,6 +135,7 @@
     <string name="transaction_record">交易记录</string>
     <string name="transaction_details">交易详情</string>
     <string name="transaction_id">交易ID</string>
+    <string name="transaction">交易</string>
     <string name="transaction_type">交易类型</string>
     <string name="transaction_time">交易时间</string>
     <string name="transaction_sender">发送者</string>
@@ -310,11 +308,22 @@
     <string name="month">月</string>
     <string name="day">日</string>
     <string name="lock_warning">超出最大锁仓高度</string>
-    <string name="lock_warning_2">低于当前已锁仓高度</string>
+    <string name="lock_warning_2">锁仓高度应大于当前已锁仓高度</string>
     <string name="input_second_secret_hint">请输入8到16位字母和数字组合</string>
     <string name="lock_clear">解锁</string>
     <string name="open_dapp">打开应用</string>
     <string name="authorize">授权</string>
     <string name="dapp_authorize">DApp授权</string>
     <string name="dapp_authorize_alert">CCTime申请该应用在此账户的操作权限</string>
+
+    <string name="block_browse">区块浏览</string>
+    <string name="height">高度</string>
+    <string name="date">日期</string>
+    <string name="total_money">总金额</string>
+    <string name="total_cost">总费用</string>
+    <string name="award">奖励</string>
+    <string name="producer_address">生产者地址</string>
+    <string name="producer_public_key">生产者公钥</string>
+    <string name="producer_balance">生产者余额</string>
+    <string name="search_hint">请输入查询区块高度或者ID</string>
 </resources>
