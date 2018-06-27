@@ -31,6 +31,7 @@ import asch.so.wallet.activity.AboutActivity;
 import asch.so.wallet.activity.AccountInfoActivity;
 import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.AppSettingActivity;
+import asch.so.wallet.activity.BlockBrowseActivity;
 import asch.so.wallet.activity.BlockInfoActivity;
 import asch.so.wallet.activity.LockCoinsActivity;
 import asch.so.wallet.activity.PeersActivity;
@@ -128,6 +129,11 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                         case  R.mipmap.my_block_info:
                         {
                             BaseActivity.start(getActivity(),BlockInfoActivity.class,null);
+                        }
+                        break;
+                        case  R.mipmap.my_contacts:
+                        {
+                            BaseActivity.start(getActivity(),BlockBrowseActivity.class,null);
                         }
                         break;
                         case  R.mipmap.my_settings:

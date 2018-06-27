@@ -13,8 +13,7 @@ import asch.so.wallet.model.entity.Transaction;
 
 public interface BlockExplorerContract {
 
-    interface View extends BaseView<BasePresenter>{
-        void displayBlock(Block block);
+    interface View extends BaseView<Presenter>{
 
         void displayFirstPageBlocks(List<Block> blocks);
 
