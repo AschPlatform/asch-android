@@ -211,6 +211,19 @@ public abstract class AschRESTService implements AschInterface{
         }
     }
 
+    protected AschResult getReplaceByAddress(String relativeUrl, String address){
+        try {
+            Argument.require(Validation.isValidAddress(address), "invalid public address");
+
+           // ParameterMap parameters = new ParameterMap().put("address", address);
+           String url=  AschServiceUrls.Account.GET_ACCOUNT_V2.replace(":address",address);
+            return get(url);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
     protected ParameterMap parametersFromObject(Object object){
         ParameterMap map = new ParameterMap();
         map.putAll(JSONObject.parseObject( JSONObject.toJSONString(object) ));

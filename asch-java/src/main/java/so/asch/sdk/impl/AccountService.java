@@ -45,7 +45,13 @@ public class AccountService extends so.asch.sdk.impl.AschRESTService implements 
 
     @Override
     public AschResult getAccount(String address){
+
             return getByAddress(AschServiceUrls.Account.GET_ACCOUNT, address);
+    }
+
+    @Override
+    public AschResult getAccountV2(String address) {
+        return getReplaceByAddress(AschServiceUrls.Account.GET_ACCOUNT_V2, address);
     }
 
     @Override

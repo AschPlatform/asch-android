@@ -44,6 +44,18 @@ public interface Account extends AschInterface {
     //version	json	版本相关信息
     AschResult getAccount(String address);
 
+    //通过地址取用户信息
+    //接口地址：/api/v2/accounts/:address
+    //请求方式：get
+    //支持格式：urlencoded
+    //address	string	Y	用户地址,最小长度：1
+    //返回参数说明：
+    //success	boole	是否成功获得response数据
+    //account	json	账户信息
+    //latestBlock	json	最新的区块信息
+    //version	json	版本相关信息
+    AschResult getAccountV2(String address);
+
     //接口地址：/api/accounts/getBalance
     //请求方式：get
     //支持格式：urlencoded

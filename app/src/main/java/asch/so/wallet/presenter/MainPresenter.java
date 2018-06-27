@@ -20,6 +20,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
+import so.asch.sdk.impl.AschFactory;
 
 /**
  * Created by kimziv on 2017/11/15.
@@ -61,7 +62,8 @@ public class MainPresenter implements MainContract.Presenter {
             @Override
             public void call(Subscriber<? super FullAccount> subscriber) {
                 try {
-                    AschResult result = AschSDK.Account.secureLogin(publicKey);
+                    String address= AschFactory.getInstance().getSecurity().getAddress(publicKey);
+                    AschResult result = AschSDK.Account.getAccountV2(address);
                     if (result!=null && result.isSuccessful()){
                         LogUtils.iTag(TAG,result.getRawJson());
 //                        Map<String, Object> map =result.parseMap();

@@ -25,6 +25,7 @@ import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
+import so.asch.sdk.impl.AschFactory;
 
 /**
  * Created by kimziv on 2017/10/17.
@@ -270,7 +271,8 @@ public class AccountsManager extends Observable {
             @Override
             public void call(Subscriber<? super FullAccount> subscriber) {
                 try {
-                    AschResult result = AschSDK.Account.secureLogin(publicKey);
+                    String address = AschFactory.getInstance().getSecurity().getAddress(publicKey);
+                    AschResult result = AschSDK.Account.getAccountV2(address);
                     if (result != null && result.isSuccessful()) {
                         LogUtils.iTag(TAG, result.getRawJson());
                         FullAccount fullAccount = JSON.parseObject(result.getRawJson(), FullAccount.class);
@@ -300,7 +302,9 @@ public class AccountsManager extends Observable {
                     subscriber.onNext(balances);
                     subscriber.onCompleted();
                 } else {
-                    subscriber.onError(result.getException());
+                    subscriber.onNext(null);
+                    subscriber.onCompleted();
+                   // subscriber.onError(result.getException());
                 }
             }
         });
@@ -323,7 +327,9 @@ public class AccountsManager extends Observable {
                 xasBalance.setBalance(String.valueOf(fullAccount.getAccount().getBalance()));
                 xasBalance.setPrecision(AppConstants.PRECISION);
                 list.add(xasBalance);
-                list.addAll(balances);
+                if (balances!=null){
+                    list.addAll(balances);
+                }
                 fullAccount.setBalances(list);
                 return fullAccount;
             }

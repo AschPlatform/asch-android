@@ -16,7 +16,7 @@ public class AppConstants {
     public static final String DIGITS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // public static final  String DEFAULT_NODE_URL="http://101.200.84.232:4097";//"http://192.168.2.124:4096";//
     public static final String DEFAULT_MAIN_NODE_URL = "http://mainnet.asch.cn";
-    public static final String DEFAULT_TEST_NODE_URL ="http://testnet.cctime.org:4096";// "http://testnet.asch.io"; //"http://testnet.asch.so:4096";  //"http://47.93.137.170:4097";
+    public static final String DEFAULT_TEST_NODE_URL ="http://47.94.37.201:4006";//http://testnet.cctime.org:4096";// "http://testnet.asch.io"; //"http://testnet.asch.so:4096";  //"http://47.93.137.170:4097";
     public static final String DEFAULT_NODE_URL = BuildConfig.TEST ? DEFAULT_TEST_NODE_URL : DEFAULT_MAIN_NODE_URL;
     //public static final  String DEFAULT_NODE_URL="http://testnet.asch.io:4096";
 //   public static final  String DEFAULT_MAGIC="594fe0f3";

@@ -95,7 +95,8 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
             @Override
             public void call(Subscriber<? super Account> subscriber) {
                 try {
-                    AschResult result = AschSDK.Account.secureLogin(publicKey);
+                   String address=AschFactory.getInstance().getSecurity().getAddress(publicKey);
+                    AschResult result = AschSDK.Account.getAccountV2(address);
                     if (result != null && result.isSuccessful()) {
                         LogUtils.iTag(TAG, result.getRawJson());
                         FullAccount fullAccount = JSON.parseObject(result.getRawJson(), FullAccount.class);

@@ -3,14 +3,15 @@ package so.asch.sdk.impl;
 public final class AschServiceUrls {
      final static class Account {
         static final String LOGIN ="/api/accounts/open";
-        static final String SECURE_LOGIN ="/api/accounts/open2";
+        static final String SECURE_LOGIN ="/api/accounts/open2";//换成V2
         static final String GET_ACCOUNT ="/api/accounts";
-        static final String GET_BALANCE ="/api/accounts/getBalance";
+        static final String GET_ACCOUNT_V2 ="/api/v2/accounts/:address";
+        static final String GET_BALANCE ="/api/accounts/getBalance";//*
         static final String GET_PUBLIC_KEY ="/api/accounts/getPublickey";
         static final String GENERATE_PUBLIC_KEY ="/api/accounts/generatePublicKey";
         static final String GET_VOTED_DELEGATES ="/api/accounts/delegates";
         static final String GET_DELEGATE_FEE ="/api/accounts/delegates/fee";
-        static final String GET_TOP_ACCOUNTS ="/api/accounts/top";
+        static final String GET_TOP_ACCOUNTS ="/api/accounts/top"; //x
     }
 
     final static class Delegate{

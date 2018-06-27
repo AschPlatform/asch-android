@@ -160,6 +160,7 @@ public class FullAccount {
 
     public static class AccountInfo{
         private String address;
+        @JSONField(name="xas")
         private String balance;
         private String publicKey;
         private boolean unconfirmedSignature;
