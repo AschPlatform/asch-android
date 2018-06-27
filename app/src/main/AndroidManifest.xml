@@ -118,7 +118,10 @@
         <activity
             android:name=".activity.SecondSecretActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.BlockBrowseActivity" />
+        <activity android:name=".activity.BlockBrowseActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            />
         <activity android:name=".activity.BlockDetailActivity"></activity>
     </application>
 

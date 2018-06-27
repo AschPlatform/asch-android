@@ -93,7 +93,7 @@ project.ext {
             applicationIdTest    : "asch.so.wallet.test",
             minSdkVersion    : 16,
             targetSdkVersion : 26,
-            versionCode      : 18,
+            versionCode      : 19,
             versionName      : "2.0.0"
     ]
 
