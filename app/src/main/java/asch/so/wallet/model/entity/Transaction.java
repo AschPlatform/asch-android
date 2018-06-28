@@ -549,7 +549,7 @@ public class Transaction {
             BigDecimal decimal = AppUtil.decimalFromBigint(getAmount(), AschConst.CORE_COIN_PRECISION);
             return   String.format("%s%s", isSender?"-":"+", AppUtil.decimalFormat(decimal)+" XAS");
         }else if (TransactionType.UIATransferV2.getCode()==getType()){
-            AssetInfo asset=(AssetInfo)getAssetInfo();
+            //AssetInfo asset=(AssetInfo)getAssetInfo();
             //return asset.getQuantity();
             BigDecimal decimal = AppUtil.decimalFromBigint(getAmount(), this.assetInfo.getPrecision());
          return String.format("%s%s", isSender?"-":"+",AppUtil.decimalFormat(decimal)+" "+this.assetInfo.getName());

@@ -67,9 +67,10 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
         String address = getAccount().getAddress();
      Subscription subscription = Observable.create((Observable.OnSubscribe<List<Transaction>>) subscriber -> {
             TransactionQueryParameters params = new TransactionQueryParameters()
-                    .setCurrency("XAS")
-                    .setSenderId(address)
-                    .setRecipientId(address)
+                    //.setCurrency("XAS")
+                    .setOwnerId(address)
+                    //.setSenderId(address)
+                    //.setRecipientId(address)
                     .orderByDescending("t_timestamp")
                     .setOffset(offset)
                     .setLimit(limit);
