@@ -91,7 +91,7 @@ public class TransactionDetailFragment extends BaseFragment {
 
     private String amountFroTransaction(Transaction transaction){
         switch (Transaction.Type.fromCode(transaction.getType())){
-            case Transfer:
+            case TransferV2:
                 return AppUtil.decimalFormat(AppUtil.decimalFromBigint(transaction.getAmount(), AppConstants.PRECISION))+" XAS";
             case Signature:
                 break;
@@ -119,12 +119,13 @@ public class TransactionDetailFragment extends BaseFragment {
                 break;
             case UIAIssue:
                 break;
-            case UIATransfer:
+            case UIATransferV2:
             {
-                UIATransferAsset asset=(UIATransferAsset)transaction.getAssetInfo();
-                if (asset!=null && asset.getUiaTransfer() !=null){
-                    return String.format("%s %s",asset.getUiaTransfer().getAmountShow(),asset.getUiaTransfer().getCurrency());
-                }
+                Transaction.AssetInfo asset=(Transaction.AssetInfo)transaction.getAssetInfo();
+                return asset.getQuantity();
+//                if (asset!=null && asset.getUiaTransfer() !=null){
+//                    return String.format("%s %s",asset.getUiaTransfer().getAmountShow(),asset.getUiaTransfer().getCurrency());
+//                }
             }
             case Lock:
                 break;
@@ -139,7 +140,7 @@ public class TransactionDetailFragment extends BaseFragment {
         String json=bundle.getString("transaction");
         Transaction transaction = JSON.parseObject(json,Transaction.class);
         switch (Transaction.Type.fromCode(transaction.getType())){
-            case Transfer:
+            case TransferV2:
                 break;
             case Signature:
                 break;
@@ -167,10 +168,10 @@ public class TransactionDetailFragment extends BaseFragment {
                 break;
             case UIAIssue:
                 break;
-            case UIATransfer:
+            case UIATransferV2:
             {
                 if (transaction.getAsset()!=null){
-                    UIATransferAsset asset=JSON.parseObject(transaction.getAsset(),UIATransferAsset.class);
+                    Transaction.AssetInfo asset=JSON.parseObject(transaction.getAsset(),Transaction.AssetInfo.class);
                     transaction.setAssetInfo(asset);
                 }
             }

@@ -293,7 +293,7 @@ public class AccountsManager extends Observable {
         return rx.Observable.create(new rx.Observable.OnSubscribe<List<Balance>>(){
             @Override
             public void call(Subscriber<? super List<Balance>> subscriber) {
-                AschResult result = AschSDK.UIA.getAddressBalances(address, 100, 0);
+                AschResult result = AschSDK.Account.getBalanceV2(address, 100, 0);
                 LogUtils.iTag(TAG, result.getRawJson());
                 if (result.isSuccessful()) {
                     JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());

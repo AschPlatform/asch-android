@@ -67,6 +67,10 @@ public interface Account extends AschInterface {
     //unconfirmedBalance	integer	未确认和已确认的余额之和，该值大于等于balance
     AschResult getBalance(String address);
 
+    //接口地址：/api/v2/balances/:address
+    //请求方式：get
+    AschResult getBalanceV2(String address, int limit, int offset);
+
     //接口地址：/api/accounts/getPublickey
     //请求方式：get
     //支持格式：urlencoded

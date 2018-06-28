@@ -6,7 +6,8 @@ public final class AschServiceUrls {
         static final String SECURE_LOGIN ="/api/accounts/open2";//换成V2
         static final String GET_ACCOUNT ="/api/accounts";
         static final String GET_ACCOUNT_V2 ="/api/v2/accounts/:address";
-        static final String GET_BALANCE ="/api/accounts/getBalance";//*
+        static final String GET_BALANCE ="/api/accounts/getBalance";
+        static final String GET_BALANCE_V2="/api/v2/balances/:address";
         static final String GET_PUBLIC_KEY ="/api/accounts/getPublickey";
         static final String GENERATE_PUBLIC_KEY ="/api/accounts/generatePublicKey";
         static final String GET_VOTED_DELEGATES ="/api/accounts/delegates";
@@ -41,6 +42,7 @@ public final class AschServiceUrls {
 
     final static class Transaction{
         static final String QUERY_TRANSACTIONS = "/api/transactions";
+        static final String QUERY_TRANSACTIONS_V2 = "/api/v2/transfers";
         static final String GET_TRANSACTION = "/api/transactions/get";
         static final String GET_UNCONFIRMED_TRANSACTION = "/api/transactions/unconfirmed/get";
         static final String GET_UNCONFIRMED_TRANSACTIONS = "/api/transactions/unconfirmed";

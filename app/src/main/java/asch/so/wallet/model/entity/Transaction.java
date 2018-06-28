@@ -1,5 +1,7 @@
 package asch.so.wallet.model.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,37 +17,64 @@ import so.asch.sdk.impl.AschConst;
  */
 
 /*
-
 {
-    "id": "b3bc209d65fb9f945f7d9aeea8734aa7f111b84d2654c4b7dc89b4c21da4aa2b",
-    "height": "128459",
-    "blockId": "f57f68e6245c42e936e403806b318325efe7ffef8aaa08e632769f5ae1507e40",
-    "type": 14,
-    "timestamp": 40472637,
-    "senderPublicKey": "2856bdb3ed4c9b34fd2bba277ffd063a00f703113224c88c076c0c58310dbec4",
-    "senderId": "ANH2RUADqXs6HPbPEZXv4qM8DZfoj4Ry3M",
-    "recipientId": "AHcGmYnCyr6jufT5AGbpmRUv55ebwMLCym",
-    "amount": 0,
-    "fee": 10000000,
-    "signature": "95debd7b968779173219831261f9786ba5c72f3221b409aed0172fd00558686828c2e6bc6611c98e7ab8a8eb8081e8caf97636e05dccd62a95cc805ecd70c40b",
-    "signSignature": "",
-    "signatures": null,
-    "confirmations": "89002",
-    "args": null,
-    "message": "",
-    "asset": {}
-}
+	"success": true,
+	"count": 3,
+	"transfers": [{
+		"tid": "343cfc15d931554f2f276846597b31fbeaf80774aed518643918f575dcebd915",
+		"senderId": "A7jbxyRqsaVQRbY69rzKbVruc8tnamdAsf",
+		"recipientId": "AHcGmYnCyr6jufT5AGbpmRUv55ebwMLCym",
+		"recipientName": "",
+		"currency": "hhh.OOPP",
+		"amount": "1000000000",
+		"timestamp": 63001055,
+		"_version_": 1,
+		"asset": {
+			"name": "hhh.OOPP",
+			"tid": "fb5a25985dd30b15a9ad9b7addc957f942b2332a3792aa3be6da39e099cfcf06",
+			"timestamp": 62518008,
+			"maximum": "2000000000000",
+			"precision": 6,
+			"quantity": "2000000000000",
+			"desc": "黄金季节",
+			"issuerId": "A6MGhEcA8xgnUiGbszKrbtVjtxQ22ySx4m",
+			"_version_": 2
+		},
+		"transaction": {
+			"id": "343cfc15d931554f2f276846597b31fbeaf80774aed518643918f575dcebd915",
+
+			}		"type": 103,
+			"timestamp": 63001055,
+			"senderId": "A7jbxyRqsaVQRbY69rzKbVruc8tnamdAsf",
+			"senderPublicKey": "ed6b73946e78ac5ef795fa7887e21a1e65b6191caef95115e974d0dd99057cc0",
+			"requestorId": null,
+			"fee": 10000000,
+			"signatures": "[\"069849f36bd3c17e7a20a4b2a84506f1c5cfa562ddd3a7ab514d4796f8487188ecc2a8405b6a79bc4c960894bce9e4bb132ddebe41d66ffa3349f914bdbc3407\"]",
+			"secondSignature": "197d71194c5206cf4d85c609c2dd85ce68664a49e4817ac8dd1682afffb0925255fb4a8ef57e02c9c9880dec58399f3473b9c41296cec57a568d5f38ec7bfb05",
+			"args": "[\"hhh.OOPP\",\"1000000000\",\"AHcGmYnCyr6jufT5AGbpmRUv55ebwMLCym\"]",
+			"height": 67259,
+			"message": "",
+			"executed": 1,
+			"_version_": 1
+		}
+	}
+
  */
 
 public class Transaction {
+    @JSONField(name="tid")
     private String id; //交易ID
+    @JSONField(name="t_height")
     private String height;//区块高度
     private String blockId;//区块ID
+    @JSONField(name="t_type")
     private int type;//交易类型
     private int timestamp;//时间戳
     private String senderPublicKey;//发送者公钥
     private String senderId;//发送者地址
     private String recipientId;
+    private String recipientName;
+    private String currency;
     private long amount;
     private long fee;
     private String signature;
@@ -55,7 +84,208 @@ public class Transaction {
     private String args;
     private String message;
     private String asset;
-    private Asset assetInfo;
+    private AssetInfo assetInfo;
+    private TransactionInfo transaction;
+
+    /**
+     "transaction": {
+     "id": "343cfc15d931554f2f276846597b31fbeaf80774aed518643918f575dcebd915",
+     "type": 103,
+     "timestamp": 63001055,
+     "senderId": "A7jbxyRqsaVQRbY69rzKbVruc8tnamdAsf",
+     "senderPublicKey": "ed6b73946e78ac5ef795fa7887e21a1e65b6191caef95115e974d0dd99057cc0",
+     "requestorId": null,
+     "fee": 10000000,
+     "signatures": "[\"069849f36bd3c17e7a20a4b2a84506f1c5cfa562ddd3a7ab514d4796f8487188ecc2a8405b6a79bc4c960894bce9e4bb132ddebe41d66ffa3349f914bdbc3407\"]",
+     "secondSignature": "197d71194c5206cf4d85c609c2dd85ce68664a49e4817ac8dd1682afffb0925255fb4a8ef57e02c9c9880dec58399f3473b9c41296cec57a568d5f38ec7bfb05",
+     "args": "[\"hhh.OOPP\",\"1000000000\",\"AHcGmYnCyr6jufT5AGbpmRUv55ebwMLCym\"]",
+     "height": 67259,
+     "message": "",
+     "executed": 1,
+     "_version_": 1
+     }
+     */
+    public  static  class  TransactionInfo{
+        private String id;
+        private int type;
+        private int timestamp;
+        private String senderId;
+        private String senderPublicKey;
+        private String requestorId;
+        private long fee;
+        private String issuerId;
+        @JSONField(name="_version_")
+        private int version;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public int getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(int timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public String getSenderId() {
+            return senderId;
+        }
+
+        public void setSenderId(String senderId) {
+            this.senderId = senderId;
+        }
+
+        public String getSenderPublicKey() {
+            return senderPublicKey;
+        }
+
+        public void setSenderPublicKey(String senderPublicKey) {
+            this.senderPublicKey = senderPublicKey;
+        }
+
+        public String getRequestorId() {
+            return requestorId;
+        }
+
+        public void setRequestorId(String requestorId) {
+            this.requestorId = requestorId;
+        }
+
+        public long getFee() {
+            return fee;
+        }
+
+        public void setFee(long fee) {
+            this.fee = fee;
+        }
+
+        public String getIssuerId() {
+            return issuerId;
+        }
+
+        public void setIssuerId(String issuerId) {
+            this.issuerId = issuerId;
+        }
+
+        public int getVersion() {
+            return version;
+        }
+
+        public void setVersion(int version) {
+            this.version = version;
+        }
+    }
+    /**
+     "asset": {
+     "name": "hhh.OOPP",
+     "tid": "fb5a25985dd30b15a9ad9b7addc957f942b2332a3792aa3be6da39e099cfcf06",
+     "timestamp": 62518008,
+     "maximum": "2000000000000",
+     "precision": 6,
+     "quantity": "2000000000000",
+     "desc": "黄金季节",
+     "issuerId": "A6MGhEcA8xgnUiGbszKrbtVjtxQ22ySx4m",
+     "_version_": 2
+     }
+     */
+    public static class AssetInfo{
+       private String name;
+       private String tid;
+       private int timestamp;
+       private String maximum;
+       private int precision;
+       private String quantity;
+       private String desc;
+       private String issuerId;
+       @JSONField(name="_version_")
+       private int version;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getTid() {
+            return tid;
+        }
+
+        public void setTid(String tid) {
+            this.tid = tid;
+        }
+
+        public int getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(int timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public String getMaximum() {
+            return maximum;
+        }
+
+        public void setMaximum(String maximum) {
+            this.maximum = maximum;
+        }
+
+        public int getPrecision() {
+            return precision;
+        }
+
+        public void setPrecision(int precision) {
+            this.precision = precision;
+        }
+
+        public String getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(String quantity) {
+            this.quantity = quantity;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+
+        public String getIssuerId() {
+            return issuerId;
+        }
+
+        public void setIssuerId(String issuerId) {
+            this.issuerId = issuerId;
+        }
+
+        public int getVersion() {
+            return version;
+        }
+
+        public void setVersion(int version) {
+            this.version = version;
+        }
+    }
 
 
 
@@ -78,7 +308,27 @@ public class Transaction {
         UIATransfer(14, "主链UIA转账"),
 
         //new in V1.3
-        Lock(100, "锁仓");
+        Lock(100, "锁仓"),
+
+        TransferV2(1,"transfer"),
+        SignatureV2(3, "setSignature"),
+        DelegateV2(10, "delegate"),
+        VoteV2(3, "vote"),
+        //MultiSignatureV2(4, "setMultiSignature"),
+        //DappV2(200, "dapp"),
+        InTransferV2(204, "inTransfer"),
+        OutTransferV2(205,"outTransfer"),
+        //StoreV2(8, "store"),
+
+        UIAIssuerV2(100, "UIA_ISSUER"),
+        UIAAssetV2(101, "UIA_ASSET"),
+        //UIAFlagsV2(11, "UIA_FLAGS"),
+        //UIA_ACLV2(12, "UIA_ACL"),
+        UIAIssueV2(102, "UIA_ISSUE"),
+        UIATransferV2(103, "UIA_TRANSFER"),
+
+        //new in V1.3
+        LockV2(4, "Lock");
 
         private static final Map<Integer, Type> allTransactionTypes = new HashMap<>();
         static{
@@ -116,6 +366,22 @@ public class Transaction {
         public static Type fromCode(int code) {
             return allTransactionTypes.get(code);
         }
+    }
+
+    public String getRecipientName() {
+        return recipientName;
+    }
+
+    public void setRecipientName(String recipientName) {
+        this.recipientName = recipientName;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public String getId() {
@@ -262,21 +528,31 @@ public class Transaction {
         this.asset = asset;
     }
 
-    public Asset getAssetInfo() {
+    public AssetInfo getAssetInfo() {
         return assetInfo;
     }
 
-    public void setAssetInfo(Asset assetInfo) {
+    public void setAssetInfo(AssetInfo assetInfo) {
         this.assetInfo = assetInfo;
     }
 
+    public TransactionInfo getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(TransactionInfo transaction) {
+        this.transaction = transaction;
+    }
+
     public String getBanlanceShow(boolean isSender){
-        if ( TransactionType.Transfer.getCode()==getType()){
+        if ( TransactionType.TransferV2.getCode()==getType()){
             BigDecimal decimal = AppUtil.decimalFromBigint(getAmount(), AschConst.CORE_COIN_PRECISION);
             return   String.format("%s%s", isSender?"-":"+", AppUtil.decimalFormat(decimal)+" XAS");
-        }else if (TransactionType.UIATransfer.getCode()==getType()){
-            UIATransferAsset asset=(UIATransferAsset)getAssetInfo();
-         return String.format("%s%s", isSender?"-":"+",asset.getUiaTransfer().getAmountShow()+" "+asset.getUiaTransfer().getCurrency());
+        }else if (TransactionType.UIATransferV2.getCode()==getType()){
+            AssetInfo asset=(AssetInfo)getAssetInfo();
+            //return asset.getQuantity();
+            BigDecimal decimal = AppUtil.decimalFromBigint(getAmount(), this.assetInfo.getPrecision());
+         return String.format("%s%s", isSender?"-":"+",AppUtil.decimalFormat(decimal)+" "+this.assetInfo.getName());
         }
         return "0 XAS";
     }

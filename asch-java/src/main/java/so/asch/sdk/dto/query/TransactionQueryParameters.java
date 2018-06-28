@@ -1,5 +1,6 @@
 package so.asch.sdk.dto.query;
 
+import so.asch.sdk.Transaction;
 import so.asch.sdk.TransactionType;
 
 import java.beans.Transient;
@@ -139,6 +140,16 @@ public class TransactionQueryParameters extends QueryParameters {
         return this;
     }
 
+    public String getOwnerId() {
+        return ownerId;
+    }
+
+    public TransactionQueryParameters setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
+        return this;
+    }
+
+
     private String blockId = null;
     private TransactionType transactionType = null;
     private String senderPublicKey = null;
@@ -151,4 +162,5 @@ public class TransactionQueryParameters extends QueryParameters {
     private String currency=null;
     private Integer uia=null;
     private Integer and=null;
+    private String ownerId=null;
 }

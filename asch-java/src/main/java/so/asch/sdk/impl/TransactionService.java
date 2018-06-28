@@ -20,6 +20,19 @@ public class TransactionService extends AschRESTService implements Transaction {
     }
 
     @Override
+    public AschResult queryTransactionsV2(TransactionQueryParameters parameters) {
+        try {
+            Argument.require(Validation.isValidTransactionQueryParameters(parameters), "invalid parameters");
+
+            ParameterMap getParameters = parametersFromObject(parameters);
+            return get(AschServiceUrls.Transaction.QUERY_TRANSACTIONS_V2, getParameters);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
+    @Override
     public AschResult getTransaction(String transactionId) {
         try {
             Argument.require(Validation.isValidTransactionId(transactionId), "invalid transaction id");

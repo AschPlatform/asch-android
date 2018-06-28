@@ -30,6 +30,7 @@ import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
 import so.asch.sdk.TransactionType;
 import so.asch.sdk.dto.query.TransactionQueryParameters;
+import so.asch.sdk.impl.AschConst;
 
 /**
  * Created by kimziv on 2017/10/13.
@@ -76,34 +77,52 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
         //String pubKey = getAccount().getPublicKey();
       Subscription subscription = Observable.create((Observable.OnSubscribe<List<Transaction>>) subscriber -> {
             AschResult result;
-            if (isUIA()) {
-                result = AschSDK.UIA.getTransactions(address, currency, limit, offset);
-            } else {
-                TransactionQueryParameters params = new TransactionQueryParameters()
+          TransactionQueryParameters params = new TransactionQueryParameters()
 //                        .setSenderPublicKey(pubKey)
 //                        .setOwnerPublicKey(pubKey)
-                        .setSenderId(address)
-                        .setRecipientId(address)
-                        .setUia(0)
-                        .orderByDescending("t_timestamp")
-                        .setOffset(offset)
-                        .setLimit(limit);
-                result = AschSDK.Transaction.queryTransactions(params);
+                  //.setCurrency(AschConst.CORE_COIN_NAME)
+                  .setOwnerId(address)
+//                        .setSenderId(address)
+//                        .setRecipientId(address)
+                  .setUia(0)
+                  .orderByDescending("t_timestamp")
+                  .setOffset(offset)
+                  .setLimit(limit);
+            if (isUIA()) {
+                params.setCurrency(currency);
+                //result = AschSDK.UIA.getTransactions(address, currency, limit, offset);
+            } else {
+                params.setCurrency(AschConst.CORE_COIN_NAME);
+//                TransactionQueryParameters params = new TransactionQueryParameters()
+////                        .setSenderPublicKey(pubKey)
+////                        .setOwnerPublicKey(pubKey)
+//                        .setCurrency(AschConst.CORE_COIN_NAME)
+//                        .setOwnerId(address)
+////                        .setSenderId(address)
+////                        .setRecipientId(address)
+//                        .setUia(0)
+//                        .orderByDescending("t_timestamp")
+//                        .setOffset(offset)
+//                        .setLimit(limit);
+
             }
+
+          result = AschSDK.Transaction.queryTransactionsV2(params);
 
             if (result.isSuccessful()) {
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
-                JSONArray transactionsJsonArray = resultJSONObj.getJSONArray("transactions");
+                JSONArray transactionsJsonArray = resultJSONObj.getJSONArray("transfers");
                 List<Transaction> transactions = JSON.parseArray(transactionsJsonArray.toJSONString(), Transaction.class);
                 ArrayList<Transaction> filteredTransactions = new ArrayList<Transaction>();
                 for (Transaction transaction : transactions) {
-                    if (!isUIA() && transaction.getType() != TransactionType.Transfer.getCode()) {
-                        continue;
-                    }
-                    if (transaction.getType() == TransactionType.Transfer.getCode()) {
-                        transaction.setAssetInfo(new TransferAsset());
-                    } else if (transaction.getType() == TransactionType.UIATransfer.getCode()) {
-                        UIATransferAsset asset = JSON.parseObject(transaction.getAsset(), UIATransferAsset.class);
+                    transaction.setType(transaction.getTransaction().getType());
+//                    if (!isUIA() && transaction.getType() != TransactionType.Transfer.getCode()) {
+//                        continue;
+//                    }
+                    if (transaction.getType() == TransactionType.TransferV2.getCode()) {
+                        transaction.setAssetInfo(new Transaction.AssetInfo());
+                    } else if (transaction.getType() == TransactionType.UIATransferV2.getCode()) {
+                        Transaction.AssetInfo asset = JSON.parseObject(transaction.getAsset(), Transaction.AssetInfo.class);
                         transaction.setAssetInfo(asset);
 
                     }

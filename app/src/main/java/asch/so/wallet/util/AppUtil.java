@@ -230,67 +230,67 @@ public class AppUtil {
 
     public static int getResIdFromCode(Transaction.Type type){
         switch (type){
-            case Transfer:
+            case TransferV2:
             {
                 return R.string.general_transfer;
             }
-            case Signature:
+            case SignatureV2:
             {
                 return R.string.set_second_secret;
             }
-            case Delegate:
+            case DelegateV2:
             {
                 return R.string.register_delegate;
             }
-            case Vote:
+            case VoteV2:
             {
                 return R.string.vote_transaction;
             }
-            case MultiSignature:
-            {
-                return R.string.multi_signature;
-            }
-            case Dapp:
-            {
-                return R.string.dapp_transaction;
-            }
-            case InTransfer:
+//            case MultiSignature:
+//            {
+//                return R.string.multi_signature;
+//            }
+//            case Dapp:
+//            {
+//                return R.string.dapp_transaction;
+//            }
+            case InTransferV2:
             {
                 return R.string.in_transfer;
             }
-            case OutTransfer:
+            case OutTransferV2:
             {
                 return R.string.out_transfer;
             }
-            case Store:
-            {
-                return R.string.store_transaction;
-            }
-            case UIAIssuer:
+//            case Store:
+//            {
+//                return R.string.store_transaction;
+//            }
+            case UIAIssuerV2:
             {
                 return R.string.uia_issuer;
             }
-            case UIAAsset:
+            case UIAAssetV2:
             {
                 return R.string.uia_asset;
             }
-            case UIAFlags:
-            {
-                return R.string.uia_flags;
-            }
-            case UIA_ACL:
-            {
-                return R.string.uia_acl;
-            }
-            case UIAIssue:
+//            case UIAFlags:
+//            {
+//                return R.string.uia_flags;
+//            }
+//            case UIA_ACL:
+//            {
+//                return R.string.uia_acl;
+//            }
+            case UIAIssueV2:
             {
                 return R.string.uia_issue_asset;
             }
-            case UIATransfer:
+            case UIATransferV2:
             {
                 return R.string.uia_transfer;
             }
-            case Lock:
+            case LockV2:
             {
                 return R.string.lock_transaction;
             }

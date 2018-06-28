@@ -32,6 +32,18 @@ public interface Transaction extends AschInterface{
     //count	int	获取到的交易总个数
     AschResult queryTransactions(TransactionQueryParameters parameters);
 
+    //接口地址：/api/transactions
+    //请求方式：get
+    //支持格式：urlencoded
+    //接口备注：如果请求不加参数则会获取全网所有交易
+    //参数：
+    //    ownerId 发款人或收款人地址
+    //    currency
+    //    limit
+    //    offset
+    AschResult queryTransactionsV2(TransactionQueryParameters parameters);
+
+
     //接口地址：/api/transactions/get
     //请求方式：get
     //支持格式：urlencoded

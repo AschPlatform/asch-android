@@ -25,6 +25,73 @@ public class Balance {
     private int precision;
     private String quantity;
     private int writeoff;
+    private Asset asset;
+
+    public static class Asset{
+        private String name;
+        private String tid;
+        private int timestamp;
+        private String maximum;
+        private int precision;
+        private String quantity;
+        private String desc;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getTid() {
+            return tid;
+        }
+
+        public void setTid(String tid) {
+            this.tid = tid;
+        }
+
+        public int getTimestamp() {
+            return timestamp;
+        }
+
+        public void setTimestamp(int timestamp) {
+            this.timestamp = timestamp;
+        }
+
+        public String getMaximum() {
+            return maximum;
+        }
+
+        public void setMaximum(String maximum) {
+            this.maximum = maximum;
+        }
+
+        public int getPrecision() {
+            return precision;
+        }
+
+        public void setPrecision(int precision) {
+            this.precision = precision;
+        }
+
+        public String getQuantity() {
+            return quantity;
+        }
+
+        public void setQuantity(String quantity) {
+            this.quantity = quantity;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+    }
 
     public String getCurrency() {
         return currency;
@@ -88,5 +155,13 @@ public class Balance {
     public String getBalanceString(){
         long longBalance=Long.parseLong(balance);
         return longBalance==0?"0":AppUtil.decimalFormat(AppUtil.decimalFromBigint(longBalance,precision));
+    }
+
+    public Asset getAsset() {
+        return asset;
+    }
+
+    public void setAsset(Asset asset) {
+        this.asset = asset;
     }
 }

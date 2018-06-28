@@ -29,7 +29,27 @@ public enum TransactionType {
     UIATransfer(14, "UIA_TRANSFER"),
 
     //new in V1.3
-    Lock(100, "Lock");
+    Lock(100, "Lock"),
+
+    TransferV2(1,"transfer"),
+    SignatureV2(3, "setSignature"),
+    DelegateV2(10, "delegate"),
+    VoteV2(3, "vote"),
+    //MultiSignatureV2(4, "setMultiSignature"),
+    //DappV2(200, "dapp"),
+    InTransferV2(204, "inTransfer"),
+    OutTransferV2(205,"outTransfer"),
+    //StoreV2(8, "store"),
+
+    UIAIssuerV2(100, "UIA_ISSUER"),
+    UIAAssetV2(101, "UIA_ASSET"),
+    //UIAFlagsV2(11, "UIA_FLAGS"),
+    //UIA_ACLV2(12, "UIA_ACL"),
+    UIAIssueV2(102, "UIA_ISSUE"),
+    UIATransferV2(103, "UIA_TRANSFER"),
+
+    //new in V1.3
+    LockV2(4, "Lock");
 
     private int code;
     private String name;

@@ -68,7 +68,7 @@ public class AssetInfoPresenter implements AssetInfoContract.Presenter {
                 Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){
                     @Override
                     public void call(Subscriber<? super List<UIAAsset>> subscriber) {
-                        AschResult result = AschSDK.UIA.getAddressBalances(address,100,0);
+                        AschResult result = AschSDK.Account.getBalanceV2(address,100,0);
                         LogUtils.iTag(TAG,result.getRawJson());
                         if (result.isSuccessful()){
                             JSONObject resultJSONObj=JSONObject.parseObject(result.getRawJson());
