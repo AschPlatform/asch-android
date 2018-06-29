@@ -43,6 +43,8 @@ public class AppConstants {
 
     public static final String DEBUG_TAG = "Debug";
     public static final String RELEASE_TAG = "Release";
+    public static final int UIA_FLAG=2;
+    public static final int GATEWAY_FLAG=3;
 
     public static final List<Locale> SUPPORTED_LOCALES =
             Arrays.asList(

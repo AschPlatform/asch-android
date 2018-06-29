@@ -299,6 +299,17 @@ public class AccountsManager extends Observable {
                     JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                     JSONArray balanceJsonArray = resultJSONObj.getJSONArray("balances");
                     List<Balance> balances = JSON.parseArray(balanceJsonArray.toJSONString(), Balance.class);
+                    for (Balance balance :
+                            balances) {
+                        //JSONObject assetJsonObj = JSONObject.parseObject(balance.getAssetJson());
+                        if (balance.getFlag()==2){
+                            Balance.UIAAsset uiaAsset=JSON.parseObject(balance.getAssetJson(), Balance.UIAAsset.class);
+                            balance.setUiaAsset(uiaAsset);
+                        }else if (balance.getFlag()==3){
+                            Balance.GatewayAsset gatewayAsset=JSON.parseObject(balance.getAssetJson(), Balance.GatewayAsset.class);
+                            balance.setGatewayAsset(gatewayAsset);
+                        }
+                    }
                     subscriber.onNext(balances);
                     subscriber.onCompleted();
                 } else {
