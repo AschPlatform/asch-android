@@ -18,6 +18,8 @@ public interface SecurityStrategy {
 
     String getAddress(String publicKey) throws SecurityException;
 
+    String getBase58Address(String publicKey) throws SecurityException;
+
     String generateTransactionId(TransactionInfo transaction) throws SecurityException;
 
     String generateSecret();

@@ -114,6 +114,7 @@ public abstract class AschRESTService implements AschInterface{
         }
         catch (Exception ex){
             return fail(ex);
+
         }
     }
 
@@ -129,7 +130,7 @@ public abstract class AschRESTService implements AschInterface{
 
     protected AschResult broadcastTransaction(TransactionInfo transaction){
         JSONObject transactionJson = (JSONObject) JSONObject.toJSON(transaction);
-        transactionJson.remove("args");
+        //transactionJson.remove("args");
         transactionJson.remove("option");
         transactionJson.remove("contractType");
         transactionJson.remove("transactionType");

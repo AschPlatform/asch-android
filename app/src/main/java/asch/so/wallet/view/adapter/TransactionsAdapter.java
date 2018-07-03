@@ -47,7 +47,7 @@ public class TransactionsAdapter extends BaseQuickAdapter<Transaction, Transacti
 
 
     private void setTransferIcon(ImageView imageView, int type, boolean isSender){
-        if ( TransactionType.TransferV2.getCode()==type || TransactionType.UIATransferV2.getCode()==type){
+        if ( TransactionType.basic_transfer.getCode()==type || TransactionType.UIATransferV2.getCode()==type){
             imageView.setImageResource(isSender?R.mipmap.transfer_out_icon:R.mipmap.transfer_in_icon);
             return;
         }

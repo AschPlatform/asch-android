@@ -85,7 +85,7 @@ public class TransactionsPresenter implements TransactionsContract.Presenter {
 //                        continue;
 //                    }
                     transaction.setType(transaction.getTransaction().getType());
-                    if (transaction.getType() == TransactionType.TransferV2.getCode()) {
+                    if (transaction.getType() == TransactionType.basic_transfer.getCode()) {
                         transaction.setAssetInfo(new Transaction.AssetInfo());
                     } else if (transaction.getType() == TransactionType.UIATransferV2.getCode()) {
                         Transaction.AssetInfo asset = JSON.parseObject(transaction.getAsset(), Transaction.AssetInfo.class);

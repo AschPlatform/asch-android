@@ -92,6 +92,27 @@ public class DefaultSecurityStrategy implements SecurityStrategy{
         }
     }
 
+
+    @Override
+    public String getBase58Address(String publicKey) throws SecurityException{
+        try{
+            Argument.require(Validation.isValidPublicKey(publicKey), "invalid public key");
+
+            byte[] hash1 = sha256Hash(Decoding.hex(publicKey));
+            byte[] hash2 = ripemd160Hash(hash1);
+            byte[] checksum = sha256Hash(sha256Hash(hash2));
+
+            byte[] buffer = new byte[hash2.length + 4];
+            System.arraycopy(hash2, 0, buffer, 0, hash2.length);
+            System.arraycopy(checksum, 0, buffer, hash2.length, 4);
+
+            return AschConst.BASE58_ADDRESS_PREFIX + Encoding.base58(buffer);
+        }
+        catch (Exception ex){
+            throw new SecurityException("generate base58 checked address failed", ex);
+        }
+    }
+
     @Override
     public String generateTransactionId(TransactionInfo transaction)throws SecurityException {
         try {

@@ -16,7 +16,6 @@ import java.security.KeyPair;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
-import static so.asch.sdk.TransactionType.Transfer;
 
 public class TransactionBuilder {
 
@@ -37,18 +36,19 @@ public class TransactionBuilder {
     }
 
     public TransactionInfo buildDelegate(String userName, String secret, String secondSecret)  throws SecurityException  {
-        KeyPair keyPair = getSecurity().generateKeyPair(secret);
-        KeyPair secondKeyPair = getSecurity().generateKeyPair(secondSecret);
-
-        TransactionInfo transaction = newTransaction(
-                TransactionType.Delegate,
-                0L,
-                AschConst.Fees.DELEGATE,
-                keyPair.getPublic());
-
-        transaction.setAsset(new DelegateAssetInfo(userName, transaction.getSenderPublicKey()));
-
-        return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(),secondSecret);
+//        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+//        KeyPair secondKeyPair = getSecurity().generateKeyPair(secondSecret);
+//
+//        TransactionInfo transaction = newTransaction(
+//                TransactionType.Delegate,
+//                0L,
+//                AschConst.Fees.DELEGATE,
+//                keyPair.getPublic());
+//
+//        transaction.setAsset(new DelegateAssetInfo(userName, transaction.getSenderPublicKey()));
+//
+//        return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(),secondSecret);
+        return null;
     }
 
     public TransactionInfo buildSignature(String secret, String secondSecret) throws  SecurityException{
@@ -56,7 +56,7 @@ public class TransactionBuilder {
         KeyPair secondKeyPair = getSecurity().generateKeyPair(secondSecret);
 
         TransactionInfo transaction =  newTransaction(
-                TransactionType.Signature,
+                TransactionType.basic_setPassword,
                 0L,
                 AschConst.Fees.SECOND_SIGNATURE,
                 keyPair.getPublic())
@@ -103,15 +103,24 @@ public class TransactionBuilder {
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
 
         TransactionInfo transaction =  newTransaction(
-                Transfer,
-                amount,
-                AschConst.Fees.TRANSFER,
+                TransactionType.basic_transfer,
                 keyPair.getPublic())
                 .setMessage(message)
-                .setRecipientId(targetAddress)
-                .setAsset(new TransferAssetInfo());
+                .setArgs(new Object[]{ amount, targetAddress })
+                .calcFee();
 
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
+
+//        TransactionInfo transaction =  newTransaction(
+//                Transfer,
+//                amount,
+//                AschConst.Fees.TRANSFER,
+//                keyPair.getPublic())
+//                .setMessage(message)
+//                .setRecipientId(targetAddress)
+//                .setAsset(new TransferAssetInfo());
+//
+//        return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
     }
 
     public TransactionInfo buildStore(byte[] contentBuffer, int wait,
@@ -181,24 +190,39 @@ public class TransactionBuilder {
     }
 
 
-        protected TransactionInfo newTransaction(TransactionType type, long amount, long fee, PublicKey publicKey, String dappID, OptionInfo optionInfo) throws SecurityException{
+//    protected TransactionInfo newTransaction(TransactionType type, PublicKey publicKey) throws SecurityException{
+//        return new TransactionInfo()
+//                .setTransactionType(type)
+//                .setTimestamp(getSecurity().getTransactionTimestamp())
+//                .setSenderId(getSecurity().encodePublicKey(publicKey));
+//    }
+
+    protected TransactionInfo newTransaction(TransactionType type, PublicKey publicKey) throws SecurityException{
+        return new TransactionInfo()
+                .setTransactionType(type)
+                .setTimestamp(getSecurity().getTransactionTimestamp())
+                .setSenderId(getSecurity().getBase58Address(getSecurity().encodePublicKey(publicKey)));
+    }
+
+
+    protected TransactionInfo newTransaction(TransactionType type, long amount, long fee, PublicKey publicKey, String dappID, OptionInfo optionInfo) throws SecurityException{
         switch (type){
-            case Transfer:
+            case basic_transfer:
                 return new TransactionInfo()
                         .setTransactionType(type)
                         .setAmount(amount)
                         .setFee(fee)
                         .setTimestamp(getSecurity().getTransactionTimestamp())
                         .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
-            case Signature:
+            case basic_setPassword:
                 return new TransactionInfo()
                         .setTransactionType(type)
                         .setAmount(amount)
                         .setFee(fee)
                         .setTimestamp(getSecurity().getTransactionTimestamp())
                         .setSenderPublicKey(getSecurity().encodePublicKey(publicKey));
-            case Delegate:
-                break;
+//            case Delegate:
+//                break;
             case Vote:
                 return new TransactionInfo()
                         .setTransactionType(type)
@@ -257,7 +281,7 @@ public class TransactionBuilder {
                 .setTimestamp(getSecurity().getTransactionTimestamp())
                 .setSenderPublicKey(getSecurity().encodePublicKey(publicKey))
                 .setContractType(type)
-                .setArgs(optionInfo.getArgsJson())
+                //.setArgs(optionInfo.getArgsJson())
                 .setOption(optionInfo);
     }
 

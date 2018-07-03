@@ -1,5 +1,6 @@
 package so.asch.sdk.transaction;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import so.asch.sdk.ContractType;
@@ -7,6 +8,7 @@ import so.asch.sdk.Transaction;
 import so.asch.sdk.TransactionType;
 import so.asch.sdk.codec.Decoding;
 import so.asch.sdk.codec.Encoding;
+import so.asch.sdk.impl.FeeCalculater;
 import so.asch.sdk.transaction.asset.AssetInfo;
 import so.asch.sdk.transaction.asset.DappAssetInfo;
 
@@ -26,6 +28,24 @@ public class TransactionInfo {
 
     public TransactionInfo setTransactionType(TransactionType type) {
         this.transactionType = type;
+        return this;
+    }
+
+    public String getSenderId() {
+        return senderId;
+    }
+
+    public TransactionInfo setSenderId(String senderId) {
+        this.senderId = senderId;
+        return this;
+    }
+
+    public String getRequestorId() {
+        return requestorId;
+    }
+
+    public TransactionInfo setRequestorId(String requestorId) {
+        this.requestorId = requestorId;
         return this;
     }
 
@@ -94,14 +114,28 @@ public class TransactionInfo {
         return transactionType;
     }
 
-    public String getSignature() {
-        return signature;
+    public String[] getSignatures() {
+        return signatures;
+    }
+
+    public TransactionInfo setSignatures(String[] signatures) {
+        this.signatures = signatures;
+        return this;
     }
 
     public TransactionInfo setSignature(String signature) {
-        this.signature = signature;
+        this.setSignatures( new String[]{ signature } );
         return this;
     }
+
+//    public String getSignature() {
+//        return signature;
+//    }
+//
+//    public TransactionInfo setSignature(String signature) {
+//        this.signature = signature;
+//        return this;
+//    }
 
     public String getSignSignature() {
         return signSignature;
@@ -140,14 +174,24 @@ public class TransactionInfo {
         return this;
     }
 
-    public String getArgs() {
+    @JSONField
+    public Object[] getArgs() {
         return args;
     }
 
-    public TransactionInfo setArgs(String args) {
+    public TransactionInfo setArgs(Object[] args) {
         this.args = args;
         return this;
     }
+
+//    public String getArgs() {
+//        return args;
+//    }
+//
+//    public TransactionInfo setArgs(String args) {
+//        this.args = args;
+//        return this;
+//    }
 
     public ContractType getContractType() {
         return contractType;
@@ -162,6 +206,9 @@ public class TransactionInfo {
     private transient TransactionType transactionType = null;
     private String recipientId = null;
 
+    private String requestorId = null;
+    private String senderId = null;
+
     private String requesterPublicKey = null;
     private String senderPublicKey = null;
     private String message = null;
@@ -169,22 +216,59 @@ public class TransactionInfo {
     private Long amount = null;
     private Long fee = null;
     private ContractType contractType=null;
-    private String signature = null;
+    //private String signature = null;
+    private String[] signatures = null;
     private String signSignature = null;
     private AssetInfo assetInfo = null;
     private transient OptionInfo optionInfo = null;
-    private String args=null;
+    //private String args=null;
+    private Object[] args = null;
 
 
     public byte[] getBytes(boolean skipSignature , boolean skipSignSignature){
+        // 4 + 4 + 8 + 32 + 32 + ? + ? + 32 + 32
+        // type(4)|timestamp(4)|fee(8)|senderId(32)|[requestorId(32)]|[message(?)]|
+        // args(?)|signature(32)|[signSignature(32)]
+
+        ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.LITTLE_ENDIAN)
+                .putInt(getType())
+                .putInt(getTimestamp())
+                .putLong(getFee())
+                .put(getSenderIdBuffer())
+                .put(getRequestorIdBuffer())
+                .put(getMessageBuffer())
+                .put(getArgsBuffer());
+
+        if (!skipSignature){
+           // buffer.put(Decoding.unsafeDecodeHex(getSignature()));
+            buffer.put(getSignaturesBuffer());
+        }
+
+        if (!skipSignSignature){
+            buffer.put(Decoding.unsafeDecodeHex(getSignSignature()));
+        }
+
+        buffer.flip();
+        byte[] result = new byte[buffer.remaining()];
+        buffer.get(result);
+
+        return result;
+    }
+
+    public byte[] getBytes0(boolean skipSignature , boolean skipSignSignature){
         //1 + 4 + 32 + 32 + 8 + 8 + 64 + 64
         //type(1)|timestamp(4)|senderPublicKey(32)|requesterPublicKey(32)|recipientId(8)|amount(8)|
         //message(?)|asset(?)|setSignature(64)|signSignature(64)
+        //------------------------------------------------
+        //new layout
+        // 4 + 4 + 8 + 32 + 32 + ? + ? + 32 + 32
+        // type(4)|timestamp(4)|fee(8)|senderId(32)|[requestorId(32)]|[message(?)]|
+        // args(?)|signature(32)|[signSignature(32)]
 
         ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE).order(ByteOrder.LITTLE_ENDIAN);
         if (optionInfo==null||optionInfo.getType()==ContractType.None){
             switch (transactionType){
-                case Transfer:
+                case basic_transfer:
                 {
                     buffer.put(getType().byteValue())
                             .putInt(getTimestamp())
@@ -197,7 +281,7 @@ public class TransactionInfo {
 
                 }
                 break;
-                case Signature:
+                case basic_setPassword:
                 {
                     buffer.put(getType().byteValue())
                             .putInt(getTimestamp())
@@ -209,8 +293,8 @@ public class TransactionInfo {
                             .put(getAsset().assetBytes());
                 }
                     break;
-                case Delegate:
-                    break;
+//                case Delegate:
+//                    break;
                 case Vote:
                 {
                     buffer.put(getType().byteValue())
@@ -284,7 +368,8 @@ public class TransactionInfo {
         }
 
         if (!skipSignature){
-            buffer.put(Decoding.unsafeDecodeHex(getSignature()));
+            //buffer.put(Decoding.unsafeDecodeHex(getSignature()));
+            buffer.put(getSignaturesBuffer());
         }
 
         if (!skipSignSignature){
@@ -389,20 +474,40 @@ public class TransactionInfo {
         return optionInfo==null?new byte[0]:optionInfo.getArgsJson().getBytes();
     }
 
-    private byte[] getArgsBuffer(){
-        byte[] result=new byte[0];
-
-        if (optionInfo!=null && optionInfo.getArgs()!=null && optionInfo.getArgs().length>0){
-            ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE)
-                    .order(ByteOrder.LITTLE_ENDIAN);
-            for (String arg:optionInfo.getArgs()){
-                buffer.put(arg.getBytes());
-            }
-            buffer.flip();
-            result = new byte[buffer.remaining()];
-            buffer.get(result);
-        }
-        return result;
+    private byte[] getSenderIdBuffer(){
+        return Encoding.getUTF8Bytes(senderId);
     }
+
+    private byte[] getRequestorIdBuffer(){
+        return Encoding.getUTF8Bytes(requestorId);
+    }
+
+    private byte[] getArgsBuffer(){
+        return Encoding.getUTF8Bytes(JSON.toJSONString(getArgs()));
+    }
+
+    public TransactionInfo calcFee() {
+        //this.setFee(10000000L);
+        this.setFee(FeeCalculater.calcFee(this));
+        return this;
+    }
+
+    private byte[] getSignaturesBuffer() { return Decoding.unsafeDecodeHex(getSignatures()[0]); }
+
+//    private byte[] getArgsBuffer(){
+//        byte[] result=new byte[0];
+//
+//        if (optionInfo!=null && optionInfo.getArgs()!=null && optionInfo.getArgs().length>0){
+//            ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE)
+//                    .order(ByteOrder.LITTLE_ENDIAN);
+//            for (String arg:optionInfo.getArgs()){
+//                buffer.put(arg.getBytes());
+//            }
+//            buffer.flip();
+//            result = new byte[buffer.remaining()];
+//            buffer.get(result);
+//        }
+//        return result;
+//    }
 
 }

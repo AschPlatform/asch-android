@@ -545,7 +545,7 @@ public class Transaction {
     }
 
     public String getBanlanceShow(boolean isSender){
-        if ( TransactionType.TransferV2.getCode()==getType()){
+        if ( TransactionType.basic_transfer.getCode()==getType()){
             BigDecimal decimal = AppUtil.decimalFromBigint(getAmount(), AschConst.CORE_COIN_PRECISION);
             return   String.format("%s%s", isSender?"-":"+", AppUtil.decimalFormat(decimal)+" XAS");
         }else if (TransactionType.UIATransferV2.getCode()==getType()){
