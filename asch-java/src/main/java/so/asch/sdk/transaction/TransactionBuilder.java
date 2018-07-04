@@ -55,12 +55,17 @@ public class TransactionBuilder {
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
         KeyPair secondKeyPair = getSecurity().generateKeyPair(secondSecret);
 
-        TransactionInfo transaction =  newTransaction(
-                TransactionType.basic_setPassword,
-                0L,
-                AschConst.Fees.SECOND_SIGNATURE,
-                keyPair.getPublic())
-                .setAsset(new SignatureAssetInfo(getSecurity().encodePublicKey(secondKeyPair.getPublic())));
+        TransactionInfo transaction=newTransaction(TransactionType.basic_setPassword,keyPair.getPublic())
+                .setArgs(new Object[]{getSecurity().encodePublicKey(secondKeyPair.getPublic())})
+                .calcFee();
+
+//
+//        TransactionInfo transaction =  newTransaction(
+//                TransactionType.basic_setPassword,
+//                0L,
+//                AschConst.Fees.SECOND_SIGNATURE,
+//                keyPair.getPublic())
+//                .setAsset(new SignatureAssetInfo(getSecurity().encodePublicKey(secondKeyPair.getPublic())));
 
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), null);
 
@@ -110,17 +115,6 @@ public class TransactionBuilder {
                 .calcFee();
 
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
-
-//        TransactionInfo transaction =  newTransaction(
-//                Transfer,
-//                amount,
-//                AschConst.Fees.TRANSFER,
-//                keyPair.getPublic())
-//                .setMessage(message)
-//                .setRecipientId(targetAddress)
-//                .setAsset(new TransferAssetInfo());
-//
-//        return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
     }
 
     public TransactionInfo buildStore(byte[] contentBuffer, int wait,
@@ -169,22 +163,6 @@ public class TransactionBuilder {
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
     }
 
-//    /**
-//     * Dapp inner transaction
-//     * @param fee
-//     * @param type
-//     * @param args
-//     * @param secret
-//     * @return
-//     * @throws SecurityException
-//     */
-//    public TransactionInfo buildInnerTransaction(long fee, TransactionType type, String [] args, String secret) throws SecurityException{
-//        KeyPair keyPair = getSecurity().generateKeyPair(secret);
-//
-//        TransactionInfo transaction= newTransaction(TransactionType.InTransfer,0,fee,keyPair.getPublic())
-//                .setOption(new OptionInfo(fee,type,args));
-//        return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),null);
-//    }
 
     public TransactionInfo buildDAppTransaction(long fee, ContractType type, String [] args, String secret) throws SecurityException{
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
