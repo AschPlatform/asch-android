@@ -83,8 +83,8 @@ public class TransactionDetailFragment extends BaseFragment {
             memoTv.setText(transaction.getMessage());
         }
         txFeeTv.setText(AppUtil.decimalFormat(AppUtil.decimalFromBigint(transaction.getFee(), AppConstants.PRECISION))+" XAS");
-        txConfirmationsTv.setText(String.valueOf(transaction.getConfirmations()));
-        txBlockIdTv.setText(transaction.getBlockId());
+       // txConfirmationsTv.setText(String.valueOf(transaction.getConfirmations()));
+       // txBlockIdTv.setText(transaction.getBlockId());
 
         return rootView;
     }

@@ -138,18 +138,33 @@ public class TransactionBuilder {
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
     }
 
+//    public TransactionInfo buildUIATransfer(String currency, long amount, String targetAddress, String message,
+//                                            String secret, String secondSecret) throws SecurityException{
+//        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+//
+//        TransactionInfo transaction =  newTransaction(
+//                TransactionType.UIATransfer,
+//                0,
+//                AschConst.Fees.UIA_TRANSFER,
+//                keyPair.getPublic())
+//                .setMessage(message)
+//                .setRecipientId(targetAddress)
+//                .setAsset(new UIATransferAssetInfo(amount, currency));
+//
+//        return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
+//    }
+
+
     public TransactionInfo buildUIATransfer(String currency, long amount, String targetAddress, String message,
                                             String secret, String secondSecret) throws SecurityException{
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
 
         TransactionInfo transaction =  newTransaction(
-                TransactionType.UIATransfer,
-                0,
-                AschConst.Fees.UIA_TRANSFER,
+                TransactionType.uia_transfer,
                 keyPair.getPublic())
                 .setMessage(message)
-                .setRecipientId(targetAddress)
-                .setAsset(new UIATransferAssetInfo(amount, currency));
+                .setArgs(new Object[]{ currency, amount, targetAddress })
+                .calcFee();
 
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
     }

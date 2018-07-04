@@ -51,7 +51,7 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
         viewHolder.transactionTv.setText(transaction.getId());
         boolean isSender=getAccount().getAddress().equals(transaction.getSenderId());
         setTransferIcon(viewHolder.transferIcon,transaction.getType(),isSender);
-        int resId=AppUtil.getResIdFromCode(Transaction.Type.fromCode(transaction.getType()));
+       // int resId=AppUtil.getResIdFromCode(Transaction.Type.fromCode(transaction.getType()));
         //String transactionType=context.getResources().getString(resId);
         //viewHolder.amountTv.setText(transactionType);
         viewHolder.amountTv.setText(transaction.getBanlanceShow(isSender));
