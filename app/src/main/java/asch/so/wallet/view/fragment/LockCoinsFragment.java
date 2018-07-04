@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.LockCoinsContract;
@@ -35,6 +37,8 @@ import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import so.asch.sdk.AschHelper;
+import so.asch.sdk.AschSDK;
 
 /**
  */
@@ -45,6 +49,8 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     LinearLayout second_passwd_ll;
     @BindView(R.id.ok_btn)
     Button okBtn;
+    @BindView(R.id.block_amount_et)
+    EditText blockAmountEt;
     @BindView(R.id.block_height_et)
     EditText blockHeightEt;
     @BindView(R.id.account_passwd_et)
@@ -120,6 +126,12 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     @Override
     public void onClick(View v) {
         if (v==okBtn){
+            String blockAmountStr=blockAmountEt.getText().toString().trim();
+            if (TextUtils.isEmpty(blockAmountStr)){
+                AppUtil.toastError(getContext(),getString(R.string.input_locked_amount));
+                return;
+            }
+
             String blockHeightStr = blockHeightEt.getText().toString();
             if(null==blockHeightStr||"".equals(blockHeightStr)){
                 AppUtil.toastError(getContext(),getString(R.string.input_locked_Height));
@@ -149,7 +161,8 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
                 }
             }
             showHUD();
-            presenter.lockCoins(Long.valueOf(blockHeightStr),account_pwd.trim(),getAccount().hasSecondSecret()?second_secret.trim():null);
+
+            presenter.lockCoins(AschSDK.Helper.amountForCoins(Integer.valueOf(blockAmountStr)), Long.valueOf(blockHeightStr),account_pwd.trim(),getAccount().hasSecondSecret()?second_secret.trim():null);
         }
     }
 

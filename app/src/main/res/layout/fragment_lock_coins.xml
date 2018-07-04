@@ -57,6 +57,42 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/divider_color"/>
+    <LinearLayout
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:paddingLeft="19dp"
+        android:paddingRight="19dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:text="@string/set_amount"
+            android:textSize="15sp"
+            android:textColor="#333333"/>
+
+        <EditText
+            android:id="@+id/block_amount_et"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:hint="@string/input_amount"
+            android:gravity="right|center"
+            android:textSize="15sp"
+            android:textColor="#333333"
+            android:inputType="number"
+            android:maxLines="1" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_color"/>
 
     <LinearLayout
         android:background="@android:color/white"

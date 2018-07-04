@@ -17,7 +17,7 @@ public interface LockCoinsContract {
     }
 
     interface Presenter extends BasePresenter{
-        void lockCoins(long height, String secret, String secondSecret);
+        void lockCoins(long amount, long height, String secret, String secondSecret);
         void loadBlockInfo();
     }
 }

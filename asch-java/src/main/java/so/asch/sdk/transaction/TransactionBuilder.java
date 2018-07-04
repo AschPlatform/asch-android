@@ -59,30 +59,27 @@ public class TransactionBuilder {
                 .setArgs(new Object[]{getSecurity().encodePublicKey(secondKeyPair.getPublic())})
                 .calcFee();
 
-//
-//        TransactionInfo transaction =  newTransaction(
-//                TransactionType.basic_setPassword,
-//                0L,
-//                AschConst.Fees.SECOND_SIGNATURE,
-//                keyPair.getPublic())
-//                .setAsset(new SignatureAssetInfo(getSecurity().encodePublicKey(secondKeyPair.getPublic())));
-
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), null);
 
     }
 
-    public TransactionInfo buildLock(long height,String secret, String secondSecret) throws  SecurityException{
+    public TransactionInfo buildLock(long amount, long height,String secret, String secondSecret) throws  SecurityException{
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
-        String[] args={String.valueOf(height)};
+        //long[] args={height,amount};
 
-        TransactionInfo transaction =  newArgsTransaction(
-                TransactionType.Lock,
-                0L,
-                AschConst.Fees.LOCK,
-                null,
-                args,
-                keyPair.getPublic())
-                ;
+        TransactionInfo transaction = newTransaction(TransactionType.basic_lock,keyPair.getPublic())
+                .setSenderPublicKey(getSecurity().encodePublicKey(keyPair.getPublic()))
+                .setArgs(new Object[]{height,amount})
+                .calcFee();
+//
+//        TransactionInfo transaction =  newArgsTransaction(
+//                TransactionType.Lock,
+//                0L,
+//                AschConst.Fees.LOCK,
+//                null,
+//                args,
+//                keyPair.getPublic())
+//                ;
 
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
 

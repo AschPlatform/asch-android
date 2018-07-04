@@ -52,12 +52,12 @@ public class LockCoinsPresenter implements LockCoinsContract.Presenter {
     }
 
     @Override
-    public void lockCoins(long height, String accountPasswd, String secondSecret) {
+    public void lockCoins(long amount, long height, String accountPasswd, String secondSecret) {
         String encryptSecret = getAccount().getEncryptSeed();
 
         Subscription subscription = Observable.create((Observable.OnSubscribe<AschResult>) subscriber -> {
             String secret = Account.decryptSecret(accountPasswd, encryptSecret);
-            AschResult result = AschSDK.Account.lockCoins(height,secret,secondSecret);
+            AschResult result = AschSDK.Account.lockCoins(amount, height,secret,secondSecret);
             if (result.isSuccessful()) {
                 subscriber.onNext(result);
                 getAccount().getFullAccount().getAccount().setLockHeight(height);

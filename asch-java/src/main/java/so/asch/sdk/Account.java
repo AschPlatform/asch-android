@@ -165,5 +165,5 @@ public interface Account extends AschInterface {
 //    名称	类型	说明
 //    success	boole	是否成功
 //    transactionId	string	交易id
-    AschResult lockCoins(long height, String secret, String secondSecret);
+    AschResult lockCoins(long amount, long height, String secret, String secondSecret);
 }

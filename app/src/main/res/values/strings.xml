@@ -326,4 +326,9 @@
     <string name="producer_public_key">生产者公钥</string>
     <string name="producer_balance">生产者余额</string>
     <string name="search_hint">请输入查询区块高度或者ID</string>
+
+
+    <string name="set_amount">设置额度</string>
+    <string name="input_amount">请输入锁仓额度</string>
+    <string name="input_locked_amount">请输入锁仓额度</string>
 </resources>

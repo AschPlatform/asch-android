@@ -200,14 +200,15 @@ public class AccountService extends so.asch.sdk.impl.AschRESTService implements 
     }
 
     @Override
-    public AschResult lockCoins(long height, String secret, String secondSecret) {
+    public AschResult lockCoins(long amount, long height, String secret, String secondSecret) {
         try {
             //Argument.require(Validation.isv);
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
             Argument.optional(secondSecret,Validation.isValidSecondSecret(secondSecret), "invalid secondSecret");
 
-            TransactionInfo transaction  = getTransactionBuilder().buildLock(height,secret,secondSecret);
-            return broadcastArgsTransaction(transaction);
+            TransactionInfo transaction  = getTransactionBuilder().buildLock(amount, height,secret,secondSecret);
+            return broadcastTransaction(transaction);
+            //return broadcastArgsTransaction(transaction);
         } catch (Exception ex) {
             return fail(ex);
         }
