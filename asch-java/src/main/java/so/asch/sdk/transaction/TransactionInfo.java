@@ -235,7 +235,7 @@ public class TransactionInfo {
                 .putInt(getTimestamp())
                 .putLong(getFee())
                 .put(getSenderIdBuffer())
-                //.put(getRequestorIdBuffer())
+                .put(getRequestorIdBuffer())
                 .put(getMessageBuffer())
                 .put(getArgsBuffer());
 

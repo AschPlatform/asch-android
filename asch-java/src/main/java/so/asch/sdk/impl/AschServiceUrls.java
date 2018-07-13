@@ -77,7 +77,8 @@ public final class AschServiceUrls {
         static final String GET_ISSUERS = "/api/uia/issuers";
         static final String GET_ISSUER = "/api/uia/issuers/${IssuerName}";
         static final String QUERY_ISSUER_ASSETS = "/api/uia/issuers/${IssuerName}/assets";
-        static final String GET_ASSETS = "/api/uia/assets";
+//        static final String GET_ASSETS = "/api/uia/assets";
+        static final String GET_ASSETS = "/api/v2/uia/assets";
         static final String GET_ASSET= "/api/uia/assets/${AssetName}";
         static final String GET＿ASSET＿ACL = "/api/uia/assets/${AssetName}/acl/flag";
         static final String GET_ADDRESS_BALANCES = "/api/uia/balances/";

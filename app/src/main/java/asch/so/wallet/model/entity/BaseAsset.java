@@ -25,10 +25,10 @@ public class BaseAsset {
 
     private String name;
     private String desc;
-    private long maximum;
+    private String maximum;
     private int precision;
     private String strategy;
-    private long quantity;
+    private String quantity;
     private long height;
     private String issuerId;
     private int acl;
@@ -55,11 +55,11 @@ public class BaseAsset {
         this.desc = desc;
     }
 
-    public long getMaximum() {
+    public String getMaximum() {
         return maximum;
     }
 
-    public void setMaximum(long maximum) {
+    public void setMaximum(String maximum) {
         this.maximum = maximum;
     }
 
@@ -79,11 +79,11 @@ public class BaseAsset {
         this.strategy = strategy;
     }
 
-    public long getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(long quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 
