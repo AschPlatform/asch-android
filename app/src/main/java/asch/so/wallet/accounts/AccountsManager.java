@@ -276,6 +276,11 @@ public class AccountsManager extends Observable {
                     if (result != null && result.isSuccessful()) {
                         LogUtils.iTag(TAG, result.getRawJson());
                         FullAccount fullAccount = JSON.parseObject(result.getRawJson(), FullAccount.class);
+                        if (fullAccount.getAccount()==null){
+                            FullAccount.AccountInfo accountInfo = new FullAccount.AccountInfo();
+                            accountInfo.setBalance("0");
+                            fullAccount.setAccount(accountInfo);
+                        }
                         subscriber.onNext(fullAccount);
                         subscriber.onCompleted();
                     } else {

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/sv_display_flight_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="50dp"
+            android:paddingLeft="16dp"
+            android:background="#ffffff"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp">
+            <TextView
+                android:id="@+id/tv_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="@string/tv_dialog_datetime"
+                android:textColor="#3F51B5"
+                android:textSize="18sp" />
+            <DatePicker
+                android:id="@+id/dp_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:datePickerMode="spinner" />
+
+            <TimePicker
+                android:id="@+id/tp_dialog"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:timePickerMode="spinner"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@id/sv_display_flight_filter"
+        android:background="#ffffff"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/tv_dialog_filter_cancel"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/dialog_content_cancel"
+            android:textColor="#3F51B5"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/tv_dialog_filter_positive"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/dialog_content_positive"
+            android:textColor="#313131"
+            android:textSize="15sp" />
+    </LinearLayout>
+</RelativeLayout>

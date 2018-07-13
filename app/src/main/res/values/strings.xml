@@ -207,7 +207,7 @@
     <string name="lock_state">锁仓状态</string>
     <string name="state">状态</string>
     <string name="not_lock">未锁仓</string>
-    <string name="input_height">请输入高度</string>
+    <string name="input_height">请输入锁仓高度</string>
     <string name="select_vote">已选择0位受托人</string>
     <string name="transfer_record">转账记录</string>
     <string name="operating_system">操作系统</string>
@@ -331,4 +331,9 @@
     <string name="set_amount">设置额度</string>
     <string name="input_amount">请输入锁仓额度</string>
     <string name="input_locked_amount">请输入锁仓额度</string>
+    <string name="tv_dialog_datetime">时间选择</string>
+    <string name="dialog_content_positive">确定</string>
+    <string name="dialog_content_cancel">取消</string>
+    <string name="date_time_picker_title">选择日期时间</string>
+    <string name="error_lock_heigh">锁仓高度无效</string>
 </resources>

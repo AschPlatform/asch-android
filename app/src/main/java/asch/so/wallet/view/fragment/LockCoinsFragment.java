@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +15,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.TimeUtils;
 import com.kaopiz.kprogresshud.KProgressHUD;
 import com.zyyoona7.lib.EasyPopup;
 import com.zyyoona7.lib.HorizontalGravity;
 import com.zyyoona7.lib.VerticalGravity;
 
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.util.DateConvertUtils;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
@@ -34,6 +38,7 @@ import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.StrUtil;
 import asch.so.wallet.view.adapter.MyDateRecyclerViewAdapter;
 import asch.so.wallet.view.validator.Validator;
+import asch.so.wallet.view.widget.DateTimePickerDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -42,7 +47,7 @@ import so.asch.sdk.AschSDK;
 
 /**
  */
-public class LockCoinsFragment extends BaseFragment implements LockCoinsContract.View, View.OnClickListener,MyDateRecyclerViewAdapter.OnDateSelectListener {
+public class LockCoinsFragment extends BaseFragment implements LockCoinsContract.View, View.OnClickListener,DateTimePickerDialog.ClickListenerInterface {
 
     KProgressHUD hud=null;
     @BindView(R.id.second_passwd_ll)
@@ -57,26 +62,29 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     EditText accountPasswordEt;
     @BindView(R.id.second_passwd_et)
     EditText secondSecretEt;
-    @BindView(R.id.ll_year)
-    LinearLayout ll_year;
-    @BindView(R.id.tv_year)
-    TextView tv_year;
-    @BindView(R.id.ll_month)
-    LinearLayout ll_month;
-    @BindView(R.id.tv_month)
-    TextView tv_month;
-    @BindView(R.id.ll_day)
-    LinearLayout ll_day;
-    @BindView(R.id.tv_day)
-    TextView tv_day;
+    @BindView(R.id.tv_date_time)
+    TextView tv_date_time;
+//    @BindView(R.id.ll_year)
+//    LinearLayout ll_year;
+//    @BindView(R.id.tv_year)
+//    TextView tv_year;
+//    @BindView(R.id.ll_month)
+//    LinearLayout ll_month;
+//    @BindView(R.id.tv_month)
+//    TextView tv_month;
+//    @BindView(R.id.ll_day)
+//    LinearLayout ll_day;
+//    @BindView(R.id.tv_day)
+//    TextView tv_day;
     @BindView(R.id.block_height)
     TextView block_height;
 
     private LockCoinsContract.Presenter presenter;
-    private EasyPopup esayPopup;
-    private MyDateRecyclerViewAdapter yearAdapter,monthAdapter,dayAdapter;
+   // private EasyPopup esayPopup;
+   // private MyDateRecyclerViewAdapter yearAdapter,monthAdapter,dayAdapter;
     private long lastHeight = 0 ;
     private long haveLockHeight = 0;
+    private Date dateTime;
 
     public LockCoinsFragment() {
     }
@@ -166,20 +174,34 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
         }
     }
 
-    @OnClick(R.id.ll_year) void onClickYear() {
-        initPopup(MyDateRecyclerViewAdapter.YEAR);
-        esayPopup.showAtAnchorView(ll_year,VerticalGravity.BELOW,HorizontalGravity.CENTER);
+    @OnClick(R.id.ll_date_time) void onClickDateTime(){
+        DateTimePickerDialog dialog = new DateTimePickerDialog(getContext(), getString(R.string.date_time_picker_title));
+        dialog.setClicklistener(this);
+        dialog.show();
     }
 
-    @OnClick(R.id.ll_month) void onClickMonth() {
-        initPopup(MyDateRecyclerViewAdapter.MONTH);
-        esayPopup.showAtAnchorView(ll_month,VerticalGravity.BELOW,HorizontalGravity.CENTER);
+    @Override
+    public void doOk(Date time) {
+        this.dateTime=time;
+    //reSetDay();
+    tv_date_time.setText(TimeUtils.date2String(time));
+    setLockHeightByDate();
     }
 
-    @OnClick(R.id.ll_day) void onClickDay() {
-        initPopup(MyDateRecyclerViewAdapter.DAY);
-        esayPopup.showAtAnchorView(ll_day,VerticalGravity.BELOW,HorizontalGravity.CENTER);
-    }
+    //    @OnClick(R.id.ll_year) void onClickYear() {
+//        initPopup(MyDateRecyclerViewAdapter.YEAR);
+//        esayPopup.showAtAnchorView(ll_year,VerticalGravity.BELOW,HorizontalGravity.CENTER);
+//    }
+//
+//    @OnClick(R.id.ll_month) void onClickMonth() {
+//        initPopup(MyDateRecyclerViewAdapter.MONTH);
+//        esayPopup.showAtAnchorView(ll_month,VerticalGravity.BELOW,HorizontalGravity.CENTER);
+//    }
+//
+//    @OnClick(R.id.ll_day) void onClickDay() {
+//        initPopup(MyDateRecyclerViewAdapter.DAY);
+//        esayPopup.showAtAnchorView(ll_day,VerticalGravity.BELOW,HorizontalGravity.CENTER);
+//    }
 
     @Override
     public void setPresenter(LockCoinsContract.Presenter presenter) {
@@ -221,82 +243,85 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
         }
     }
 
-    private void initPopup(int type) {
-        View contentView = LayoutInflater.from(getContext()).inflate(R.layout.date_recyclerview,null);
-        handleListView(type,contentView);
-        esayPopup = new EasyPopup(getContext());
-        if(type!=MyDateRecyclerViewAdapter.YEAR){
-            esayPopup.setHeight(310);
-        }
-        esayPopup.setContentView(contentView)
-                .setAnimationStyle(R.style.DatePopAnim)
-                .setFocusAndOutsideEnable(true)
-                .createPopup();
+//    private void initPopup(int type) {
+//        View contentView = LayoutInflater.from(getContext()).inflate(R.layout.date_recyclerview,null);
+//        handleListView(type,contentView);
+//        esayPopup = new EasyPopup(getContext());
+//        if(type!=MyDateRecyclerViewAdapter.YEAR){
+//            esayPopup.setHeight(310);
+//        }
+//        esayPopup.setContentView(contentView)
+//                .setAnimationStyle(R.style.DatePopAnim)
+//                .setFocusAndOutsideEnable(true)
+//                .createPopup();
+//
+//    }
 
-    }
+//    private void handleListView(int type,View contentView){
+//        if (contentView instanceof RecyclerView) {
+//            RecyclerView recyclerView = (RecyclerView) contentView;
+//            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+//            if(null==yearAdapter){
+//                yearAdapter = new MyDateRecyclerViewAdapter(getActivity(),MyDateRecyclerViewAdapter.YEAR,this);
+//                yearAdapter.notifyDataSetChanged();
+//            }
+//            if(null==monthAdapter){
+//                monthAdapter = new MyDateRecyclerViewAdapter(getActivity(),MyDateRecyclerViewAdapter.MONTH,this);
+//                monthAdapter.notifyDataSetChanged();
+//            }
+//            if(null==dayAdapter){
+//                dayAdapter = new MyDateRecyclerViewAdapter(getActivity(),MyDateRecyclerViewAdapter.DAY,this);
+//                dayAdapter.notifyDataSetChanged();
+//            }
+//            switch (type){
+//                case MyDateRecyclerViewAdapter.YEAR:
+//                    recyclerView.setAdapter(yearAdapter);
+//                    break;
+//                case MyDateRecyclerViewAdapter.MONTH:
+//                    recyclerView.setAdapter(monthAdapter);
+//                    break;
+//                case MyDateRecyclerViewAdapter.DAY:
+//                    dayAdapter.onYearOrMonthChange(tv_year.getText().toString(),tv_month.getText().toString());
+//                    recyclerView.setAdapter(dayAdapter);
+//                    break;
+//            }
+//        }
+//    }
 
-    private void handleListView(int type,View contentView){
-        if (contentView instanceof RecyclerView) {
-            RecyclerView recyclerView = (RecyclerView) contentView;
-            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-            if(null==yearAdapter){
-                yearAdapter = new MyDateRecyclerViewAdapter(getActivity(),MyDateRecyclerViewAdapter.YEAR,this);
-                yearAdapter.notifyDataSetChanged();
-            }
-            if(null==monthAdapter){
-                monthAdapter = new MyDateRecyclerViewAdapter(getActivity(),MyDateRecyclerViewAdapter.MONTH,this);
-                monthAdapter.notifyDataSetChanged();
-            }
-            if(null==dayAdapter){
-                dayAdapter = new MyDateRecyclerViewAdapter(getActivity(),MyDateRecyclerViewAdapter.DAY,this);
-                dayAdapter.notifyDataSetChanged();
-            }
-            switch (type){
-                case MyDateRecyclerViewAdapter.YEAR:
-                    recyclerView.setAdapter(yearAdapter);
-                    break;
-                case MyDateRecyclerViewAdapter.MONTH:
-                    recyclerView.setAdapter(monthAdapter);
-                    break;
-                case MyDateRecyclerViewAdapter.DAY:
-                    dayAdapter.onYearOrMonthChange(tv_year.getText().toString(),tv_month.getText().toString());
-                    recyclerView.setAdapter(dayAdapter);
-                    break;
-            }
-        }
-    }
-
-    public void onDateSelect(int type,String str) {
-        esayPopup.dismiss();
-        switch (type){
-            case MyDateRecyclerViewAdapter.YEAR:
-                tv_year.setText(str);
-                reSetDay();
-                break;
-            case MyDateRecyclerViewAdapter.MONTH:
-                tv_month.setText(str);
-                reSetDay();
-                break;
-            case MyDateRecyclerViewAdapter.DAY:
-                tv_day.setText(str);
-                break;
-        }
-        setLockHeightByDate();
-    }
+//    public void onDateSelect(int type,String str) {
+//        esayPopup.dismiss();
+//        switch (type){
+//            case MyDateRecyclerViewAdapter.YEAR:
+//                tv_year.setText(str);
+//                reSetDay();
+//                break;
+//            case MyDateRecyclerViewAdapter.MONTH:
+//                tv_month.setText(str);
+//                reSetDay();
+//                break;
+//            case MyDateRecyclerViewAdapter.DAY:
+//                tv_day.setText(str);
+//                break;
+//        }
+//        setLockHeightByDate();
+//    }
 
     public void initDate(long differHeight){
         Calendar calendar = AppUtil.getDateByHeight(differHeight);
-        tv_year.setText(calendar.get(Calendar.YEAR)+ getString(R.string.year));
-        tv_month.setText(calendar.get(Calendar.MONTH)+1+getString(R.string.month));
-        tv_day.setText(calendar.get(Calendar.DAY_OF_MONTH)+getString(R.string.day));
+        tv_date_time.setText(TimeUtils.date2String(calendar.getTime()));
+//        tv_year.setText(calendar.get(Calendar.YEAR)+ getString(R.string.year));
+//        tv_month.setText(calendar.get(Calendar.MONTH)+1+getString(R.string.month));
+//        tv_day.setText(calendar.get(Calendar.DAY_OF_MONTH)+getString(R.string.day));
     }
 
     private void setLockHeightByDate(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR,StrUtil.getNumbers(tv_year.getText().toString()));
-        calendar.set(Calendar.MONTH,StrUtil.getNumbers(tv_month.getText().toString())-1);
-        calendar.set(Calendar.DAY_OF_MONTH,StrUtil.getNumbers(tv_day.getText().toString()));
-        long ms = calendar.getTimeInMillis()-System.currentTimeMillis();
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.set(Calendar.YEAR,StrUtil.getNumbers(tv_year.getText().toString()));
+//        calendar.set(Calendar.MONTH,StrUtil.getNumbers(tv_month.getText().toString())-1);
+//        calendar.set(Calendar.DAY_OF_MONTH,StrUtil.getNumbers(tv_day.getText().toString()));
+
+//        long ms = calendar.getTimeInMillis()-System.currentTimeMillis();
+        long ms = this.dateTime.getTime()-System.currentTimeMillis();
         if(ms>0){
             blockHeightEt.setText(ms/10000 + lastHeight+"");
         }else{
@@ -304,13 +329,13 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
         }
     }
 
-    private void reSetDay(){
-        int maxDay = dayAdapter.getMaxDay(tv_year.getText().toString(),tv_month.getText().toString());
-        int day = StrUtil.getNumbers(tv_day.getText().toString());
-        if(day>maxDay){
-            tv_day.setText("1"+getString(R.string.day));
-        }
-    }
+//    private void reSetDay(){
+//        int maxDay = dayAdapter.getMaxDay(tv_year.getText().toString(),tv_month.getText().toString());
+//        int day = StrUtil.getNumbers(tv_day.getText().toString());
+//        if(day>maxDay){
+//            tv_day.setText("1"+getString(R.string.day));
+//        }
+//    }
 
     private  void  showHUD(){
         if (hud==null){

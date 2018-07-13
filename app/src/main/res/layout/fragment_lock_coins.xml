@@ -130,7 +130,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/divider_color"/>
-
     <LinearLayout
         android:background="@android:color/white"
         android:layout_width="match_parent"
@@ -141,8 +140,7 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@null"
             android:gravity="center_vertical"
@@ -151,18 +149,22 @@
             android:textColor="#333333"/>
 
         <LinearLayout
-            android:id="@+id/ll_year"
-            android:layout_width="90dp"
+            android:id="@+id/ll_date_time"
+            android:layout_width="wrap_content"
             android:orientation="horizontal"
             android:background="@drawable/date_bg"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+
             android:layout_height="wrap_content">
             <TextView
-                android:id="@+id/tv_year"
-                android:text="2018"
+                android:id="@+id/tv_date_time"
+                android:text="2018-08-05 10:13:15"
                 android:textColor="@color/white"
-                android:gravity="right|center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="1dp"
                 android:layout_height="30dp" />
 
             <TextView
@@ -173,57 +175,6 @@
                 android:layout_height="25dp"
                 android:layout_marginRight="3dp"/>
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_month"
-            android:layout_marginLeft="6dp"
-            android:layout_width="70dp"
-            android:orientation="horizontal"
-            android:background="@drawable/date_bg"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_month"
-                android:text="01"
-                android:textColor="@color/white"
-                android:gravity="right|center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="30dp" />
-
-            <TextView
-                android:gravity="center"
-                android:layout_alignParentRight="true"
-                android:background="@mipmap/expand_arrow_down"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="3dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_day"
-            android:layout_marginLeft="6dp"
-            android:layout_width="70dp"
-            android:orientation="horizontal"
-            android:background="@drawable/date_bg"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/tv_day"
-                android:text="01"
-                android:textColor="@color/white"
-                android:gravity="right|center"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="30dp" />
-
-            <TextView
-                android:gravity="center"
-                android:layout_alignParentRight="true"
-                android:background="@mipmap/expand_arrow_down"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="3dp"/>
-        </LinearLayout>
-
 
     </LinearLayout>
 
@@ -231,6 +182,107 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/divider_color"/>
+
+    <!--<LinearLayout-->
+        <!--android:background="@android:color/white"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="57dp"-->
+        <!--android:paddingLeft="19dp"-->
+        <!--android:paddingRight="19dp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:gravity="center_vertical">-->
+
+        <!--<TextView-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:background="@null"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:text="@string/set_date"-->
+            <!--android:textSize="15sp"-->
+            <!--android:textColor="#333333"/>-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/ll_year"-->
+            <!--android:layout_width="90dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:background="@drawable/date_bg"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<TextView-->
+                <!--android:id="@+id/tv_year"-->
+                <!--android:text="2018"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:gravity="right|center"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_height="30dp" />-->
+
+            <!--<TextView-->
+                <!--android:gravity="center"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:background="@mipmap/expand_arrow_down"-->
+                <!--android:layout_width="25dp"-->
+                <!--android:layout_height="25dp"-->
+                <!--android:layout_marginRight="3dp"/>-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/ll_month"-->
+            <!--android:layout_marginLeft="6dp"-->
+            <!--android:layout_width="70dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:background="@drawable/date_bg"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<TextView-->
+                <!--android:id="@+id/tv_month"-->
+                <!--android:text="01"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:gravity="right|center"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_height="30dp" />-->
+
+            <!--<TextView-->
+                <!--android:gravity="center"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:background="@mipmap/expand_arrow_down"-->
+                <!--android:layout_width="25dp"-->
+                <!--android:layout_height="25dp"-->
+                <!--android:layout_marginRight="3dp"/>-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+            <!--android:id="@+id/ll_day"-->
+            <!--android:layout_marginLeft="6dp"-->
+            <!--android:layout_width="70dp"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:background="@drawable/date_bg"-->
+            <!--android:layout_height="wrap_content">-->
+            <!--<TextView-->
+                <!--android:id="@+id/tv_day"-->
+                <!--android:text="01"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:gravity="right|center"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_height="30dp" />-->
+
+            <!--<TextView-->
+                <!--android:gravity="center"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:background="@mipmap/expand_arrow_down"-->
+                <!--android:layout_width="25dp"-->
+                <!--android:layout_height="25dp"-->
+                <!--android:layout_marginRight="3dp"/>-->
+        <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/divider_color"/>-->
 
     <LinearLayout
         android:background="@android:color/white"

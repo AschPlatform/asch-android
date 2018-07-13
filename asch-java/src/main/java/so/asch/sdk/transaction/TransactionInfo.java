@@ -235,16 +235,16 @@ public class TransactionInfo {
                 .putInt(getTimestamp())
                 .putLong(getFee())
                 .put(getSenderIdBuffer())
-                .put(getRequestorIdBuffer())
+                //.put(getRequestorIdBuffer())
                 .put(getMessageBuffer())
                 .put(getArgsBuffer());
 
-        if (!skipSignature){
+        if (!skipSignature && this.getSignatures()!=null){
            // buffer.put(Decoding.unsafeDecodeHex(getSignature()));
             buffer.put(getSignaturesBuffer());
         }
 
-        if (!skipSignSignature){
+        if (!skipSignSignature && this.getSignSignature()!=null){
             buffer.put(Decoding.unsafeDecodeHex(getSignSignature()));
         }
 

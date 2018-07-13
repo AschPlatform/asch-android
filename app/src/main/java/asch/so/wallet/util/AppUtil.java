@@ -214,7 +214,10 @@ public class AppUtil {
             return context.getString(R.string.error_vote_cancel);
         }else if (error.contains("Failed to add vote")){
             return context.getString(R.string.error_vote_ok);
-        }else {
+        }else  if (error.contains("Invalid lock height")){
+            return context.getString(R.string.error_lock_heigh);
+        }
+        else {
             return context.getString(R.string.error_params);
         }
     }
