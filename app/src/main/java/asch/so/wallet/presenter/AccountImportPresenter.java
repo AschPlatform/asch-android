@@ -90,6 +90,7 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
     }
 
     public  rx.Observable<Account> createLoginAccountObservable(Account account){
+       // String address=account.getAddress();
         String publicKey=account.getPublicKey();
         return rx.Observable.create(new rx.Observable.OnSubscribe<Account>() {
             @Override
@@ -101,6 +102,13 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
                         LogUtils.iTag(TAG, result.getRawJson());
                         FullAccount fullAccount = JSON.parseObject(result.getRawJson(), FullAccount.class);
                         account.setFullAccount(fullAccount);
+                        if (fullAccount.getAccount()==null){
+                            FullAccount.AccountInfo accountInfo = new FullAccount.AccountInfo();
+                            accountInfo.setAddress(address);
+                            accountInfo.setPublicKey(publicKey);
+                            accountInfo.setBalance("0");
+                            fullAccount.setAccount(accountInfo);
+                        }
                         subscriber.onNext(account);
                         subscriber.onCompleted();
                     } else {
@@ -192,10 +200,15 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
 
                     @Override
                     public void onNext(Account account) {
-                        String address=account.getFullAccount().getAccount().getAddress();
-                        if (!TextUtils.isEmpty(address)){
-                            account.setAddress(address);
-                        }
+                        String address=account.getAddress();
+
+//                        if (!TextUtils.isEmpty(address)){
+//                            account.setAddress(address);
+//                        }
+//                        String address=account.getFullAccount().getAccount().getAddress();
+//                        if (!TextUtils.isEmpty(address)){
+//                            account.setAddress(address);
+//                        }
                         AccountsManager.getInstance().addAccount(account);
 //                        AppConfig.putLastAccountAddress(account.getAddress());
                         AppConfig.putLastAccountPublicKey(account.getPublicKey());

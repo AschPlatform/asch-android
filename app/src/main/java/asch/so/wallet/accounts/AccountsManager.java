@@ -278,6 +278,8 @@ public class AccountsManager extends Observable {
                         FullAccount fullAccount = JSON.parseObject(result.getRawJson(), FullAccount.class);
                         if (fullAccount.getAccount()==null){
                             FullAccount.AccountInfo accountInfo = new FullAccount.AccountInfo();
+                            accountInfo.setAddress(address);
+                            accountInfo.setPublicKey(publicKey);
                             accountInfo.setBalance("0");
                             fullAccount.setAccount(accountInfo);
                         }
