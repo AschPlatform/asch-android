@@ -124,8 +124,8 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
                     } else if (transaction.getType() == TransactionType.UIATransferV2.getCode()) {
                         Transaction.AssetInfo asset = JSON.parseObject(transaction.getAsset(), Transaction.AssetInfo.class);
                         transaction.setAssetInfo(asset);
-
                     }
+
                     filteredTransactions.add(transaction);
                 }
 

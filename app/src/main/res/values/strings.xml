@@ -83,7 +83,7 @@
     <string name="delete_account">删除账户</string>
     <string name="backup_how">如何备份账户</string>
     <string name="master_password_create_fail">生成账户主密码失败,请重试</string>
-    <string name="accounts_exist">此账户以及存在</string>
+    <string name="accounts_exist">此账户已经存在</string>
     <string name="accounts_create_fail">账户创建失败</string>
     <string name="mnemonic_backup">助记词备份</string>
     <string name="important_note">重要提示</string>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.View;
 
 import asch.so.base.activity.ActivityStackManager;
@@ -70,6 +71,16 @@ public class SecretBackupActivity extends TitleToolbarActivity {
         });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            this.onBackClicked(null);
+            return false;
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+
     private void goback(View v){
         if (action==Action.BackupFromStart){
             Intent intent =new Intent(this, MainTabActivity.class);
@@ -81,6 +92,8 @@ public class SecretBackupActivity extends TitleToolbarActivity {
             super.onBackClicked(v);
         }
     }
+
+
 
     private void showBackupAlertDialog(DialogInterface.OnClickListener okListener){
         AlertDialog.Builder builder =new AlertDialog
