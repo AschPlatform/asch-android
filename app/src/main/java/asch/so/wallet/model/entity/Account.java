@@ -1,5 +1,7 @@
 package asch.so.wallet.model.entity;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -158,7 +160,8 @@ public class Account extends RealmObject{
     public boolean hasSecondSecret(){
         if (getFullAccount()!=null && getFullAccount().getAccount()!=null)
         {
-            return getFullAccount().getAccount().isSecondSignature();
+           String secondPubkey = getFullAccount().getAccount().getSecondPublicKey();
+            return !(TextUtils.isEmpty(secondPubkey));
         }
         return false;
     }
