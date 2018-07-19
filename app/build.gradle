@@ -203,10 +203,10 @@ dependencies {
     compile rootProject.ext.dependencies["filedownloader"]
     compile rootProject.ext.dependencies["expandablelayout"]
     compile rootProject.ext.dependencies["expandablelayout"]
-    compile rootProject.ext.dependencies["localeChanger"]
     compile rootProject.ext.dependencies["progressButton"]
     compile rootProject.ext.dependencies["eventbus"]
     compile rootProject.ext.dependencies["switchbutton"]
+    compile rootProject.ext.dependencies["localeChanger"]
 }
 
 //def rename_andd_moveout_apk(orignalFile, buildType) {

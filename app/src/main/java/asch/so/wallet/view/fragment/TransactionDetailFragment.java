@@ -126,7 +126,12 @@ public class TransactionDetailFragment extends BaseFragment {
             case UIATransferV2:
             {
                 Transaction.AssetInfo asset=(Transaction.AssetInfo)transaction.getAssetInfo();
-                return asset.getQuantity();
+                if (asset!=null){
+                    return AppUtil.decimalFormat(AppUtil.decimalFromBigint(transaction.getAmount(), asset.getPrecision()))+" "+asset.getName();
+                }else {
+                    return "0";
+                }
+                //return asset.getQuantity();
 //                if (asset!=null && asset.getUiaTransfer() !=null){
 //                    return String.format("%s %s",asset.getUiaTransfer().getAmountShow(),asset.getUiaTransfer().getCurrency());
 //                }

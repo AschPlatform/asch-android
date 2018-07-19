@@ -38,6 +38,7 @@
         </ezy.ui.layout.LoadingLayout>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/bottom_ll"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"

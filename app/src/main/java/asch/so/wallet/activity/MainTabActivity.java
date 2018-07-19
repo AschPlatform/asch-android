@@ -43,6 +43,7 @@ import asch.so.wallet.util.UpdateAppHttpUtil;
 import asch.so.wallet.view.adapter.TabFragmentPagerAdapter;
 import asch.so.wallet.view.fragment.AssetBalanceFragment;
 import asch.so.wallet.view.fragment.DappCenterFragment;
+import asch.so.wallet.view.fragment.DiscoveryFragment;
 import asch.so.wallet.view.fragment.MineFragment;
 import asch.so.wallet.view.fragment.TodoFragment;
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -161,13 +162,13 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
         TabFragmentPagerAdapter adapter = new TabFragmentPagerAdapter(getSupportFragmentManager());
 
         AssetBalanceFragment assetsFragment=AssetBalanceFragment.newInstance();
-        DappCenterFragment dappCenterFragment=DappCenterFragment.newInstance();
-        //TodoFragment dappFragment=TodoFragment.newInstance();
+       // DappCenterFragment dappCenterFragment=DappCenterFragment.newInstance();
+        DiscoveryFragment discoveryFragment=DiscoveryFragment.newInstance();
         MineFragment mineFragment=MineFragment.newInstance();
 
 
         adapter.addFragment(assetsFragment);
-        adapter.addFragment(dappCenterFragment);
+        adapter.addFragment(discoveryFragment);
        // adapter.addFragment(dappFragment);
         adapter.addFragment(mineFragment);
         viewPager.setAdapter(adapter);

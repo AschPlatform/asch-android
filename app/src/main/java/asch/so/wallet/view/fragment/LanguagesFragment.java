@@ -3,6 +3,7 @@ package asch.so.wallet.view.fragment;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import com.blankj.utilcode.util.AppUtils;
 import com.franmontiel.localechanger.LocaleChanger;
 import com.franmontiel.localechanger.utils.ActivityRecreationHelper;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.util.Arrays;
 import java.util.Locale;
@@ -42,6 +44,8 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+
+    KProgressHUD hud=null;
 
     private int currentPostion=0;
 
@@ -104,7 +108,36 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
 
         adapter.notifyDataSetChanged();
         //getActivity().finish();
-        AppUtil.restartApp(getContext());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AppUtil.restartApp(getContext());
+                        dismissHUD();
+                    }
+                });
+            }
+        },1000);
+        showHUD();
+
+    }
+
+
+    private  void  showHUD(){
+        if (hud==null){
+            hud = KProgressHUD.create(getActivity())
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setCancellable(true)
+                    .show();
+        }
+    }
+
+    private  void  dismissHUD(){
+        if (hud!=null){
+            hud.dismiss();
+        }
     }
 
     public enum Item{

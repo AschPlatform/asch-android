@@ -3,6 +3,8 @@ package asch.so.wallet.model.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import asch.so.wallet.util.AppUtil;
 import so.asch.sdk.impl.AschConst;
 
@@ -29,6 +31,7 @@ import so.asch.sdk.impl.AschConst;
         }
  */
 public class Delegate implements Parcelable{
+    @JSONField(name="name")
     private String username;
     private String address;
     private String publicKey;
@@ -43,6 +46,7 @@ public class Delegate implements Parcelable{
     private float productivity;
     private long forged;
     private boolean voted;
+    private long votes;
 
     public String getUsername() {
         return username;
@@ -160,6 +164,14 @@ public class Delegate implements Parcelable{
         this.voted = voted;
     }
 
+    public long getVotes() {
+        return votes;
+    }
+
+    public void setVotes(long votes) {
+        this.votes = votes;
+    }
+
     public static final Parcelable.Creator<Delegate> CREATOR = new Creator<Delegate>(){
         @Override
         public Delegate createFromParcel(Parcel source) {
@@ -178,6 +190,7 @@ public class Delegate implements Parcelable{
             delegate.setProductivity(source.readFloat());
             delegate.setForged(source.readLong());
             delegate.setVoted(source.readByte() != 0);
+            delegate.setVotes(source.readLong());
 
             return delegate;
         }
@@ -224,5 +237,6 @@ public class Delegate implements Parcelable{
         dest.writeFloat(productivity);
         dest.writeLong(forged);
         dest.writeByte((byte)(voted?1:0));
+        dest.writeLong(votes);
     }
 }

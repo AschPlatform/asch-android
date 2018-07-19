@@ -29,13 +29,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesFragment.OnListFragmentInteractionListener {
-    @BindView(R.id.tablayout)
-    SlidingTabLayout tablayout;
+//    @BindView(R.id.tablayout)
+//    SlidingTabLayout tablayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
     private VoteDelegatesFragment voteDelegatesFragment;
-    private  MyVoteRecordFragment myVoteRecordFragment;
-    private WhoVoteForMeFragment whoVoteForMeFragment;
+//    private  MyVoteRecordFragment myVoteRecordFragment;
+//    private WhoVoteForMeFragment whoVoteForMeFragment;
 
     private MyPagerAdapter adapter;
 
@@ -44,7 +44,8 @@ public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(getString(R.string.vote));
+//        setTitle(getString(R.string.vote));
+        setTitle(getString(R.string.delegate_list));
         mTitles = new String[]{getString(R.string.node_list), getString(R.string.vote_record), getString(R.string.vote_me)};
         ButterKnife.bind(this);
 
@@ -58,14 +59,14 @@ public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesF
 
     private void initView() {
         voteDelegatesFragment=VoteDelegatesFragment.newInstance(1);
-        myVoteRecordFragment=MyVoteRecordFragment.newInstance(1);
-        whoVoteForMeFragment=WhoVoteForMeFragment.newInstance(1);
+//        myVoteRecordFragment=MyVoteRecordFragment.newInstance(1);
+//        whoVoteForMeFragment=WhoVoteForMeFragment.newInstance(1);
         mFagments.add(voteDelegatesFragment);
-        mFagments.add(myVoteRecordFragment);
-          mFagments.add(whoVoteForMeFragment);
+//        mFagments.add(myVoteRecordFragment);
+//          mFagments.add(whoVoteForMeFragment);
         adapter = new MyPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
-        tablayout.setViewPager(viewPager, mTitles);
+       // tablayout.setViewPager(viewPager, mTitles);
         //viewPager.setOffscreenPageLimit(0);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -75,14 +76,14 @@ public class VoteActivity extends TitleToolbarActivity implements VoteDelegatesF
                         voteDelegatesFragment.refreshData();
                     }
                     break;
-                    case  1:{
-                        myVoteRecordFragment.refreshData();
-                    }
-                    break;
-                    case 2:{
-                        whoVoteForMeFragment.refreshData();
-                    }
-                    break;
+//                    case  1:{
+//                        myVoteRecordFragment.refreshData();
+//                    }
+//                    break;
+//                    case 2:{
+//                        whoVoteForMeFragment.refreshData();
+//                    }
+//                    break;
                 }
             }
 

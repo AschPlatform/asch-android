@@ -216,6 +216,8 @@ public class AppUtil {
             return context.getString(R.string.error_vote_ok);
         }else  if (error.contains("Invalid lock height")){
             return context.getString(R.string.error_lock_heigh);
+        }else  if (error.contains("Sender account not found")){
+            return context.getString(R.string.account_balance_insufficient);
         }
         else {
             return context.getString(R.string.error_params);

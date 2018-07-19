@@ -174,7 +174,7 @@
     <string name="password_error">密码输入不正确,请重新输入</string>
     <string name="only_one_account">当前钱包只有一只账户，不能删除</string>
     <string name="delete_success">删除成功</string>
-    <string name="account_input_tip">账户名称只能是字母数组或者下划线</string>
+    <string name="account_input_tip">账户名称只能是字母数字或者下划线</string>
     <string name="personal_center">个人中心</string>
     <string name="forget_pin">忘记pin码?</string>
     <string name="pin_tip">点击 "确定" 创建一个新的pin码。\n\n如果你记得你的pin码, 点击"取消" 返回。?</string>
@@ -336,4 +336,7 @@
     <string name="dialog_content_cancel">取消</string>
     <string name="date_time_picker_title">选择日期时间</string>
     <string name="error_lock_heigh">锁仓高度无效</string>
+    <string name="discovery">发现</string>
+    <string name="delegate_list">受托人列表</string>
+    <string name="account_balance_insufficient">账户余额不足</string>
 </resources>

@@ -29,13 +29,14 @@
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-            <ImageButton
-                android:id="@+id/select_btn"
-                android:layout_marginLeft="20dp"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@mipmap/item_unslected"
-                />
+
+                <ImageButton
+                    android:id="@+id/select_btn"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@mipmap/item_unslected"
+                    android:visibility="gone" />
             </LinearLayout>
             <LinearLayout
                 android:orientation="vertical"
