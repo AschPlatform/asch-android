@@ -218,6 +218,8 @@ public class AppUtil {
             return context.getString(R.string.error_lock_heigh);
         }else  if (error.contains("Sender account not found")){
             return context.getString(R.string.account_balance_insufficient);
+        }else if (error.contains("Blockchain is not ready")){
+            return context.getString(R.string.blockchain_is_not_ready);
         }
         else {
             return context.getString(R.string.error_params);

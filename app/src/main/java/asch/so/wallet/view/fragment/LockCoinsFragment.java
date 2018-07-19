@@ -56,28 +56,19 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     Button okBtn;
     @BindView(R.id.block_amount_et)
     EditText blockAmountEt;
-    @BindView(R.id.block_height_et)
-    EditText blockHeightEt;
+//    @BindView(R.id.block_height_et)
+//    EditText blockHeightEt;
     @BindView(R.id.account_passwd_et)
     EditText accountPasswordEt;
     @BindView(R.id.second_passwd_et)
     EditText secondSecretEt;
     @BindView(R.id.tv_date_time)
     TextView tv_date_time;
-//    @BindView(R.id.ll_year)
-//    LinearLayout ll_year;
-//    @BindView(R.id.tv_year)
-//    TextView tv_year;
-//    @BindView(R.id.ll_month)
-//    LinearLayout ll_month;
-//    @BindView(R.id.tv_month)
-//    TextView tv_month;
-//    @BindView(R.id.ll_day)
-//    LinearLayout ll_day;
-//    @BindView(R.id.tv_day)
-//    TextView tv_day;
     @BindView(R.id.block_height)
     TextView block_height;
+
+    private  long lockHeight;
+
 
     private LockCoinsContract.Presenter presenter;
    // private EasyPopup esayPopup;
@@ -103,26 +94,26 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
         View rootView = inflater.inflate(R.layout.fragment_lock_coins, container, false);
         ButterKnife.bind(this, rootView);
         okBtn.setOnClickListener(this);
-        blockHeightEt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if("".equals(charSequence.toString())){
-                    return;
-                }
-                long lockHeight = Long.valueOf(charSequence.toString());
-                if(lockHeight>lastHeight){
-                    initDate(lockHeight-lastHeight);
-                }else{
-                    initDate(0);
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
+//        blockHeightEt.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                if("".equals(charSequence.toString())){
+//                    return;
+//                }
+//                long lockHeight = Long.valueOf(charSequence.toString());
+//                if(lockHeight>lastHeight){
+//                    initDate(lockHeight-lastHeight);
+//                }else{
+//                    initDate(0);
+//                }
+//            }
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//            }
+//        });
         presenter=new LockCoinsPresenter(getContext(), this);
         presenter.loadBlockInfo();
         if(!getAccount().hasSecondSecret()){
@@ -140,18 +131,27 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
                 return;
             }
 
-            String blockHeightStr = blockHeightEt.getText().toString();
-            if(null==blockHeightStr||"".equals(blockHeightStr)){
-                AppUtil.toastError(getContext(),getString(R.string.input_locked_Height));
-                return;
-            }
+//            String blockHeightStr = blockHeightEt.getText().toString();
+//            if(null==blockHeightStr||"".equals(blockHeightStr)){
+//                AppUtil.toastError(getContext(),getString(R.string.input_locked_Height));
+//                return;
+//            }
 
-            if(Integer.valueOf(blockHeightStr)-lastHeight>=10000000){
+//            if(Integer.valueOf(blockHeightStr)-lastHeight>=10000000){
+//                AppUtil.toastWarning(getActivity(),getString(R.string.lock_warning));
+//                return;
+//            }
+//
+//            if(Integer.valueOf(blockHeightStr)-haveLockHeight<=0){
+//                AppUtil.toastWarning(getActivity(),getString(R.string.lock_warning_2));
+//                return;
+//            }
+            if(lockHeight-lastHeight>=10000000){
                 AppUtil.toastWarning(getActivity(),getString(R.string.lock_warning));
                 return;
             }
 
-            if(Integer.valueOf(blockHeightStr)-haveLockHeight<=0){
+            if(lockHeight-haveLockHeight<=0){
                 AppUtil.toastWarning(getActivity(),getString(R.string.lock_warning_2));
                 return;
             }
@@ -170,7 +170,7 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
             }
             showHUD();
 
-            presenter.lockCoins(AschSDK.Helper.amountForCoins(Integer.valueOf(blockAmountStr)), Long.valueOf(blockHeightStr),account_pwd.trim(),getAccount().hasSecondSecret()?second_secret.trim():null);
+            presenter.lockCoins(AschSDK.Helper.amountForCoins(Integer.valueOf(blockAmountStr)), lockHeight,account_pwd.trim(),getAccount().hasSecondSecret()?second_secret.trim():null);
         }
     }
 
@@ -235,7 +235,8 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
             block_height.setText(String.valueOf(lastHeight));
             haveLockHeight = account.getFullAccount().getAccount().getLockHeight();
             if(haveLockHeight>lastHeight){
-                blockHeightEt.setText(haveLockHeight+"");
+                //blockHeightEt.setText(haveLockHeight+"");
+                lockHeight=haveLockHeight;
                 initDate(haveLockHeight-lastHeight);
             }else{
                 initDate(0);
@@ -323,9 +324,11 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
 //        long ms = calendar.getTimeInMillis()-System.currentTimeMillis();
         long ms = this.dateTime.getTime()-System.currentTimeMillis();
         if(ms>0){
-            blockHeightEt.setText(ms/10000 + lastHeight+"");
+            lockHeight=ms/10000 + lastHeight;
+            //blockHeightEt.setText(ms/10000 + lastHeight+"");
         }else{
-            blockHeightEt.setText("");
+            lastHeight=0;
+//            blockHeightEt.setText("");
         }
     }
 

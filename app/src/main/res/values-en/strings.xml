@@ -258,4 +258,85 @@
     <string name="vote_cancel_to_trustee">Cancel the vote for the delegates</string>
     <string name="no_data">No Data</string>
     <string name="website">https://www.asch.io</string>
+
+    <string name="opreation_success">Operation Successful</string>
+    <string name="dapps_list">Application List</string>
+    <string name="my_dapps">My Apps</string>
+    <string name="dapps">Application</string>
+    <string name="download">Download</string>
+    <string name="start">Start</string>
+    <string name="pause">Pause</string>
+    <string name="continued">Continued</string>
+    <string name="delete">Delete</string>
+    <string name="install">Install</string>
+    <string name="installed">Installed</string>
+    <string name="open">Open</string>
+    <string name="uninstall_success">Uninstall Success</string>
+
+
+    <string name="dapp_detail">Detail</string>
+    <string name="dapp_info">Information</string>
+    <string name="dapp_price">Price</string>
+    <string name="dapp_size">Size</string>
+    <string name="dapp_verion">verion</string>
+    <string name="dapp_datetime">Publish Time</string>
+    <string name="dapp_developer">Developer</string>
+    <string name="dapp_des">Introduction</string>
+    <string name="dapp_free">Free</string>
+    <string name="asch_company_name">Beijing Asch Chain Technology Co. Ltd.</string>
+    <string name="dapp_des_content">CCTime (Cryptocurrency Time) is a distributed social news sharing and communication platform based on ASCH (ASCH) sidechain technology.Its idea comes from Hacker News. Hacker News is a news channel owned by Y Combinator, focusing on news sharing, commenting and communication on computer science and entrepreneurship topics.
+    </string>
+
+    <string name="support_currency">Currency</string>
+    <string name="circulation">Current Liquidity</string>
+    <string name="dapp_balance">Balance</string>
+    <string name="dapp_balance_detail">Balance Detail</string>
+    <string name="deposit">Deposit</string>
+    <string name="dapp_deposit">Deposit</string>
+    <string name="deposit_success">Deposit Success</string>
+    <string name="please_input_account_password">Please input Account Password</string>
+    <string name="passwd_lock_hint">Is password free for 1 hour?</string>
+
+    <string name="have_set">Already Set</string>
+    <string name="have_lock">Already Locked</string>
+    <string name="set_lock_msg">Set Lock</string>
+    <string name="last_height">Last Height</string>
+    <string name="set_height">Set Height</string>
+    <string name="set_date">Set Date</string>
+    <string name="year">Year</string>
+    <string name="month">Month</string>
+    <string name="day">Day</string>
+    <string name="lock_warning">Maximum lock height exceeded</string>
+    <string name="lock_warning_2">Lock position height should be greater than current lock height</string>
+    <string name="input_second_secret_hint">Please enter 8-16 letters and numbers</string>
+    <string name="lock_clear">Unlock</string>
+    <string name="open_dapp">Open DAPP</string>
+    <string name="authorize">Authorize</string>
+    <string name="dapp_authorize">DAPP Authorize</string>
+    <string name="dapp_authorize_alert">CCTime applies for the application's permission to operate on this account</string>
+
+    <string name="block_browse">Block Browse</string>
+    <string name="height">Height</string>
+    <string name="date">Date</string>
+    <string name="total_money">Total Amount</string>
+    <string name="total_cost">Total Cost</string>
+    <string name="award">Award</string>
+    <string name="producer_address">Producer Address</string>
+    <string name="producer_public_key">Producer Public Key</string>
+    <string name="producer_balance">Balance</string>
+    <string name="search_hint">Please enter query block height or ID</string>
+
+
+    <string name="set_amount">Set Amount</string>
+    <string name="input_amount">Please input the locked amount</string>
+    <string name="input_locked_amount">Please input the locked amount</string>
+    <string name="tv_dialog_datetime">Select time</string>
+    <string name="dialog_content_positive">Sure</string>
+    <string name="dialog_content_cancel">Cancel</string>
+    <string name="date_time_picker_title">Select Date Time</string>
+    <string name="error_lock_heigh">Invalid lock height</string>
+    <string name="discovery">Discovery</string>
+    <string name="delegate_list">Delegate List</string>
+    <string name="account_balance_insufficient">Insufficient account balances</string>
+    <string name="blockchain_is_not_ready">Blockchain is not ready</string>
 </resources>

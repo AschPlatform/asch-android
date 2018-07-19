@@ -68,7 +68,7 @@ public class DappCenterFragment extends BaseFragment{
 
     private void initView() {
         toolbar.setBackVisible(false);
-        toolbar.setTitle(getString(R.string.dapps));
+        toolbar.setTitle(getString(R.string.discovery));
         dAppsFragment=DAppsFragment.newInstance();
         installedDAppsFragment=InstalledDAppsFragment.newInstance();
 

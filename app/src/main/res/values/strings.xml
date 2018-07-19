@@ -339,4 +339,5 @@
     <string name="discovery">发现</string>
     <string name="delegate_list">受托人列表</string>
     <string name="account_balance_insufficient">账户余额不足</string>
+    <string name="blockchain_is_not_ready">区块没有同步好</string>
 </resources>
