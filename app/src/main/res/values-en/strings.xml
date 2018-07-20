@@ -15,12 +15,12 @@
 
 	Dear users：\n\n
 
-	\t the system will automatically generate an Asch address for you, when you choose to login to be a user of Asch chain, and you are then deemed by the Asch chain to  have read, understood and completely agreed with all contents of this risk statement.
+	\t\t the system will automatically generate an Asch address for you, when you choose to login to be a user of Asch chain, and you are then deemed by the Asch chain to  have read, understood and completely agreed with all contents of this risk statement.
 
 	Once you register to be a user and create an account, you will get a secret key and must save it by yourself. If you forget the secret key, your asset on Asch chain will be lost forever and it cannot be found back. You shall be liable personally for any obligation and loss for losing the secret key. There is no rights and obligation for Asch to store or save your secret key in any form. And it is not impossible for Asch to obtain or divulge your private key.
 	\n\n
 
-	\t Please make sure that you have remembered and saved your secret key so as to avoid unnecessary trouble.\n\n
+	\t\t Please make sure that you have remembered and saved your secret key so as to avoid unnecessary trouble.\n\n
 
 	Please be well known\n\n
 
@@ -51,7 +51,7 @@
     <string name="secret_key_null">Secret key cannot be vacant</string>
     <string name="secret_key_error">The format of secret key is unmatched with BIP39</string>
     <string name="wallet_name_invalid">Wallet name doesn’t meet the requirement</string>
-    <string name="wallet_name">Wallet Name</string>
+    <string name="account_name">Account Name</string>
     <string name="wallet_name_input">Wallet Name</string>
     <string name="wallet_name_exist">The wallet name exists</string>
     <string name="password_short">Password(no less than eight characters)</string>
@@ -300,7 +300,7 @@
     <string name="have_set">Already Set</string>
     <string name="have_lock">Already Locked</string>
     <string name="set_lock_msg">Set Lock</string>
-    <string name="last_height">Last Height</string>
+    <string name="last_height">Block Height</string>
     <string name="set_height">Set Height</string>
     <string name="set_date">Set Date</string>
     <string name="year">Year</string>

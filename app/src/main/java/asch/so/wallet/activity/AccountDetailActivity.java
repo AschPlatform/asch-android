@@ -199,7 +199,11 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         switch (item.getItemId()){
             case  R.id.item_save:
             {
+                Account account=AccountsManager.getInstance().getCurrentAccount();
                 String name =nameEt.getText().toString().trim();
+                if (account.getName().equals(name)){
+                    return super.onOptionsItemSelected(item);
+                }
                 if (Validator.check(this, Validator.Type.Name,name,getString(R.string.account_input_tip)))
                 {
                     this.presenter.changeAccountName(name);

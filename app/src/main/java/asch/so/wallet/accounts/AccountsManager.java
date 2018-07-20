@@ -217,15 +217,15 @@ public class AccountsManager extends Observable {
     }
 
     /**
-     * 更新当前用户的别名
+     * 更新当前用户的地址
      *
-     * @param name
+     * @param address
      */
-    public void updateAccountAddress(String name) {
+    public void updateAccountAddress(String address) {
         if (currentAccount != null) {
             // currentAccount.setName(name);
             //updateAccount(currentAccount.getAddress(),name);
-            AccountsDao.getInstance().updateAccountAddress(currentAccount, name, new AccountsDao.OnUpdateAddressListener() {
+            AccountsDao.getInstance().updateAccountAddress(currentAccount, address, new AccountsDao.OnUpdateAddressListener() {
 
                 @Override
                 public void onUpdateAddress(Account account, String address) {
@@ -376,7 +376,7 @@ public class AccountsManager extends Observable {
             public void onNext(FullAccount fullAccount) {
                 LogUtils.dTag(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getBalances().toString());
                // account.setAddress(fullAccount.getAccount().getAddress());
-                updateAccountAddress(fullAccount.getAccount().getAddress());
+                //updateAccountAddress(fullAccount.getAccount().getAddress());
                 account.setFullAccount(fullAccount);
             }
         });

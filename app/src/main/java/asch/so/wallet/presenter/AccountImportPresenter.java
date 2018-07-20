@@ -200,7 +200,7 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
 
                     @Override
                     public void onNext(Account account) {
-                        String address=account.getAddress();
+                       // String address=account.getAddress();
 
 //                        if (!TextUtils.isEmpty(address)){
 //                            account.setAddress(address);

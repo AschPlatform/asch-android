@@ -152,10 +152,13 @@ public class AccountsDao {
     }
 
     public void  updateAccount(Account account, String name, OnUpdateNameListener listener){
+
         getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
+                Account dbAccount=queryAccount(account.getAddress());
                 account.setName(name);
+                dbAccount.setName(name);
                 if (listener!=null){
                     listener.onUpdateName(account,name);
                 }
@@ -164,10 +167,13 @@ public class AccountsDao {
     }
 
     public void  updateAccountBackup(Account account, boolean isBackup, OnUpdateBackupListener listener){
+
         getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
+                Account dbAccount=queryAccount(account.getAddress());
                 account.setBackup(isBackup);
+                dbAccount.setBackup(isBackup);
                 if (listener!=null){
                     listener.onUpdateBackup(account,isBackup);
                 }
@@ -176,10 +182,13 @@ public class AccountsDao {
     }
 
     public void  updateAccountAddress(Account account, String address, OnUpdateAddressListener listener){
+
         getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
+                Account dbAccount=queryAccount(account.getAddress());
                 account.setAddress(address);
+                dbAccount.setAddress(address);
                 if (listener!=null){
                     listener.onUpdateAddress(account,address);
                 }

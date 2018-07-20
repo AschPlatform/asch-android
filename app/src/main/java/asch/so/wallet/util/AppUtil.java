@@ -208,9 +208,9 @@ public class AppUtil {
         String error=ex.getMessage();
         if (error.contains("Failed to connect")){
             return context.getString(R.string.error_network);
-        }else if (error.contains("Insufficient balance")){
+        }else if (error.contains("Insufficient balance")||error.contains("Insufficient requestor balance")){
             return context.getString(R.string.error_balance_insufficient);
-        }else if (error.contains("Failed to remove vote")){
+        } else if (error.contains("Failed to remove vote")){
             return context.getString(R.string.error_vote_cancel);
         }else if (error.contains("Failed to add vote")){
             return context.getString(R.string.error_vote_ok);

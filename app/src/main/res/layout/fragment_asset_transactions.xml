@@ -55,7 +55,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:background="@drawable/button_transfer_bg"
-            android:textColor="#333333"
+            android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:text="@string/transfer"
             tools:ignore="HardcodedText" />

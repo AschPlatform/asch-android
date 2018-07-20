@@ -9,12 +9,12 @@
 
         尊敬的用户：\n\n
 
-        \t当您选择注册为阿希链用户之时起，系统会自动给您生成一个阿希链地址。阿希链即视为您已经认真阅读、知悉、理解并完全同意该风险声明的全部内容。
+        \t\t当您选择注册为阿希链用户之时起，系统会自动给您生成一个阿希链地址。阿希链即视为您已经认真阅读、知悉、理解并完全同意该风险声明的全部内容。
 
         您注册为阿希链的用户，创建账户即生成私钥，用户须自行保存私钥。当您忘记私钥时，您阿希链地址上的所有资产将永远丢失，并且无法找回，由此造成的任何损失和责任均由您个人承担。阿希链没有权利且无任何义务以任何形式存储或保存您的私钥，也绝无可能获取或泄露您的私钥。
         \n\n
 
-        \t所以请您务必妥善保管和存储自己的私钥，以免造成不必要的麻烦。\n\n
+        \t\t所以请您务必妥善保管和存储自己的私钥，以免造成不必要的麻烦。\n\n
 
         敬请周知\n\n
 
@@ -45,7 +45,7 @@
     <string name="secret_key_null">私钥不能为空</string>
     <string name="secret_key_error">私钥格式不符合BIP39规范</string>
     <string name="wallet_name_invalid">钱包名称不符合要求</string>
-    <string name="wallet_name">钱包名称</string>
+    <string name="account_name">账户名称</string>
     <string name="wallet_name_input">请输入钱包名称</string>
     <string name="wallet_name_exist">此账户名称已存在</string>
     <string name="password_short">请输入不少于8位字符的密码</string>
@@ -301,7 +301,7 @@
     <string name="have_set">已设置</string>
     <string name="have_lock">已锁仓</string>
     <string name="set_lock_msg">设置锁仓信息</string>
-    <string name="last_height">当前高度</string>
+    <string name="last_height">区块高度</string>
     <string name="set_height">设置高度</string>
     <string name="set_date">设置时间</string>
     <string name="year">年</string>
