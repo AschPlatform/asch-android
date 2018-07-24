@@ -14,10 +14,12 @@ public interface LockCoinsContract {
     interface View extends BaseView<Presenter>{
         void displayLockCoinsResult(boolean success, String msg);
         void displayBlockInfo(Account account);
+        void displayLockFee(String fee);
     }
 
     interface Presenter extends BasePresenter{
         void lockCoins(long amount, long height, String secret, String secondSecret);
         void loadBlockInfo();
+        void  queryLockFee();
     }
 }

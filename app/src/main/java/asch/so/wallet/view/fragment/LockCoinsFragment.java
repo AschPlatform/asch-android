@@ -21,6 +21,7 @@ import com.zyyoona7.lib.EasyPopup;
 import com.zyyoona7.lib.HorizontalGravity;
 import com.zyyoona7.lib.VerticalGravity;
 
+import java.math.BigDecimal;
 import java.sql.Time;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,6 +45,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import so.asch.sdk.AschHelper;
 import so.asch.sdk.AschSDK;
+import so.asch.sdk.TransactionType;
+import so.asch.sdk.impl.FeeCalculater;
 
 /**
  */
@@ -54,8 +57,8 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     LinearLayout second_passwd_ll;
     @BindView(R.id.ok_btn)
     Button okBtn;
-    @BindView(R.id.block_amount_et)
-    EditText blockAmountEt;
+    @BindView(R.id.lock_amount_et)
+    EditText lockAmountEt;
 //    @BindView(R.id.block_height_et)
 //    EditText blockHeightEt;
     @BindView(R.id.account_passwd_et)
@@ -66,7 +69,8 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     TextView tv_date_time;
     @BindView(R.id.block_height)
     TextView block_height;
-
+    @BindView(R.id.lock_fee_tv)
+    TextView lockFeeTv;
     private  long lockHeight;
 
 
@@ -93,41 +97,53 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_lock_coins, container, false);
         ButterKnife.bind(this, rootView);
+        //
         okBtn.setOnClickListener(this);
-//        blockHeightEt.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//            }
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-//                if("".equals(charSequence.toString())){
-//                    return;
-//                }
-//                long lockHeight = Long.valueOf(charSequence.toString());
-//                if(lockHeight>lastHeight){
-//                    initDate(lockHeight-lastHeight);
-//                }else{
-//                    initDate(0);
-//                }
-//            }
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//            }
-//        });
         presenter=new LockCoinsPresenter(getContext(), this);
         presenter.loadBlockInfo();
+        presenter.queryLockFee();
         if(!getAccount().hasSecondSecret()){
             second_passwd_ll.setVisibility(View.GONE);
         }
         return rootView;
     }
 
+
+
     @Override
     public void onClick(View v) {
         if (v==okBtn){
-            String blockAmountStr=blockAmountEt.getText().toString().trim();
-            if (TextUtils.isEmpty(blockAmountStr)){
+
+
+
+            String lockAmountStr=lockAmountEt.getText().toString().trim();
+            if (TextUtils.isEmpty(lockAmountStr)){
                 AppUtil.toastError(getContext(),getString(R.string.input_locked_amount));
+                return;
+            }
+
+            long lockAmount = AschSDK.Helper.amountForXAS(BigDecimal.valueOf(Long.valueOf(lockAmountStr)));
+            if (lockAmount<=0){
+                AppUtil.toastError(getContext(),getString(R.string.locked_low_limit));
+                return;
+            }
+
+
+            long balance= getAccount().getXASLongBalance();
+            if (lockAmount>balance){
+                AppUtil.toastError(getContext(),getString(R.string.error_balance_insufficient));
+                return;
+            }
+            long fee=FeeCalculater.calcFee(TransactionType.basic_lock);
+            long lowLimit=AschSDK.Helper.amountForCoins(1);
+            long maxLock=balance-fee-lowLimit;
+
+
+            if ((balance-fee-lockAmount)<lowLimit){
+                BigDecimal decimal= AppUtil.decimalFromBigint(maxLock,AppConstants.PRECISION);
+                int maxLockInt= decimal.intValue();
+                String errText=String.format(getString(R.string.locked_remain_balance_limit),maxLockInt);
+                AppUtil.toastError(getContext(),errText);
                 return;
             }
 
@@ -170,7 +186,7 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
             }
             showHUD();
 
-            presenter.lockCoins(AschSDK.Helper.amountForCoins(Integer.valueOf(blockAmountStr)), lockHeight,account_pwd.trim(),getAccount().hasSecondSecret()?second_secret.trim():null);
+            presenter.lockCoins(lockAmount, lockHeight,account_pwd.trim(),getAccount().hasSecondSecret()?second_secret.trim():null);
         }
     }
 
@@ -229,7 +245,7 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
 
     @Override
     public void displayBlockInfo(Account account) {
-        if (account!=null){
+        if (account!=null && account.getFullAccount()!=null){
             FullAccount.BlockInfo blockInfo =account.getFullAccount().getLatestBlock();
             lastHeight = blockInfo.getHeight();
             block_height.setText(String.valueOf(lastHeight));
@@ -244,68 +260,11 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
         }
     }
 
-//    private void initPopup(int type) {
-//        View contentView = LayoutInflater.from(getContext()).inflate(R.layout.date_recyclerview,null);
-//        handleListView(type,contentView);
-//        esayPopup = new EasyPopup(getContext());
-//        if(type!=MyDateRecyclerViewAdapter.YEAR){
-//            esayPopup.setHeight(310);
-//        }
-//        esayPopup.setContentView(contentView)
-//                .setAnimationStyle(R.style.DatePopAnim)
-//                .setFocusAndOutsideEnable(true)
-//                .createPopup();
-//
-//    }
 
-//    private void handleListView(int type,View contentView){
-//        if (contentView instanceof RecyclerView) {
-//            RecyclerView recyclerView = (RecyclerView) contentView;
-//            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
-//            if(null==yearAdapter){
-//                yearAdapter = new MyDateRecyclerViewAdapter(getActivity(),MyDateRecyclerViewAdapter.YEAR,this);
-//                yearAdapter.notifyDataSetChanged();
-//            }
-//            if(null==monthAdapter){
-//                monthAdapter = new MyDateRecyclerViewAdapter(getActivity(),MyDateRecyclerViewAdapter.MONTH,this);
-//                monthAdapter.notifyDataSetChanged();
-//            }
-//            if(null==dayAdapter){
-//                dayAdapter = new MyDateRecyclerViewAdapter(getActivity(),MyDateRecyclerViewAdapter.DAY,this);
-//                dayAdapter.notifyDataSetChanged();
-//            }
-//            switch (type){
-//                case MyDateRecyclerViewAdapter.YEAR:
-//                    recyclerView.setAdapter(yearAdapter);
-//                    break;
-//                case MyDateRecyclerViewAdapter.MONTH:
-//                    recyclerView.setAdapter(monthAdapter);
-//                    break;
-//                case MyDateRecyclerViewAdapter.DAY:
-//                    dayAdapter.onYearOrMonthChange(tv_year.getText().toString(),tv_month.getText().toString());
-//                    recyclerView.setAdapter(dayAdapter);
-//                    break;
-//            }
-//        }
-//    }
-
-//    public void onDateSelect(int type,String str) {
-//        esayPopup.dismiss();
-//        switch (type){
-//            case MyDateRecyclerViewAdapter.YEAR:
-//                tv_year.setText(str);
-//                reSetDay();
-//                break;
-//            case MyDateRecyclerViewAdapter.MONTH:
-//                tv_month.setText(str);
-//                reSetDay();
-//                break;
-//            case MyDateRecyclerViewAdapter.DAY:
-//                tv_day.setText(str);
-//                break;
-//        }
-//        setLockHeightByDate();
-//    }
+    @Override
+    public void displayLockFee(String fee) {
+        lockFeeTv.setText(fee);
+    }
 
     public void initDate(long differHeight){
         Calendar calendar = AppUtil.getDateByHeight(differHeight);
@@ -332,13 +291,6 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
         }
     }
 
-//    private void reSetDay(){
-//        int maxDay = dayAdapter.getMaxDay(tv_year.getText().toString(),tv_month.getText().toString());
-//        int day = StrUtil.getNumbers(tv_day.getText().toString());
-//        if(day>maxDay){
-//            tv_day.setText("1"+getString(R.string.day));
-//        }
-//    }
 
     private  void  showHUD(){
         if (hud==null){

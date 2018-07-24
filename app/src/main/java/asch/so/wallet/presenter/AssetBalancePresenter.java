@@ -31,7 +31,8 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
     private Context context;
     private CompositeSubscription subscriptions;
 
-    public AssetBalancePresenter(AssetBalanceContract.View view) {
+    public AssetBalancePresenter(Context ctx,AssetBalanceContract.View view) {
+        this.context=ctx;
         this.view = view;
         view.setPresenter(this);
         this.subscriptions=new CompositeSubscription();
@@ -76,7 +77,8 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
                     @Override
                     public void onError(java.lang.Throwable e) {
                         LogUtils.dTag("xasObservable error:",e.toString());
-                        view.displayError(new Throwable(context.getString(R.string.balance_get_error)));
+                        view.displayError(e);
+//                        view.displayError(new Throwable(context.getString(R.string.balance_get_error)));
                     }
 
                     @Override

@@ -81,6 +81,15 @@ public class FeeCalculater {
         return staticFeeMap.get(transactionTypeFromCode(trans.getType()));
     }
 
+    /**
+     * type 不能为basic_setName
+     * @param type
+     * @return
+     */
+    public static long calcFee( TransactionType type ) {
+        return staticFeeMap.get(transactionTypeFromCode(type.getCode()));
+    }
+
     protected static long calcSetNameFee( String name ) {
         int[] feeSteps = new int[]{
         //-----------------------------//

@@ -5,13 +5,17 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.LogUtils;
 
+import java.math.BigDecimal;
+
 import asch.so.base.view.Throwable;
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.LockCoinsContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Delegate;
 import asch.so.wallet.model.entity.FullAccount;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.fragment.LockCoinsFragment;
 import rx.Observable;
 import rx.Subscriber;
@@ -21,6 +25,8 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
+import so.asch.sdk.TransactionType;
+import so.asch.sdk.impl.FeeCalculater;
 
 /**
  * Created by kimziv on 2017/12/13.
@@ -92,6 +98,12 @@ public class LockCoinsPresenter implements LockCoinsContract.Presenter {
         this.view.displayBlockInfo(getAccount());
     }
 
+    @Override
+    public void queryLockFee() {
+      long fee=  FeeCalculater.calcFee(TransactionType.basic_lock);
+      String feeStr =  AppUtil.decimalFormat(AppUtil.decimalFromBigint(fee, AppConstants.PRECISION));
+      view.displayLockFee(feeStr+" XAS");
+    }
 
     public Account getAccount() {
         return AccountsManager.getInstance().getCurrentAccount();

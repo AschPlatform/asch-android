@@ -151,7 +151,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         addIconIv.setOnClickListener(this);
         addBtn.setOnClickListener(this);
         backupBtn.setOnClickListener(this);
-        presenter = new AssetBalancePresenter(this);
+        presenter = new AssetBalancePresenter(this.getContext(),this);
 
         setupRefreshLayout();
         initPopupMenu();
@@ -327,7 +327,9 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void displayError(java.lang.Throwable ex) {
-        AppUtil.toastError(getContext(),ex==null?getString(R.string.net_error):ex.getMessage());
+       String errToast= AppUtil.extractInfoFromError(getContext(), ex);
+        AppUtil.toastError(getContext(),errToast);
+//        AppUtil.toastError(getContext(),ex==null?getString(R.string.net_error):ex.getMessage());
         refreshLayout.finishRefresh(1000);
     }
 }

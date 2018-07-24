@@ -286,6 +286,8 @@ public class AccountsManager extends Observable {
                         subscriber.onNext(fullAccount);
                         subscriber.onCompleted();
                     } else {
+                        //subscriber.onNext(null);
+                       // subscriber.onCompleted();
                         subscriber.onError(result.getException());
                     }
                 } catch (Exception ex) {

@@ -168,8 +168,13 @@ public class AccountInfoFragment extends BaseFragment implements AccountInfoCont
     }
 
     private void setAccountInfo(Account account){
-        BigDecimal decimal=account.getFullAccount().getAccount().getBalanceDecimalValue();
-        balanceTv.setText(String.format("%s XAS",AppUtil.decimalFormat(decimal)));
+        if (account.getFullAccount()!=null && account.getFullAccount().getAccount()!=null){
+            BigDecimal decimal=account.getFullAccount().getAccount().getBalanceDecimalValue();
+            balanceTv.setText(String.format("%s XAS",AppUtil.decimalFormat(decimal)));
+        }else {
+            balanceTv.setText(String.format("%d XAS",0));
+        }
+
         pubkeyTv.setText(account.getPublicKey());
         addressTv.setText(account.getAddress());
         boolean isSetSecondPasswd=account.hasSecondSecret();

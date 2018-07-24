@@ -160,6 +160,7 @@
                     />
             </LinearLayout>
             <LinearLayout
+                android:visibility="gone"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 android:layout_width="match_parent"

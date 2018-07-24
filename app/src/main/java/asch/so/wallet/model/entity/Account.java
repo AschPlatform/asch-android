@@ -214,4 +214,14 @@ public class Account extends RealmObject{
         }
         return false;
     }
+
+    public long getXASLongBalance(){
+        if (this.getFullAccount().getBalances()!=null && this.getFullAccount().getBalances().size()>0)
+        {
+            Balance balance=this.getFullAccount().getBalances().get(0);
+            long amount =balance.getLongBalance();
+            return amount;
+        }
+        return 0;
+    }
 }

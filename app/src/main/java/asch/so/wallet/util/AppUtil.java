@@ -50,6 +50,7 @@ public class AppUtil {
 
     public  static String decimalFormat(BigDecimal decimal){
         DecimalFormat df = new DecimalFormat("#.########");
+
         return df.format(decimal);
     }
 
