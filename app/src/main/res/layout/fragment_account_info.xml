@@ -136,8 +136,8 @@
                             android:layout_marginLeft="20dp"
                             android:layout_marginRight="10dp"
                             style="@style/PrimaryButton.Style"
-                            android:layout_width="100dp"
-                            android:layout_height="40dp"
+                            android:layout_width="80dp"
+                            android:layout_height="36dp"
                             android:textColor="#FFFFFF"
                             android:textSize="15sp"
                             android:text="@string/not_set" />
@@ -184,17 +184,20 @@
                         <TextView
                             android:id="@+id/tv_lock_date"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:textSize="11sp"
+                            android:maxLines="2"
+                            android:textColor="#333333"
+                            />
 
                         <Button
                             android:id="@+id/lock_coins_btn"
-                            android:layout_gravity="right|center_vertical"
                             android:layout_marginTop="0dp"
-                            android:layout_marginLeft="20dp"
+                            android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             style="@style/PrimaryButton.Style"
-                            android:layout_width="100dp"
-                            android:layout_height="40dp"
+                            android:layout_width="80dp"
+                            android:layout_height="36dp"
                             android:textColor="#FFFFFF"
                             android:textSize="15sp"
                             android:text="@string/not_lock" />

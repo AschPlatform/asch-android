@@ -159,7 +159,7 @@ public class AccountInfoFragment extends BaseFragment implements AccountInfoCont
 
     @Override
     public void dispLockInfo(String lockeAmount, String lockedDate) {
-        tv_lock_date.setText(getString(R.string.locked_amount_colon)+lockeAmount+" XAS "+getString(R.string.locked_deadline_colon)+lockedDate);
+        tv_lock_date.setText(getString(R.string.locked_amount_colon)+lockeAmount+" XAS\n"+getString(R.string.locked_deadline_colon)+lockedDate);
     }
 
     @Override

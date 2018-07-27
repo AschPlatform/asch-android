@@ -340,9 +340,10 @@
     <string name="account_balance_insufficient">Insufficient account balances</string>
     <string name="blockchain_is_not_ready">Blockchain is not ready</string>
 
-    <string name="locked_remain_balance_limit">为了保障你锁仓后的正常使用，您需要预留出至少1.1XAS，您最多可以锁仓%dXAS</string>
-    <string name="lock_fee">手续费</string>
-    <string name="locked_low_limit">锁仓金额必须大于0</string>
-    <string name="locked_amount_colon">已锁仓额度：</string>
-    <string name="locked_deadline_colon">锁仓截止时间：</string>
+    <string name="locked_remain_balance_limit"> In order to ensure the normal use after locking, you need to reserve at least 1.1XAS，you can lock maximum %dXAS</string>
+    <string name="lock_fee">Lock fee</string>
+    <string name="locked_low_limit">Lock amount must be greater than 0</string>
+    <string name="locked_amount_colon">Locked amount：</string>
+    <string name="locked_deadline_colon">Deadline：</string>
+
 </resources>
