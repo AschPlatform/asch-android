@@ -166,8 +166,9 @@ public class FullAccount {
         private boolean unconfirmedSignature;
         private boolean secondSignature;
         private String secondPublicKey;
-        //private String[] multisignatures;
-        //private String[] u_multisignatures;
+        private boolean isLocked;
+        @JSONField(name="weight")
+        private long lockedAmount;
         private long lockHeight;
 
         public String getAddress() {
@@ -247,6 +248,21 @@ public class FullAccount {
             return AschConst.Fees.SECOND_SIGNATURE<Long.parseLong(balance);
         }
 
+        public boolean isLocked() {
+            return isLocked;
+        }
+
+        public void setLocked(boolean locked) {
+            isLocked = locked;
+        }
+
+        public long getLockedAmount() {
+            return lockedAmount;
+        }
+
+        public void setLockedAmount(long lockedAmount) {
+            this.lockedAmount = lockedAmount;
+        }
     }
 
     public static class BlockInfo{

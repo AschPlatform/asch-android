@@ -41,6 +41,10 @@ public class AppConstants {
     public static final int DEFAULT_CACHE_TIMEOUT = 30 * 60;//单位秒
     public static final int DEFAULT_ACCOUNT_LOCK_CACHE_TIMEOUT = 60 * 60;//单位秒
 
+    public static final  long ONE_MONTH_SECONDS = 30 * 24 * 60 * 60;
+    public static final  long ONE_MONTH_MILLS = ONE_MONTH_SECONDS * 1000;
+    public static final  long ONE_MONTH_BLOCKS = ONE_MONTH_SECONDS / 10;
+
     public static final String DEBUG_TAG = "Debug";
     public static final String RELEASE_TAG = "Release";
     public static final int UIA_FLAG=2;

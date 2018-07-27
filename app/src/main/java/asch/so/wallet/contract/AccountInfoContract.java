@@ -13,7 +13,7 @@ public interface AccountInfoContract {
 
     interface View extends BaseView<Presenter>{
         void displayAccountInfo(Account account);
-        void dispLockInfo(String date);
+        void dispLockInfo(String lockeAmount, String lockedDate);
     }
 
     interface Presenter extends BasePresenter{

@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import asch.so.base.view.Throwable;
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.AccountInfoContract;
@@ -92,7 +93,9 @@ public class AccountInfoPresenter implements AccountInfoContract.Presenter {
                             long lockHeight = getAccount().getFullAccount().getAccount().getLockHeight();
                             Calendar calendar = AppUtil.getDateByHeight(lockHeight-lastHeight);
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-                            view.dispLockInfo(sdf.format(calendar.getTime()));
+                            long lockedAmount=getAccount().getFullAccount().getAccount().getLockedAmount();
+                            String lockedAmountText=AppUtil.decimalFormat(AppUtil.decimalFromBigint(lockedAmount, AppConstants.PRECISION));
+                            view.dispLockInfo(lockedAmountText, sdf.format(calendar.getTime()));
                         }
                     }
                 });

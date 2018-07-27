@@ -77,6 +77,13 @@ public class AppUtil {
         return calendar;
     }
 
+    public static Calendar getDateByHeight(long  currentMillis, long differHeight){
+        long time = currentMillis + differHeight*10*1000;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(time);
+        return calendar;
+    }
+
     public static void copyText(Context context, String content){
 //        ClipboardManager clipboardManager = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
 //        //ClipData clipData = ClipData.newPlainText(null, content);

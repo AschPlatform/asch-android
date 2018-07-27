@@ -170,9 +170,10 @@ public class Account extends RealmObject{
     public boolean hasLockCoins(){
         if (getFullAccount()!=null && getFullAccount().getAccount()!=null)
         {
-            long lockHeight = getFullAccount().getAccount().getLockHeight();
-            long currentHeight = getFullAccount().getLatestBlock().getHeight();
-            return lockHeight>currentHeight;
+//            long lockHeight = getFullAccount().getAccount().getLockHeight();
+//            long currentHeight = getFullAccount().getLatestBlock().getHeight();
+//            return lockHeight>currentHeight;
+            return  getFullAccount().getAccount().isLocked();
         }
         return false;
     }

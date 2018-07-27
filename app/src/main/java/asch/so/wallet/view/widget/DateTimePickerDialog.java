@@ -155,4 +155,11 @@ public class DateTimePickerDialog extends AlertDialog {
             dpDialog.setMaxDate(maxTime.getTimeInMillis());
         }
     }
+
+    public void setMinDate(long minDate)
+    {
+        if (dpDialog!=null){
+            dpDialog.setMinDate(minDate);
+        }
+    }
 }

@@ -256,7 +256,7 @@
     <string name="error_vote_cancel_count">取消给受投人的投票，每次最多可以同时取消33人</string>
     <string name="vote_cancel_to_trustee">取消给受托人的投票</string>
     <string name="no_data">暂无数据</string>
-    <string name="website">http://www.asch.cn</string>
+    <string name="website">http://www.asch.io</string>
 
     <string name="opreation_success">操作成功</string>
     <string name="dapps_list">应用列表</string>
@@ -308,7 +308,7 @@
     <string name="month">月</string>
     <string name="day">日</string>
     <string name="lock_warning">超出最大锁仓高度</string>
-    <string name="lock_warning_2">锁仓高度应大于当前已锁仓高度</string>
+    <string name="lock_warning_2">锁仓高度不正确</string>
     <string name="input_second_secret_hint">请输入8到16位字母和数字组合</string>
     <string name="lock_clear">解锁</string>
     <string name="open_dapp">打开应用</string>
@@ -343,4 +343,6 @@
     <string name="locked_remain_balance_limit">为了保障你锁仓后的正常使用，您需要预留出至少1.1XAS，您最多可以锁仓%dXAS</string>
     <string name="lock_fee">手续费</string>
     <string name="locked_low_limit">锁仓金额必须大于0</string>
+    <string name="locked_amount_colon">已锁仓额度：</string>
+    <string name="locked_deadline_colon">锁仓截止时间：</string>
 </resources>

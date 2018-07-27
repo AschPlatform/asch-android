@@ -59,8 +59,6 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     Button okBtn;
     @BindView(R.id.lock_amount_et)
     EditText lockAmountEt;
-//    @BindView(R.id.block_height_et)
-//    EditText blockHeightEt;
     @BindView(R.id.account_passwd_et)
     EditText accountPasswordEt;
     @BindView(R.id.second_passwd_et)
@@ -72,6 +70,8 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     @BindView(R.id.lock_fee_tv)
     TextView lockFeeTv;
     private  long lockHeight;
+    private  long initMills;
+    private Calendar minLockCalaendar;
 
 
     private LockCoinsContract.Presenter presenter;
@@ -113,9 +113,6 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     @Override
     public void onClick(View v) {
         if (v==okBtn){
-
-
-
             String lockAmountStr=lockAmountEt.getText().toString().trim();
             if (TextUtils.isEmpty(lockAmountStr)){
                 AppUtil.toastError(getContext(),getString(R.string.input_locked_amount));
@@ -147,21 +144,6 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
                 return;
             }
 
-//            String blockHeightStr = blockHeightEt.getText().toString();
-//            if(null==blockHeightStr||"".equals(blockHeightStr)){
-//                AppUtil.toastError(getContext(),getString(R.string.input_locked_Height));
-//                return;
-//            }
-
-//            if(Integer.valueOf(blockHeightStr)-lastHeight>=10000000){
-//                AppUtil.toastWarning(getActivity(),getString(R.string.lock_warning));
-//                return;
-//            }
-//
-//            if(Integer.valueOf(blockHeightStr)-haveLockHeight<=0){
-//                AppUtil.toastWarning(getActivity(),getString(R.string.lock_warning_2));
-//                return;
-//            }
             if(lockHeight-lastHeight>=10000000){
                 AppUtil.toastWarning(getActivity(),getString(R.string.lock_warning));
                 return;
@@ -191,7 +173,15 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     }
 
     @OnClick(R.id.ll_date_time) void onClickDateTime(){
-        DateTimePickerDialog dialog = new DateTimePickerDialog(getContext(), getString(R.string.date_time_picker_title));
+        DateTimePickerDialog dialog = new DateTimePickerDialog(getContext(),
+                getString(R.string.date_time_picker_title),
+                true,
+                true,
+                this.minLockCalaendar,
+                this.minLockCalaendar,
+                null
+
+        );
         dialog.setClicklistener(this);
         dialog.show();
     }
@@ -199,25 +189,9 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     @Override
     public void doOk(Date time) {
         this.dateTime=time;
-    //reSetDay();
-    tv_date_time.setText(TimeUtils.date2String(time));
-    setLockHeightByDate();
+        tv_date_time.setText(TimeUtils.date2String(time));
+        setLockHeightByDate();
     }
-
-    //    @OnClick(R.id.ll_year) void onClickYear() {
-//        initPopup(MyDateRecyclerViewAdapter.YEAR);
-//        esayPopup.showAtAnchorView(ll_year,VerticalGravity.BELOW,HorizontalGravity.CENTER);
-//    }
-//
-//    @OnClick(R.id.ll_month) void onClickMonth() {
-//        initPopup(MyDateRecyclerViewAdapter.MONTH);
-//        esayPopup.showAtAnchorView(ll_month,VerticalGravity.BELOW,HorizontalGravity.CENTER);
-//    }
-//
-//    @OnClick(R.id.ll_day) void onClickDay() {
-//        initPopup(MyDateRecyclerViewAdapter.DAY);
-//        esayPopup.showAtAnchorView(ll_day,VerticalGravity.BELOW,HorizontalGravity.CENTER);
-//    }
 
     @Override
     public void setPresenter(LockCoinsContract.Presenter presenter) {
@@ -243,6 +217,8 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
         }
     }
 
+
+
     @Override
     public void displayBlockInfo(Account account) {
         if (account!=null && account.getFullAccount()!=null){
@@ -250,14 +226,21 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
             lastHeight = blockInfo.getHeight();
             block_height.setText(String.valueOf(lastHeight));
             haveLockHeight = account.getFullAccount().getAccount().getLockHeight();
-            if(haveLockHeight>lastHeight){
-                //blockHeightEt.setText(haveLockHeight+"");
-                lockHeight=haveLockHeight;
-                initDate(haveLockHeight-lastHeight);
-            }else{
-                initDate(0);
-            }
+//            long oneMonthHeight=30*24*60*60/10;
+//            long nextLockHeight = haveLockHeight+oneMonthHeight;
+//            long diffHeight=0;
+//            if (nextLockHeight>lastHeight){
+//                diffHeight=nextLockHeight-lastHeight;
+//            }else {
+//                diffHeight=oneMonthHeight;
+//            }
+//            initDate(diffHeight);
+            initDate(lastHeight,haveLockHeight);
         }
+//        else {
+//            long oneMonthHeight=30*24*60*60/10;
+//            initDate(oneMonthHeight);
+//        }
     }
 
 
@@ -266,28 +249,39 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
         lockFeeTv.setText(fee);
     }
 
-    public void initDate(long differHeight){
-        Calendar calendar = AppUtil.getDateByHeight(differHeight);
-        tv_date_time.setText(TimeUtils.date2String(calendar.getTime()));
-//        tv_year.setText(calendar.get(Calendar.YEAR)+ getString(R.string.year));
-//        tv_month.setText(calendar.get(Calendar.MONTH)+1+getString(R.string.month));
-//        tv_day.setText(calendar.get(Calendar.DAY_OF_MONTH)+getString(R.string.day));
+    public void initDate(long lastHeight, long lockedBlock){
+        this.initMills=System.currentTimeMillis();
+        long nextLockHeight = haveLockHeight+AppConstants.ONE_MONTH_BLOCKS;
+        long diffHeight=0;
+        if (nextLockHeight>lastHeight){
+            diffHeight=nextLockHeight-lastHeight;
+        }else {
+            diffHeight=AppConstants.ONE_MONTH_BLOCKS;
+        }
+        this.minLockCalaendar=AppUtil.getDateByHeight(this.initMills, diffHeight);
+
+        long lockedMillis;
+        if (lockedBlock<lastHeight){
+            lockedMillis=this.initMills-(lastHeight-lockedBlock)*10*1000;
+        }else {
+            lockedMillis=this.initMills+(lockedBlock-lastHeight)*10*1000;
+        }
+        tv_date_time.setText(TimeUtils.millis2String(lockedMillis));
+//
+//
+//        Calendar calendar = AppUtil.getDateByHeight(this.initMills, differHeight);
+//        this.minLockCalaendar=calendar;
+//
+//        tv_date_time.setText(TimeUtils.date2String(calendar.getTime()));
     }
 
     private void setLockHeightByDate(){
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.set(Calendar.YEAR,StrUtil.getNumbers(tv_year.getText().toString()));
-//        calendar.set(Calendar.MONTH,StrUtil.getNumbers(tv_month.getText().toString())-1);
-//        calendar.set(Calendar.DAY_OF_MONTH,StrUtil.getNumbers(tv_day.getText().toString()));
-
-//        long ms = calendar.getTimeInMillis()-System.currentTimeMillis();
-        long ms = this.dateTime.getTime()-System.currentTimeMillis();
+//        long ms = this.dateTime.getTime()-System.currentTimeMillis();
+        long ms = this.dateTime.getTime()-this.initMills+(System.currentTimeMillis()-this.initMills);
         if(ms>0){
             lockHeight=ms/10000 + lastHeight;
-            //blockHeightEt.setText(ms/10000 + lastHeight+"");
         }else{
             lastHeight=0;
-//            blockHeightEt.setText("");
         }
     }
 
