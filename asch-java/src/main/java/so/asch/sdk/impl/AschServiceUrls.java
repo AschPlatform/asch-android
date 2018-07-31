@@ -93,4 +93,8 @@ public final class AschServiceUrls {
         static final String QUERY_DAPP_BALANCES_FORMAT = "/api/dapps/balances/%s";
     }
 
+    final static class Gateway{
+         static final String GET_GATEWAY_CURRENCIES="/api/v2/gateways/currencies";
+    }
+
 }

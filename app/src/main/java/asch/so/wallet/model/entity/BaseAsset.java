@@ -38,6 +38,9 @@ public class BaseAsset {
     private int allowBlacklist;
     private String maximumShow;
     private String quantityShow;
+    private String gateway;
+    private String symbol;
+    private int revoked;
 
     public String getName() {
         return name;
@@ -157,5 +160,29 @@ public class BaseAsset {
 
     public void setQuantityShow(String quantityShow) {
         this.quantityShow = quantityShow;
+    }
+
+    public String getGateway() {
+        return gateway;
+    }
+
+    public void setGateway(String gateway) {
+        this.gateway = gateway;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
+
+    public int getRevoked() {
+        return revoked;
+    }
+
+    public void setRevoked(int revoked) {
+        this.revoked = revoked;
     }
 }

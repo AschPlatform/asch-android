@@ -62,6 +62,19 @@ public class UIAService extends AschRESTService implements UIA {
     }
 
     @Override
+    public AschResult getGatewayAssets(int limit, int offset) {
+        try {
+            Argument.require(Validation.isValidLimit(limit), "invalid limit");
+            Argument.require(Validation.isValidOffset(offset), "invalid offset");
+
+            return get(AschServiceUrls.Gateway.GET_GATEWAY_CURRENCIES, createLimitAndOffsetParameters(limit, offset));
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
+    @Override
     public AschResult getAsset(String assetName) {
         try {
             Argument.notNullOrEmpty(assetName, "assetName");

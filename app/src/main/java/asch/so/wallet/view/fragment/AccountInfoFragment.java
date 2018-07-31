@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,6 +106,7 @@ public class AccountInfoFragment extends BaseFragment implements AccountInfoCont
         ButterKnife.bind(this,rootView);
         secondPasswdBtn.setOnClickListener(this);
         lockCoinsBtn.setOnClickListener(this);
+        addressTv.setOnClickListener(this);
         return rootView;
     }
 
@@ -120,6 +122,15 @@ public class AccountInfoFragment extends BaseFragment implements AccountInfoCont
             BaseActivity.start(getActivity(),SecondSecretActivity.class,null);
         }else  if (v==lockCoinsBtn){
             BaseActivity.start(getActivity(),LockCoinsActivity.class,null);
+        }else if (v==addressTv){
+            copyAddress();
+        }
+    }
+
+    private void copyAddress(){
+        String address=addressTv.getText().toString().trim();
+        if (!TextUtils.isEmpty(address)){
+            AppUtil.copyText(getContext(),address);
         }
     }
 

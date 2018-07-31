@@ -56,6 +56,9 @@ public interface UIA extends AschInterface {
     //count	integer	所有资产的个数
     AschResult getAssets(int limit, int offset);
 
+
+    AschResult getGatewayAssets(int limit, int offset);
+
     //获取指定资产信息
     //接口地址：/api/uia/assets/name
     //请求方式：get

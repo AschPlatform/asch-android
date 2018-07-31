@@ -87,8 +87,6 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
-//            transactionTv=itemView.findViewById(R.id.transactionid_tv);
-//            amountTv=itemView.findViewById(R.id.ammount_tv);
         }
     }
 }

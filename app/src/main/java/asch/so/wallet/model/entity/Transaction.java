@@ -1,5 +1,7 @@
 package asch.so.wallet.model.entity;
 
+import android.text.TextUtils;
+
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.math.BigDecimal;
@@ -213,9 +215,24 @@ public class Transaction {
        private String issuerId;
        @JSONField(name="_version_")
        private int version;
+        private String gateway;
+        private String symbol;
+        private int revoked;
 
         public String getName() {
             return name;
+        }
+
+        public String getDisplayName(){
+            if (!TextUtils.isEmpty(getName()))
+            {
+                return getName();
+            }
+            if (!TextUtils.isEmpty(getSymbol()))
+            {
+                return getSymbol();
+            }
+            return "";
         }
 
         public void setName(String name) {
@@ -284,6 +301,30 @@ public class Transaction {
 
         public void setVersion(int version) {
             this.version = version;
+        }
+
+        public String getGateway() {
+            return gateway;
+        }
+
+        public void setGateway(String gateway) {
+            this.gateway = gateway;
+        }
+
+        public String getSymbol() {
+            return symbol;
+        }
+
+        public void setSymbol(String symbol) {
+            this.symbol = symbol;
+        }
+
+        public int getRevoked() {
+            return revoked;
+        }
+
+        public void setRevoked(int revoked) {
+            this.revoked = revoked;
         }
     }
 
@@ -597,7 +638,7 @@ public class Transaction {
             //AssetInfo asset=(AssetInfo)getAssetInfo();
             //return asset.getQuantity();
             BigDecimal decimal = AppUtil.decimalFromBigint(getAmount(), this.assetInfo.getPrecision());
-         return String.format("%s%s", isSender?"-":"+",AppUtil.decimalFormat(decimal)+" "+this.assetInfo.getName());
+         return String.format("%s%s", isSender?"-":"+",AppUtil.decimalFormat(decimal)+" "+this.assetInfo.getDisplayName());
         }
         return "0 XAS";
     }

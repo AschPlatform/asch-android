@@ -1,6 +1,7 @@
 package asch.so.wallet.presenter;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -93,17 +94,6 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
                 //result = AschSDK.UIA.getTransactions(address, currency, limit, offset);
             } else {
                 params.setCurrency(AschConst.CORE_COIN_NAME);
-//                TransactionQueryParameters params = new TransactionQueryParameters()
-////                        .setSenderPublicKey(pubKey)
-////                        .setOwnerPublicKey(pubKey)
-//                        .setCurrency(AschConst.CORE_COIN_NAME)
-//                        .setOwnerId(address)
-////                        .setSenderId(address)
-////                        .setRecipientId(address)
-//                        .setUia(0)
-//                        .orderByDescending("t_timestamp")
-//                        .setOffset(offset)
-//                        .setLimit(limit);
 
             }
 
@@ -123,6 +113,10 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
                         transaction.setAssetInfo(new Transaction.AssetInfo());
                     } else if (transaction.getType() == TransactionType.UIATransferV2.getCode()) {
                         Transaction.AssetInfo asset = JSON.parseObject(transaction.getAsset(), Transaction.AssetInfo.class);
+//                        if (!TextUtils.isEmpty(asset.getSymbol()))
+//                        {
+//                            asset.setName(asset.getSymbol());
+//                        }
                         transaction.setAssetInfo(asset);
                     }
 

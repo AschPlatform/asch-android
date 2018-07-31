@@ -90,24 +90,45 @@ public class Wallet {
         return rx.Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){
             @Override
             public void call(Subscriber<? super List<UIAAsset>> subscriber) {
-                String cacheJson=CacheUtils.getInstance().getString(UIA_ASSETS_CACHE_KEY);
-                if (!ignoreCache && !TextUtils.isEmpty(cacheJson)){
-                    JSONObject resultJSONObj=JSONObject.parseObject(cacheJson);
-                    JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
-                    List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
-                    subscriber.onNext(assets);
-                    subscriber.onCompleted();
-                    return;
-                }
+//                String cacheJson=CacheUtils.getInstance().getString(UIA_ASSETS_CACHE_KEY);
+//                if (!ignoreCache && !TextUtils.isEmpty(cacheJson)){
+//                    JSONObject resultJSONObj=JSONObject.parseObject(cacheJson);
+//                    JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
+//                    List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
+//                    subscriber.onNext(assets);
+//                    subscriber.onCompleted();
+//                    return;
+//                }
                 AschResult result = AschSDK.UIA.getAssets(100,0);
+                AschResult result2 = AschSDK.UIA.getGatewayAssets(100,0);
+
                 LogUtils.iTag(TAG,result.getRawJson());
-                if (result.isSuccessful()){
+                if (result.isSuccessful() && result2.isSuccessful()){
                     String rawJson=result.getRawJson();
                     JSONObject resultJSONObj=JSONObject.parseObject(rawJson);
-                    JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
-                    List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
+                    JSONArray assetJsonArray=resultJSONObj.getJSONArray("assets");
+                    List<UIAAsset> assets= JSON.parseArray(assetJsonArray.toJSONString(),UIAAsset.class);
+
+                    rawJson=result2.getRawJson();
+                    resultJSONObj=JSONObject.parseObject(rawJson);
+                    assetJsonArray=resultJSONObj.getJSONArray("currencies");
+                    ArrayList<UIAAsset> allAssets=new ArrayList<>(assets);
+
+                    for (Object obj :
+                            assetJsonArray) {
+                        UIAAsset asset=new UIAAsset();
+                        JSONObject jsonObj=(JSONObject)obj;
+                        asset.setName(jsonObj.getString("symbol"));
+                        asset.setPrecision(jsonObj.getIntValue("precision"));
+                        asset.setGateway(jsonObj.getString("gateway"));
+                        asset.setDesc(jsonObj.getString("desc"));
+                        allAssets.add(asset);
+                    }
+                   // List<UIAAsset> assets2= JSON.parseArray(assetJsonArray.toJSONString(),UIAAsset.class);
+
+
                     CacheUtils.getInstance().put(UIA_ASSETS_CACHE_KEY,rawJson,AppConstants.DEFAULT_CACHE_TIMEOUT);
-                    subscriber.onNext(assets);
+                    subscriber.onNext(allAssets);
                     subscriber.onCompleted();
                 }else{
                     subscriber.onError(result.getException());
