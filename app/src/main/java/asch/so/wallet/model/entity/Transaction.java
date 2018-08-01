@@ -3,7 +3,11 @@ package asch.so.wallet.model.entity;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.parser.DefaultJSONParser;
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.parser.deserializer.ObjectDeserializer;
 
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
@@ -77,7 +81,10 @@ public class Transaction {
     private String recipientId;
     private String recipientName;
     private String currency;
+    @JSONField(name="amountl")
     private long amount;
+    @JSONField(name="amount")
+    private String amountStr;
     private long fee;
     private String signature;
     private String signSignature;
@@ -88,6 +95,8 @@ public class Transaction {
     private String asset;
     private AssetInfo assetInfo;
     private TransactionInfo transaction;
+
+
 
     /**
      "transaction": {
@@ -550,6 +559,14 @@ public class Transaction {
         this.amount = amount;
     }
 
+    public String getAmountStr() {
+        return amountStr;
+    }
+
+    public void setAmountStr(String amountStr) {
+        this.amountStr = amountStr;
+    }
+
     public long getFee() {
         return fee;
     }
@@ -643,6 +660,23 @@ public class Transaction {
         return "0 XAS";
     }
 
+
+//    public static class  AmountDeserializer implements ObjectDeserializer{
+//
+//        //@SuppressWarnings("unchecked")
+//        @Override
+//        public <T> T deserialze(DefaultJSONParser parser, java.lang.reflect.Type type, Object fieldName) {
+//            if (!fieldName.equals("amount"))
+//                return parser.parseObject(type,fieldName);
+//            String amountStr=parser.parseObject(String.class);
+//            int index=amountStr.indexOf('.');
+//            if (index!=-1){
+//             amountStr = amountStr.substring(0,index-1);
+//                return (T) new Long(amountStr);
+//            }
+//            return parser.parseObject(Long.class,fieldName);
+//        }
+//    }
 
 
 }

@@ -6,6 +6,10 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.ParserConfig;
+import com.alibaba.fastjson.parser.deserializer.ExtraProcessor;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.serializer.ValueFilter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,21 +106,21 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
             if (result.isSuccessful()) {
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                 JSONArray transactionsJsonArray = resultJSONObj.getJSONArray("transfers");
+
                 List<Transaction> transactions = JSON.parseArray(transactionsJsonArray.toJSONString(), Transaction.class);
                 ArrayList<Transaction> filteredTransactions = new ArrayList<Transaction>();
                 for (Transaction transaction : transactions) {
+                    String amountStr=transaction.getAmountStr();
+                    int index=amountStr.indexOf('.');
+                    if (index!=-1){
+                        amountStr = amountStr.substring(0,index);
+                    }
+                    transaction.setAmount(Long.parseLong(amountStr));
                     transaction.setType(transaction.getTransaction().getType());
-//                    if (!isUIA() && transaction.getType() != TransactionType.Transfer.getCode()) {
-//                        continue;
-//                    }
                     if (transaction.getType() == TransactionType.basic_transfer.getCode()) {
                         transaction.setAssetInfo(new Transaction.AssetInfo());
                     } else if (transaction.getType() == TransactionType.UIATransferV2.getCode()) {
                         Transaction.AssetInfo asset = JSON.parseObject(transaction.getAsset(), Transaction.AssetInfo.class);
-//                        if (!TextUtils.isEmpty(asset.getSymbol()))
-//                        {
-//                            asset.setName(asset.getSymbol());
-//                        }
                         transaction.setAssetInfo(asset);
                     }
 
