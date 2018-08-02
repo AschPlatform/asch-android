@@ -143,7 +143,8 @@ public class WalletApplication extends MultiDexApplication {
         Realm.init(this);
         RealmConfiguration configuration = new RealmConfiguration.Builder()
                 .name("wallet.db")
-                .schemaVersion(AppConstants.DB_SCHEME_VERSION)
+                .schemaVersion(AppConstants.DB_SCHEME_VERSION_CURRENT)
+                .migration(new DBMigration())
                 //.deleteRealmIfMigrationNeeded()
                 .build();
         //Realm.deleteRealm(configuration);
