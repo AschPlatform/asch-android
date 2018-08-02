@@ -137,13 +137,22 @@ public class TransactionInfo {
 //        return this;
 //    }
 
-    public String getSignSignature() {
-        return signSignature;
+//    public String getSignSignature() {
+//        return signSignature;
+//    }
+//
+//    public TransactionInfo setSignSignature(String signSignature) {
+//        this.signSignature = signSignature;
+//        return this;
+//    }
+
+
+    public String getSecondSignature() {
+        return secondSignature;
     }
 
-    public TransactionInfo setSignSignature(String signSignature) {
-        this.signSignature = signSignature;
-        return this;
+    public void setSecondSignature(String secondSignature) {
+        this.secondSignature = secondSignature;
     }
 
     public Integer getTimestamp() {
@@ -202,6 +211,7 @@ public class TransactionInfo {
         return this;
     }
 
+    @JSONField(name = "id")
     private String transactionId = null;
     private transient TransactionType transactionType = null;
     private String recipientId = null;
@@ -218,7 +228,8 @@ public class TransactionInfo {
     private ContractType contractType=null;
     //private String signature = null;
     private String[] signatures = null;
-    private String signSignature = null;
+//    private String signSignature = null;
+    private String secondSignature=null;
     private AssetInfo assetInfo = null;
     private transient OptionInfo optionInfo = null;
     //private String args=null;
@@ -235,7 +246,7 @@ public class TransactionInfo {
                 .putInt(getTimestamp())
                 .putLong(getFee())
                 .put(getSenderIdBuffer())
-                .put(getRequestorIdBuffer())
+                //.put(getRequestorIdBuffer())
                 .put(getMessageBuffer())
                 .put(getArgsBuffer());
 
@@ -244,8 +255,8 @@ public class TransactionInfo {
             buffer.put(getSignaturesBuffer());
         }
 
-        if (!skipSignSignature && this.getSignSignature()!=null){
-            buffer.put(Decoding.unsafeDecodeHex(getSignSignature()));
+        if (!skipSignSignature && this.getSecondSignature()!=null){
+            buffer.put(Decoding.unsafeDecodeHex(getSecondSignature()));
         }
 
         buffer.flip();
@@ -373,7 +384,7 @@ public class TransactionInfo {
         }
 
         if (!skipSignSignature){
-            buffer.put(Decoding.unsafeDecodeHex(getSignSignature()));
+            buffer.put(Decoding.unsafeDecodeHex(getSecondSignature()));
         }
 
         buffer.flip();
@@ -393,50 +404,6 @@ public class TransactionInfo {
                 .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
                 .putInt(getDappTransactionType())
                 .put(getDappArgsBuffer());
-//        switch (optionInfo.getType()){
-//            case CoreDeposit:
-//                break;
-//            case CoreWithdrawal:
-//            {
-//
-//                buffer.putInt(getTimestamp())
-//                        .put(getDappTransactionFee())
-//                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
-//                        .putInt(getDappTransactionType())
-//                        .put(getDappArgsBuffer());
-//            }
-//               break;
-//            case CoreTransfer:
-//            {
-//                buffer.putInt(getTimestamp())
-//                        .put(getDappTransactionFee())
-//                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
-//                        .putInt(getDappTransactionType())
-//                        .put(getDappArgsBuffer());
-//            }
-//                break;
-//            case CoreSetNickname:
-//                break;
-//            case CCTimePostArticle:
-//                break;
-//            case CCTimePostComment:
-//                break;
-//            case CCTimeVoteArticle:
-//                break;
-//            case CCTimeLikeComment:
-//                break;
-//            case CCTimeReport:
-//                break;
-//            default:
-//            {
-//                buffer.putInt(getTimestamp())
-//                        .put(getDappTransactionFee())
-//                        .put(Decoding.unsafeDecodeHex(getSenderPublicKey()))
-//                        .putInt(getDappTransactionType())
-//                        .put(getDappArgsBuffer());
-//            }
-//                break;
-//        }
         return buffer;
     }
 
@@ -458,7 +425,7 @@ public class TransactionInfo {
     }
 
     private byte[] getMessageBuffer(){
-        return message == null ? new byte[0] : message.getBytes();
+        return message == null ? new byte[0] :Encoding.getUTF8Bytes( message);
     }
 
     private byte[] getDappTransactionFee(){
@@ -484,10 +451,26 @@ public class TransactionInfo {
 
     private byte[] getArgsBuffer(){
         return Encoding.getUTF8Bytes(JSON.toJSONString(getArgs()));
+        //return Encoding.getUTF8Bytes(getArgsJson());
     }
 
+//    public String getArgsJson(){
+//        StringBuilder builder=new StringBuilder();
+//        builder.append("[");
+//        Object[] args=getArgs();
+//        for (int i = 0; i < args.length; i++) {
+//            String arg= args[i].toString();
+//            builder.append(String.format("\"%s\"",arg));
+//            if (i!=(args.length-1)){
+//                builder.append(",");
+//            }
+//        }
+//        builder.append("]");
+//        //String argsJson = JSON.toJSONString(args);
+//        return builder.toString();
+//    }
+
     public TransactionInfo calcFee() {
-        //this.setFee(10000000L);
         this.setFee(FeeCalculater.calcFee(this));
         return this;
     }

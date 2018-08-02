@@ -29,6 +29,9 @@ public class DBMigration implements RealmMigration {
         // }
         Log.i(TAG,"oldVersion:"+oldVersion);
         if (oldVersion == 2) {
+            if ( schema.contains("DApp")){
+                return;
+            }
             schema.create("DApp")
                     .addField("category", int.class)
                     .addField("name", String.class)

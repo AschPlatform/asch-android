@@ -228,6 +228,8 @@ public class AppUtil {
             return context.getString(R.string.account_balance_insufficient);
         }else if (error.contains("Blockchain is not ready")){
             return context.getString(R.string.blockchain_is_not_ready);
+        }else if(error.contains("aied to verify signature")){
+            return context.getString(R.string.error_failed_to_verify_signature);
         }
         else {
             return context.getString(R.string.error_params);

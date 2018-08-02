@@ -71,16 +71,6 @@ public class TransactionBuilder {
                 .setSenderPublicKey(getSecurity().encodePublicKey(keyPair.getPublic()))
                 .setArgs(new Object[]{height,amount})
                 .calcFee();
-//
-//        TransactionInfo transaction =  newArgsTransaction(
-//                TransactionType.Lock,
-//                0L,
-//                AschConst.Fees.LOCK,
-//                null,
-//                args,
-//                keyPair.getPublic())
-//                ;
-
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
 
     }
@@ -107,8 +97,9 @@ public class TransactionBuilder {
         TransactionInfo transaction =  newTransaction(
                 TransactionType.basic_transfer,
                 keyPair.getPublic())
+                .setSenderPublicKey(getSecurity().encodePublicKey(keyPair.getPublic()))
                 .setMessage(message)
-                .setArgs(new Object[]{ amount, targetAddress })
+                .setArgs(new String[]{ amount+"", targetAddress })
                 .calcFee();
 
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
@@ -295,7 +286,7 @@ public class TransactionBuilder {
 
         if (null != secondSecret) {
             KeyPair secondKeyPair = getSecurity().generateKeyPair(secondSecret);
-            transaction.setSignSignature(getSecurity().SignSignature(transaction, secondKeyPair.getPrivate()));
+            transaction.setSecondSignature(getSecurity().SignSignature(transaction, secondKeyPair.getPrivate()));
         }
 
         transaction.setTransactionId(getSecurity().generateTransactionId(transaction));

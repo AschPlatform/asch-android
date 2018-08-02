@@ -177,7 +177,8 @@ public class DefaultSecurityStrategy implements SecurityStrategy{
             Argument.require(transaction != null, "transaction can not be null");
             Argument.require(privateKey != null, "private key can not be null");
 
-            byte[] transactionBytes = transaction.getBytes( false, true);
+//            byte[] transactionBytes = transaction.getBytes( false, true);
+            byte[] transactionBytes = transaction.getBytes( true, true);
             byte[] hash = sha256Hash(transactionBytes);
             return Encoding.hex(Ed25519.signature(hash, privateKey));
         }

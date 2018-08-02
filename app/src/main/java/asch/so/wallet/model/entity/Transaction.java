@@ -81,10 +81,10 @@ public class Transaction {
     private String recipientId;
     private String recipientName;
     private String currency;
-    @JSONField(name="amountl")
+    //@JSONField(name="amountl")
     private long amount;
-    @JSONField(name="amount")
-    private String amountStr;
+//    @JSONField(name="amount")
+//    private String amountStr;
     private long fee;
     private String signature;
     private String signSignature;
@@ -559,13 +559,13 @@ public class Transaction {
         this.amount = amount;
     }
 
-    public String getAmountStr() {
-        return amountStr;
-    }
-
-    public void setAmountStr(String amountStr) {
-        this.amountStr = amountStr;
-    }
+//    public String getAmountStr() {
+//        return amountStr;
+//    }
+//
+//    public void setAmountStr(String amountStr) {
+//        this.amountStr = amountStr;
+//    }
 
     public long getFee() {
         return fee;

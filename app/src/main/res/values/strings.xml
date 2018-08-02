@@ -345,4 +345,5 @@
     <string name="locked_low_limit">锁仓金额必须大于0</string>
     <string name="locked_amount_colon">已锁仓额度：</string>
     <string name="locked_deadline_colon">锁仓截止时间：</string>
+    <string name="error_failed_to_verify_signature">验证签名失败</string>
 </resources>

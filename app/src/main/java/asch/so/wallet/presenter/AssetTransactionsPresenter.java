@@ -110,12 +110,12 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
                 List<Transaction> transactions = JSON.parseArray(transactionsJsonArray.toJSONString(), Transaction.class);
                 ArrayList<Transaction> filteredTransactions = new ArrayList<Transaction>();
                 for (Transaction transaction : transactions) {
-                    String amountStr=transaction.getAmountStr();
-                    int index=amountStr.indexOf('.');
-                    if (index!=-1){
-                        amountStr = amountStr.substring(0,index);
-                    }
-                    transaction.setAmount(Long.parseLong(amountStr));
+//                    String amountStr=transaction.getAmountStr();
+//                    int index=amountStr.indexOf('.');
+//                    if (index!=-1){
+//                        amountStr = amountStr.substring(0,index);
+//                    }
+//                    transaction.setAmount(Long.parseLong(amountStr));
                     transaction.setType(transaction.getTransaction().getType());
                     if (transaction.getType() == TransactionType.basic_transfer.getCode()) {
                         transaction.setAssetInfo(new Transaction.AssetInfo());

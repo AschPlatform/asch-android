@@ -67,6 +67,7 @@ public class LockCoinsPresenter implements LockCoinsContract.Presenter {
             if (result.isSuccessful()) {
                 subscriber.onNext(result);
                 getAccount().getFullAccount().getAccount().setLockHeight(height);
+                getAccount().getFullAccount().getAccount().setLocked(true);
                 subscriber.onCompleted();
             } else {
                 subscriber.onError(new Throwable(result.getError()));

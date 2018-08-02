@@ -131,6 +131,7 @@ public class WalletApplication extends MultiDexApplication {
         url=TextUtils.isEmpty(url) ? AppConstants.DEFAULT_NODE_URL : url;
         AschSDK.Config.initBIP39(Wallet.getInstance().getMnemonicCode());
         AschSDK.Config.setAschServer(url);
+        AschSDK.Config.setLongTransactionIdEnabled(true);
         if (url.contains("mainnet")){
             AschSDK.Config.setMagic(AppConstants.MAINNET_MAGIC);
         }else {
