@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,7 +67,7 @@ import so.asch.sdk.impl.Validation;
  * Created by kimziv on 2017/9/27.
  */
 
-public class AssetTransferFragment extends BaseFragment implements AssetTransferContract.View{
+public class AssetTransferFragment extends BaseFragment implements AssetTransferContract.View, AdapterView.OnItemSelectedListener{
     private  static  final String TAG=AssetTransferFragment.class.getSimpleName();
 
     AssetTransferContract.Presenter presenter;
@@ -91,14 +92,14 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     TextView balanceTv;
 
     KProgressHUD hud;
-    private Balance balance;
+    private Balance balanceRemain;
     private QRCodeURL qrCodeURL;
     private SecondPasswdDialog secondPasswdDialog;
-    //private HashMap<String, BaseAsset> assetsMap;
+    private HashMap<String, BaseAsset> assetsMap;
+    private List<String> nameList;
     private BaseAsset selectedAsset;
     private String currency=null;
     private AssetTransferActivity.Action action;
-    //int precision = 0;
 
     public static AssetTransferFragment newInstance() {
         
@@ -113,7 +114,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         action= AssetTransferActivity.Action.valueOf(getArguments().getInt("action"));
-        balance= JSON.parseObject(getArguments().getString("balance"),Balance.class);
+       // balance= JSON.parseObject(getArguments().getString("balance"),Balance.class);
         String uri = getArguments().getString("qrcode_uri");
         parseQRUri(uri);
         presenter =new AssetTransferPresenter(getContext(),this);
@@ -150,13 +151,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
             // AppUtil.toastError(getContext(),"收款二维码有错误");
         }
 
-        Balance balanceRemain=getBalance();
-        //float realBalance = balanceRemain!=null?balanceRemain.getDecimalBalance().floatValue():-1;
-        //if (realBalance>=0){
-            balanceTv.setText(balanceRemain==null?"":balanceRemain.getBalanceString());
-        //}else {
-         //   balanceTv.setText("");
-        //}
+        this.balanceRemain=getBalance();
+        balanceTv.setText(this.balanceRemain==null?"":this.balanceRemain.getBalanceString());
 
         targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));
         if (hasSecondPasswd()){
@@ -241,44 +237,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 balanceTv.setVisibility(hasFocus?View.VISIBLE:View.INVISIBLE);
             }
         });
-//        switch (action){
-//            case ScanSecretToTransfer:
-//            {
-//               // assetsSpinner.setClickable(true);
-//               // assetsSpinner.setOnTouchListener(null);
-//            }
-//            break;
-//            case AssetBalanceToTransfer:{
-//                assetsSpinner.setOnTouchListener(new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        return true;
-//                    }
-//                });
-//            }
-//            break;
-//            default:
-//        }
 
         feeEt.setKeyListener(null);
-
-//        if (qrCodeURL!=null){
-//            targetEt.setText(qrCodeURL.getAddress());
-//            amountEt.setText(qrCodeURL.getAmount());
-//            String assetName = qrCodeURL.getCurrency();
-//            this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
-//        }else {
-//           // AppUtil.toastError(getContext(),"收款二维码有错误");
-//        }
-//
-//        Balance balanceRemain=getBalance();
-//        float realBalance = balanceRemain!=null?balanceRemain.getRealBalance():-1;
-//        if (realBalance>=0){
-//            balanceTv.setText(String.valueOf(realBalance));
-//        }else {
-//            balanceTv.setText("");
-//        }
-
         presenter.loadAssets(currency,false);
         return rootView;
     }
@@ -348,7 +308,9 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @Override
    public void displayAssets(LinkedHashMap<String,BaseAsset> assetsMap){
         LogUtils.dTag(TAG,"++++assets:"+assetsMap.toString());
+        this.assetsMap=assetsMap;
         List<String> nameList=new ArrayList<>(assetsMap.keySet());
+        this.nameList=nameList;
         int selectIndex= nameList.indexOf(currency);
         BaseAsset asset=assetsMap.get(currency);
         selectedAsset=asset;
@@ -360,9 +322,26 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         assetsSpinner.setAdapter(adapter);
         assetsSpinner.setSelection(selectIndex,true);
-
+        assetsSpinner.setOnItemSelectedListener(this);
 
     }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        if (this.assetsMap!=null && this.nameList!=null){
+            this.currency=this.nameList.get(position);
+            //int selectIndex= nameList.indexOf(currency);
+            this.selectedAsset=assetsMap.get(currency);
+            this.balanceRemain=getBalance();
+            balanceTv.setText(this.balanceRemain==null?"":this.balanceRemain.getBalanceString());
+        }
+    }
+
 
     @Override
     public void displayTransferResult(boolean res, String msg) {
@@ -376,7 +355,6 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
            dismissHUD();
             AppUtil.toastError(getContext(),msg);
         //}
-
 
     }
 

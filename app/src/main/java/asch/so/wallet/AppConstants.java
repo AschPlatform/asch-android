@@ -15,14 +15,14 @@ public class AppConstants {
     public static final long XAS_CIRCULATION = 100000000;
     public static final String DIGITS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     // public static final  String DEFAULT_NODE_URL="http://101.200.84.232:4097";//"http://192.168.2.124:4096";//
-    public static final String DEFAULT_MAIN_NODE_URL ="http://192.168.1.78:7800";//"http://192.168.1.43:4096";// "http://mainnet.asch.cn";
+    public static final String DEFAULT_MAIN_NODE_URL ="http://mainnet.asch.cn"; //"http://192.168.1.78:7800";//"http://192.168.1.43:4096";//
     public static final String DEFAULT_TEST_NODE_URL ="http://47.75.26.122:4096";//"http://192.168.1.76:4096";//"http://47.94.37.201:4006";//http://testnet.cctime.org:4096";// "http://testnet.asch.io"; //"http://testnet.asch.so:4096";  //"http://47.93.137.170:4097";
     public static final String DEFAULT_NODE_URL = BuildConfig.TEST ? DEFAULT_TEST_NODE_URL : DEFAULT_MAIN_NODE_URL;
     //public static final  String DEFAULT_NODE_URL="http://testnet.asch.io:4096";
 //   public static final  String DEFAULT_MAGIC="594fe0f3";
 
     public static final String TESTNET_MAGIC = "594fe0f3";
-    public static final String MAINNET_MAGIC = TESTNET_MAGIC;//"5f5b3cf5";
+    public static final String MAINNET_MAGIC = "5f5b3cf5";
 
 //   public static final  String DEFAULT_NODE_URL="http://mainnet.asch.cn";
 //   public static final  String DEFAULT_MAGIC="5f5b3cf5";

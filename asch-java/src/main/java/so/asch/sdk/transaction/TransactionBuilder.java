@@ -68,7 +68,7 @@ public class TransactionBuilder {
         //long[] args={height,amount};
 
         TransactionInfo transaction = newTransaction(TransactionType.basic_lock,keyPair.getPublic())
-                .setSenderPublicKey(getSecurity().encodePublicKey(keyPair.getPublic()))
+                //.setSenderPublicKey(getSecurity().encodePublicKey(keyPair.getPublic()))
                 .setArgs(new Object[]{height,amount})
                 .calcFee();
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
@@ -97,7 +97,7 @@ public class TransactionBuilder {
         TransactionInfo transaction =  newTransaction(
                 TransactionType.basic_transfer,
                 keyPair.getPublic())
-                .setSenderPublicKey(getSecurity().encodePublicKey(keyPair.getPublic()))
+//                .setSenderPublicKey(getSecurity().encodePublicKey(keyPair.getPublic()))
                 .setMessage(message)
                 .setArgs(new String[]{ amount+"", targetAddress })
                 .calcFee();
@@ -182,6 +182,7 @@ public class TransactionBuilder {
         return new TransactionInfo()
                 .setTransactionType(type)
                 .setTimestamp(getSecurity().getTransactionTimestamp())
+                .setSenderPublicKey(getSecurity().encodePublicKey(publicKey))
                 .setSenderId(getSecurity().getBase58Address(getSecurity().encodePublicKey(publicKey)));
     }
 
