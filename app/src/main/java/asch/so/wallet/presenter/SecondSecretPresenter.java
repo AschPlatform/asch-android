@@ -18,6 +18,8 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
+import so.asch.sdk.TransactionType;
+import so.asch.sdk.impl.FeeCalculater;
 import so.asch.sdk.impl.Validation;
 
 /**
@@ -48,8 +50,8 @@ public class SecondSecretPresenter implements SecondSecretContract.Presenter{
 
     @Override
     public void storeSecondPassword(String accountPasswd, String secondSecret) {
-        String encryptSecret = getAccount().getEncryptSeed();
 
+        String encryptSecret = getAccount().getEncryptSeed();
         Subscription subscription = Observable.create((Observable.OnSubscribe<AschResult>) subscriber -> {
             String decryptSecret = Account.decryptSecret(accountPasswd, encryptSecret);
             if (!Validation.isValidSecret(decryptSecret)) {

@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2017/10/27.
  */
 
-public class TransactionDetailFragment extends BaseFragment {
+public class TransactionDetailFragment extends BaseFragment implements View.OnClickListener{
 
     @BindView(R.id.tx_id_tv)
     TextView txIDTv;
@@ -90,7 +90,20 @@ public class TransactionDetailFragment extends BaseFragment {
             // txConfirmationsTv.setText(String.valueOf(transaction.getConfirmations()));
        // txBlockIdTv.setText(transaction.getBlockId());
 
+        txSenderTv.setOnClickListener(this);
+        txReceiveTv.setOnClickListener(this);
+
         return rootView;
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (txSenderTv==v){
+            AppUtil.copyText(getContext(),txSenderTv.getText().toString().trim());
+        }else if (txReceiveTv==v){
+            AppUtil.copyText(getContext(),txReceiveTv.getText().toString().trim());
+        }
     }
 
     private String amountFroTransaction(Transaction transaction){

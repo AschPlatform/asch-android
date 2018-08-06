@@ -258,10 +258,13 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
         }else {
             diffHeight=AppConstants.ONE_MONTH_BLOCKS;
         }
-        this.minLockCalaendar=AppUtil.getDateByHeight(this.initMills, diffHeight);
+        this.minLockCalaendar=AppUtil.getDateByHeight(this.initMills, diffHeight+30);
 
         long lockedMillis;
-        if (lockedBlock<lastHeight){
+        if (lockedBlock==0) {
+            lockedMillis=this.initMills;
+        }else
+            if (lockedBlock<lastHeight){
             lockedMillis=this.initMills-(lastHeight-lockedBlock)*10*1000;
         }else {
             lockedMillis=this.initMills+(lockedBlock-lastHeight)*10*1000;

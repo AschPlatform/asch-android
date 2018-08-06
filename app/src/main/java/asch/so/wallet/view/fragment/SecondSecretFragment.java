@@ -12,13 +12,17 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.SecondSecretContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.SecondSecretPresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import so.asch.sdk.TransactionType;
+import so.asch.sdk.impl.FeeCalculater;
 
 /**
  * Created by haizeiwang on 2018/1/22.
@@ -71,6 +75,13 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
         String passwd=passwdEt1.getText().toString();
         String passwd2=passwdEt2.getText().toString();
         String account_pwd = account_passwd.getText().toString();
+        if (getAccount().getFullAccount()!=null &&
+                getAccount().getFullAccount().getBalances()!=null &&
+                getAccount().getFullAccount().getBalances().size()!=0 &&
+                getAccount().getXASLongBalance() <= FeeCalculater.calcFee(TransactionType.basic_setPassword)){
+            AppUtil.toastError(getContext(),getString(R.string.account_balance_insufficient));
+            return;
+        }
 
         if (!Validator.check(getContext(), Validator.Type.SecondSecret,passwd,getString(R.string.input_second_secret_hint))){
             return;
@@ -83,6 +94,10 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
             presenter.storeSecondPassword(account_pwd,passwd);
             showHUD();
         }
+    }
+
+    private Account getAccount() {
+        return AccountsManager.getInstance().getCurrentAccount();
     }
 
     private  void  showHUD(){

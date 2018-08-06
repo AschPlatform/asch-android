@@ -216,7 +216,9 @@ public class AppUtil {
         String error=ex.getMessage();
         if (error.contains("Failed to connect")){
             return context.getString(R.string.error_network);
-        }else if (error.contains("Insufficient balance")||error.contains("Insufficient requestor balance")){
+        }else if (error.contains("Insufficient balance")||
+                error.contains("Insufficient requestor balance")||
+                error.contains("Insufficient sender balance")){
             return context.getString(R.string.error_balance_insufficient);
         } else if (error.contains("Failed to remove vote")){
             return context.getString(R.string.error_vote_cancel);
@@ -232,7 +234,14 @@ public class AppUtil {
             return context.getString(R.string.error_failed_to_verify_signature);
         }
         else {
-            return context.getString(R.string.error_params);
+//
+            if (TextUtils.isEmpty(ex.getLocalizedMessage()))
+            {
+                return context.getString(R.string.error_server);
+            }else {
+                return ex.getLocalizedMessage();
+            }
+
         }
     }
 
