@@ -14,7 +14,6 @@ import com.blankj.utilcode.util.Utils;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
-import com.litesuits.common.io.FileUtils;
 
 import asch.so.wallet.R;
 

@@ -1,4 +1,4 @@
-def supportVersion = "27.0.1"
+def supportVersion =  "26.0.2" //"27.0.1"
 def rxBindingVersion = "0.4.0"
 def retrofitVersion = "2.2.0"
 def okHttpVersion = "3.7.0"
@@ -87,7 +87,7 @@ project.ext {
 //    ]
     android = [
             compileSdkVersion: 26,
-            buildToolsVersion: "26.0.3",
+            buildToolsVersion: "27.0.3",
             applicationId    : "asch.so.wallet",
             applicationIdTest    : "asch.so.wallet.test",
             minSdkVersion    : 16,
@@ -98,7 +98,7 @@ project.ext {
 
     aschsdk = [
             compileSdkVersion: 26,
-            buildToolsVersion: "26.0.3",
+            buildToolsVersion: "27.0.3",
             applicationId    : "asch.so.wallet",
             minSdkVersion    : 16,
             targetSdkVersion : 26,

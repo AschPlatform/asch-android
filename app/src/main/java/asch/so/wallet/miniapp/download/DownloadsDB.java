@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import asch.so.wallet.model.entity.DApp;
 import io.realm.Realm;
 import io.realm.RealmResults;
-import retrofit2.http.PUT;
+//import retrofit2.http.PUT;
 
 /**
  * Created by kimziv on 2018/3/5.

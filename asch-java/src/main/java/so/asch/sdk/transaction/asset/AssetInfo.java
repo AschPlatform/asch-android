@@ -1,6 +1,6 @@
 package so.asch.sdk.transaction.asset;
 
-import java.beans.Transient;
+//import java.beans.Transient;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -12,7 +12,7 @@ public abstract class AssetInfo {
     private static final int MAX_BUFFER_SIZE = 1024 * 5;
     private static final byte[] EMPTY_BUFFER = new byte[0];
 
-    @Transient
+    //@Transient
     public byte[] assetBytes(){
         ByteBuffer buffer = ByteBuffer.allocate(MAX_BUFFER_SIZE)
                 .order(ByteOrder.LITTLE_ENDIAN);

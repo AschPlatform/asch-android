@@ -3,7 +3,7 @@ package so.asch.sdk.dto.query;
 import so.asch.sdk.Transaction;
 import so.asch.sdk.TransactionType;
 
-import java.beans.Transient;
+//import java.beans.Transient;
 
 /**
  * Created by eagle on 17-7-16.
@@ -35,7 +35,7 @@ public class TransactionQueryParameters extends QueryParameters {
         return transactionType == null ? null : transactionType.getCode();
     }
 
-    @Transient
+   // @Transient
     public TransactionType getTransactionType() {
         return transactionType;
     }

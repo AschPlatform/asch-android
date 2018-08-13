@@ -8,10 +8,10 @@ import android.util.Log;
 
 import com.blankj.utilcode.util.LogUtils;
 
-import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
-import net.i2p.crypto.eddsa.spec.EdDSAParameterSpec;
-import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
-import net.i2p.crypto.eddsa.EdDSAPrivateKey;
+//import net.i2p.crypto.eddsa.spec.EdDSANamedCurveTable;
+//import net.i2p.crypto.eddsa.spec.EdDSAParameterSpec;
+//import net.i2p.crypto.eddsa.spec.EdDSAPrivateKeySpec;
+//import net.i2p.crypto.eddsa.EdDSAPrivateKey;
 
 
 import java.io.InputStream;

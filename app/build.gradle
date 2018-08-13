@@ -4,7 +4,8 @@ apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.3'
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
     String isTest= rootProject.ext.config.isTest?"true":"false"
 
     String appName = rootProject.ext.config.isTest?"@string/app_name_test":"@string/app_name"
@@ -25,6 +26,11 @@ android {
             storePassword 'asch123456!'
         }
     }
+
+    sourceSets.main {
+        jniLibs.srcDirs = ['libs']  // <-- Set your folder here!
+    }
+
 
     defaultConfig {
         renderscriptTargetApi rootProject.ext.android.targetSdkVersion
@@ -54,7 +60,7 @@ android {
         multiDexEnabled true
 
 //        ndk {
-//            abiFilters 'armeabi', 'armeabi-v7a','arm64-v8a'
+//            abiFilters 'armeabi', 'armeabi-v7a','arm64-v8a', 'x86'
 //        }
     }
 
@@ -139,75 +145,79 @@ android {
 
 dependencies {
     //    implementation 'com.android.support:support-v4:26.1.0'
-    implementation 'com.android.support:support-v4:26.1.0'
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+//    implementation 'com.android.support:support-v4:26.1.0'
+//    implementation 'com.android.support:recyclerview-v7:26.1.0'
+    implementation rootProject.ext.dependencies['support-v4']
+    implementation rootProject.ext.dependencies['recyclerview']
+    //implementation rootProject.ext.dependencies['appcompat-v7']
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    androidTestCompile 'com.google.code.findbugs:jsr305:3.0.2'
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    compile rootProject.ext.dependencies["design"]
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:multidex:1.0.1'
+    androidTestImplementation  'com.google.code.findbugs:jsr305:3.0.2'
+    implementation rootProject.ext.dependencies["appcompat-v7"]
+    implementation rootProject.ext.dependencies["design"]
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:multidex:1.0.1'
     //    releaseCompile project(path: ':base', configuration: 'release')
     //    debugCompile project(path: ':base', configuration: 'debug')
-    compile project(':base')
-    compile project(':widget')
-    compile project(':asch-java')
-    compile project(':update-app')
-    compile project(path: ':CordovaLib')
-    compile rootProject.ext.dependencies["butterknife"]
+    implementation project(':base')
+    implementation project(':widget')
+    implementation project(':asch-java')
+    implementation project(':update-app')
+    implementation project(path: ':CordovaLib')
+    implementation rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
-    compile rootProject.ext.dependencies["dagger"]
+    implementation rootProject.ext.dependencies["dagger"]
     annotationProcessor rootProject.ext.dependencies["dagger-compiler"]
-    compile rootProject.ext.dependencies["retrofit2-fastjson-converter"]
-    compile rootProject.ext.dependencies["cardview"]
-    compile rootProject.ext.dependencies["rxandroid"]
-    compile rootProject.ext.dependencies["fastjson"]
-    compile rootProject.ext.dependencies["smart-refresh-layout"]
-    compile rootProject.ext.dependencies["smart-refresh-header"]
-    compile rootProject.ext.dependencies["circleimageview"]
-    compile rootProject.ext.dependencies["zxing-core"]
-    compile rootProject.ext.dependencies["bga-zxing"]
-    compile rootProject.ext.dependencies["bga-qrcodecore"]
-    compile rootProject.ext.dependencies["bga-zbar"]
-    compile rootProject.ext.dependencies["easypermissions"]
-    compile rootProject.ext.dependencies["js-bridge"]
-    compile rootProject.ext.dependencies["agentweb"]
-    compile rootProject.ext.dependencies["hawk"]
-    compile rootProject.ext.dependencies["youth-banner"]
-    compile rootProject.ext.dependencies["realtimeblurview"]
-    compile rootProject.ext.dependencies["baseRecyclerViewAdapterHelper"]
-    compile rootProject.ext.dependencies["passcodeview"]
-    compile rootProject.ext.dependencies["dialogplus"]
-    compile(rootProject.ext.dependencies["lollipin"]) {
+    implementation rootProject.ext.dependencies["retrofit2-fastjson-converter"]
+    implementation rootProject.ext.dependencies["cardview"]
+    implementation rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["fastjson"]
+    implementation rootProject.ext.dependencies["smart-refresh-layout"]
+    implementation rootProject.ext.dependencies["smart-refresh-header"]
+    implementation rootProject.ext.dependencies["circleimageview"]
+    implementation rootProject.ext.dependencies["zxing-core"]
+    implementation rootProject.ext.dependencies["bga-zxing"]
+    implementation rootProject.ext.dependencies["bga-qrcodecore"]
+    implementation rootProject.ext.dependencies["bga-zbar"]
+    implementation rootProject.ext.dependencies["easypermissions"]
+    implementation rootProject.ext.dependencies["js-bridge"]
+    implementation rootProject.ext.dependencies["agentweb"]
+    implementation rootProject.ext.dependencies["hawk"]
+    implementation rootProject.ext.dependencies["youth-banner"]
+    implementation rootProject.ext.dependencies["realtimeblurview"]
+    implementation rootProject.ext.dependencies["baseRecyclerViewAdapterHelper"]
+    implementation rootProject.ext.dependencies["passcodeview"]
+    implementation rootProject.ext.dependencies["dialogplus"]
+    implementation(rootProject.ext.dependencies["lollipin"]) {
         transitive = true
     }
-    compile rootProject.ext.dependencies["ldialogs"]
-    compile rootProject.ext.dependencies["utilcode"]
-    compile rootProject.ext.dependencies["easy-popup"]
-    compile rootProject.ext.dependencies["bubbleLayout"]
-    compile rootProject.ext.dependencies["bugly"]
-    compile rootProject.ext.dependencies["loadinglayout"]
-    compile rootProject.ext.dependencies["flycoTabLayout"]
-    compile rootProject.ext.dependencies["kprogresshud"]
-    compile rootProject.ext.dependencies["toasty"]
-    compile rootProject.ext.dependencies["glide"]
-    compile rootProject.ext.dependencies["bgaBaseadapter"]
-    compile rootProject.ext.dependencies["bgaPhotopicker"]
-    compile rootProject.ext.dependencies["switchIcon"]
-    //compile rootProject.ext.dependencies["update"]
+    implementation rootProject.ext.dependencies["ldialogs"]
+    implementation rootProject.ext.dependencies["utilcode"]
+    implementation rootProject.ext.dependencies["easy-popup"]
+    implementation rootProject.ext.dependencies["bubbleLayout"]
+    implementation rootProject.ext.dependencies["bugly"]
+    implementation rootProject.ext.dependencies["loadinglayout"]
+    implementation rootProject.ext.dependencies["flycoTabLayout"]
+    implementation rootProject.ext.dependencies["kprogresshud"]
+    implementation rootProject.ext.dependencies["toasty"]
+    implementation rootProject.ext.dependencies["glide"]
+    implementation rootProject.ext.dependencies["bgaBaseadapter"]
+    implementation rootProject.ext.dependencies["bgaPhotopicker"]
+    implementation rootProject.ext.dependencies["switchIcon"]
+    //implementation rootProject.ext.dependencies["update"]
 
-    compile rootProject.ext.dependencies["okhttpUtils"]
-    compile rootProject.ext.dependencies["filedownloader"]
-    compile rootProject.ext.dependencies["expandablelayout"]
-    compile rootProject.ext.dependencies["expandablelayout"]
-    compile rootProject.ext.dependencies["progressButton"]
-    compile rootProject.ext.dependencies["eventbus"]
-    compile rootProject.ext.dependencies["switchbutton"]
-    compile rootProject.ext.dependencies["localeChanger"]
+    implementation rootProject.ext.dependencies["okhttpUtils"]
+    implementation rootProject.ext.dependencies["filedownloader"]
+    implementation rootProject.ext.dependencies["expandablelayout"]
+    implementation rootProject.ext.dependencies["expandablelayout"]
+    implementation rootProject.ext.dependencies["progressButton"]
+    implementation rootProject.ext.dependencies["eventbus"]
+    implementation rootProject.ext.dependencies["switchbutton"]
+    implementation rootProject.ext.dependencies["localeChanger"]
 }
 
 //def rename_andd_moveout_apk(orignalFile, buildType) {

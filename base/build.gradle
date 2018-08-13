@@ -31,41 +31,43 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
-    compile rootProject.ext.dependencies["support-v4"]
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    compile rootProject.ext.dependencies["support-v13"]
-    compile rootProject.ext.dependencies["design"]
-    compile rootProject.ext.dependencies["recyclerview"]
-    compile rootProject.ext.dependencies["cardview"]
-    compile rootProject.ext.dependencies["rxandroid"]
-    compile rootProject.ext.dependencies["rxbinding"]
-    compile rootProject.ext.dependencies["rxbinding-support-v4"]
-    compile rootProject.ext.dependencies["rxbinding-appcompat-v7"]
-    compile rootProject.ext.dependencies["rxbinding-design"]
-    compile rootProject.ext.dependencies["rxbinding-recyclerview-v7"]
-    compile rootProject.ext.dependencies["ormlite-android"]
-    compile rootProject.ext.dependencies["stream"]
-    compile rootProject.ext.dependencies["retrofit"]
-    compile rootProject.ext.dependencies["adapter-rxjava"]
-    compile rootProject.ext.dependencies["fastjson"]
-    compile rootProject.ext.dependencies["okhttp3-logging-interceptor"]
+    testImplementation 'junit:junit:4.12'
+    implementation rootProject.ext.dependencies["support-v4"]
+    implementation rootProject.ext.dependencies["appcompat-v7"]
+    implementation rootProject.ext.dependencies["support-v13"]
+    implementation rootProject.ext.dependencies["design"]
+    implementation rootProject.ext.dependencies["recyclerview"]
+    implementation rootProject.ext.dependencies["cardview"]
+    implementation rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["rxbinding"]
+    implementation rootProject.ext.dependencies["rxbinding-support-v4"]
+    implementation rootProject.ext.dependencies["rxbinding-appcompat-v7"]
+    implementation rootProject.ext.dependencies["rxbinding-design"]
+    implementation rootProject.ext.dependencies["rxbinding-recyclerview-v7"]
+    implementation rootProject.ext.dependencies["ormlite-android"]
+    implementation rootProject.ext.dependencies["stream"]
+    implementation rootProject.ext.dependencies["retrofit"]
+    implementation rootProject.ext.dependencies["adapter-rxjava"]
+    implementation rootProject.ext.dependencies["fastjson"]
+    implementation rootProject.ext.dependencies["okhttp3-logging-interceptor"]
 
-    debugCompile rootProject.ext.dependencies["stetho"]
-    debugCompile rootProject.ext.dependencies["stetho-okhttp3"]
+//    debugImplementation rootProject.ext.dependencies["stetho"]
+//    debugimplementation rootProject.ext.dependencies["stetho-okhttp3"]
+    implementation rootProject.ext.dependencies["stetho"]
+    implementation rootProject.ext.dependencies["stetho-okhttp3"]
 
-    compile rootProject.ext.dependencies["smart-refresh-layout"]
-    compile rootProject.ext.dependencies["smart-refresh-header"]
-    compile (rootProject.ext.dependencies["lollipin"]){
+    implementation rootProject.ext.dependencies["smart-refresh-layout"]
+    implementation rootProject.ext.dependencies["smart-refresh-header"]
+    implementation (rootProject.ext.dependencies["lollipin"]){
         transitive=true
     }
-    compile rootProject.ext.dependencies["ldialogs"]
+    implementation rootProject.ext.dependencies["ldialogs"]
 
-    compile 'org.glassfish:javax.annotation:10.0-b28'
+    implementation 'org.glassfish:javax.annotation:10.0-b28'
 
-    compile rootProject.ext.dependencies["localeChanger"]
+    implementation rootProject.ext.dependencies["localeChanger"]
 }
