@@ -31,6 +31,7 @@ public final class AschServiceUrls {
         static final String GET_BLOCK_INFO = "/api/blocks/get";
         static final String GET_FULL_BLOCK_INFO = "/api/blocks/full";
         static final String QUERY_BLOCKS = "/api/blocks/";
+        static final String QUERY_BLOCKS_V2 = "/api/V2/blocks";
         static final String GET_HEIGHT = "/api/blocks/getHeight";
         static final String GET_FREE="/api/blocks/getFee";
         static final String GET_MILESTONE = "/api/blocks/getMilestone";

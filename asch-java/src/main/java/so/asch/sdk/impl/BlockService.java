@@ -61,6 +61,20 @@ public class BlockService extends AschRESTService implements Block {
     }
 
     @Override
+    public AschResult queryBlocksV2(BlockQueryParameters parameters) {
+        try {
+            //Argument.require(Validation.isValidBlockQueryParameters(parameters), "invalid parameters");
+
+            ParameterMap query = parametersFromObject(parameters);
+            return get(AschServiceUrls.Block.QUERY_BLOCKS_V2,  query);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
+
+    @Override
     public AschResult getHeight() {
         return get(AschServiceUrls.Block.GET_HEIGHT);
     }

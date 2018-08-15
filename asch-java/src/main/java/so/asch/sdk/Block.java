@@ -43,6 +43,27 @@ public interface Block extends AschInterface {
     //count	integer	区块链高度
     AschResult queryBlocks(BlockQueryParameters parameters);
 
+    //接口地址：/api/V2/blocks
+    //请求方式：get
+    //支持格式：urlencoded
+    //接口说明：不加参数则获取全网区块详情
+    //请求参数说明：
+    //limit	integer	N	限制结果集个数，最小值：0,最大值：100
+    //orderBy	string	N	根据表中字段排序，如height:desc
+    //offset	integer	N	偏移量，最小值0
+    //generatorPublicKey	string	N	区块生成者公钥
+    //totalAmount	integer	N	交易总额，最小值：0，最大值：10000000000000000
+    //totalFee	integer	N	手续费总额，最小值：0，最大值：10000000000000000
+    //reward	integer	N	奖励金额，最小值：0
+    //previousBlock	string	N	上一个区块
+    //height	integer	N	区块高度
+    //返回参数说明：
+    //success	boole	是否成功获得response数据
+    //blocks	Array	由区块详情json串构成的数组
+    //count	integer	区块链高度
+    AschResult queryBlocksV2(BlockQueryParameters parameters);
+
+
     //接口地址：/api/blocks/getHeight
     //请求方式：get
     //支持格式：无

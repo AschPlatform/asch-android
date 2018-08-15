@@ -78,7 +78,7 @@ public class BlockExplorerPresenter implements BlockExplorerContract.Presenter {
                         .setOffset(offset)
                         .setLimit(limit);
                 params.setHeight(-1);
-                result = AschSDK.Block.queryBlocks(params);
+                result = AschSDK.Block.queryBlocksV2(params);
             }else{
                 if(isBlockHeight(idOrHeight)){
                     result = AschSDK.Block.getBlockByHeight(Integer.valueOf(idOrHeight),true);
