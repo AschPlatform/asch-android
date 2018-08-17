@@ -70,7 +70,7 @@ public class MyDelegateInfoPresenter implements MyDelegateInfoContract.Presenter
                     .setOffset(offset)
                     .setLimit(limit);
 
-            AschResult result = AschSDK.Block.queryBlocks(params);
+            AschResult result = AschSDK.Block.queryBlocksV2(params);
             if (result.isSuccessful()) {
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                 JSONArray blocksJsonArray = resultJSONObj.getJSONArray("blocks");

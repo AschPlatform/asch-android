@@ -57,7 +57,7 @@ public class BlockDetailPresenter implements BlockDetailContract.Presenter {
     @Override
     public void loadBlockInfo(String tid) {
         Subscription subscription = Observable.create((Observable.OnSubscribe<AschResult>) subscriber -> {
-            AschResult result = AschSDK.Block.getBlockById(tid,false);
+            AschResult result = AschSDK.Block.getBlockById(tid);
             if (result != null && result.isSuccessful()) {
                 subscriber.onNext(result);
                 subscriber.onCompleted();

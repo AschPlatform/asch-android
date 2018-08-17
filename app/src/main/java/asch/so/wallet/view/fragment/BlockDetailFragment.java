@@ -126,13 +126,19 @@ public class BlockDetailFragment extends Fragment implements BlockDetailContract
         String dateTime = TimeUtils.date2String(dateT,new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"));
         date.setText(dateTime);
         id.setText(blk.getId());
-        transaction.setText(blk.getNumberOfTransactions()+"");
-        money.setText(AppUtil.decimalFormat(AppUtil.decimalFromBigint(blk.getTotalAmount(), AppConstants.PRECISION))+" XAS");
-        cost.setText(AppUtil.decimalFormat(AppUtil.decimalFromBigint(blk.getTotalFee(), AppConstants.PRECISION))+" XAS");
+        transaction.setText(blk.getCount()+"");
+        cost.setText(AppUtil.decimalFormat(AppUtil.decimalFromBigint(blk.getFees(), AppConstants.PRECISION))+" XAS");
         award.setText(AppUtil.decimalFormat(AppUtil.decimalFromBigint(blk.getReward(), AppConstants.PRECISION))+" XAS");
-        address.setText(blk.getGeneratorId());
-        public_key.setText(blk.getGeneratorPublicKey());
+        public_key.setText(blk.getDelegate());
+
+        /*已隐藏的，v2接口没有对应数据
+        //确认数
         confirmationsTv.setText(blk.getConfirmations());
+        //总金额字段
+        money.setText(AppUtil.decimalFormat(AppUtil.decimalFromBigint(blk.getTotalAmount(), AppConstants.PRECISION))+" XAS");
+        //生产者地址
+        address.setText(blk.getGeneratorId());
+        */
     }
 
     @Override

@@ -25,7 +25,7 @@ public class DappService extends AschRESTService implements Dapp {
     }
 
     @Override
-    public AschResult queryBlocks(BlockQueryParameters parameters) {
+    public AschResult queryBlocksV2(BlockQueryParameters parameters) {
         return null;
     }
 

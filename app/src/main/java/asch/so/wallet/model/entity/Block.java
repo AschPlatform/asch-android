@@ -25,38 +25,32 @@ package asch.so.wallet.model.entity;
  }
  */
 public class Block {
-    private String id;
-    private int timestamp;
-    private int version;
-    private int height;
+    /*  V1的字段
     private String previousBlock;
     private int numberOfTransactions;
     private long totalAmount;
     private long totalFee;
-    private long reward;
     private int payloadLength;
-    private String payloadHash;
     private String generatorPublicKey;
     private String generatorId;
     private String blockSignature;
     private String confirmations;
     private long totalForged;
+    */
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    private int version;
+    private String delegate;
+    private int height;
+    private String prevBlockId;
+    private int timestamp;
+    private int count;
+    private int fees;
+    private String payloadHash;
+    private long reward;
+    private String signature;
+    private String id;
 
-    public int getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(int timestamp) {
-        this.timestamp = timestamp;
-    }
 
     public int getVersion() {
         return version;
@@ -64,6 +58,14 @@ public class Block {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public String getDelegate() {
+        return delegate;
+    }
+
+    public void setDelegate(String delegate) {
+        this.delegate = delegate;
     }
 
     public int getHeight() {
@@ -74,52 +76,36 @@ public class Block {
         this.height = height;
     }
 
-    public String getPreviousBlock() {
-        return previousBlock;
+    public String getPrevBlockId() {
+        return prevBlockId;
     }
 
-    public void setPreviousBlock(String previousBlock) {
-        this.previousBlock = previousBlock;
+    public void setPrevBlockId(String prevBlockId) {
+        this.prevBlockId = prevBlockId;
     }
 
-    public int getNumberOfTransactions() {
-        return numberOfTransactions;
+    public int getTimestamp() {
+        return timestamp;
     }
 
-    public void setNumberOfTransactions(int numberOfTransactions) {
-        this.numberOfTransactions = numberOfTransactions;
+    public void setTimestamp(int timestamp) {
+        this.timestamp = timestamp;
     }
 
-    public long getTotalAmount() {
-        return totalAmount;
+    public int getCount() {
+        return count;
     }
 
-    public void setTotalAmount(long totalAmount) {
-        this.totalAmount = totalAmount;
+    public void setCount(int count) {
+        this.count = count;
     }
 
-    public long getTotalFee() {
-        return totalFee;
+    public int getFees() {
+        return fees;
     }
 
-    public void setTotalFee(long totalFee) {
-        this.totalFee = totalFee;
-    }
-
-    public long getReward() {
-        return reward;
-    }
-
-    public void setReward(long reward) {
-        this.reward = reward;
-    }
-
-    public int getPayloadLength() {
-        return payloadLength;
-    }
-
-    public void setPayloadLength(int payloadLength) {
-        this.payloadLength = payloadLength;
+    public void setFees(int fees) {
+        this.fees = fees;
     }
 
     public String getPayloadHash() {
@@ -130,43 +116,30 @@ public class Block {
         this.payloadHash = payloadHash;
     }
 
-    public String getGeneratorPublicKey() {
-        return generatorPublicKey;
+    public long getReward() {
+        return reward;
     }
 
-    public void setGeneratorPublicKey(String generatorPublicKey) {
-        this.generatorPublicKey = generatorPublicKey;
+    public void setReward(long reward) {
+        this.reward = reward;
     }
 
-    public String getGeneratorId() {
-        return generatorId;
+    public String getSignature() {
+        return signature;
     }
 
-    public void setGeneratorId(String generatorId) {
-        this.generatorId = generatorId;
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
-    public String getBlockSignature() {
-        return blockSignature;
+    public String getId() {
+        return id;
     }
 
-    public void setBlockSignature(String blockSignature) {
-        this.blockSignature = blockSignature;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getConfirmations() {
-        return confirmations;
-    }
 
-    public void setConfirmations(String confirmations) {
-        this.confirmations = confirmations;
-    }
 
-    public long getTotalForged() {
-        return totalForged;
-    }
-
-    public void setTotalForged(long totalForged) {
-        this.totalForged = totalForged;
-    }
 }

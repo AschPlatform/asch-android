@@ -28,10 +28,16 @@ public final class AschServiceUrls {
     }
 
     final static class Block{
+        /**
+         * V1版本接口，未用
+         */
         static final String GET_BLOCK_INFO = "/api/blocks/get";
         static final String GET_FULL_BLOCK_INFO = "/api/blocks/full";
         static final String QUERY_BLOCKS = "/api/blocks/";
-        static final String QUERY_BLOCKS_V2 = "/api/V2/blocks";
+        /**
+         * 正在用的接口
+         */
+        static final String QUERY_BLOCKS_V2 = "/api/V2/blocks/";
         static final String GET_HEIGHT = "/api/blocks/getHeight";
         static final String GET_FREE="/api/blocks/getFee";
         static final String GET_MILESTONE = "/api/blocks/getMilestone";

@@ -42,7 +42,7 @@ public interface Dapp extends AschInterface{
 //    success	boole	是否成功获得response数据
 //    count	integer	符合条件的总结果数目
 //    blocks	Array	每个元素是一个block对象，对象里面包含block的id、height、产块受托人公钥等信息
-     AschResult queryBlocks(BlockQueryParameters parameters);
+     AschResult queryBlocksV2(BlockQueryParameters parameters);
 
 //    2.1 根据地址获取dapp内账户信息
 //

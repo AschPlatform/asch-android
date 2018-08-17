@@ -134,7 +134,7 @@ public class Main {
     }
 
     private static boolean handleBlockTransactions(long height){
-        AschResult result = AschSDK.Block.getBlockByHeight(height, false);
+        AschResult result = AschSDK.Block.getBlockByHeight(height);
         if (!result.isSuccessful()){
             return false;
         }

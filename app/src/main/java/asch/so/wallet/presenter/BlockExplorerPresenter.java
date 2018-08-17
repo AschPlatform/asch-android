@@ -81,9 +81,9 @@ public class BlockExplorerPresenter implements BlockExplorerContract.Presenter {
                 result = AschSDK.Block.queryBlocksV2(params);
             }else{
                 if(isBlockHeight(idOrHeight)){
-                    result = AschSDK.Block.getBlockByHeight(Integer.valueOf(idOrHeight),true);
+                    result = AschSDK.Block.getBlockByHeight(Integer.valueOf(idOrHeight));
                 }else{
-                    result = AschSDK.Block.getBlockById(idOrHeight,true);
+                    result = AschSDK.Block.getBlockById(idOrHeight);
                 }
             }
 

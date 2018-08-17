@@ -18,10 +18,9 @@ public interface Block extends AschInterface {
     //返回参数说明：
     //success	boole	是否成功获得response数据
     //block	json	区块详情
-    AschResult getBlockById(String id, boolean fullBlockInfo);
-    AschResult getBlockByHeight(long height, boolean fullBlockInfo);
+    AschResult getBlockById(String id);
+    AschResult getBlockByHeight(long height);
     AschResult getBlockByHash(String hash, boolean fullBlockInfo);
-
 
     //接口地址：/api/blocks
     //请求方式：get
@@ -41,7 +40,9 @@ public interface Block extends AschInterface {
     //success	boole	是否成功获得response数据
     //blocks	Array	由区块详情json串构成的数组
     //count	integer	区块链高度
-    AschResult queryBlocks(BlockQueryParameters parameters);
+    //AschResult queryBlocks(BlockQueryParameters parameters);
+
+
 
     //接口地址：/api/V2/blocks
     //请求方式：get
