@@ -198,8 +198,8 @@ project.ext {
             "localeChanger"                 :"com.github.franmontiel:LocaleChanger:${localeChangerVersion}",
             "progressButton"                :"com.github.jiang111:CProgressButton:${progressButtonVersion}",
             "eventbus"                      :"org.greenrobot:eventbus:${eventbusVersion}",
-            "switchbutton"                  :"com.kyleduo.switchbutton:library:${switchbuttonVersion}"
-
+            "switchbutton"                  :"com.kyleduo.switchbutton:library:${switchbuttonVersion}",
+            "taggroup"                      :"co.lujun:androidtagview:1.1.4"
     ]
 }
 

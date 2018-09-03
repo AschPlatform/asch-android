@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
 
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.crypto.AccountSecurity;
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -30,21 +31,15 @@ public class Account extends RealmObject{
     @PrimaryKey
     private String publicKey;
 
-    //账户加密密码
-    private String passwd;
-    //密码提示
-    private  String hint;
+
+
 
     //账户临时存储密码
     @Ignore
     private String tmpPasswd;
 
     private String encryptSeed;
-
-    private String encryptPasswd;
-
     private String secondSecret;
-    private String enryptSecondSecret;
     //是否已备份
     private boolean backup;
 
@@ -60,21 +55,7 @@ public class Account extends RealmObject{
         this.fullAccount = fullAccount;
     }
 
-    public String getPasswd() {
-        return passwd;
-    }
 
-    public void setPasswd(String passwd) {
-        this.passwd = passwd;
-    }
-
-    public String getHint() {
-        return hint;
-    }
-
-    public void setHint(String hint) {
-        this.hint = hint;
-    }
 
     public String getSeed() {
         return seed;
@@ -116,29 +97,17 @@ public class Account extends RealmObject{
         this.encryptSeed = encryptSeed;
     }
 
-    public String getEncryptPasswd() {
-        return encryptPasswd;
-    }
 
-    public void setEncryptPasswd(String encryptPasswd) {
-        this.encryptPasswd = encryptPasswd;
-    }
 
     public String toJSON(){
       return  JSON.toJSONString(this);
     }
 
-    public boolean checKPassword(String passwd){
-        if (passwd==null || passwd.length()==0)
-            return false;
-        String decryptPasswd= AccountSecurity.decryptPassword(getEncryptPasswd(),passwd);
-        return passwd.equals(decryptPasswd);
-    }
 
-    public String decryptSecret(String passwd){
+    public static String decryptSecret(String passwd){
         if (passwd==null || passwd.length()==0)
             return null;
-        String decryptSecret= AccountSecurity.decryptSecret(getEncryptSeed(),passwd);
+        String decryptSecret= AccountSecurity.decryptSecret(AccountsManager.getInstance().getCurrentAccount().getEncryptSeed(),passwd);
         return decryptSecret;
     }
 
@@ -186,15 +155,6 @@ public class Account extends RealmObject{
     public void setSecondSecret(String secondSecret) {
         this.secondSecret = secondSecret;
     }
-
-    public String getEnryptSecondSecret() {
-        return enryptSecondSecret;
-    }
-
-    public void setEnryptSecondSecret(String enryptSecondSecret) {
-        this.enryptSecondSecret = enryptSecondSecret;
-    }
-
     public String getTmpPasswd() {
         return tmpPasswd;
     }

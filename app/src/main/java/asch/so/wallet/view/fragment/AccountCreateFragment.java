@@ -11,22 +11,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
-import asch.so.wallet.activity.BackupActivity;
-import asch.so.wallet.activity.FirstStartActivity;
+import asch.so.wallet.activity.ImportOrCreateAccoutActivity;
 import asch.so.wallet.activity.MainTabActivity;
 import asch.so.wallet.activity.SecretBackupActivity;
 import asch.so.wallet.contract.AccountCreateContract;
-import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountCreatePresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
@@ -42,17 +38,8 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
 
     Unbinder unbinder;
 
-//    @BindView(R.id.seed_et)
-//    EditText seedEt;
     @BindView(R.id.name_et)
     EditText nameEt;
-    @BindView(R.id.passwd_et)
-    EditText passwdEt;
-    @BindView(R.id.passwd_et2)
-    EditText passwdEt2;
-    @BindView(R.id.hint_et)
-    EditText hintEt;
-
     @BindView(R.id.create_btn)
     Button createBtn;
 
@@ -95,37 +82,17 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
      * 创建账户
      */
     private void createAccount(){
-       // String seed=seedEt.getText().toString().trim();
         String name=nameEt.getText().toString();
-        String passwd=passwdEt.getText().toString();
-        String passwd2=passwdEt2.getText().toString();
-        String hint=hintEt.getText().toString();
 
-        if (!Validator.check(getContext(), Validator.Type.Name,name,getString(R.string.wallet_name_invalid)))
-        {
+        if (!Validator.check(getContext(), Validator.Type.Name,name,getString(R.string.wallet_name_invalid))) {
             return;
         }
-
-//        if (AccountsManager.getInstance().hasAccountForSeed(seed)){
-//            Toast.makeText(getContext(),"此账户以及存在",Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-
         if (AccountsManager.getInstance().hasAccountForName(name)){
             AppUtil.toastError(getContext(),getString(R.string.wallet_name_exist));
             return;
         }
 
-        if (!Validator.check(getContext(), Validator.Type.Password,passwd,getString(R.string.password_short))){
-            return;
-        }
-        if (!passwd.equals(passwd2)){
-            AppUtil.toastError(getContext(),getString(R.string.password_inconsistency));
-            return;
-        }
-
-
-        presenter.storeAccount(null,name,passwd,hint);
+        presenter.storeAccount(name);
         showHUD();
     }
 
@@ -173,7 +140,6 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
 
     @Override
     public void displayCreateAccountResult(boolean res, String msg, String secret) {
-
         if (getActivity()==null)
             return;
         dismissHUD();
@@ -183,19 +149,6 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         }else {
             AppUtil.toastError(getContext(),msg);
         }
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                if (getArguments()!=null &&  FirstStartActivity.class.getName().equals(getArguments().getString("clazz"))){
-//                    Intent intent =new Intent(getActivity(), MainTabActivity.class);
-//                    startActivity(intent);
-//                    ActivityStackManager.getInstance().finishAll();
-//                }else {
-//                    getActivity().finish();
-//                }
-//            }
-//        }, 500);
 
     }
 
@@ -210,7 +163,7 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
     }
 
     private void finishPage(){
-        if (getArguments()!=null &&  FirstStartActivity.class.getName().equals(getArguments().getString("clazz"))){
+        if (getArguments()!=null &&  ImportOrCreateAccoutActivity.class.getName().equals(getArguments().getString("clazz"))){
             Intent intent =new Intent(getActivity(), MainTabActivity.class);
             startActivity(intent);
             ActivityStackManager.getInstance().finishAll();
@@ -223,7 +176,7 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         if (secret!=null) {
             Bundle bundle = new Bundle();
             bundle.putString("secret", secret);
-            if (getArguments()!=null &&  FirstStartActivity.class.getName().equals(getArguments().getString("clazz"))){
+            if (getArguments()!=null &&  ImportOrCreateAccoutActivity.class.getName().equals(getArguments().getString("clazz"))){
                 bundle.putInt("action", SecretBackupActivity.Action.BackupFromStart.getValue());
             }else {
                 bundle.putInt("action", SecretBackupActivity.Action.BackupFromInApp.getValue());
@@ -253,7 +206,6 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
                 goback();
 
             }
-        }).show()
-        ;
+        }).show();
     }
 }

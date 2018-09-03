@@ -50,6 +50,7 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
     }
 
     private Account getAccount(){
+        AccountsManager.getInstance().getCurrentAccount();
         return AccountsManager.getInstance().getCurrentAccount();
     }
 

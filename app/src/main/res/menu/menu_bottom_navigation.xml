@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/item_assets"
-        android:icon="@mipmap/tab_property_nor"
-        android:title="@string/assets" />
+        android:icon="@drawable/tab_asch_nor"
+        android:title="@string/asch" />
 
     <item
         android:id="@+id/item_discovery"
-        android:icon="@mipmap/tab_app_nor"
+        android:icon="@drawable/tab_app_nor"
         android:title="@string/discovery" />
 
     <item
         android:id="@+id/item_mine"
-        android:icon="@mipmap/tab_my_nor"
+        android:icon="@drawable/tab_my_nor"
         android:title="@string/mine" />
 
 </menu>

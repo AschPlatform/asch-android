@@ -42,7 +42,7 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
     }
 
     @Override
-    public void storeAccount(String seed, String name, String password, String hint) {
+    public void storeAccount(String name) {
 
        Observable<Account> observable =  Observable.create(new Observable.OnSubscribe<Account>() {
 
@@ -58,7 +58,7 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
                     return;
                 }
                 tmpSecret=secret;
-                Account account=createAccount(secret, name,password,hint);
+                Account account=createAccount(secret, name);
                 if (account!=null){
                     subscriber.onNext(account);
                     subscriber.onCompleted();
@@ -115,10 +115,8 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
     /**
      * 创建账户
      * @param name
-     * @param passwd
-     * @param hint
      */
-    private Account createAccount(String secret,String name, String passwd, String hint){
+    private Account createAccount(String secret,String name){
 
         try {
             String pubKey = AschSDK.Helper.getPublicKey(secret);
@@ -131,11 +129,10 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
             account.setPublicKey(pubKey);
             account.setAddress(address);
             account.setName(name);
-            account.setPasswd(passwd);
-            account.setHint(hint);
-            AccountSecurity.encryptAccount(account,passwd);
+
+            AccountSecurity.encryptAccount(account);
             account.setSeed(null);
-            account.setPasswd(null);
+
             return account;
 //            AccountsManager.getInstance().addAccount(account);
 //            AppConfig.putLastAccountAddress(account.getAddress());
@@ -146,9 +143,7 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
     }
 
     @Override
-    public void subscribe() {
-
-    }
+    public void subscribe() { }
 
     @Override
     public void unSubscribe() {

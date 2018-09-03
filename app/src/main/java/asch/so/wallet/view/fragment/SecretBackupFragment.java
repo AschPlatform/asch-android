@@ -1,5 +1,6 @@
 package asch.so.wallet.view.fragment;
 
+import android.accounts.AccountManager;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.SecretBackupContract;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.SecretBackupPresenter;
 import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
@@ -45,8 +48,8 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
          View rootView =inflater.inflate(R.layout.fragment_secret_backup,container,false);
         ButterKnife.bind(this,rootView);
         copyBtn.setOnClickListener(this);
-       String secret=getArguments().getString("secret");
-        secretTv.setText(secret);
+        String password=getArguments().getString("password");
+        secretTv.setText(Account.decryptSecret(password));
         showAlertDialog();
         presenter=new SecretBackupPresenter(getContext(),this);
         return rootView;

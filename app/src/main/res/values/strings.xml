@@ -22,18 +22,43 @@
     </string>
     <string name="title_activity_vote">VoteActivity</string>
 
+    <!--TODO：没翻译的-->
+    <string name="wallet_slogan">轻 松 管 理 你 的 资 产</string>
+    <string name="init_wallet">初始化钱包</string>
+    <string name="wallet_pwd">钱包密码</string>
+    <string name="ensure_wallet_pwd">确认钱包密码</string>
+    <string name="set_password_info">*请输入 8位钱包密码，需要同时满足字母、数字</string>
+    <string name="password_unvalid">请输入8到16位，包含字母、数字</string>
+    <string name="account_remark_hint">*6-12位字母、数字、下划线</string>
+    <string name="secret_key_hint">输入助记词、用空格分开</string>
+    <string name="secure_setting">安全设置</string>
+    <string name="account_backup">账户备份</string>
+    <string name="second_pwd">二级密码</string>
+    <string name="enter_wallet_pwd">请输入钱包密码</string>
+    <string name="backup_attention">注意！拥有钱包私钥就能完全控制钱包资产。\n因此强烈建议你使用钱包前做好备份，
+    将钱包私钥保存到安全的地方</string>
+    <string name="backup_now">立即备份</string>
+    <string name="backup_info">钱包助记词用于恢复钱包资产，拥有钱包私钥就能完全控制钱包资产，请务必妥善保管，
+    丢失助记词即丢失钱包资产，ASCH不储存用户助记词，无法提供找回功能</string>
+    <string name="backup_order">请根据你记下的助记词，按照顺序点击，验证你备份的助记词正确无误</string>
+    <string name="check_order_err">请按顺序点选助记词，以确认您的备份无误</string>
+    <string name="check_order_success">备份成功！</string>
+    <string name="check_order_success_content">请妥善保管您的助记词</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="asch">Asch</string>
     <string name="phone_wallet">手机钱包</string>
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
-    <string name="create_account">创建账户</string>
-    <string name="import_account">导入账户</string>
+    <string name="add_account">添加账户</string>
+    <string name="create_account">创建新账户</string>
+    <string name="set_wallet_pwd">设置钱包密码</string>
+    <string name="import_account">导入旧账户</string>
     <string name="terms_service">默认阅读并同意阅读条款</string>
     <string name="service_term">服务条款</string>
     <string name="read_service">请仔细阅读并同意服务条款</string>
-    <string name="photo_permission">扫描二维码需要打开相机和散光灯的权限</string>
+    <string name="photo_permission">扫描二维码需要打开相机和闪光灯的权限</string>
     <string name="photo_permission_content">
         图片选择需要以下权限:
 
@@ -41,7 +66,7 @@
 
         2.拍照</string>
     <string name="secret_key">私钥</string>
-    <string name="secret_key_hint">私钥（BIP39格式，可扫码输入）</string>
+
     <string name="secret_key_null">私钥不能为空</string>
     <string name="secret_key_error">私钥格式不符合BIP39规范</string>
     <string name="wallet_name_invalid">钱包名称不符合要求</string>
@@ -53,8 +78,8 @@
     <string name="password_input_hint">密码(不少于8位字符)</string>
     <string name="password_repeat">重复密码</string>
     <string name="password_hint">密码提示（可不填）</string>
-    <string name="account_hint">账户名称（只能是字母、数字、下划线）</string>
-    <string name="remark_hint">注：请备份好你的密码，该账户不提供密码找回功能，密码用于加密保护私钥，强度非常重要。</string>
+    <string name="account_hint">账户备注</string>
+    <string name="remark_hint">注意：请备份好你的密码，该账户不提供密码找回功能，密码用于加密保护私钥，强度非常重要。</string>
     <string name="safety_tip">安全提示</string>
     <string name="account_creation_success">尊敬的用户您好，当前账户已经创建成功，为了账户资金安全考虑，务必请您对账户进行备份！</string>
     <string name="out_off_hint">再按一次退出程序</string>

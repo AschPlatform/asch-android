@@ -16,6 +16,6 @@ public interface AccountImportContract {
     }
 
     interface Presenter extends BasePresenter{
-        void importAccount(String seed, String name, String password, String hint);
+        void importAccount(String seed, String name);
     }
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#FFFF9A28</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="tab_checked">#3F51B5</color>
+    <color name="tab_checked">#FFFF9A28</color>
     <color name="tab_unchecked">#757575</color>
     <color name="black_shade">#666666</color>
     <color name="divider_color">#F3F3F3</color>
@@ -13,4 +13,5 @@
     <color name="button_bg_pre">#0E4DA4</color>
     <color name="menu_divider">#33FFFFFF</color>
     <color name="update_btn_color">#32b3e3</color>
+    <color name="main_color">#FFFF9A28</color>
 </resources>

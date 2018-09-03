@@ -20,7 +20,9 @@ public interface DAppDepositContract {
 
     interface Presenter extends BasePresenter{
 
-        void transfer( String dappId, String currency, long amount, String message, String secret, String secondSecret, String password);
+        default void transfer(String dappId, String currency, long amount, String message, String secret, String secondSecret, String password) {
+
+        }
 
         void loadAssets(String currency, boolean ignoreCache);
     }

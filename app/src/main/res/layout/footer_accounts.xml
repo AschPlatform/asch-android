@@ -19,7 +19,7 @@
     android:textColor="#333333"
     android:textSize="15sp"
     android:layout_marginLeft="10dp"
-    android:text="@string/create_account"
+    android:text="@string/add_account"
     />
 </LinearLayout>
     <View

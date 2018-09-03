@@ -25,7 +25,7 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label">
         <activity android:name="asch.so.base.activity.BaseActivity" />
-        <activity android:name=".activity.FirstStartActivity">
+        <activity android:name=".activity.ImportOrCreateAccoutActivity">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -52,10 +52,21 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+        <activity android:name=".activity.CheckPasswordActivity"></activity>
+        <activity android:name=".activity.SecureSettingActivity"></activity>
+
+        <activity android:name=".activity.AccountBackUpCheckOrderActivity"/>
+        <activity android:name=".activity.AccountBackUpShowMnemonicActivity"/>
+        <activity android:name=".activity.AccountBackUpAttentionActivity"></activity>
         <activity android:name=".activity.AccountsActivity" />
         <activity
             android:name=".activity.AccountImportActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".activity.InitWalletActivity"></activity>
+        <activity
+            android:name=".activity.SetWalletPwdActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            />
         <activity
             android:name=".activity.AccountCreateActivity"
             android:windowSoftInputMode="adjustPan|adjustResize" />

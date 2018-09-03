@@ -68,7 +68,7 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
         subscriptions.clear();
     }
 
-    private  Observable<Account> createNewAccountObservable(String secret, String name, String password, String hint){
+    private  Observable<Account> createNewAccountObservable(String secret, String name){
       return  Observable.create(new Observable.OnSubscribe<Account>() {
 
             @Override
@@ -77,7 +77,7 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
                     subscriber.onError(new Throwable("1"));
                     return;
                 }
-                Account account=createAccount(secret, name,password,hint);
+                Account account=createAccount(secret, name);
                 if (account!=null){
                     subscriber.onNext(account);
                     subscriber.onCompleted();
@@ -122,8 +122,8 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
     }
 
     @Override
-    public void importAccount(String secret, String name, String password, String hint) {
-        Observable<Account> newAccoutObservable = createNewAccountObservable(secret,name,password,hint);
+    public void importAccount(String secret, String name) {
+        Observable<Account> newAccoutObservable = createNewAccountObservable(secret,name);
         //rx.Observable<FullAccount> loginObservable = AccountsManager.getInstance().createLoginAccountObservable("");
         Observable<Account> flatMapObservable =  newAccoutObservable.flatMap(new Func1<Account, Observable<Account>>() {
             @Override
@@ -219,21 +219,21 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
     }
 
 
-    private Account createAccount(String secret,String name, String passwd, String hint){
+    private Account createAccount(String secret,String name){
 
         try {
             String publicKey=AschSDK.Helper.getPublicKey(secret);
             String address=AschFactory.getInstance().getSecurity().getAddress(publicKey);
             Account account=new Account();
             account.setName(name);
-            account.setPasswd(passwd);
+
             account.setPublicKey(publicKey);
             account.setAddress(address);
-            account.setHint(hint);
+
             account.setSeed(secret);
-            AccountSecurity.encryptAccount(account,passwd);
+            AccountSecurity.encryptAccount(account);
             account.setSeed(null);
-            account.setPasswd(null);
+
             return account;
         } catch (SecurityException e) {
             e.printStackTrace();

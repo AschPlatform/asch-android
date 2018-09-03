@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.activity.BaseActivity;
@@ -22,32 +21,26 @@ import butterknife.ButterKnife;
  * 第一次创建钱包的页面
  */
 
-public class FirstStartActivity extends BaseActivity implements View.OnClickListener{
+public class ImportOrCreateAccoutActivity extends BaseActivity implements View.OnClickListener{
 
     @BindView(R.id.create_btn)
     Button createBtn;
     @BindView(R.id.import_btn)
     Button importBtn;
-    @BindView(R.id.checkBox)
-    CheckBox checkBox;
-    @BindView(R.id.term_tv)
-    TextView termTv;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_first_start);
+        setContentView(R.layout.activity_import_or_create);
 
         ButterKnife.bind(this);
         createBtn.setOnClickListener(this);
         importBtn.setOnClickListener(this);
-        checkBox.setOnClickListener(this);
-        termTv.setOnClickListener(this);
+
         StatusBarUtil.immersive(this);
         AppUtil.updateApp(this);
     }
-
-
 
     @Override
     protected void onDestroy() {
@@ -57,20 +50,12 @@ public class FirstStartActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         if (view==createBtn){
-            if (checkBox.isChecked()){
-                Bundle bundle=new Bundle();
-                bundle.putString("clazz",FirstStartActivity.class.getName());
-                start(this,AccountCreateActivity.class,bundle);
-            }else {
-                AppUtil.toastWarning(this,getString(R.string.read_service));
-            }
-
+            Bundle bundle=new Bundle();
+            bundle.putString("clazz",ImportOrCreateAccoutActivity.class.getName());
+            start(this,AccountCreateActivity.class,bundle);
         }else if (view==importBtn){
             Intent intent=new Intent(this,AccountImportActivity.class);
             startActivityForResult(intent,AccountImportActivity.REQUEST_CODE_FROM_START);
-        }else if (view==termTv){
-            Intent intent=new Intent(this,TermServiceActivity.class);
-            startActivity(intent);
         }
     }
 

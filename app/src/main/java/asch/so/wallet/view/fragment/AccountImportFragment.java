@@ -1,7 +1,6 @@
 package asch.so.wallet.view.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -11,17 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-import asch.so.base.activity.ActivityStackManager;
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
-import asch.so.wallet.activity.FirstStartActivity;
-import asch.so.wallet.activity.MainTabActivity;
 import asch.so.wallet.contract.AccountImportContract;
 import asch.so.wallet.presenter.AccountImportPresenter;
 import asch.so.wallet.util.AppUtil;
@@ -38,19 +32,8 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
 
     @BindView(R.id.seed_et)
     EditText seedEt;
-
     @BindView(R.id.name_et)
     EditText nameEt;
-
-    @BindView(R.id.passwd_et)
-    EditText passwdEt;
-
-    @BindView(R.id.passwd_et2)
-    EditText passwdEt2;
-
-    @BindView(R.id.hint_et)
-    EditText hintEt;
-
     @BindView(R.id.import_btn)
     Button importBtn;
 
@@ -60,14 +43,11 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
     KProgressHUD hud=null;
 
     public static AccountImportFragment newInstance() {
-        
         Bundle args = new Bundle();
-        
         AccountImportFragment fragment = new AccountImportFragment();
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +57,7 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_account_import,container, false);
-       unbinder = ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         Context ctx=this.getContext();
 
         importBtn.setOnClickListener(new View.OnClickListener() {
@@ -97,48 +77,24 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
     private void importAccount(){
 
         String name = nameEt.getText().toString().trim();
-        String passwd = passwdEt.getText().toString().trim();
-        String passwd2=passwdEt2.getText().toString().trim();
-        String hint=hintEt.getText().toString().trim();
         String seed=seedEt.getText().toString().trim();
         if (TextUtils.isEmpty(seed)){
             AppUtil.toastError(getContext(),getString(R.string.secret_key_null));
             return;
         }
-        if (!Validator.check(getContext(), Validator.Type.Secret,seed,getString(R.string.secret_key_error)))
-        {
+        if (!Validator.check(getContext(), Validator.Type.Secret,seed,getString(R.string.secret_key_error))) {
             return;
         }
-
-//        if (AccountsManager.getInstance().hasAccountForSeed(seed)){
-//            Toast.makeText(getContext(),"此账户以及存在",Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-
-
-        if (!Validator.check(getContext(), Validator.Type.Name,name,getString(R.string.wallet_name_invalid)))
-        {
+        if (!Validator.check(getContext(), Validator.Type.Name,name,getString(R.string.wallet_name_invalid))) {
             return;
         }
-
         if (AccountsManager.getInstance().hasAccountForName(name)){
             AppUtil.toastError(getContext(),getString(R.string.wallet_name_exist));
             return;
         }
 
-        if (!Validator.check(getContext(), Validator.Type.Password,passwd,getString(R.string.password_short))){
-            return;
-        }
-        if (!passwd.equals(passwd2)){
-            AppUtil.toastError(getContext(),getString(R.string.password_inconsistency));
-            return;
-        }
-
-        presenter.importAccount(seed,name,passwd,hint);
+        presenter.importAccount(seed,name);
         showHUD();
-//        Toast.makeText(getContext(),"导入成功",Toast.LENGTH_SHORT).show();
-//        getActivity().setResult(1);
-//        getActivity().finish();
     }
 
 
@@ -147,7 +103,6 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
         super.onDestroyView();
         unbinder.unbind();
         presenter.unSubscribe();
-
     }
 
     @Override
@@ -203,7 +158,7 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
             @Override
             public void run() {
                 getActivity().setResult(1);
-//                if (getArguments()!=null && FirstStartActivity.class.getName().equals(getArguments().getString("clazz"))){
+//                if (getArguments()!=null && ImportOrCreateAccoutActivity.class.getName().equals(getArguments().getString("clazz"))){
 //                    Intent intent =new Intent(getActivity(), MainTabActivity.class);
 //                    startActivity(intent);
 //                    ActivityStackManager.getInstance().finishAll();
@@ -212,7 +167,6 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
                 //}
             }
         }, 500);
-
     }
 
     //设置种子

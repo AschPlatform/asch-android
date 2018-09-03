@@ -19,6 +19,8 @@ public class AppConfig {
     private  static String language=null;
     private  static  final  String NODE_URL_KEY="nodeURLKey";
     private  static String nodeURL=null;
+    private  static final  String WALLET_PWD = "walletPwd";
+    private  static final  String PWD_KEY = "pwdKey";
 
 
     public static void init(Context context){
@@ -124,6 +126,29 @@ public class AppConfig {
             Hawk.delete(NODE_URL_KEY);
         }
         nodeURL=null;
+    }
+
+    public static void putWalletPwd(String pwd){
+        Hawk.put(WALLET_PWD,pwd);
+    }
+
+    public static String getWalletPwd(){
+        return Hawk.get(WALLET_PWD);
+    }
+
+    public static void deleteWalletPwd(){
+        if (Hawk.contains(WALLET_PWD))
+        {
+            Hawk.delete(WALLET_PWD);
+        }
+    }
+
+    public static void putPwdKey(String pwd){
+        Hawk.put(PWD_KEY,pwd);
+    }
+
+    public static String getPwdKey(){
+        return Hawk.get(PWD_KEY);
     }
 
     public static void clear(){

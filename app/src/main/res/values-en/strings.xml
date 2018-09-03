@@ -34,12 +34,14 @@
     <string name="phone_wallet">Mobile Wallet</string>
     <string name="confirm">confirm</string>
     <string name="cancel">cancel</string>
+    <string name="add_account">Add Account</string>
     <string name="create_account">Create Account</string>
+    <string name="set_wallet_pwd">Set Wallet Password</string>
     <string name="import_account">Import Account</string>
     <string name="terms_service">Read acquiescently and agree to the above terms and conditions</string>
     <string name="service_term">Service Term</string>
     <string name="read_service">Please read carefully and agree to the service terms</string>
-    <string name="photo_permission">Scanning the QR code requires the permission of the camera and floodlight</string>
+    <string name="photo_permission">Scanning the QR code requires the permission of the camera and flash light</string>
     <string name="photo_permission_content">
 	 choosing photos requires the following permissions:
 
@@ -47,7 +49,7 @@
 
 	2.photographing</string>
     <string name="secret_key">Secret Key</string>
-    <string name="secret_key_hint">Secret key（BIP39）,which can be scanned to input</string>
+
     <string name="secret_key_null">Secret key cannot be vacant</string>
     <string name="secret_key_error">The format of secret key is unmatched with BIP39</string>
     <string name="wallet_name_invalid">Wallet name doesn’t meet the requirement</string>
@@ -59,7 +61,7 @@
     <string name="password_input_hint">Password</string>
     <string name="password_repeat"> Confirm password</string>
     <string name="password_hint">Password hint(may not fill）</string>
-    <string name="account_hint"><font size="12">Account name(only letters, figures and underscore character)</font></string>
+    <string name="account_hint"><font size="12">Account remark</font></string>
     <string name="remark_hint">Remark: Please backup your password. This account does not have the function of finding password. Password is used for cryptography to protect secret key and the strength is very important.</string>
     <string name="safety_tip">Safety tips</string>
     <string name="account_creation_success">Dear users, the account is created successfully. In order to protect the assets’ safety, please backup your account!</string>

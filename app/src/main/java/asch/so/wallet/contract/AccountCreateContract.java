@@ -22,11 +22,8 @@ public interface AccountCreateContract {
 
         /**
          * 存储账户信息
-         * @param seed
          * @param name
-         * @param password
-         * @param hint
          */
-        void storeAccount(String seed, String name, String password, String hint);
+        void storeAccount(String name);
     }
 }

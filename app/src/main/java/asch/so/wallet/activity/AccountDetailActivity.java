@@ -20,6 +20,7 @@ import asch.so.base.fragment.BaseDialogFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.contract.AccountDetailContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountDetailPresenter;
@@ -104,7 +105,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
     private void copyAddress(){
         String address=addressTv.getText().toString().trim();
-        if (!TextUtils.isEmpty(address)){
+    if (!TextUtils.isEmpty(address)){
             AppUtil.copyText(this,address);
         }
     }
@@ -127,10 +128,11 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                 public void onClick(BaseDialogFragment dialog, int which) {
                     EditText editText = dialog.getDialog().findViewById(R.id.passwd_et);
                     String inputPasswd=editText.getText().toString().trim();
-                    String secret=AccountsManager.getInstance().getCurrentAccount().decryptSecret(inputPasswd);
-                    if (secret!=null){
+
+                    String password= Wallet.getInstance().decryptPassword(inputPasswd);
+                    if (password!=null){
                         Bundle bundle=new Bundle();
-                        bundle.putString("secret",secret);
+                        bundle.putString("password",password);
                         bundle.putInt("action", SecretBackupActivity.Action.BackupFromAccountDetail.getValue());
                         BaseActivity.start(thiz,SecretBackupActivity.class,bundle);
                         dialog.dismiss();
@@ -166,7 +168,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                     AppUtil.toastError(thiz,getString(R.string.account_input_title));
                     return;
                 }
-                if ( AccountsManager.getInstance().getCurrentAccount().checKPassword(inputPasswd)){
+                if ( Wallet.getInstance().checkPassword(inputPasswd)){
                     AccountsManager.getInstance().removeCurrentAccount();
                     AppUtil.toastSuccess(thiz,getString(R.string.delete_success));
                     dialog.dismiss();

@@ -23,6 +23,7 @@ import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
+import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.CoreAsset;
 import asch.so.wallet.model.entity.FullAccount;
@@ -74,6 +75,47 @@ public class Wallet {
         instance=new Wallet(ctx);
     }
 
+    public  Boolean isSetedPwd(){
+        if(AppConfig.getWalletPwd()!=null && !AppConfig.getWalletPwd().isEmpty()) {
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
+    private String getEncryptPasswd(){
+        return AppConfig.getWalletPwd();
+    }
+
+    public void setEncryptPasswd(String encryptPwd){
+        AppConfig.putWalletPwd(encryptPwd);
+    }
+
+    public void setPwdKey(String encryptPwd){
+        AppConfig.putPwdKey(encryptPwd);
+    }
+
+    public String getPwdKey(){
+        return AppConfig.getPwdKey();
+    }
+
+    public boolean checkPassword(String passwd){
+        if (passwd==null || passwd.length()==0)
+            return false;
+        String decryptPasswd= AccountSecurity.decryptPassword(getEncryptPasswd(),passwd);
+        return passwd.equals(decryptPasswd);
+    }
+
+    public  String decryptPassword(String passwd){
+        if (passwd==null || passwd.length()==0)
+            return null;
+        String decryptPassword= AccountSecurity.decryptPassword(getEncryptPasswd(),passwd);
+        return decryptPassword;
+    }
+
+
+
     public MnemonicCode getMnemonicCode() {
         return mnemonicCode;
     }
@@ -85,6 +127,8 @@ public class Wallet {
     public void setAllssets(LinkedHashMap<String, BaseAsset> allssets) {
         this.allssets = allssets;
     }
+
+
 
     public  rx.Observable<List<UIAAsset>> createLoadAllAssetsObservable(boolean ignoreCache){
         return rx.Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){

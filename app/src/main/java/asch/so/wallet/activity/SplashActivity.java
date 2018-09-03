@@ -44,7 +44,7 @@ public class SplashActivity extends BaseActivity {
                 if (AccountsManager.getInstance().getCurrentAccount()!=null){
                      intent = new Intent(SplashActivity.this, MainTabActivity.class);
                 }else {
-                     intent = new Intent(SplashActivity.this, FirstStartActivity.class);
+                     intent = new Intent(SplashActivity.this, InitWalletActivity.class);
                 }
                 SplashActivity.this.startActivity(intent);
                 finish();

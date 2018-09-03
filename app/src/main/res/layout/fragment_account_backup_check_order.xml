@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/page_bg"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:id="@+id/backup_order"
+        android:text="@string/backup_order"
+        android:textSize="12sp"
+        android:background="@null"
+        android:textColor="@color/dark_gray"
+        android:layout_alignParentTop="true"
+        />
+
+
+    <TextView
+        android:id="@+id/backup_order_mnemonic"
+        android:layout_height="100dp"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:text=""
+        android:background="@color/white"
+        android:layout_below="@id/backup_order"
+        android:textSize="15sp"
+        android:textColor="@color/dark_gray"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/tag_group"
+        android:layout_below="@+id/backup_order_mnemonic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:padding="10dp"
+        android:background="@null"
+
+        app:vertical_interval="10dp"
+        app:horizontal_interval="10dp"
+        app:container_gravity="center"
+        app:container_enable_drag="false"
+        app:container_background_color = "#00000000"
+
+        app:tag_clickable="true"
+        app:tag_background_color="@color/tag_gray"
+        app:tag_border_color = "@color/tag_gray"
+        app:tag_text_color="@color/white"
+        app:tag_theme="none"
+        app:tag_ripple_duration="200"/>
+
+
+    <Button
+        android:id="@+id/backup_order_next"
+        style="@style/PrimaryButton.Style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:layout_marginHorizontal="20dp"
+        android:textColor="@color/white"
+        android:layout_below="@+id/tag_group"
+        android:layout_marginTop="30dp"
+        android:textSize="@dimen/btn_text_size"
+        android:text="@string/next"/>
+
+</RelativeLayout>

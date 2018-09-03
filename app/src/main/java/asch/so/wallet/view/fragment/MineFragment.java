@@ -10,6 +10,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,7 @@ import asch.so.wallet.activity.BlockBrowseActivity;
 import asch.so.wallet.activity.BlockInfoActivity;
 import asch.so.wallet.activity.LockCoinsActivity;
 import asch.so.wallet.activity.PeersActivity;
+import asch.so.wallet.activity.SecureSettingActivity;
 import asch.so.wallet.activity.TodoActivity;
 import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.activity.VoteActivity;
@@ -42,12 +44,14 @@ import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.MineContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.MinePresenter;
+import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.IdenticonGenerator;
 import asch.so.wallet.view.adapter.MineAdapter;
 import asch.so.wallet.view.entity.MineItem;
 import asch.so.wallet.view.entity.MineSection;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by kimziv on 2017/9/21.
@@ -63,7 +67,9 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     @BindView(R.id.address_tv)
     TextView addressTv;
     @BindView(R.id.ident_icon)
-    ImageView identicon;
+    CircleImageView identicon;
+    @BindView(R.id.copy_address)
+    View copyView;
 
     private List<MineSection> itemList=new ArrayList<>();
     private MineAdapter adapter =new MineAdapter(itemList);
@@ -89,6 +95,12 @@ public class MineFragment extends BaseFragment implements MineContract.View{
         View rootView = inflater.inflate(R.layout.fragment_mine, container,false);
         ButterKnife.bind(this,rootView);
 
+        copyView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                copyAddress();
+            }
+        });
         mineRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         mineRcv.setItemAnimator(new DefaultItemAnimator());
         mineRcv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
@@ -106,6 +118,12 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                             startActivity(intent);
                         }
                         break;
+                        case R.mipmap.icon_safe:{
+                            Intent intent = new Intent(getActivity(), SecureSettingActivity.class);
+                            startActivity(intent);
+                        }
+                        break;
+
                         case R.mipmap.my_bill:
                         {
                             BaseActivity.start(getActivity(), TransactionsActivity.class, new Bundle());
@@ -170,6 +188,13 @@ public class MineFragment extends BaseFragment implements MineContract.View{
         return rootView;
     }
 
+    private void copyAddress(){
+        String address=((TextView)copyView.findViewById(R.id.address_tv)).getText().toString().trim();
+        if (!TextUtils.isEmpty(address)){
+            AppUtil.copyText(getActivity(),address);
+        }
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -193,6 +218,7 @@ public class MineFragment extends BaseFragment implements MineContract.View{
         IdenticonGenerator.getInstance().generateBitmap(account.getPublicKey(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {
+
                 identicon.setImageBitmap(bmp);
             }
         });

@@ -6,8 +6,14 @@ import com.blankj.utilcode.util.LogUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
+import asch.so.wallet.AppConfig;
+import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.model.entity.Account;
+import so.asch.sdk.codec.Encoding;
+import so.asch.sdk.security.DefaultSecurityStrategy;
 
 import static asch.so.wallet.crypto.AesCbcWithIntegrity.*;
 
@@ -21,50 +27,11 @@ public class AccountSecurity {
 
     private static final byte[] salt = "Asch_Wallet_Security_Initialize_".getBytes();
 
-    /**
-     * 加密用户信息
-     * @param account
-     * @param passwd
-     * @return
-     */
-    public static Account encryptAccount(Account account,String passwd){
+    private static String encryptPwd(String pwd){
         try {
-            SecretKeys key =generateKeyFromPassword(passwd,saltString(salt));
-            AesCbcWithIntegrity.CipherTextIvMac civ =encrypt(account.getSeed(), key);
-            LogUtils.iTag(TAG, "Encrypted: " + civ.toString());
-            account.setEncryptSeed(civ.toString());
-            AesCbcWithIntegrity.CipherTextIvMac civ2 =encrypt(passwd, key);
-            account.setEncryptPasswd(civ2.toString());
-            return account;
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
-     * 解密用户信息
-     * @param account
-     * @param passwd
-     * @return
-     */
-    public static Account decryptAccount(Account account, String passwd){
-
-        try {
-            SecretKeys key =generateKeyFromPassword(passwd,saltString(salt));
-            CipherTextIvMac civ =new CipherTextIvMac(account.getEncryptSeed());
-            String decrytText = decryptString(civ, key);
-            account.setSeed(decrytText);
-
-            CipherTextIvMac civ2 =new CipherTextIvMac(account.getEncryptPasswd());
-            String decrytText2 = decryptString(civ2, key);
-            account.setSeed(decrytText2);
-
-            return account;
-
+            SecretKeys key =generateKeyFromPassword(pwd,saltString(salt));
+            AesCbcWithIntegrity.CipherTextIvMac civ =encrypt(pwd, key);
+            return civ.toString();
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -73,10 +40,28 @@ public class AccountSecurity {
         return null;
     }
 
-    public static String decryptPassword(String encryptPasswd, String passwd){
 
+    /**
+     * 加密钱包
+     * @param pwd
+     * @return
+     */
+    public static Wallet encryptWallet(Wallet wallet, String pwd){
+        wallet.setEncryptPasswd(encryptPwd(pwd));
+        String pwdKey = genWalletPwdKey(pwd);
+        Wallet.getInstance().setPwdKey(pwdKey);
+        return wallet;
+    }
+
+
+    /**
+     * 解密钱包密码
+     * @param pwd
+     * @return
+     */
+    public static String decryptPassword(String encryptPasswd, String pwd){
         try {
-            SecretKeys key =generateKeyFromPassword(passwd,saltString(salt));
+            SecretKeys key =generateKeyFromPassword(pwd,saltString(salt));
             CipherTextIvMac civ =new CipherTextIvMac(encryptPasswd);
             String decrytText = decryptString(civ, key);
             return  decrytText;
@@ -88,10 +73,48 @@ public class AccountSecurity {
         return null;
     }
 
-    public static String decryptSecret(String encryptSecret, String passwd){
 
+    /**
+     * 生成pwdKey，用于加密seed
+     * @param pwd
+     * @return
+     */
+    public static String genWalletPwdKey(String pwd){
         try {
-            SecretKeys key =generateKeyFromPassword(passwd,saltString(salt));
+            MessageDigest digest =  MessageDigest.getInstance("SHA-256");
+            digest.update(pwd.getBytes());
+            return new String(Encoding.hex(digest.digest()));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    /**
+     * 加密用户信息
+     * @param account
+     * @return
+     */
+    public static Account encryptAccount(Account account){
+        try {
+            SecretKeys key =generateKeyFromPassword(Wallet.getInstance().getPwdKey(),saltString(salt));
+            AesCbcWithIntegrity.CipherTextIvMac civ =encrypt(account.getSeed(), key);
+            account.setEncryptSeed(civ.toString());
+            return account;
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+
+    public static String decryptSecret(String encryptSecret, String passwd){
+        try {
+            SecretKeys key =generateKeyFromPassword(genWalletPwdKey(passwd),saltString(salt));
             CipherTextIvMac civ =new CipherTextIvMac(encryptSecret);
             String decrytText = decryptString(civ, key);
             return  decrytText;
