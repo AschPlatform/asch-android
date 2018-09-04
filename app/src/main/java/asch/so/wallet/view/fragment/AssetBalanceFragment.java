@@ -233,10 +233,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
             startActivity(intent);
         }
-//        else if (view.getId() == R.id.transactions_ll) {
-//            moreEasyPopup.dismiss();
-//            BaseActivity.start(getActivity(), TransactionsActivity.class, new Bundle());
-//        }
+
     }
 
     private void showPopupMenu(View view, int offsetX, int offsetY) {
@@ -329,7 +326,6 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     public void displayError(java.lang.Throwable ex) {
        String errToast= AppUtil.extractInfoFromError(getContext(), ex);
         AppUtil.toastError(getContext(),errToast);
-//        AppUtil.toastError(getContext(),ex==null?getString(R.string.net_error):ex.getMessage());
         refreshLayout.finishRefresh(1000);
     }
 }
