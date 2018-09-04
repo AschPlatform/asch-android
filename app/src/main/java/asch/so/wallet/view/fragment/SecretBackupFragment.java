@@ -14,6 +14,7 @@ import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.SecretBackupContract;
+import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.SecretBackupPresenter;
 import asch.so.wallet.util.AppUtil;
@@ -49,7 +50,7 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
         ButterKnife.bind(this,rootView);
         copyBtn.setOnClickListener(this);
         String password=getArguments().getString("password");
-        secretTv.setText(Account.decryptSecret(password));
+        secretTv.setText(AccountSecurity.decryptSecret(password));
         showAlertDialog();
         presenter=new SecretBackupPresenter(getContext(),this);
         return rootView;

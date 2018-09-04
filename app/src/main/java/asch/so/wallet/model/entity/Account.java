@@ -104,10 +104,10 @@ public class Account extends RealmObject{
     }
 
 
-    public static String decryptSecret(String passwd){
+    public  String decryptSecret(String passwd){
         if (passwd==null || passwd.length()==0)
             return null;
-        String decryptSecret= AccountSecurity.decryptSecret(AccountsManager.getInstance().getCurrentAccount().getEncryptSeed(),passwd);
+        String decryptSecret= AccountSecurity.decryptSecret(getEncryptSeed(),passwd);
         return decryptSecret;
     }
 

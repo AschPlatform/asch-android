@@ -66,36 +66,36 @@ public class AccountsPresenter implements AccountsContract.Presenter{
 //                .subscribe(accounts->view.displaySavedAccounts(accounts));
 //        subscriptions.add(subscription);
 //    }
-@Override
-public void loadSavedAccounts() {
+    @Override
+    public void loadSavedAccounts() {
 //    Subscription subscription= accountsDao.queryAllSavedAccounts()
 //            .subscribeOn(Schedulers.io())
 //            .observeOn(AndroidSchedulers.mainThread())
 //            .subscribe(accounts->view.displaySavedAccounts(accounts));
 //    subscriptions.add(subscription);
 
-    Subscription subscription = Observable.just(accountsDao.queryAllSavedAccounts())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .unsubscribeOn(Schedulers.io())
-            .subscribe(new Subscriber<RealmResults<Account>>() {
-                @Override
-                public void onCompleted() {
+        Subscription subscription = Observable.just(accountsDao.queryAllSavedAccounts())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .subscribe(new Subscriber<RealmResults<Account>>() {
+                    @Override
+                    public void onCompleted() {
 
-                }
+                    }
 
-                @Override
-                public void onError(Throwable e) {
+                    @Override
+                    public void onError(Throwable e) {
 
-                }
+                    }
 
-                @Override
-                public void onNext(RealmResults<Account> accounts) {
-                    view.displaySavedAccounts(accounts);
-                }
-            });
-           // .subscribe(accounts -> view.displaySavedAccounts(accounts));
-    subscriptions.add(subscription);
+                    @Override
+                    public void onNext(RealmResults<Account> accounts) {
+                        view.displaySavedAccounts(accounts);
+                    }
+                });
+               // .subscribe(accounts -> view.displaySavedAccounts(accounts));
+        subscriptions.add(subscription);
 }
 
     @Override

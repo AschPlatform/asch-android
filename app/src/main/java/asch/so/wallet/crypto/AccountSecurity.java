@@ -10,6 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import asch.so.wallet.AppConfig;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.model.entity.Account;
 import so.asch.sdk.codec.Encoding;
@@ -111,6 +112,19 @@ public class AccountSecurity {
     }
 
 
+    public static String decryptSecret(String passwd){
+        try {
+            SecretKeys key =generateKeyFromPassword(genWalletPwdKey(passwd),saltString(salt));
+            CipherTextIvMac civ =new CipherTextIvMac(AccountsManager.getInstance().getCurrentAccount().getEncryptSeed());
+            String decrytText = decryptString(civ, key);
+            return  decrytText;
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static String decryptSecret(String encryptSecret, String passwd){
         try {

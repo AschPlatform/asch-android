@@ -44,6 +44,9 @@
     <string name="check_order_err">请按顺序点选助记词，以确认您的备份无误</string>
     <string name="check_order_success">备份成功！</string>
     <string name="check_order_success_content">请妥善保管您的助记词</string>
+    <string name="account_del">输入你的助记词，使用空格分离开</string>
+    <string name="del_err">助记词不匹配，请重新检查后输入</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -54,7 +57,7 @@
     <string name="add_account">添加账户</string>
     <string name="create_account">创建新账户</string>
     <string name="set_wallet_pwd">设置钱包密码</string>
-    <string name="import_account">导入旧账户</string>
+    <string name="import_account">导入账户</string>
     <string name="terms_service">默认阅读并同意阅读条款</string>
     <string name="service_term">服务条款</string>
     <string name="read_service">请仔细阅读并同意服务条款</string>

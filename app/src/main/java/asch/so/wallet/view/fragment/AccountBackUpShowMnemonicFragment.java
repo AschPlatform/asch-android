@@ -15,6 +15,7 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.activity.AccountBackUpCheckOrderActivity;
 import asch.so.wallet.activity.AccountBackUpShowMnemonicActivity;
+import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -49,7 +50,19 @@ public class AccountBackUpShowMnemonicFragment extends BaseFragment{
         View rootView =inflater.inflate(R.layout.fragment_account_backup_show_mnemonic,container,false);
         unbinder= ButterKnife.bind(this,rootView);
         mnemonicTv.setText(getArguments().getString("seed"));
-
+        mnemonicTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppUtil.copyText(getActivity(),mnemonicTv.getText().toString());
+            }
+        });
+        mnemonicTv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AppUtil.copyText(getActivity(),mnemonicTv.getText().toString());
+                return false;
+            }
+        });
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

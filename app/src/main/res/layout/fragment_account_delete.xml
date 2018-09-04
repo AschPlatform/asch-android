@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_margin="10dp"
         android:id="@+id/tag_backup_info"
-        android:text="@string/backup_info"
+        android:text="@string/account_del"
         android:textSize="12sp"
         android:background="@null"
         android:textColor="@color/dark_gray"
@@ -21,11 +21,11 @@
         />
 
 
-    <TextView
-        android:id="@+id/backup_mnemonic"
+    <EditText
+        android:id="@+id/del_mnemonic"
         style="@style/TextLableStyle"
+        android:layout_height="150dp"
         android:text=""
-        android:longClickable="true"
         android:layout_below="@id/tag_backup_info"
         android:textSize="12sp"
         android:textColor="@color/dark_gray"
@@ -33,7 +33,7 @@
         />
 
     <Button
-        android:id="@+id/backup_next"
+        android:id="@+id/del_next"
         style="@style/PrimaryButton.Style"
         android:layout_width="match_parent"
         android:layout_height="@dimen/btn_height"

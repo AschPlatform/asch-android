@@ -6,13 +6,7 @@
     android:orientation="vertical"
     tools:context="asch.so.wallet.view.fragment.AccountsFragment"
     >
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/header"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:background="@android:color/holo_blue_light"-->
-        <!--android:layout_height="20dp"></LinearLayout>-->
-    <android.support.v7.widget.RecyclerView
+    <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
         android:id="@+id/accounts_rcv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,32 +15,6 @@
         android:dividerHeight="0dp"
         android:layout_alignParentTop="true"
         />
-
-    <LinearLayout
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/goto_create_btn"
-            style="@style/PrimaryButton.Style"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:layout_weight="1"
-            android:text="@string/create_account" />
-        <Button
-            android:id="@+id/goto_import_btn"
-            style="@style/PrimaryButton.Style"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:layout_weight="1"
-            android:text="@string/import_account" />
-
-
-    </LinearLayout>
-
 
 </RelativeLayout>
 

@@ -3,7 +3,7 @@
     <!-- 矩形的圆角弧度 -->
     <corners android:radius="3dp" />
     <!-- 矩形的填充色 -->
-    <solid android:color="@color/button_bg_nor" />
+    <solid android:color="@color/main_color" />
 
     <!-- 矩形的边框的宽度,每段虚线的长度，和两段虚线之间的颜色和颜色 -->
     <!--<stroke-->

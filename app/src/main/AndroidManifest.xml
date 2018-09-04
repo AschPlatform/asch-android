@@ -54,7 +54,7 @@
         </activity>
         <activity android:name=".activity.CheckPasswordActivity"></activity>
         <activity android:name=".activity.SecureSettingActivity"></activity>
-
+        <activity android:name=".activity.AccountDeleteActivity"/>
         <activity android:name=".activity.AccountBackUpCheckOrderActivity"/>
         <activity android:name=".activity.AccountBackUpShowMnemonicActivity"/>
         <activity android:name=".activity.AccountBackUpAttentionActivity"></activity>

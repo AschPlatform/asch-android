@@ -42,6 +42,8 @@ public class AccountsManager extends Observable {
     private Account currentAccount = null;
     //所有账户
     private ArrayList<Account> accounts = null;
+    //删除时操作的账户
+    private Account delAccount = null;
 
 
     public static AccountsManager getInstance() {
@@ -72,6 +74,14 @@ public class AccountsManager extends Observable {
                 setCurrentAccount(accounts.get(0));
             }
         }
+    }
+
+    public Account getDelAccount() {
+        return delAccount;
+    }
+
+    public void setDelAccount(Account account){
+        this.delAccount = account;
     }
 
     public Account getCurrentAccount() {
@@ -121,13 +131,14 @@ public class AccountsManager extends Observable {
      */
     public void removeAccount(Account account) {
         accounts.remove(account);
-        if (currentAccount == account) {
+        if (currentAccount.getAddress().equals(account.getAddress())) {
             if (accounts.size() > 0) {
                 setCurrentAccount(accounts.get(0));
             } else {
                 setCurrentAccount(null);
             }
         }
+        delAccount = null;
         AccountsDao.getInstance().removeAccount(account);
     }
 

@@ -2,8 +2,10 @@ package asch.so.wallet.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.SwipeDismissBehavior;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,16 +16,29 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+import com.zyyoona7.lib.EasyPopup;
+import com.zyyoona7.lib.HorizontalGravity;
+import com.zyyoona7.lib.VerticalGravity;
 
 import java.util.List;
 
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseDialogFragment;
 import asch.so.base.fragment.BaseFragment;
+import asch.so.wallet.AppConfig;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.activity.AccountCreateActivity;
 import asch.so.wallet.activity.AccountImportActivity;
+import asch.so.wallet.activity.AccountsActivity;
+import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.contract.AccountsContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountsPresenter;
@@ -41,24 +56,21 @@ import butterknife.Unbinder;
 
 public class AccountsFragment extends BaseFragment implements AccountsContract.View{
     private static final String TAG=AccountsFragment.class.getSimpleName();
+
     private final int FLAG_ADD_ACCOUNT = 0;
     private final int FLAG_IMPORT_ACCOUNT = 1;
-    private final int FLAG_DEL_ACCOUNT = 2;
+    public final int FLAG_DEL_ACCOUNT = 2;
     @BindView(R.id.accounts_rcv)
-    RecyclerView accountsRecycleView;
+    SwipeMenuRecyclerView accountsRecycleView;
     private AccountsAdapter accountsAdapter;
-
     private Unbinder unbinder;
     private AccountsContract.Presenter presenter;
 
-
-
     public static AccountsFragment newInstance() {
-        
         Bundle args = new Bundle();
-        
         AccountsFragment fragment = new AccountsFragment();
         fragment.setArguments(args);
+
         return fragment;
     }
 
@@ -72,10 +84,14 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         View rootView=inflater.inflate(R.layout.fragment_accounts, container, false);
         unbinder= ButterKnife.bind(this,rootView);
         Context ctx=rootView.getContext();
-
         accountsRecycleView.setLayoutManager(new LinearLayoutManager(ctx));
         accountsRecycleView.setItemAnimator(new DefaultItemAnimator());
         accountsRecycleView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+        accountsRecycleView.setSwipeMenuCreator(swipeMenuCreator);
+        accountsRecycleView.setSwipeMenuItemClickListener(mMenuItemClickListener);
+
+
+
         accountsAdapter=new AccountsAdapter();
         accountsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -94,76 +110,71 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         }
 
 
-        View header=LayoutInflater.from(getContext()).inflate(R.layout.footer_accounts,accountsRecycleView,false);
-        header.findViewById(R.id.create_ll).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               checkPwd(FLAG_ADD_ACCOUNT);
-            }
-        });
-        header.findViewById(R.id.import_ll).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkPwd(FLAG_IMPORT_ACCOUNT);
-            }
-        });
-        accountsAdapter.addFooterView(header);
         presenter=new AccountsPresenter(getContext(),this);
         presenter.loadSavedAccounts();
 
         return rootView;
     }
 
-    
-    private void checkPwd(int Flag){
-        InputPasswdDialog dialog = InputPasswdDialog.newInstance();
-        dialog.setOnClickListener(new BaseDialogFragment.OnClickListener() {
-            @Override
-            public void onClick(BaseDialogFragment dialog, int which) {
-                EditText editText = dialog.getDialog().findViewById(R.id.passwd_et);
-                String inputPasswd=editText.getText().toString().trim();
-                if(Wallet.getInstance().checkPassword(inputPasswd)){
-                    operateAccount(Flag,dialog);
-                }else {
-                    AppUtil.toastError(getActivity(),getString(R.string.password_error));
-                }
-            }
-        });
-        dialog.setOnCancelListener(new BaseDialogFragment.OnCancelListener() {
-            @Override
-            public void onCancel(BaseDialogFragment dialog) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show(getFragmentManager(),"operate_account");
+
+    private SwipeMenuCreator swipeMenuCreator = new SwipeMenuCreator() {
+        @Override
+        public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
+            int width = getResources().getDimensionPixelSize(R.dimen.dp_72);
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            SwipeMenuItem del = new SwipeMenuItem(getActivity())
+                    .setBackground(R.color.list_del)
+                    .setText(R.string.delete)
+                    .setTextColor(Color.WHITE)
+                    .setWidth(width)
+                    .setHeight(height);
+            swipeRightMenu.addMenuItem(del);
+        }
+    };
+
+
+    private SwipeMenuItemClickListener mMenuItemClickListener = new SwipeMenuItemClickListener() {
+        @Override
+        public void onItemClick(SwipeMenuBridge menuBridge) {
+            menuBridge.closeMenu();
+            int adapterPosition = menuBridge.getAdapterPosition();
+            delAccount( (Account) accountsAdapter.getItem(adapterPosition));
+        }
+    };
+
+    public void addAccount(){
+        checkPwd(FLAG_ADD_ACCOUNT,new Account());
     }
 
-    private void operateAccount(int Flag,BaseDialogFragment dialog){
-        if(Flag == FLAG_DEL_ACCOUNT){
+    public void impAccount(){
+        checkPwd(FLAG_IMPORT_ACCOUNT,new Account());
+    }
 
-            if (AccountsManager.getInstance().getAccountsCount()<2){
-                AppUtil.toastError(getActivity(),getString(R.string.only_one_account));
-                return;
-            }
-
-            AccountsManager.getInstance().removeCurrentAccount();
-            AppUtil.toastSuccess(getActivity(),getString(R.string.delete_success));
-            dialog.dismiss();
+    public void delAccount(Account account){
+        if (AccountsManager.getInstance().getAccountsCount()<2){
+            AppUtil.toastError(getActivity(),getString(R.string.only_one_account));
             return;
         }
-
-        Class<?> clazz = null;
-        if(Flag == FLAG_ADD_ACCOUNT){
-            clazz = AccountCreateActivity.class;
-        }
-        if(Flag == FLAG_IMPORT_ACCOUNT){
-            clazz = AccountImportActivity.class;
-        }
-
-        Intent intent =new Intent(getActivity(),clazz);
-        startActivityForResult(intent,1);
-        dialog.dismiss();
+        checkPwd(FLAG_DEL_ACCOUNT,account);
     }
+
+    private void checkPwd(int Flag,Account account){
+        Bundle bundle = new Bundle();
+        String title = null;
+        if (Flag==FLAG_DEL_ACCOUNT){
+            title = getString(R.string.delete_account);
+            AccountsManager.getInstance().setDelAccount(account);
+        }else if(Flag == FLAG_IMPORT_ACCOUNT){
+            title = getString(R.string.import_account);
+        }else if(Flag == FLAG_ADD_ACCOUNT){
+            title = getString(R.string.add_account);
+        }
+        bundle.putString("title",title);
+        BaseActivity.start(getActivity(),CheckPasswordActivity.class,bundle);
+
+    }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -192,7 +203,6 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         this.accountsAdapter.replaceData(accountList);
     }
 
-
     @Override
     public void gotoCreateAccount() {
 
@@ -207,5 +217,11 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         presenter.subscribe();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.loadSavedAccounts();
     }
 }

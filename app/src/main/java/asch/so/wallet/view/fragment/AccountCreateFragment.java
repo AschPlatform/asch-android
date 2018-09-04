@@ -19,6 +19,7 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.ImportOrCreateAccoutActivity;
 import asch.so.wallet.activity.MainTabActivity;
 import asch.so.wallet.activity.SecretBackupActivity;
@@ -145,7 +146,10 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         dismissHUD();
         if (res) {
             AppUtil.toastSuccess(getContext(), msg);
-            showSuccessDialog(secret);
+            Intent intent = new Intent(getActivity(), AccountsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+//            showSuccessDialog(secret);
         }else {
             AppUtil.toastError(getContext(),msg);
         }

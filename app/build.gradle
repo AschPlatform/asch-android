@@ -220,6 +220,7 @@ dependencies {
     implementation rootProject.ext.dependencies["localeChanger"]
 
     implementation rootProject.ext.dependencies["taggroup"]
+    implementation rootProject.ext.dependencies["recyclerview-swipe"]
 }
 
 //def rename_andd_moveout_apk(orignalFile, buildType) {
