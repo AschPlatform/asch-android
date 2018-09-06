@@ -88,6 +88,7 @@
                     android:gravity="center"
                     android:background="@drawable/backup_bg"
                     android:text="@string/please_backup"
+                    android:visibility="gone"
                     android:textSize="10sp"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"

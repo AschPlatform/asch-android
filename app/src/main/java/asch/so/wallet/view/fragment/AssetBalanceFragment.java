@@ -219,9 +219,9 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             showPopupMenu(view,SizeUtils.dp2px(30), SizeUtils.dp2px(-12));
         } else if (backupBtn == view || identicon==view || nameTv==view) {
             if (accountBalance!=null){
-                Bundle bundle =new Bundle();
-                bundle.putString("balance",accountBalance.getBalanceString());
-                BaseActivity.start(getActivity(), AccountDetailActivity.class,bundle);
+//                Bundle bundle =new Bundle();
+//                bundle.putString("balance",accountBalance.getBalanceString());
+//                BaseActivity.start(getActivity(), AccountDetailActivity.class,bundle);
             }
         } else if (view.getId() == R.id.scan_ll) {
             moreEasyPopup.dismiss();

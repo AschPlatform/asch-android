@@ -10,6 +10,7 @@ import android.widget.TextView;
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.activity.BackupActivity;
 import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.activity.SecondSecretActivity;
@@ -26,6 +27,8 @@ public class SecureSettingFragment extends BaseFragment implements View.OnClickL
     TextView backUpTv;
     @BindView(R.id.second_pwd)
     TextView pwdTv;
+    @BindView(R.id.second_pwd_state)
+    TextView stateTv;
 
 
     public static SecureSettingFragment newInstance() {
@@ -44,8 +47,13 @@ public class SecureSettingFragment extends BaseFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_security_setting,container,false);
         unbinder= ButterKnife.bind(this,rootView);
+        if (AccountsManager.getInstance().getCurrentAccount().hasSecondSecret()){
+            stateTv.setText(getString(R.string.have_set));
+        }else {
+            pwdTv.setOnClickListener(this);
+            stateTv.setText(getString(R.string.set_now));
+        }
         backUpTv.setOnClickListener(this);
-        pwdTv.setOnClickListener(this);
         return rootView;
     }
 

@@ -67,7 +67,7 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     @BindView(R.id.address_tv)
     TextView addressTv;
     @BindView(R.id.ident_icon)
-    CircleImageView identicon;
+    ImageView identicon;
     @BindView(R.id.copy_address)
     View copyView;
 

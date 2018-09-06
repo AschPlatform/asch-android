@@ -38,8 +38,7 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
     EditText passwdEt2;
     @BindView(R.id.save_btn)
     Button save_btn;
-    @BindView(R.id.account_passwd)
-    EditText account_passwd;
+
 
     public static SecondSecretFragment newInstance() {
         SecondSecretFragment fragment = new SecondSecretFragment();
@@ -74,7 +73,6 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
     public void saveSecondPassword(){
         String passwd=passwdEt1.getText().toString();
         String passwd2=passwdEt2.getText().toString();
-        String account_pwd = account_passwd.getText().toString();
         if (getAccount().getFullAccount()!=null &&
                 getAccount().getFullAccount().getBalances()!=null &&
                 getAccount().getFullAccount().getBalances().size()!=0 &&
@@ -96,10 +94,7 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
             AppUtil.toastError(getContext(),"二级密码不允许设置空格");
              return;
         }
-        if (Validator.check(getContext(), Validator.Type.Password,account_pwd,getString(R.string.account_password_error))){
-            presenter.storeSecondPassword(account_pwd,passwd);
-            showHUD();
-        }
+
     }
 
     private Account getAccount() {
