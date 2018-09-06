@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.activity.AccountsActivity;
+import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.activity.ImportOrCreateAccoutActivity;
 import asch.so.wallet.activity.MainTabActivity;
 import asch.so.wallet.activity.SecretBackupActivity;
@@ -144,16 +146,11 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         if (getActivity()==null)
             return;
         dismissHUD();
-        if (res) {
-            AppUtil.toastSuccess(getContext(), msg);
-            Intent intent = new Intent(getActivity(), AccountsActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-//            showSuccessDialog(secret);
-        }else {
+        if(!res){
             AppUtil.toastError(getContext(),msg);
+            return;
         }
-
+        finishPage();
     }
 
     private void goback(){
@@ -171,7 +168,12 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
             Intent intent =new Intent(getActivity(), MainTabActivity.class);
             startActivity(intent);
             ActivityStackManager.getInstance().finishAll();
-        }else {
+        }else if(getArguments()!=null &&  CheckPasswordActivity.class.getName().equals(getArguments().getString("clazz"))) {
+            Intent intent = new Intent(getActivity(), AccountsActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+        else{
             getActivity().finish();
         }
     }

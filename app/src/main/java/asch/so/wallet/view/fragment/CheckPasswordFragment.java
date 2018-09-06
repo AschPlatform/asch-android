@@ -18,6 +18,7 @@ import asch.so.wallet.activity.AccountCreateActivity;
 import asch.so.wallet.activity.AccountDeleteActivity;
 import asch.so.wallet.activity.AccountImportActivity;
 import asch.so.wallet.activity.BackupActivity;
+import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.activity.SecondSecretActivity;
 import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.entity.Account;
@@ -67,10 +68,10 @@ public class CheckPasswordFragment extends BaseFragment{
 
     private void checkPwd(){
         if(Wallet.getInstance().checkPassword(pwdEt.getText().toString())){
+            Bundle bundle = new Bundle();
             String title = getArguments().getString("title");
             if (title.equals(getString(R.string.account_backup))){
                 String seed = AccountSecurity.decryptSecret(pwdEt.getText().toString());
-                Bundle bundle = new Bundle();
                 bundle.putString("seed",seed);
                 BaseActivity.start(getActivity(),AccountBackUpAttentionActivity.class,bundle);
             }else if(title.equals(getString(R.string.second_pwd))){
@@ -78,12 +79,11 @@ public class CheckPasswordFragment extends BaseFragment{
             }else if(title.equals(getString(R.string.import_account))){
                 BaseActivity.start(getActivity(), AccountImportActivity.class,new Bundle());
             }else if(title.equals(getString(R.string.add_account))){
-                BaseActivity.start(getActivity(), AccountCreateActivity.class,new Bundle());
+                bundle.putString("clazz", CheckPasswordActivity.class.getName());
+                BaseActivity.start(getActivity(), AccountCreateActivity.class,bundle);
             }else if(title.equals(getString(R.string.delete_account))){
-                Bundle bundle = new Bundle();
                 bundle.putString("password",pwdEt.getText().toString());
                 BaseActivity.start(getActivity(), AccountDeleteActivity.class,bundle);
-
             }
 
         }else {

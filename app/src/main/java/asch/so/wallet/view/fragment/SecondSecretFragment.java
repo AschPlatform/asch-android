@@ -78,7 +78,7 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
         if (getAccount().getFullAccount()!=null &&
                 getAccount().getFullAccount().getBalances()!=null &&
                 getAccount().getFullAccount().getBalances().size()!=0 &&
-                getAccount().getXASLongBalance() <= FeeCalculater.calcFee(TransactionType.basic_setPassword)){
+                       getAccount().getXASLongBalance() <= FeeCalculater.calcFee(TransactionType.basic_setPassword)){
             AppUtil.toastError(getContext(),getString(R.string.account_balance_insufficient));
             return;
         }
@@ -86,9 +86,15 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
         if (!Validator.check(getContext(), Validator.Type.SecondSecret,passwd,getString(R.string.input_second_secret_hint))){
             return;
         }
+
         if (!passwd.equals(passwd2)){
             AppUtil.toastError(getContext(),getString(R.string.password_inconsistency));
             return;
+        }
+
+        if(passwd.contains(" ")) {
+            AppUtil.toastError(getContext(),"二级密码不允许设置空格");
+             return;
         }
         if (Validator.check(getContext(), Validator.Type.Password,account_pwd,getString(R.string.account_password_error))){
             presenter.storeSecondPassword(account_pwd,passwd);
