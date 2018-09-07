@@ -12,7 +12,7 @@ public class AccountNameCheckable extends BaseCheckable {
 
     @Override
     public boolean check() {
-        return isNotBlank() && checkWithPattern("[A-Za-z0-9_]+");
+        return isNotBlank() && checkWithPattern("[A-Za-z0-9_]{6,12}");
 //        return isNotBlank() && checkWithPattern("[A-Za-z0-9_]{1,12}");
     }
 }

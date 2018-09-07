@@ -21,6 +21,6 @@ public interface SecondSecretContract {
          * @param secret asch账户密码
          * @param secondSecret  asch账户二级密码，最小长度：1，最大长度：100
          */
-        void storeSecondPassword(String secret, String secondSecret);
+        void storeSecondPassword(String secondSecret);
     }
 }

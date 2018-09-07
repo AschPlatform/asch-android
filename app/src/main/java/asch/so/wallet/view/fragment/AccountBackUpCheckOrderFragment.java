@@ -25,11 +25,11 @@ import asch.so.wallet.activity.AccountBackUpShowMnemonicActivity;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.widget.AlertDialog;
 import asch.so.wallet.view.widget.BackUpMenmonicAlertDialog;
+import asch.so.wallet.view.widget.TagContainerLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import co.lujun.androidtagview.TagContainerLayout;
-import co.lujun.androidtagview.TagView;
+import asch.so.wallet.view.widget.TagView;
 
 
 public class AccountBackUpCheckOrderFragment extends BaseFragment{
@@ -97,6 +97,7 @@ public class AccountBackUpCheckOrderFragment extends BaseFragment{
         List<String> listRandom = Arrays.asList(seed.split(" "));
         Collections.shuffle(listRandom);
         mTagGroup.setTags(listRandom);
+
         listShow = new ArrayList<>();
     }
 
@@ -107,10 +108,12 @@ public class AccountBackUpCheckOrderFragment extends BaseFragment{
         if(listShow.contains(text)){
             v.setTagBackgroundColor(Color.parseColor("#"+Integer.toHexString(getResources()
                     .getColor(R.color.tag_gray))));
+            v.invalidate();
             listShow.remove(text);
         }else {
             v.setTagBackgroundColor(Color.parseColor("#"+Integer.toHexString(getResources()
                     .getColor(R.color.main_color))));
+            v.invalidate();
             listShow.add(text);
         }
 
@@ -124,6 +127,7 @@ public class AccountBackUpCheckOrderFragment extends BaseFragment{
     private void check(){
 
         if (listSeed.equals(listShow)){
+            AccountsManager.getInstance().setAccountBackup(true);
             new BackUpMenmonicAlertDialog(getActivity())
                     .setTitle(getString(R.string.check_order_success))
                     .setContent(getString(R.string.check_order_success_content))

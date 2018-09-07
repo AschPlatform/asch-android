@@ -32,7 +32,6 @@ public class AccountCreateActivity extends TitleToolbarActivity {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.create_account));
 
-
         AccountCreateFragment fragment =AccountCreateFragment.newInstance();
         fragment.setArguments(getBundle());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);

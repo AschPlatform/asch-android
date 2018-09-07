@@ -90,10 +90,8 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
             return;
         }
 
-        if(passwd.contains(" ")) {
-            AppUtil.toastError(getContext(),"二级密码不允许设置空格");
-             return;
-        }
+        presenter.storeSecondPassword(passwd);
+        showHUD();
 
     }
 

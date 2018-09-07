@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
@@ -23,6 +24,7 @@ import asch.so.wallet.activity.SecondSecretActivity;
 import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.util.AppUtil;
+import asch.so.widget.edittext.PassWordEditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -33,8 +35,7 @@ public class CheckPasswordFragment extends BaseFragment{
     Unbinder unbinder;
     @BindView(R.id.check_pwd_ok)
     Button okBtn;
-    @BindView(R.id.check_pwd_et)
-    EditText pwdEt;
+    PassWordEditText pwdEt;
 
 
 
@@ -57,6 +58,8 @@ public class CheckPasswordFragment extends BaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_check_password,container,false);
         unbinder= ButterKnife.bind(this,rootView);
+        pwdEt = new PassWordEditText(getActivity(),R.id.input_pwd_layout,rootView);
+        pwdEt.setHint(getString(R.string.enter_wallet_pwd));
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +80,8 @@ public class CheckPasswordFragment extends BaseFragment{
             }else if(title.equals(getString(R.string.second_pwd))){
                 BaseActivity.start(getActivity(),SecondSecretActivity.class,new Bundle());
             }else if(title.equals(getString(R.string.import_account))){
-                BaseActivity.start(getActivity(), AccountImportActivity.class,new Bundle());
+                    bundle.putString("clazz",CheckPasswordActivity.class.getName());
+                BaseActivity.start(getActivity(), AccountImportActivity.class,bundle);
             }else if(title.equals(getString(R.string.add_account))){
                 bundle.putString("clazz", CheckPasswordActivity.class.getName());
                 BaseActivity.start(getActivity(), AccountCreateActivity.class,bundle);

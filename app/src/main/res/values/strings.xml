@@ -23,7 +23,7 @@
     <string name="title_activity_vote">VoteActivity</string>
 
     <!--TODO：没翻译的-->
-    <string name="second_pwd_info">注意！设置二级密码可以让你的资产更安全，但是二级密码是记录在区块链上的，一旦丢失，将无法找回或者修改，请务必认证保管。\n\n设置二级密码将消耗5XAS的手续费。</string>
+    <string name="second_pwd_info">注意！设置二级密码可以让你的资产更安全，但是二级密码是记录在区块链上的，一旦丢失，将无法找回或者修改，请务必认真保管。\n\n设置二级密码将消耗5XAS的手续费。</string>
     <string name="set_now">立即设置 </string>
     <string name="wallet_slogan">轻 松 管 理 你 的 资 产</string>
     <string name="init_wallet">初始化钱包</string>
@@ -46,7 +46,7 @@
     <string name="check_order_err">请按顺序点选助记词，以确认您的备份无误</string>
     <string name="check_order_success">备份成功！</string>
     <string name="check_order_success_content">请妥善保管您的助记词</string>
-    <string name="account_del">输入你的助记词，使用空格分离开</string>
+    <string name="account_del">输入你的助记词，使用空格分离</string>
     <string name="del_err">助记词不匹配，请重新检查后输入</string>
 
 

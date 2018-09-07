@@ -1,10 +1,12 @@
 package asch.so.wallet.view.fragment;
 
+import android.accounts.AccountManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import asch.so.base.activity.BaseActivity;
@@ -28,7 +30,13 @@ public class SecureSettingFragment extends BaseFragment implements View.OnClickL
     @BindView(R.id.second_pwd)
     TextView pwdTv;
     @BindView(R.id.second_pwd_state)
-    TextView stateTv;
+    TextView pwdStateTv;
+    @BindView(R.id.second_backup_state)
+    TextView backupStateTv;
+    @BindView(R.id.back_arrow)
+    ImageView backupArrow;
+    @BindView(R.id.second_pwd_arrow)
+    ImageView pwdArrow;
 
 
     public static SecureSettingFragment newInstance() {
@@ -48,12 +56,24 @@ public class SecureSettingFragment extends BaseFragment implements View.OnClickL
         View rootView =inflater.inflate(R.layout.fragment_security_setting,container,false);
         unbinder= ButterKnife.bind(this,rootView);
         if (AccountsManager.getInstance().getCurrentAccount().hasSecondSecret()){
-            stateTv.setText(getString(R.string.have_set));
+            pwdStateTv.setText(getString(R.string.have_set));
+            pwdArrow.setVisibility(View.GONE);
         }else {
             pwdTv.setOnClickListener(this);
-            stateTv.setText(getString(R.string.set_now));
+            pwdStateTv.setText(getString(R.string.set_now));
+            pwdArrow.setVisibility(View.VISIBLE);
         }
-        backUpTv.setOnClickListener(this);
+
+
+        if (AccountsManager.getInstance().getCurrentAccount().isBackup()){
+            backupStateTv.setText(R.string.have_backup);
+            backupArrow.setVisibility(View.GONE);
+        }else {
+            backupArrow.setVisibility(View.VISIBLE);
+            backupStateTv.setText(R.string.backup_now);
+            backUpTv.setOnClickListener(this);
+        }
+
         return rootView;
     }
 

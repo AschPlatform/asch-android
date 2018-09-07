@@ -21,6 +21,7 @@ import asch.so.wallet.contract.SetWalletPwdContract;
 import asch.so.wallet.presenter.SetWalletPwdPresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
+import asch.so.widget.edittext.PassWordEditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -29,22 +30,14 @@ import butterknife.Unbinder;
 public class SetWalletPwdFragment extends BaseFragment implements View.OnClickListener, SetWalletPwdContract.View{
 
     Unbinder unbinder;
-    @BindView(R.id.passwd_et)
-    EditText passwdEt;
-    @BindView(R.id.eye_1)
-    View eye1;
-    @BindView(R.id.clear_1)
-    View clear1;
 
-    @BindView(R.id.passwd_et2)
-    EditText passwdEt2;
-    @BindView(R.id.eye_2)
-    View eye2;
-    @BindView(R.id.clear_2)
-    View clear2;
 
     @BindView(R.id.create_btn)
     Button createBtn;
+
+    PassWordEditText passwdEt;
+    PassWordEditText passwdEt2;
+
 
     KProgressHUD hud=null;
     private SetWalletPwdContract.Presenter presenter;
@@ -65,18 +58,19 @@ public class SetWalletPwdFragment extends BaseFragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_set_wallet_pwd,container,false);
         unbinder= ButterKnife.bind(this,rootView);
+        createBtn.setOnClickListener(this);
         presenter=new SetWalletPwdPresenter(getContext(),this);
-        eye1.setOnClickListener(this::onClick);
-        clear1.setOnClickListener(this::onClick);
-        eye2.setOnClickListener(this::onClick);
-        clear2.setOnClickListener(this::onClick);
-        createBtn.setOnClickListener(this::onClick);
+        passwdEt = new PassWordEditText(getActivity(),R.id.set_pwd_edit1,rootView);
+        passwdEt.setHint(getString(R.string.wallet_pwd));
+        passwdEt2 = new PassWordEditText(getActivity(),R.id.set_pwd_edit2,rootView);
+        passwdEt2.setHint(getString(R.string.ensure_wallet_pwd));
         return rootView;
     }
 
     private void createWallet(){
         String passwd=passwdEt.getText().toString();
         String passwd2=passwdEt2.getText().toString();
+
 
         if (!Validator.check(getContext(), Validator.Type.SecondSecret,passwd,getString(R.string.password_unvalid))){
             return;
@@ -146,37 +140,6 @@ public class SetWalletPwdFragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.eye_1:
-                if (passwdEt.getInputType()==InputType.TYPE_TEXT_VARIATION_PASSWORD) {
-                    passwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    passwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                }
-                else {
-                    passwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    passwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }
-                passwdEt.setSelection(passwdEt.getText().toString().length());
-                break;
-
-            case R.id.eye_2:
-                if (passwdEt2.getInputType()==InputType.TYPE_TEXT_VARIATION_PASSWORD) {
-                    passwdEt2.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    passwdEt2.setInputType(InputType.TYPE_CLASS_TEXT);
-                }
-                else {
-                    passwdEt2.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    passwdEt2.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }
-                passwdEt2.setSelection(passwdEt2.getText().toString().length());
-                break;
-
-            case R.id.clear_1:
-                passwdEt.setText("");
-                break;
-
-            case R.id.clear_2:
-                passwdEt2.setText("");
-                break;
 
             case R.id.create_btn:
                 createWallet();

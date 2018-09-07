@@ -1,6 +1,7 @@
 package asch.so.wallet.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -13,9 +14,13 @@ import android.widget.EditText;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.activity.AccountsActivity;
+import asch.so.wallet.activity.CheckPasswordActivity;
+import asch.so.wallet.activity.ImportOrCreateAccoutActivity;
 import asch.so.wallet.contract.AccountImportContract;
 import asch.so.wallet.presenter.AccountImportPresenter;
 import asch.so.wallet.util.AppUtil;
@@ -149,24 +154,22 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
             return;
         dismissHUD();
         if (res) {
+
             AppUtil.toastSuccess(getContext(), msg);
+
+            if (getArguments()!=null && ImportOrCreateAccoutActivity.class.getName().equals(getArguments().getString("clazz"))){
+                getActivity().setResult(1);
+                getActivity().finish();
+            }else {
+                Intent intent = new Intent(getActivity(), AccountsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                getActivity().startActivity(intent);
+            }
+
         }else {
             AppUtil.toastError(getContext(),msg);
         }
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getActivity().setResult(1);
-//                if (getArguments()!=null && ImportOrCreateAccoutActivity.class.getName().equals(getArguments().getString("clazz"))){
-//                    Intent intent =new Intent(getActivity(), MainTabActivity.class);
-//                    startActivity(intent);
-//                    ActivityStackManager.getInstance().finishAll();
-//                }else {
-                    getActivity().finish();
-                //}
-            }
-        }, 500);
+
     }
 
     //设置种子

@@ -8,12 +8,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/account_backup"
-        style="@style/TextLableStyle"
-        android:text="@string/account_backup"
-        android:layout_marginTop="10dp"
-        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/account_backup"
+            style="@style/TextLableStyle"
+            android:text="@string/account_backup"
+            />
+
+        <ImageView
+            android:id="@+id/back_arrow"
+            android:layout_width="@dimen/sp_12"
+            android:layout_height="@dimen/sp_12"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/my_next"/>
+        <TextView
+            android:id="@+id/second_backup_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dp"
+            android:text="@string/backup_now"/>
+    </RelativeLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
@@ -31,6 +54,7 @@
             />
 
         <ImageView
+            android:id="@+id/second_pwd_arrow"
             android:layout_width="@dimen/sp_12"
             android:layout_height="@dimen/sp_12"
             android:layout_centerVertical="true"

@@ -8,6 +8,7 @@ import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.contract.SecondSecretContract;
+import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.util.AppUtil;
 import rx.Observable;
@@ -49,11 +50,11 @@ public class SecondSecretPresenter implements SecondSecretContract.Presenter{
     }
 
     @Override
-    public void storeSecondPassword(String accountPasswd, String secondSecret) {
+    public void storeSecondPassword( String secondSecret) {
 
         String encryptSecret = getAccount().getEncryptSeed();
         Subscription subscription = Observable.create((Observable.OnSubscribe<AschResult>) subscriber -> {
-            String decryptSecret = Account.decryptSecret(accountPasswd, encryptSecret);
+            String decryptSecret = AccountSecurity.decryptSecret(encryptSecret);
             if (!Validation.isValidSecret(decryptSecret)) {
                 subscriber.onError(new Throwable(context.getString(R.string.account_password_error)));
             } else {

@@ -15,6 +15,7 @@
         android:id="@+id/tag_backup_info"
         android:text="@string/account_del"
         android:textSize="12sp"
+
         android:background="@null"
         android:textColor="@color/dark_gray"
         android:layout_alignParentTop="true"
@@ -26,6 +27,8 @@
         style="@style/TextLableStyle"
         android:layout_height="150dp"
         android:text=""
+        android:padding="10dp"
+        android:gravity="top"
         android:layout_below="@id/tag_backup_info"
         android:textSize="12sp"
         android:textColor="@color/dark_gray"
@@ -35,12 +38,14 @@
     <Button
         android:id="@+id/del_next"
         style="@style/PrimaryButton.Style"
+        android:background="@drawable/btn_round_rect_gray"
         android:layout_width="match_parent"
         android:layout_height="@dimen/btn_height"
         android:layout_marginHorizontal="20dp"
         android:textColor="@color/white"
         android:layout_centerInParent="true"
         android:textSize="@dimen/btn_text_size"
-        android:text="@string/next"/>
+
+        android:text="@string/delete"/>
 
 </RelativeLayout>

@@ -45,6 +45,7 @@ public class AccountImportActivity extends TitleToolbarActivity implements  Easy
         ButterKnife.bind(this);
         setTitle(getString(R.string.import_account));
         fragment = AccountImportFragment.newInstance();
+        fragment.setArguments(getBundle());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
 
 

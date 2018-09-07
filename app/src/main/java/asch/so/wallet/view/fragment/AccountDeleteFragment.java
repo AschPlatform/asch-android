@@ -2,14 +2,21 @@ package asch.so.wallet.view.fragment;
 
 import android.accounts.AccountManager;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
@@ -33,7 +40,7 @@ public class AccountDeleteFragment extends BaseFragment{
     @BindView(R.id.del_mnemonic)
     EditText mnemonicTv;
     String seed;
-
+    String[] listWords;
 
 
 
@@ -54,6 +61,7 @@ public class AccountDeleteFragment extends BaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_account_delete,container,false);
         unbinder= ButterKnife.bind(this,rootView);
+
         Account account = AccountsManager.getInstance().getDelAccount();
         seed = account.decryptSecret(getArguments().getString("password"));
 
@@ -69,8 +77,6 @@ public class AccountDeleteFragment extends BaseFragment{
                         isDelCurrentAccount = false;
                     AccountsManager.getInstance().removeAccount(account);
 
-
-
                     AppUtil.toastSuccess(getActivity(),getString(R.string.delete_success));
                     Intent intent = new Intent(getActivity(), AccountsActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -78,6 +84,31 @@ public class AccountDeleteFragment extends BaseFragment{
                 }else {
                     AppUtil.toastError(getActivity(),getString(R.string.del_err));
                 }
+            }
+        });
+
+
+        mnemonicTv.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                listWords = s.toString().split(" ");
+                if (listWords.length==12){
+                    nextBtn.setBackground(getResources().getDrawable(R.drawable.btn_round_rect_orange));
+                }else{
+                    nextBtn.setBackground(getResources().getDrawable(R.drawable.btn_round_rect_gray));
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
         return rootView;
