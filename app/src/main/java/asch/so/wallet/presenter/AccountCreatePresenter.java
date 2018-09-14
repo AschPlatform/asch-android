@@ -123,13 +123,12 @@ public class AccountCreatePresenter implements AccountCreateContract.Presenter{
             LogUtils.dTag(TAG,secret+secret);
             LogUtils.dTag(TAG,"pubKey:"+pubKey);
             String address = AschFactory.getInstance().getSecurity().getAddress(pubKey);
-
             Account account =new Account();
             account.setSeed(secret);
             account.setPublicKey(pubKey);
             account.setAddress(address);
             account.setName(name);
-
+            account.setSaveSecondPasswordState(Account.STATE_SUGGEST);
             AccountSecurity.encryptAccount(account);
             account.setSeed(null);
 

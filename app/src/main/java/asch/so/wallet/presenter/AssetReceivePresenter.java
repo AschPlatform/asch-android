@@ -92,6 +92,27 @@ public class AssetReceivePresenter implements AssetReceiveContract.Presenter {
         subscriptions.clear();
     }
 
+
+    @Override
+    public void generateQrCode(String address) {
+        new AsyncTask<Void, Void, Bitmap>() {
+            @Override
+            protected Bitmap doInBackground(Void... params) {
+
+                return QRCodeEncoder.syncEncodeQRCode(address, BGAQRCodeUtil.dp2px(context, 150), Color.parseColor("#000000"));
+            }
+
+            @Override
+            protected void onPostExecute(Bitmap bitmap) {
+                if (bitmap != null) {
+                    view.displayQrCode(bitmap);
+                } else {
+                    AppUtil.toastError(context, context.getString(R.string.create_qr_fail));
+                }
+            }
+        }.execute();
+    }
+
     @Override
    public void generateQrCode(String address,String currency, String ammount) {
         new AsyncTask<Void, Void, Bitmap>() {

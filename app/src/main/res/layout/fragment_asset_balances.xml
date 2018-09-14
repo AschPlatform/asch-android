@@ -61,8 +61,8 @@
                     android:padding="1dp"
                     android:scaleType="centerInside"
                     android:background="@drawable/square_bg"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
+                    android:layout_width="@dimen/head_coin_size"
+                    android:layout_height="@dimen/head_coin_size"
                     android:layout_margin="8dp"
                     android:src="@mipmap/default_avatar"
                     />

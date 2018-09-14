@@ -14,4 +14,5 @@
     <dimen name="activity_dialog_negative_button_size">6sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="head_coin_size">54dp</dimen>
 </resources>

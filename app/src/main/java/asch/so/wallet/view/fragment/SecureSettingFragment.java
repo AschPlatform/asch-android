@@ -1,6 +1,5 @@
 package asch.so.wallet.view.fragment;
 
-import android.accounts.AccountManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -55,7 +54,8 @@ public class SecureSettingFragment extends BaseFragment implements View.OnClickL
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_security_setting,container,false);
         unbinder= ButterKnife.bind(this,rootView);
-        if (AccountsManager.getInstance().getCurrentAccount().hasSecondSecret()){
+        if (getAccount().hasSecondSecret()|
+                getAccount().getFullAccount().getAccount().isSecondSignature()){
             pwdStateTv.setText(getString(R.string.have_set));
             pwdArrow.setVisibility(View.GONE);
         }else {
@@ -78,7 +78,9 @@ public class SecureSettingFragment extends BaseFragment implements View.OnClickL
     }
 
 
-
+    private asch.so.wallet.model.entity.Account getAccount(){
+        return AccountsManager.getInstance().getCurrentAccount();
+    }
 
     @Override
     public void onDestroyView() {
@@ -101,7 +103,7 @@ public class SecureSettingFragment extends BaseFragment implements View.OnClickL
                 break;
 
             case R.id.second_pwd:
-                bundle.putString("title",getString(R.string.second_pwd));
+                bundle.putString("title",getString(R.string.set_second_secret));
                 BaseActivity.start(getActivity(),CheckPasswordActivity.class,bundle);
                 break;
 

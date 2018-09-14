@@ -4,49 +4,59 @@
     android:layout_width="match_parent"
     android:layout_height="200dp">
 
-    <ImageView
-        android:id="@+id/header_bg"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/mine_header_bg"
-        />
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_centerVertical="true"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/ammount_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="32sp"
-            android:layout_marginLeft="20dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:text="889888"
-            />
-        <TextView
-            android:layout_below="@+id/ammount_tv"
-            android:id="@+id/asset_tv"
+        android:layout_marginTop="20dp"
+        android:layout_height="180dp"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_gravity="center_horizontal"
+            android:layout_width="@dimen/head_coin_size"
+            android:layout_height="@dimen/head_coin_size"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/icon_xas"/>
+
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp"
-            android:maxLines="1"
-            android:ellipsize="middle"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            android:text="@string/xas_balance" />
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/ammount_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="0"
+                android:textColor="@color/main_color"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/asset_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/ammount_tv"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/ammount_tv"
+                android:text="@string/xas_balance"
+                android:textColor="@color/main_color"
+                android:textSize="13sp" />
+        </RelativeLayout>
     </LinearLayout>
+
+
 
 <LinearLayout
     android:layout_alignParentBottom="true"
-    android:background="@color/white"
     android:orientation="vertical"
     android:gravity="center_vertical"
     android:layout_width="match_parent"
-    android:layout_height="20dp">
+    android:layout_height="40dp">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

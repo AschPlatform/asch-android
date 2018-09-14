@@ -9,6 +9,7 @@
     <color name="black_shade">#666666</color>
     <color name="divider_color">#F3F3F3</color>
     <color name="page_bg">#F5F5F9</color>
+    <color name="button_blue">#4185de</color>
     <color name="button_bg_nor">#FFFF9A28</color>
     <color name="button_bg_pre">#FF8200</color>
     <color name="menu_divider">#33FFFFFF</color>

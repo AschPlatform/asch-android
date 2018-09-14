@@ -1,16 +1,20 @@
 package asch.so.wallet.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
+
+import com.blankj.utilcode.util.LogUtils;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
+import asch.so.base.view.Throwable;
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.accounts.Wallet;
@@ -18,20 +22,29 @@ import asch.so.wallet.activity.AccountBackUpAttentionActivity;
 import asch.so.wallet.activity.AccountCreateActivity;
 import asch.so.wallet.activity.AccountDeleteActivity;
 import asch.so.wallet.activity.AccountImportActivity;
-import asch.so.wallet.activity.BackupActivity;
 import asch.so.wallet.activity.CheckPasswordActivity;
+import asch.so.wallet.activity.SecondCheckPasswordActivity;
 import asch.so.wallet.activity.SecondSecretActivity;
 import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.util.AppUtil;
+import asch.so.wallet.view.validator.Validator;
+import asch.so.wallet.view.widget.SaveSecondPwdDialog;
 import asch.so.widget.edittext.PassWordEditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import rx.Observable;
+import rx.Subscriber;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+import so.asch.sdk.AschResult;
+import so.asch.sdk.AschSDK;
 
 
-public class CheckPasswordFragment extends BaseFragment{
-
+public class CheckPasswordFragment extends BaseFragment {
+    private static final String TAG= CheckPasswordFragment.class.getSimpleName();
     Unbinder unbinder;
     @BindView(R.id.check_pwd_ok)
     Button okBtn;
@@ -51,7 +64,6 @@ public class CheckPasswordFragment extends BaseFragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
 
     @Override
@@ -69,16 +81,22 @@ public class CheckPasswordFragment extends BaseFragment{
         return rootView;
     }
 
+
+
     private void checkPwd(){
+
         if(Wallet.getInstance().checkPassword(pwdEt.getText().toString())){
-            Bundle bundle = new Bundle();
+
             String title = getArguments().getString("title");
+            Bundle bundle = new Bundle();
+
             if (title.equals(getString(R.string.account_backup))){
                 String seed = AccountSecurity.decryptSecret(pwdEt.getText().toString());
                 bundle.putString("seed",seed);
                 BaseActivity.start(getActivity(),AccountBackUpAttentionActivity.class,bundle);
-            }else if(title.equals(getString(R.string.second_pwd))){
-                BaseActivity.start(getActivity(),SecondSecretActivity.class,new Bundle());
+            }else if(title.equals(getString(R.string.set_second_secret))){
+                bundle.putString("password",pwdEt.getText().toString());
+                BaseActivity.start(getActivity(),SecondSecretActivity.class,bundle);
             }else if(title.equals(getString(R.string.import_account))){
                     bundle.putString("clazz",CheckPasswordActivity.class.getName());
                 BaseActivity.start(getActivity(), AccountImportActivity.class,bundle);
@@ -88,6 +106,33 @@ public class CheckPasswordFragment extends BaseFragment{
             }else if(title.equals(getString(R.string.delete_account))){
                 bundle.putString("password",pwdEt.getText().toString());
                 BaseActivity.start(getActivity(), AccountDeleteActivity.class,bundle);
+            }
+            //转账
+            else if(title.equals(AssetTransferFragment.class.getSimpleName())){
+
+                if (getArguments().getBoolean("hasSecondPwd")){
+                    //保存二级密码的情况
+                    Account account = AccountsManager.getInstance().getCurrentAccount();
+                    int state = account.getSaveSecondPasswordState();
+                    if (state==Account.STATE_REMEMBER){
+                        backToTransfer(pwdEt.getText().toString(),AccountsManager.getInstance().getCurrentAccount().getSecondSecret(pwdEt.getText().toString()));
+                        return;
+                    }
+
+
+                    String currency = getArguments().getString("currency");
+                    if (!TextUtils.isEmpty(currency)){
+                        bundle.putString("currency",currency);
+                    }
+                    bundle.putString("title",AssetTransferFragment.class.getSimpleName());
+                    bundle.putString("password",pwdEt.getText().toString());
+                    Intent intent = new Intent(getActivity(),SecondCheckPasswordActivity.class);
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent,1);
+                    return;
+                }
+                backToTransfer(pwdEt.getText().toString(),"");
+
             }
 
         }else {
@@ -99,6 +144,35 @@ public class CheckPasswordFragment extends BaseFragment{
 
 
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1&&resultCode==1){
+            String secondPwd= data.getStringExtra("secondPwd");
+            if (!TextUtils.isEmpty(secondPwd)){
+                Intent intent = new Intent();
+                intent.putExtra("secondPwd",secondPwd);
+                intent.putExtra("password",pwdEt.getText().toString());
+                getActivity().setResult(1,intent);
+                getActivity().finish();
+            }
+
+
+        }
+    }
+
+    private void backToTransfer(String password,String secondPwd){
+        Intent intent = new Intent();
+        intent.putExtra("password",password);
+        if (!TextUtils.isEmpty(secondPwd))
+            intent.putExtra("secondPwd",secondPwd);
+        getActivity().setResult(1,intent);
+        getActivity().finish();
+    }
+
+
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -107,6 +181,5 @@ public class CheckPasswordFragment extends BaseFragment{
         }
 
     }
-
 
 }

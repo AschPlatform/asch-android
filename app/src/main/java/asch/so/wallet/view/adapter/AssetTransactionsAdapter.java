@@ -57,13 +57,16 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
         viewHolder.amountTv.setText(transaction.getBanlanceShow(isSender));
         CharSequence ago= AppUtil.getRelativeTimeSpanString(context, transaction.dateFromAschTimestamp().getTime());
         viewHolder.dateTv.setText(ago);
+        if (transaction.getFee()!=0){
+            viewHolder.transationFee.setText(R.string.transaction_fee);
+        }
 //        String ago=timeAgo.getTimeAgo(transaction.dateFromAschTimestamp());
 //        viewHolder.dateTv.setText(ago);
     }
 
     private void setTransferIcon(ImageView imageView, int type, boolean isSender){
         if ( TransactionType.basic_transfer.getCode()==type || TransactionType.UIATransferV2.getCode()==type){
-            imageView.setImageResource(isSender?R.mipmap.transfer_out_icon:R.mipmap.transfer_in_icon);
+            imageView.setImageResource(isSender?R.mipmap.icon_transfer_accounts:R.mipmap.icon_receivables);
             return;
         }
         imageView.setImageResource(R.mipmap.transfer_other_icon);
@@ -74,7 +77,8 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
     }
 
     static class ViewHolder extends BaseViewHolder {
-       // @Nullable
+        @BindView(R.id.transaction_fee)
+        TextView transationFee;
         @BindView(R.id.transfer_icon)
         ImageView transferIcon;
         @BindView(R.id.transactionid_tv)

@@ -1,6 +1,7 @@
 package asch.so.wallet.model.db.dao;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import java.util.List;
@@ -181,6 +182,23 @@ public class AccountsDao {
         });
     }
 
+    public void  updateSaveSecondPwd(Account account, @Account.States int STATE_SAVE_SECOND, String secondPwd, OnUpdateSaveSecondPwdStateListener listener){
+
+        getRealm().executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Account dbAccount=queryAccount(account.getAddress());
+                account.setSaveSecondPasswordState(STATE_SAVE_SECOND);
+                account.setSecondSecret(secondPwd);
+                dbAccount.setSaveSecondPasswordState(STATE_SAVE_SECOND);
+                dbAccount.setSecondSecret(secondPwd);
+                if (listener!=null){
+                    listener.OnUpdateSaveSecondPwdStateListener(account,STATE_SAVE_SECOND);
+                }
+            }
+        });
+    }
+
     public void  updateAccountAddress(Account account, String address, OnUpdateAddressListener listener){
 
         getRealm().executeTransaction(new Realm.Transaction() {
@@ -204,6 +222,11 @@ public class AccountsDao {
     public interface OnUpdateBackupListener{
 
         void onUpdateBackup(Account account, boolean backup);
+    }
+
+    public interface OnUpdateSaveSecondPwdStateListener{
+
+        void OnUpdateSaveSecondPwdStateListener(Account account,  @Account.States int SAVE_SECOND_STATE);
     }
 
     public interface OnUpdateAddressListener{

@@ -1,9 +1,15 @@
 package asch.so.wallet.model.entity;
 
+import android.content.Intent;
+import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.annotation.JSONField;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.crypto.AccountSecurity;
@@ -20,7 +26,6 @@ public class Account extends RealmObject{
 
     //用户密码，暂时存储在数据库里，后续放入tee环境里
     private String seed;
-
     //钱包别名
     private String name;
     //@PrimaryKey
@@ -30,18 +35,16 @@ public class Account extends RealmObject{
     //公钥
     @PrimaryKey
     private String publicKey;
-
-
-
-
     //账户临时存储密码
     @Ignore
     private String tmpPasswd;
-
     private String encryptSeed;
     private String secondSecret;
     //是否已备份
     private boolean backup;
+    //是否保存二级密码
+    private int saveSecondPwdState;
+
 
     @Ignore
     @JSONField(serialize=false)
@@ -118,6 +121,25 @@ public class Account extends RealmObject{
         return decryptSecret;
     }
 
+    public @States int getSaveSecondPasswordState(){
+        return saveSecondPwdState;
+    }
+
+
+    public void setSaveSecondPasswordState(@States int state) {
+        saveSecondPwdState = state;
+    }
+
+
+
+    @IntDef({STATE_SUGGEST,STATE_REMEMBER,STATE_FORGET})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface States {}
+    public static final int STATE_SUGGEST = 0;
+    public static final int STATE_REMEMBER = 1;
+    public static final int STATE_FORGET = -1;
+
+
     public boolean isBackup() {
         return backup;
     }
@@ -135,7 +157,6 @@ public class Account extends RealmObject{
         return false;
     }
 
-
     public boolean hasLockCoins(){
         if (getFullAccount()!=null && getFullAccount().getAccount()!=null)
         {
@@ -148,13 +169,14 @@ public class Account extends RealmObject{
     }
 
 
-    public String getSecondSecret() {
-        return secondSecret;
+    public String getSecondSecret(String password) {
+        return AccountSecurity.decryptPassword(secondSecret,password);
     }
 
     public void setSecondSecret(String secondSecret) {
-        this.secondSecret = secondSecret;
+        this.secondSecret = AccountSecurity.encryptPwd(secondSecret);;
     }
+
     public String getTmpPasswd() {
         return tmpPasswd;
     }

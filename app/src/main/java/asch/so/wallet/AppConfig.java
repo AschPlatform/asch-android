@@ -1,6 +1,7 @@
 package asch.so.wallet;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.orhanobut.hawk.Hawk;
 
@@ -15,12 +16,12 @@ public class AppConfig {
     private static final String  LAST_ACCOUNT_PUBLIC_KEY_KEY="lastAccountPublicKeyKey";
     private static String lastAccountAddress=null;
     private static String lastAccountPublicKey=null;
-    private  static  final  String LANGUAGE_KEY="languagekey";
-    private  static String language=null;
-    private  static  final  String NODE_URL_KEY="nodeURLKey";
-    private  static String nodeURL=null;
-    private  static final  String WALLET_PWD = "walletPwd";
-    private  static final  String PWD_KEY = "pwdKey";
+    private static final  String LANGUAGE_KEY="languagekey";
+    private static String language=null;
+    private static final  String NODE_URL_KEY="nodeURLKey";
+    private static String nodeURL=null;
+    private static final String WALLET_PWD = "walletPwd";
+    private static final String PWD_KEY = "pwdKey";
 
 
     public static void init(Context context){

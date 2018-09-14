@@ -1,9 +1,7 @@
 package asch.so.wallet.accounts;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -26,7 +24,6 @@ import asch.so.wallet.R;
 import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.CoreAsset;
-import asch.so.wallet.model.entity.FullAccount;
 import asch.so.wallet.model.entity.UIAAsset;
 import rx.Observable;
 import rx.Subscriber;
@@ -75,20 +72,20 @@ public class Wallet {
         instance=new Wallet(ctx);
     }
 
-    public  Boolean isSetedPwd(){
+    public  Boolean isSetPwd(){
         if(AppConfig.getWalletPwd()!=null && !AppConfig.getWalletPwd().isEmpty()) {
             return true;
         }else {
             return false;
         }
-
     }
 
-    private String getEncryptPasswd(){
+
+    private String getEncryptPassword(){
         return AppConfig.getWalletPwd();
     }
 
-    public void setEncryptPasswd(String encryptPwd){
+    public void setEncryptPassword(String encryptPwd){
         AppConfig.putWalletPwd(encryptPwd);
     }
 
@@ -100,17 +97,17 @@ public class Wallet {
         return AppConfig.getPwdKey();
     }
 
-    public boolean checkPassword(String passwd){
-        if (passwd==null || passwd.length()==0)
+    public boolean checkPassword(String pwd){
+        if (pwd==null || pwd.length()==0)
             return false;
-        String decryptPasswd= AccountSecurity.decryptPassword(getEncryptPasswd(),passwd);
-        return passwd.equals(decryptPasswd);
+        String decryptPasswd= AccountSecurity.decryptPassword(getEncryptPassword(),pwd);
+        return pwd.equals(decryptPasswd);
     }
 
-    public  String decryptPassword(String passwd){
-        if (passwd==null || passwd.length()==0)
+    public  String decryptPassword(String pwd){
+        if (pwd==null || pwd.length()==0)
             return null;
-        String decryptPassword= AccountSecurity.decryptPassword(getEncryptPasswd(),passwd);
+        String decryptPassword= AccountSecurity.decryptPassword(getEncryptPassword(),pwd);
         return decryptPassword;
     }
 

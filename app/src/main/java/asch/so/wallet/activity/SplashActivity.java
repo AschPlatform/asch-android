@@ -36,20 +36,29 @@ public class SplashActivity extends BaseActivity {
         unbinder=ButterKnife.bind(this);
         StatusBarUtil.immersive(this);
 
-        particleView.startAnim();
-        particleView.setOnParticleAnimListener(new ParticleView.ParticleAnimListener() {
-            @Override
-            public void onAnimationEnd() {
-                Intent intent=null;
-                if (AccountsManager.getInstance().getCurrentAccount()!=null){
-                     intent = new Intent(SplashActivity.this, MainTabActivity.class);
-                }else {
-                     intent = new Intent(SplashActivity.this, InitWalletActivity.class);
-                }
-                SplashActivity.this.startActivity(intent);
-                finish();
-            }
-        });
+        Intent intent=null;
+        if (AccountsManager.getInstance().getCurrentAccount()!=null){
+            intent = new Intent(SplashActivity.this, MainTabActivity.class);
+        }else {
+            intent = new Intent(SplashActivity.this, InitWalletActivity.class);
+        }
+        SplashActivity.this.startActivity(intent);
+        finish();
+//
+//        particleView.startAnim();
+//        particleView.setOnParticleAnimListener(new ParticleView.ParticleAnimListener() {
+//            @Override
+//            public void onAnimationEnd() {
+//                Intent intent=null;
+//                if (AccountsManager.getInstance().getCurrentAccount()!=null){
+//                     intent = new Intent(SplashActivity.this, MainTabActivity.class);
+//                }else {
+//                     intent = new Intent(SplashActivity.this, InitWalletActivity.class);
+//                }
+//                SplashActivity.this.startActivity(intent);
+//                finish();
+//            }
+//        });
 
     }
 

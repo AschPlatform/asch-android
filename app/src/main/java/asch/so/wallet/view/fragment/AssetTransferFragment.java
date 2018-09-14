@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConfig;
@@ -45,6 +47,7 @@ import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.activity.AssetTransferActivity;
+import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Account;
@@ -76,35 +79,29 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     EditText targetEt;
     @BindView(R.id.ammount_et)
     EditText amountEt;
-    @BindView(R.id.memo_et)
-    EditText memoEt;
-    @BindView(R.id.fee_et)
-    EditText feeEt;
     @BindView(R.id.transfer_btn)
     Button transferBtn;
-    @BindView(R.id.assets_sp)
-    Spinner assetsSpinner;
-    @BindView(R.id.second_passwd_ll)
-    View secondPasswdLl;
-    @BindView(R.id.second_passwd_et)
-    EditText secondPasswdEt;
-    @BindView(R.id.balance_tv)
+    @BindView(R.id.transfer_balance)
     TextView balanceTv;
+    @BindView(R.id.transfer_scan)
+    ImageView scan;
+    //暂时隐藏
+    @BindView(R.id.memo_et)
+    EditText memoEt;
 
     KProgressHUD hud;
     private Balance balanceRemain;
     private QRCodeURL qrCodeURL;
-    private SecondPasswdDialog secondPasswdDialog;
     private HashMap<String, BaseAsset> assetsMap;
     private List<String> nameList;
     private BaseAsset selectedAsset;
     private String currency=null;
     private AssetTransferActivity.Action action;
+    long amount;
 
     public static AssetTransferFragment newInstance() {
         
         Bundle args = new Bundle();
-        
         AssetTransferFragment fragment = new AssetTransferFragment();
         fragment.setArguments(args);
         return fragment;
@@ -114,11 +111,9 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         action= AssetTransferActivity.Action.valueOf(getArguments().getInt("action"));
-       // balance= JSON.parseObject(getArguments().getString("balance"),Balance.class);
         String uri = getArguments().getString("qrcode_uri");
         parseQRUri(uri);
         presenter =new AssetTransferPresenter(getContext(),this);
-        setHasOptionsMenu(true);
     }
 
     private Account getAccount(){
@@ -135,11 +130,11 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     private boolean hasSecondPasswd(){
         return getAccount().hasSecondSecret();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_asset_transfer,container,false);
         ButterKnife.bind(this,rootView);
-
         hideKeyboard();
 
         if (qrCodeURL!=null){
@@ -153,26 +148,28 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
         this.balanceRemain=getBalance();
         balanceTv.setText(this.balanceRemain==null?"":this.balanceRemain.getBalanceString());
-
         targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));
-        if (hasSecondPasswd()){
-            secondPasswdLl.setVisibility(View.VISIBLE);
-        }else {
-            secondPasswdLl.setVisibility(View.GONE);
-        }
+        scan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =new Intent(getActivity(), QRCodeScanActivity.class);
+                Bundle bundle=new Bundle();
+                bundle.putInt("action", QRCodeScanActivity.Action.ScanAddressToPaste.value);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, 11);
+            }
+        });
 
         transferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 String targetAddress= targetEt.getText().toString().trim();
-                String ammountStr=amountEt.getText().toString().trim();
+                String amountStr=amountEt.getText().toString().trim();
                 String message=memoEt.getText().toString();
-                String secondSecret=secondPasswdEt.getText().toString().trim();
                 boolean hasSecondPwd=hasSecondPasswd();
 
-                if (currency==null)
-                {
+                if (currency==null) {
                     AppUtil.toastError(getContext(),getString(R.string.select_coin));
                     return;
                 }
@@ -186,81 +183,69 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                     return;
                 }
 
-                if (!Validator.check(getContext(), Validator.Type.Amount,ammountStr,getString(R.string.invalid_money))){
+                if (!Validator.check(getContext(), Validator.Type.Amount,amountStr,getString(R.string.invalid_money))){
                     return;
                 }
+
+                //余额校验
                 int precision=selectedAsset.getPrecision();
-                BigDecimal amountDecimal=new BigDecimal(ammountStr);
-                MathContext mc=new MathContext(ammountStr.length(), RoundingMode.HALF_UP);
+                BigDecimal amountDecimal=new BigDecimal(amountStr);
+                MathContext mc=new MathContext(amountStr.length(), RoundingMode.HALF_UP);
                 amountDecimal=amountDecimal.multiply(new BigDecimal(10).pow(precision),mc);
-                long amount = amountDecimal.longValue();
+                amount = amountDecimal.longValue();
                 long remainBalance=balanceRemain!=null?balanceRemain.getLongBalance():-1;
-                if (remainBalance>=0 && remainBalance<amount){
+                if (remainBalance>=0 && remainBalance-0.1<amount){
                     AppUtil.toastError(getContext(),getString(R.string.money_not_enough));
                     return;
                 }
 
-                if (hasSecondPwd){
-                    if (!Validator.check(getContext(),Validator.Type.SecondSecret,secondSecret,getString(R.string.secondary_password_error))){
-                        return;
-                    }
-                }
+                Intent intent = new Intent(getActivity(), CheckPasswordActivity.class);
+                Bundle bundle = new Bundle();
+                String title = currency+getString(R.string.transfer);
+                String clazz = AssetTransferFragment.class.getSimpleName();
+                bundle.putString("title",clazz);
+                bundle.putString("currency",currency);
+                bundle.putBoolean("hasSecondPwd",hasSecondPwd);
+                intent.putExtras(bundle);
+                startActivityForResult(intent,1);
 
-                showConfirmationDialog(targetAddress, ammountStr, currency,secondSecret, new TransferConfirmationDialog.OnConfirmListener() {
-                    @Override
-                    public void onConfirm(TransferConfirmationDialog dialog) {
-                        //long amount=(long)(Float.parseFloat(ammountStr)*Math.pow(10,precision));
-                        //int precision=selectedAsset.getPrecision();
-                        //long amount = AppUtil.scaledAmountFromDecimal(Float.parseFloat(ammountStr),precision);
-                        Account currentAccount =AccountsManager.getInstance().getCurrentAccount();
-                        if (currentAccount!=null)
-                        {
-                            showPasswordInputDialog(new SecondPasswdDialog.PasswordCallback() {
-                                @Override
-                                public void callback(SecondPasswdDialog dialog, String password) {
-                                    if (Validator.check(getContext(), Validator.Type.Password,password,getString(R.string.account_password_error)))
-                                    {
-                                        presenter.transfer(currency,targetAddress,amount,message,null,hasSecondPwd?secondSecret:null,password);
-                                        showHUD();
-                                    }
-                                }
-                            });
-                            return;
-                        }
-                    }
-                });
-            }
-        });
-        amountEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                balanceTv.setVisibility(hasFocus?View.VISIBLE:View.INVISIBLE);
             }
         });
 
-        feeEt.setKeyListener(null);
+
         presenter.loadAssets(currency,false);
         return rootView;
+    }
+
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1&&resultCode==1){
+            String secondSecret = data.getStringExtra("secondPwd");
+            String password = data.getStringExtra("password");
+
+            if (hasSecondPasswd()&&TextUtils.isEmpty(secondSecret)){
+                AppUtil.toastError(getContext(),getString(R.string.error_failed_to_verify_signature));
+                return;
+            }
+
+            if (TextUtils.isEmpty(password)){
+                AppUtil.toastError(getContext(),getString(R.string.error_failed_to_verify_signature));
+                return;
+            }
+
+            presenter.transfer(currency,targetEt.getText().toString().trim(),amount,"",null,hasSecondPasswd()?secondSecret:null,password);
+            showHUD();
+        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
-    }
-
-    private void showConfirmationDialog(String address, String amount, String currency, String secondPasswd, TransferConfirmationDialog.OnConfirmListener onConfirmListener){
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        TransferConfirmationDialog dialog =TransferConfirmationDialog.newInstance(address,amount,currency,secondPasswd);
-        dialog.setOnClickListener(onConfirmListener);
-        dialog.show(fm,"confirmation");
-    }
-
-    private void showPasswordInputDialog(SecondPasswdDialog.PasswordCallback callback){
-        secondPasswdDialog = new SecondPasswdDialog(getActivity());
-        secondPasswdDialog.setPasswordCallback(callback);
-        secondPasswdDialog.clearPasswordText();
-        secondPasswdDialog.show();
     }
 
 
@@ -273,7 +258,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_asset_transfer,menu);
+//        inflater.inflate(R.menu.menu_asset_transfer,menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -320,9 +305,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        assetsSpinner.setAdapter(adapter);
-        assetsSpinner.setSelection(selectIndex,true);
-        assetsSpinner.setOnItemSelectedListener(this);
+
 
     }
 
@@ -352,8 +335,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @Override
     public void displayPasswordValidMessage(boolean res, String msg) {
         //if (!res){
-           dismissHUD();
-            AppUtil.toastError(getContext(),msg);
+        dismissHUD();
+        AppUtil.toastError(getContext(),msg);
         //}
 
     }
@@ -379,10 +362,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (secondPasswdDialog!=null){
-                    secondPasswdDialog.dismiss();
-                }
-               dismissHUD();
+
+                dismissHUD();
                 getActivity().finish();
             }
         }, 200);

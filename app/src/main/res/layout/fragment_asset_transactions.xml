@@ -21,7 +21,7 @@
             android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="?attr/actionBarSize"/>
+            />
         <ezy.ui.layout.LoadingLayout
             android:id="@+id/loading_ll"
             android:layout_width="match_parent"
@@ -46,6 +46,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="43dp"
         android:orientation="horizontal">
         <Button
@@ -58,6 +59,7 @@
             android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:text="@string/transfer"
+            android:layout_margin="5dp"
             tools:ignore="HardcodedText" />
         <Button
             android:id="@+id/goto_receive_btn"
@@ -65,11 +67,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:background="@color/button_bg_nor"
+            android:background="@color/button_blue"
             android:textColor="#FFFFFF"
+            android:layout_margin="5dp"
             android:textSize="15sp"
-            style="?android:attr/borderlessButtonStyle"
-            android:text="@string/receive"
+            android:text="@string/receipt"
             tools:ignore="HardcodedText" />
 
 

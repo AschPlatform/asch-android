@@ -1,5 +1,6 @@
 package asch.so.wallet.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +11,12 @@ import android.widget.EditText;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import asch.so.base.activity.ActivityStackManager;
+import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.activity.AccountsActivity;
+import asch.so.wallet.activity.SecureSettingActivity;
 import asch.so.wallet.contract.SecondSecretContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.SecondSecretPresenter;
@@ -67,9 +71,6 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
         return rootView;
     }
 
-    /**
-     * 保存二级密码
-     */
     public void saveSecondPassword(){
         String passwd=passwdEt1.getText().toString();
         String passwd2=passwdEt2.getText().toString();
@@ -90,7 +91,7 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
             return;
         }
 
-        presenter.storeSecondPassword(passwd);
+        presenter.storeSecondPassword(passwd,getArguments().getString("password"));
         showHUD();
 
     }
@@ -141,8 +142,11 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
             return;
         dismissHUD();
         if (success) {
+
             AppUtil.toastSuccess(getContext(), msg);
-            getActivity().finish();
+            Intent intent = new Intent(getActivity(), SecureSettingActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
         }else {
             AppUtil.toastError(getContext(),msg);
         }

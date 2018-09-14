@@ -12,15 +12,17 @@ public interface SecondSecretContract {
     interface  View extends BaseView<Presenter> {
 
         void displaySetSecondSecretResult(boolean res, String msg);
+
     }
 
     interface Presenter extends BasePresenter {
 
         /**
          * 保存二级密码
-         * @param secret asch账户密码
+         * @param password asch账户密码
          * @param secondSecret  asch账户二级密码，最小长度：1，最大长度：100
          */
-        void storeSecondPassword(String secondSecret);
+        void storeSecondPassword(String secondSecret,String password);
+
     }
 }

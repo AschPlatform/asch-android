@@ -138,7 +138,7 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
             }
         });
 
-        presenter.generateQrCode(account.getAddress(),"XAS","8");
+        presenter.generateQrCode(account.getAddress());
         presenter.loadAssets(false);
         return rootView;
     }
@@ -184,27 +184,27 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
 
     @Override
     public void displayAssets(LinkedHashMap<String,BaseAsset> assetsMap) {
-        LogUtils.dTag(TAG,"++++assets:"+assetsMap.toString());
-        List<String> nameList=new ArrayList<>(assetsMap.keySet());
-        int selectIndex= nameList.indexOf(currency);
-        selectIndex=selectIndex==-1?0:selectIndex;
-        ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        assetsSp.setAdapter(adapter);
-        assetsSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                //currency = nameList.get(position);
-                currency = adapter.getItem(position);
-                presenter.generateQrCode(addressTv.getText().toString().trim(),currency,ammountEt.getText().toString().trim());
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-        assetsSp.setSelection(selectIndex,true);
+//        LogUtils.dTag(TAG,"++++assets:"+assetsMap.toString());
+//        List<String> nameList=new ArrayList<>(assetsMap.keySet());
+//        int selectIndex= nameList.indexOf(currency);
+//        selectIndex=selectIndex==-1?0:selectIndex;
+//        ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        assetsSp.setAdapter(adapter);
+//        assetsSp.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+//                //currency = nameList.get(position);
+//                currency = adapter.getItem(position);
+//                presenter.generateQrCode(addressTv.getText().toString().trim(),currency,ammountEt.getText().toString().trim());
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+//        assetsSp.setSelection(selectIndex,true);
     }
 }

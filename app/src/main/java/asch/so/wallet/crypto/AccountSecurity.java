@@ -1,20 +1,17 @@
 package asch.so.wallet.crypto;
 
-import android.util.Log;
-
-import com.blankj.utilcode.util.LogUtils;
-
 import java.io.UnsupportedEncodingException;
 import java.security.GeneralSecurityException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
 
-import asch.so.wallet.AppConfig;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.model.entity.Account;
 import so.asch.sdk.codec.Encoding;
-import so.asch.sdk.security.DefaultSecurityStrategy;
+import so.asch.sdk.impl.AschFactory;
+import so.asch.sdk.security.SecurityException;
 
 import static asch.so.wallet.crypto.AesCbcWithIntegrity.*;
 
@@ -28,7 +25,7 @@ public class AccountSecurity {
 
     private static final byte[] salt = "Asch_Wallet_Security_Initialize_".getBytes();
 
-    private static String encryptPwd(String pwd){
+    public static String encryptPwd(String pwd){
         try {
             SecretKeys key =generateKeyFromPassword(pwd,saltString(salt));
             AesCbcWithIntegrity.CipherTextIvMac civ =encrypt(pwd, key);
@@ -48,12 +45,26 @@ public class AccountSecurity {
      * @return
      */
     public static Wallet encryptWallet(Wallet wallet, String pwd){
-        wallet.setEncryptPasswd(encryptPwd(pwd));
+        wallet.setEncryptPassword(encryptPwd(pwd));
         String pwdKey = genWalletPwdKey(pwd);
         Wallet.getInstance().setPwdKey(pwdKey);
         return wallet;
     }
 
+
+    public static Boolean checkSecondPassword(String secondPwd){
+        try {
+            PublicKey publicKey = AschFactory.getInstance().getSecurity().generateKeyPair(secondPwd).getPublic();
+            String strKey = AschFactory.getInstance().getSecurity().encodePublicKey(publicKey);
+            if (AccountsManager.getInstance().getCurrentAccount().getFullAccount().getAccount().getSecondPublicKey().equals(strKey)){
+                return true;
+            }else
+                return false;
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     /**
      * 解密钱包密码

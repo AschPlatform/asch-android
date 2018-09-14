@@ -259,6 +259,18 @@ public class AccountsManager extends Observable {
         }
     }
 
+    public void setSaveSecondPwd(@Account.States int SAVE_SECOND_STATE,String secondPwd){
+        if (currentAccount!=null){
+            AccountsDao.getInstance().updateSaveSecondPwd(currentAccount, SAVE_SECOND_STATE,secondPwd, new AccountsDao.OnUpdateSaveSecondPwdStateListener() {
+                @Override
+                public void OnUpdateSaveSecondPwdStateListener(Account account, int SAVE_SECOND_STATE) {
+                    setChanged();
+                    notifyObservers();
+                }
+            });
+        }
+    }
+
     public boolean hasAccountForName(String name) {
         return AccountsDao.getInstance().hasAccountForName(name);
     }

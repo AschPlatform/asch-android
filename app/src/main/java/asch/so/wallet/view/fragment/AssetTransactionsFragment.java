@@ -209,7 +209,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     @Override
     public void displayBalance(Balance balance) {
         amountTv.setText(balance.getBalanceString());
-        assetTv.setText(String.format("%s %s",balance.getCurrency(),getContext().getString(R.string.balance)));
+        assetTv.setText(balance.getCurrency());
     }
 
     @Override
