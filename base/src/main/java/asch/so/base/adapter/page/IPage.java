@@ -118,7 +118,7 @@ public abstract class IPage {
         synchronized (lock) {
             if (isLoading) // 如果正在加载数据，则抛出异常
             {
-                throw new RuntimeException();
+//                throw new RuntimeException();
             } else {
                 isLoading = true;
             }

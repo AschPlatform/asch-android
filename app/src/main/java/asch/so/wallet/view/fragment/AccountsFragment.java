@@ -11,10 +11,15 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
@@ -39,6 +44,7 @@ import asch.so.wallet.activity.AccountCreateActivity;
 import asch.so.wallet.activity.AccountImportActivity;
 import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.CheckPasswordActivity;
+import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.contract.AccountsContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.AccountsPresenter;
@@ -54,12 +60,13 @@ import butterknife.Unbinder;
  * 所有账户
  */
 
-public class AccountsFragment extends BaseFragment implements AccountsContract.View{
+public class AccountsFragment extends BaseFragment implements AccountsContract.View,View.OnClickListener{
     private static final String TAG=AccountsFragment.class.getSimpleName();
-
     private final int FLAG_ADD_ACCOUNT = 0;
     private final int FLAG_IMPORT_ACCOUNT = 1;
     public final int FLAG_DEL_ACCOUNT = 2;
+    View addBtn;
+    EasyPopup moreEasyPopup;
     @BindView(R.id.accounts_rcv)
     SwipeMenuRecyclerView accountsRecycleView;
     private AccountsAdapter accountsAdapter;
@@ -84,14 +91,13 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
         View rootView=inflater.inflate(R.layout.fragment_accounts, container, false);
         unbinder= ButterKnife.bind(this,rootView);
         Context ctx=rootView.getContext();
+        setHasOptionsMenu(true);
+        initPopupMenu();
         accountsRecycleView.setLayoutManager(new LinearLayoutManager(ctx));
         accountsRecycleView.setItemAnimator(new DefaultItemAnimator());
         accountsRecycleView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         accountsRecycleView.setSwipeMenuCreator(swipeMenuCreator);
         accountsRecycleView.setSwipeMenuItemClickListener(mMenuItemClickListener);
-
-
-
         accountsAdapter=new AccountsAdapter();
         accountsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -174,12 +180,52 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_add,menu);
+        super.onCreateOptionsMenu(menu, inflater);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_add_btn:
+            {
+                if (addBtn==null)
+                    addBtn = getActivity().getWindow().getDecorView().findViewById(R.id.menu_add_btn);
+                showPopupMenu(addBtn, SizeUtils.dp2px(30), SizeUtils.dp2px(-12));
+            }
+            break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 
+    private void showPopupMenu(View view, int offsetX, int offsetY) {
+        moreEasyPopup.showAtAnchorView(view, VerticalGravity.BELOW, HorizontalGravity.LEFT, offsetX,offsetY);
+    }
+
+    private void initPopupMenu() {
+        moreEasyPopup = new EasyPopup(getActivity())
+                .setContentView(R.layout.menu_account)
+                .setAnimationStyle(R.style.PopupMenuAnimation)
+                .setFocusAndOutsideEnable(true)
+                .createPopup();
+        View contentView = moreEasyPopup.getContentView();
+        View addItem = contentView.findViewById(R.id.add_ll);
+        View importItem = contentView.findViewById(R.id.import_ll);
+
+        addItem.setOnClickListener(this);
+        importItem.setOnClickListener(this);
+
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
+
+
 
     @Override
     public void onDestroyView() {
@@ -223,5 +269,16 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
     public void onResume() {
         super.onResume();
         presenter.loadSavedAccounts();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.add_ll) {
+            moreEasyPopup.dismiss();
+            addAccount();
+        } else if (v.getId() == R.id.import_ll) {
+            moreEasyPopup.dismiss();
+            impAccount();
+        }
     }
 }

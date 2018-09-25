@@ -1,0 +1,153 @@
+package asch.so.wallet.view.fragment;
+
+import android.annotation.SuppressLint;
+import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.alibaba.fastjson.JSON;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import java.util.List;
+
+import asch.so.base.activity.BaseActivity;
+import asch.so.base.fragment.BaseFragment;
+import asch.so.wallet.R;
+import asch.so.wallet.activity.TransactionDetailActivity;
+import asch.so.wallet.contract.RecordMulitChainContract;
+import asch.so.wallet.model.entity.BaseAsset;
+import asch.so.wallet.model.entity.Deposit;
+import asch.so.wallet.model.entity.Transaction;
+import asch.so.wallet.model.entity.Withdraw;
+import asch.so.wallet.presenter.RecordMulitChainPresenter;
+import asch.so.wallet.util.AppUtil;
+import asch.so.wallet.view.adapter.AssetTransactionsAdapter;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import ezy.ui.layout.LoadingLayout;
+
+@SuppressLint("ValidFragment")
+public class RecordMulitChainFragment extends BaseFragment implements RecordMulitChainContract.View {
+
+    @BindView(R.id.refreshLayout)
+    RefreshLayout refreshLayout;
+    @BindView(R.id.loading_ll)
+    LoadingLayout loadingLayout;
+    @BindView(R.id.asset_transactions_rcv)
+    RecyclerView txRcv;
+    RecordMulitChainPresenter.RecordType recordType;
+    private AssetTransactionsAdapter adapter;
+    private RecordMulitChainContract.Presenter presenter;
+    //转账、（跨链）充值，提现。
+    @BaseAsset.Type int type;
+    String currency;
+
+    public static RecordMulitChainFragment getInstance(String title,int type,String currency,RecordMulitChainPresenter.RecordType recordType) {
+        RecordMulitChainFragment fragment = new RecordMulitChainFragment();
+        fragment.type = type;
+        fragment.currency = currency;
+        fragment.recordType = recordType;
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        adapter=new AssetTransactionsAdapter(getContext());
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_record_mulit_chain, null);
+        ButterKnife.bind(this,v);
+        txRcv.setLayoutManager(new LinearLayoutManager(getContext()));
+        txRcv.setItemAnimator(new DefaultItemAnimator());
+        txRcv.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
+        txRcv.setAdapter(adapter);
+        presenter = new RecordMulitChainPresenter(getActivity(),this,type,currency, recordType);
+
+        if (recordType== RecordMulitChainPresenter.RecordType.transfer)
+            adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+                    Transaction transaction = (Transaction) adapter.getItem(position);
+                    String json = JSON.toJSONString(transaction);
+                    Bundle bundle=new Bundle();
+                    bundle.putString("transaction",json);
+                    BaseActivity.start(getActivity(), TransactionDetailActivity.class,bundle);
+                }
+            });
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                if (presenter!=null) {
+                    presenter.loadFirstPageTransactions();
+                }
+            }
+        });
+
+        refreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                if (presenter!=null) {
+                    presenter.loadMorePageTransactions();
+                }
+            }
+        });
+        refreshLayout.autoRefresh();
+
+        presenter.loadFirstPageTransactions();
+        return v;
+    }
+
+
+    @Override
+    public void displayFirstPageTransactions(List<?> transactions) {
+        if (transactions.isEmpty()) {
+            loadingLayout.showEmpty();
+        }else {
+            loadingLayout.showContent();
+        }
+        adapter.replaceData(transactions);
+        refreshLayout.finishRefresh(500);
+    }
+
+    @Override
+    public void displayMorePageTransactions(List<?> transactions) {
+        adapter.addData(transactions);
+        refreshLayout.finishLoadmore(500);
+    }
+
+
+
+
+    @Override
+    public void setPresenter(RecordMulitChainContract.Presenter presenter) {
+        presenter = this.presenter;
+    }
+
+    @Override
+    public void displayError(Throwable exception) {
+        if (adapter.getData().isEmpty()){
+            loadingLayout.showError();
+        }else {
+            if (getContext()!=null) {
+                AppUtil.toastError(getContext(), AppUtil.extractInfoFromError(getContext(),exception));
+            }
+        }
+        if (refreshLayout.isRefreshing()){
+            refreshLayout.finishRefresh(500);
+        }else {
+            refreshLayout.finishLoadmore(500);
+        }
+    }
+}

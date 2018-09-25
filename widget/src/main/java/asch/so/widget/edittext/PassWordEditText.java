@@ -2,7 +2,9 @@ package asch.so.widget.edittext;
 
 import android.content.Context;
 import android.media.Image;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
@@ -30,8 +32,30 @@ public class PassWordEditText extends RelativeLayout implements View.OnClickList
         eyeIv = (ImageView)mainLayout.findViewById(R.id.eye);
         eyeIv.setOnClickListener(this);
         clearIv = (ImageView)mainLayout.findViewById(R.id.clear);
+        clearIv.setVisibility(View.INVISIBLE);
         clearIv.setOnClickListener(this);
         editText = (EditText)mainLayout.findViewById(R.id.passwd_et);
+
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().length()>0){
+                    clearIv.setVisibility(View.VISIBLE);
+                }else {
+                    clearIv.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
     }
 
@@ -53,10 +77,12 @@ public class PassWordEditText extends RelativeLayout implements View.OnClickList
             if (editText.getInputType()== InputType.TYPE_TEXT_VARIATION_PASSWORD) {
                 editText.setTransformationMethod(PasswordTransformationMethod.getInstance());
                 editText.setInputType(InputType.TYPE_CLASS_TEXT);
+                eyeIv.setImageResource(R.drawable.icon_nodisplay);
             }
             else {
                 editText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 editText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                eyeIv.setImageResource(R.drawable.icon_xians);
             }
             editText.setSelection(editText.getText().toString().length());
         }
@@ -66,6 +92,7 @@ public class PassWordEditText extends RelativeLayout implements View.OnClickList
         }
 
     }
+
 
 
     private void setPasswordVisible(){

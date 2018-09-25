@@ -31,7 +31,6 @@
         app:titleTextColor="@android:color/white"
         app:title_gravity="center"
         app:rightText=""
-        app:rightIcon="@mipmap/icon_add"
         app:rightTextAppearance="?attr/actionMenuTextAppearance"
         app:rightTextColor="@android:color/white"
         app:rightVisible="false"

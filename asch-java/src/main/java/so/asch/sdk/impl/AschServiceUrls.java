@@ -79,7 +79,7 @@ public final class AschServiceUrls {
         static final String  GET_STORED_DATA ="/api/storages";
         //static final String  GET_LOAD_STATUS ="";
     }
-
+                                                           
     final static class UIA{
         static final String GET_ISSUERS = "/api/uia/issuers";
         static final String GET_ISSUER = "/api/uia/issuers/${IssuerName}";
@@ -102,6 +102,9 @@ public final class AschServiceUrls {
 
     final static class Gateway{
          static final String GET_GATEWAY_CURRENCIES="/api/v2/gateways/currencies";
+         static final String GET_GATEWAY_DEPOSITS="/api/v2/gateways/deposits/%s/%s";
+            static final String GET_GATEWAY_WITHDRAWALS="/api/v2/gateways/withdrawals/%s/%s";
+
     }
 
 }

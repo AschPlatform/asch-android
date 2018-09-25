@@ -65,14 +65,14 @@ public class SecureSettingFragment extends BaseFragment implements View.OnClickL
         }
 
 
-        if (AccountsManager.getInstance().getCurrentAccount().isBackup()){
-            backupStateTv.setText(R.string.have_backup);
-            backupArrow.setVisibility(View.GONE);
-        }else {
+//        if (AccountsManager.getInstance().getCurrentAccount().isBackup()){
+//            backupStateTv.setText(R.string.have_backup);
+//            backupArrow.setVisibility(View.GONE);
+//        }else {
             backupArrow.setVisibility(View.VISIBLE);
             backupStateTv.setText(R.string.backup_now);
             backUpTv.setOnClickListener(this);
-        }
+//        }
 
         return rootView;
     }

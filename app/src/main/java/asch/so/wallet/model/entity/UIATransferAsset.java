@@ -1,12 +1,10 @@
 package asch.so.wallet.model.entity;
 
-import so.asch.sdk.transaction.asset.UIATransferAssetInfo;
-
 /**
  * Created by kimziv on 2017/11/1.
  */
 
-public class UIATransferAsset extends Asset {
+public class UIATransferAsset extends BaseAsset {
 
     /*
      "transactionId": "4c7f362a7e91771b1a3b71acddf5801344cf0ce7861689d152bf38af783c907f",

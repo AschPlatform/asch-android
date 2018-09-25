@@ -109,12 +109,7 @@ public class WalletApplication extends MultiDexApplication {
 
     private void initWallet(){
         Wallet.init(this);
-        Wallet.getInstance().loadAssets(true,new Wallet.OnLoadAssetsListener() {
-            @Override
-            public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
-                LogUtils.dTag(TAG,"all assets:"+assetsMap.toString());
-            }
-        });
+
     }
 
     private void initBuglySDK() {

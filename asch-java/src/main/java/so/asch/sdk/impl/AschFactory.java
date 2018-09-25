@@ -68,7 +68,9 @@ public final class AschFactory {
                 .register(Dapp.class, DappService.class)
                 .register(UIA.class, UIAService.class)
                 .register(Peer.class, PeerService.class)
-                .register(Misc.class, MiscService.class);
+                .register(Misc.class, MiscService.class)
+                .register(Gateway.class,GatewayService.class);
+
     }
 
 }

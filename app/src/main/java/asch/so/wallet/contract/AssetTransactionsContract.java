@@ -15,12 +15,8 @@ public interface AssetTransactionsContract {
 
     interface View extends BaseView<Presenter>{
         void displayBalance(Balance balance);
-        void displayFirstPageTransactions(List<Transaction> transactions);
-        void displayMorePageTransactions(List<Transaction> transactions);
     }
 
     interface Presenter extends BasePresenter{
-        void loadFirstPageTransactions();
-        void loadMorePageTransactions();
     }
 }

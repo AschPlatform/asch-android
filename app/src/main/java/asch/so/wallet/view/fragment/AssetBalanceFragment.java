@@ -38,12 +38,14 @@ import com.zyyoona7.lib.HorizontalGravity;
 import com.zyyoona7.lib.VerticalGravity;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.activity.AccountDetailActivity;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransactionsActivity;
@@ -52,6 +54,7 @@ import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
+import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.presenter.AssetBalancePresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.IdenticonGenerator;
@@ -80,43 +83,31 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     Toolbar toolbar;
     @BindView(R.id.parallax)
     ImageView parallax;
-
-    @BindView(R.id.xas_balance_tv)
-    TextView xasBalanceTv;
-
     @BindView(R.id.ident_icon)
     ImageView identicon;
     @BindView(R.id.name_tv)
     TextView nameTv;
-    @BindView(R.id.backup_btn)
-    Button backupBtn;
-
+    @BindView(R.id.address_tv)
+    TextView addressTv;
     @BindView(R.id.add_icon)
     ImageView addIconIv;
-    @BindView(R.id.add_btn)
-    ImageView addBtn;
     @BindView(R.id.top_balance_tv)
     TextView topBalanceTv;
-//    @BindView(R.id.loading_ll)
-//    LoadingLayout loadingLayout;
-
+    @BindView(R.id.add_icon_scroll)
+    ImageView addIconSrcoll;
+    @BindView(R.id.copy_address)
+    View copyAddress;
     EasyPopup moreEasyPopup;
 
     private Balance accountBalance=null;
-
-
     Unbinder unbinder;
-
-
     private List<Balance> assetList = new ArrayList<>();
     private AssetsAdapter adapter = new AssetsAdapter(assetList);
-
     private AssetBalanceContract.Presenter presenter;
 
     public static AssetBalanceFragment newInstance() {
 
         Bundle args = new Bundle();
-
         AssetBalanceFragment fragment = new AssetBalanceFragment();
         fragment.setArguments(args);
         return fragment;
@@ -138,21 +129,19 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         adapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
-                Balance balance = assetList.get(position);
                 Bundle bundle = new Bundle();
+                Balance balance = assetList.get(position);
                 String json = JSON.toJSONString(balance);
                 bundle.putString("balance", json);
                 BaseActivity.start(getActivity(), AssetTransactionsActivity.class, bundle);
             }
         });
-
+        addIconSrcoll.setOnClickListener(this);
         identicon.setOnClickListener(this);
         nameTv.setOnClickListener(this);
         addIconIv.setOnClickListener(this);
-        addBtn.setOnClickListener(this);
-        backupBtn.setOnClickListener(this);
+        copyAddress.setOnClickListener(this);
         presenter = new AssetBalancePresenter(this.getContext(),this);
-
         setupRefreshLayout();
         initPopupMenu();
         presenter.loadAccount();
@@ -201,8 +190,9 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
                 if (fraction > 0.8 && !misAppbarExpand) {
                     misAppbarExpand = true;
                     // addIconIv.setAlpha(0);
+
                     topBalanceTv.setAlpha(0);
-                    addIconIv.setClickable(false);
+//                    addIconIv.setClickable(false);
                    // toolbar.setVisibility(View.GONE);
                 }
             }
@@ -213,16 +203,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
     @Override
     public void onClick(View view) {
-        if (view == addIconIv) {
+        if (view == addIconIv || view == addIconSrcoll) {
             showPopupMenu(view,SizeUtils.dp2px(30), SizeUtils.dp2px(-2));
-        } else if (addBtn == view) {
-            showPopupMenu(view,SizeUtils.dp2px(30), SizeUtils.dp2px(-12));
-        } else if (backupBtn == view || identicon==view || nameTv==view) {
-            if (accountBalance!=null){
-//                Bundle bundle =new Bundle();
-//                bundle.putString("balance",accountBalance.getBalanceString());
-//                BaseActivity.start(getActivity(), AccountDetailActivity.class,bundle);
-            }
         } else if (view.getId() == R.id.scan_ll) {
             moreEasyPopup.dismiss();
             Bundle bundle = new Bundle();
@@ -232,8 +214,9 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             moreEasyPopup.dismiss();
             Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
             startActivity(intent);
+        } else if (view==copyAddress){
+            AppUtil.copyText(getActivity(),addressTv.getText().toString());
         }
-
     }
 
     private void showPopupMenu(View view, int offsetX, int offsetY) {
@@ -245,17 +228,12 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
                 .setContentView(R.layout.menu_asset_balance)
                 .setAnimationStyle(R.style.PopupMenuAnimation)
                 .setFocusAndOutsideEnable(true)
-//                .setDimValue(0.5f)
-//                .setDimColor(Color.RED)
-//                .setDimView(mTitleBar)
                 .createPopup();
         View contentView = moreEasyPopup.getContentView();
         View scanItem = contentView.findViewById(R.id.scan_ll);
         View receiveItem = contentView.findViewById(R.id.receive_ll);
-        //View billItem = contentView.findViewById(R.id.transactions_ll);
         scanItem.setOnClickListener(this);
         receiveItem.setOnClickListener(this);
-        //billItem.setOnClickListener(this);
     }
 
     @Override
@@ -295,7 +273,6 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void displayXASBalance(Balance balance) {
         String amount =balance.getBalanceString();  // String.valueOf(balance.getRealBalance());
-        xasBalanceTv.setText(amount);
         topBalanceTv.setText(amount + " XAS");
         accountBalance=balance;
     }
@@ -303,6 +280,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void displayAccount(Account account) {
         nameTv.setText(account.getName()==null?"":account.getName());
+        addressTv.setText(account.getAddress()==null?"":account.getAddress());
         int width=0;
         if (LocaleChanger.getLocale().getLanguage().contains("zh"))
         {
@@ -310,10 +288,6 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         }else{
             width=ConvertUtils.dp2px(100);
         }
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)backupBtn.getLayoutParams();
-        params.width =width;
-        backupBtn.setLayoutParams(params);
-        backupBtn.setText(account.isBackup()?getString(R.string.have_backup):getString(R.string.please_backup));
         IdenticonGenerator.getInstance().generateBitmap(account.getPublicKey(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {

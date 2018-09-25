@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -22,16 +19,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.LogUtils;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -39,10 +32,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
-import asch.so.base.view.Throwable;
-import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
@@ -51,16 +41,12 @@ import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Account;
-import asch.so.wallet.model.entity.Asset;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.QRCodeURL;
-import asch.so.wallet.model.entity.UIAAsset;
 import asch.so.wallet.presenter.AssetTransferPresenter;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
-import asch.so.wallet.view.widget.SecondPasswdDialog;
-import asch.so.wallet.view.widget.TransferConfirmationDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import so.asch.sdk.impl.AschConst;
@@ -85,6 +71,9 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     TextView balanceTv;
     @BindView(R.id.transfer_scan)
     ImageView scan;
+    @BindView(R.id.transfer_coin_name)
+    TextView coinNameTv;
+
     //暂时隐藏
     @BindView(R.id.memo_et)
     EditText memoEt;
@@ -148,6 +137,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
         this.balanceRemain=getBalance();
         balanceTv.setText(this.balanceRemain==null?"":this.balanceRemain.getBalanceString());
+        coinNameTv.setText(getBalance().getCurrency());
         targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -321,6 +311,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
             //int selectIndex= nameList.indexOf(currency);
             this.selectedAsset=assetsMap.get(currency);
             this.balanceRemain=getBalance();
+
             balanceTv.setText(this.balanceRemain==null?"":this.balanceRemain.getBalanceString());
         }
     }

@@ -90,7 +90,6 @@ public class AccountsDao {
    }
 
     /**
-     *
      * @param account
      */
    public void addAccount(Account account){
@@ -130,7 +129,6 @@ public class AccountsDao {
     }
 
     /**
-     *
      * @param account
      */
    public void  updateAccount(Account account){

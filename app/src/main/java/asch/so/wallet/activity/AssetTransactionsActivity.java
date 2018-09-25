@@ -27,23 +27,13 @@ public class AssetTransactionsActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
-
         Intent intent=getIntent();
         String json =intent.getExtras().getString("balance");
         Balance balance=JSON.parseObject(json,Balance.class);
         setTitle(balance.getCurrency());
-
         fragment=AssetTransactionsFragment.newInstance();
         fragment.setArguments(intent.getExtras());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
-
-//        presenter=new AssetTransactionsPresenter(this,fragment, balance.getCurrency());
-//        presenter.loadTransactions(balance.getCurrency(), !AschConst.CORE_COIN_NAME.equals(balance.getCurrency()));
-
-
         StatusBarUtil.immersive(this);
     }
 

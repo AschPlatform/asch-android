@@ -18,6 +18,7 @@ import asch.so.wallet.AppConstants;
 import asch.so.wallet.model.db.dao.AccountsDao;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
+import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.FullAccount;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -337,9 +338,11 @@ public class AccountsManager extends Observable {
                         if (balance.getFlag()==2){
                             Balance.UIAAsset uiaAsset=JSON.parseObject(balance.getAssetJson(), Balance.UIAAsset.class);
                             balance.setUiaAsset(uiaAsset);
+                            balance.setType(BaseAsset.TYPE_UIA);
                         }else if (balance.getFlag()==3){
                             Balance.GatewayAsset gatewayAsset=JSON.parseObject(balance.getAssetJson(), Balance.GatewayAsset.class);
                             balance.setGatewayAsset(gatewayAsset);
+                            balance.setType(BaseAsset.TYPE_GATEWAY);
                         }
                     }
                     subscriber.onNext(balances);

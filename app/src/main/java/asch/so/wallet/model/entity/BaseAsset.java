@@ -1,5 +1,10 @@
 package asch.so.wallet.model.entity;
 
+import android.support.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 /**
  * Created by kimziv on 2017/9/27.
  */
@@ -23,6 +28,8 @@ package asch.so.wallet.model.entity;
  */
 public class BaseAsset {
 
+    private int type;
+    private Boolean isShow = false;
     private String name;
     private String desc;
     private String maximum;
@@ -41,6 +48,22 @@ public class BaseAsset {
     private String gateway;
     private String symbol;
     private int revoked;
+
+
+    @IntDef({TYPE_XAS,TYPE_UIA,TYPE_GATEWAY})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Type {}
+    public static final int TYPE_XAS = 0;
+    public static final int TYPE_UIA = 1;
+    public static final int TYPE_GATEWAY = 2;
+
+    public void setType(@Type int type) {
+        this.type = type;
+    }
+
+    public @Type int getType() {
+        return type;
+    }
 
     public String getName() {
         return name;

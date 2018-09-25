@@ -33,7 +33,7 @@ public class Balance {
     private String assetJson;
     private UIAAsset uiaAsset;
     private GatewayAsset gatewayAsset;
-
+    private @BaseAsset.Type int type = BaseAsset.TYPE_XAS;
 
     public static class UIAAsset{
         private String name;
@@ -220,6 +220,14 @@ public class Balance {
             preci=this.getPrecision();
         }
         return longBalance==0?"0":AppUtil.decimalFormat(AppUtil.decimalFromBigint(longBalance,preci));
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getAssetJson() {

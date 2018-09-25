@@ -12,82 +12,9 @@
         android:background="@drawable/toolbar"
         android:layout_height="200dp">
 
-        <RelativeLayout
-            android:layout_centerInParent="true"
-            android:id="@+id/head_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            >
+        <include layout="@layout/layout_head_info">
 
-
-            <ImageView
-                android:id="@+id/ident_icon"
-                android:padding="1dp"
-                android:scaleType="centerInside"
-                android:background="@drawable/square_bg"
-                android:layout_width="54dp"
-                android:layout_height="54dp"
-                android:layout_centerHorizontal="true"
-
-                android:src="@mipmap/default_avatar"
-                />
-
-
-            ​
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ident_icon"
-                android:layout_centerHorizontal="true"
-                android:layout_marginVertical="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/name_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="xxxxx"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-                ​
-
-                <LinearLayout
-                    android:id="@+id/copy_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/address_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="4dp"
-                        android:alpha="0.7"
-                        android:text="xxxxxxxxxxxxxxx"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                        android:textColor="@android:color/white"
-                        android:textSize="12sp"
-                        android:visibility="visible" />
-
-                    <ImageView
-
-                        android:layout_width="13sp"
-                        android:layout_height="13sp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="20dp"
-                        android:src="@mipmap/icon_ctiy" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-            ​
-        </RelativeLayout>
-
+        </include>
     </RelativeLayout>
 
 

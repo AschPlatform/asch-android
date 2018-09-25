@@ -23,8 +23,10 @@ import asch.so.base.util.TimeAgo;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.Deposit;
 import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.model.entity.UIATransferAsset;
+import asch.so.wallet.model.entity.Withdraw;
 import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +37,7 @@ import so.asch.sdk.impl.AschConst;
  * Created by kimziv on 2017/10/13.
  */
 
-public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, AssetTransactionsAdapter.ViewHolder> {
+public class AssetTransactionsAdapter extends BaseQuickAdapter<Object, AssetTransactionsAdapter.ViewHolder> {
 
     //private TimeAgo timeAgo=null;
     private Context context;
@@ -47,22 +49,46 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Transaction, Asse
     }
 
     @Override
-    protected void convert(ViewHolder viewHolder, Transaction transaction) {
-        viewHolder.transactionTv.setText(transaction.getId());
-        boolean isSender=getAccount().getAddress().equals(transaction.getSenderId());
-        setTransferIcon(viewHolder.transferIcon,transaction.getType(),isSender);
-       // int resId=AppUtil.getResIdFromCode(Transaction.Type.fromCode(transaction.getType()));
-        //String transactionType=context.getResources().getString(resId);
-        //viewHolder.amountTv.setText(transactionType);
-        viewHolder.amountTv.setText(transaction.getBanlanceShow(isSender));
-        CharSequence ago= AppUtil.getRelativeTimeSpanString(context, transaction.dateFromAschTimestamp().getTime());
-        viewHolder.dateTv.setText(ago);
-        if (transaction.getFee()!=0){
-            viewHolder.transationFee.setText(R.string.transaction_fee);
+    protected void convert(ViewHolder viewHolder, Object object) {
+        if (object instanceof Transaction){
+            Transaction transaction = (Transaction)object;
+            viewHolder.transactionTv.setText(transaction.getId());
+            boolean isSender=getAccount().getAddress().equals(transaction.getSenderId());
+            setTransferIcon(viewHolder.transferIcon,transaction.getType(),isSender);
+            // int resId=AppUtil.getResIdFromCode(Transaction.Type.fromCode(transaction.getType()));
+            //String transactionType=context.getResources().getString(resId);
+            //viewHolder.amountTv.setText(transactionType);
+            viewHolder.amountTv.setText(transaction.getBanlanceShow(isSender));
+            CharSequence ago= AppUtil.getRelativeTimeSpanString(context, transaction.dateFromAschTimestamp().getTime());
+            viewHolder.dateTv.setText(ago);
+            if (transaction.getFee()!=0){
+                viewHolder.transationFee.setText(R.string.transaction_fee);
+            }
+        }else if(object instanceof Deposit){
+            Deposit deposit = (Deposit)object;
+            viewHolder.transactionTv.setText(deposit.getAddress());
+            viewHolder.transferIcon.setImageResource(R.mipmap.icon_recharge);
+
+            viewHolder.amountTv.setText("+ "+deposit.getBanlanceShow());
+            CharSequence ago= AppUtil.getRelativeTimeSpanString(context, deposit.dateFromAschTimestamp().getTime());
+            viewHolder.dateTv.setText(ago);
+            viewHolder.transationFee.setText(R.string.sure_time+":"+String.valueOf(deposit.getConfirmations())+R.string.done);
+
+
+        }else if(object instanceof Withdraw){
+            Withdraw withdraw = (Withdraw)object;
+            viewHolder.transactionTv.setText(withdraw.getRecipientId());
+            viewHolder.transferIcon.setImageResource(R.mipmap.icon_withdraw);
+
+            viewHolder.amountTv.setText("- "+withdraw.getBanlanceShow());
+            CharSequence ago= AppUtil.getRelativeTimeSpanString(context, withdraw.dateFromAschTimestamp().getTime());
+            viewHolder.dateTv.setText(ago);
+            viewHolder.transationFee.setText(R.string.sure_time);
         }
-//        String ago=timeAgo.getTimeAgo(transaction.dateFromAschTimestamp());
-//        viewHolder.dateTv.setText(ago);
+
     }
+
+
 
     private void setTransferIcon(ImageView imageView, int type, boolean isSender){
         if ( TransactionType.basic_transfer.getCode()==type || TransactionType.UIATransferV2.getCode()==type){

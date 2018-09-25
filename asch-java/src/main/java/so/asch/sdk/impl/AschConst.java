@@ -14,6 +14,12 @@ public final class AschConst {
     public static final int BASE58_ADDRESS_LEN = 34 ;
     public static final Date ASCH_BEGIN_EPOCH;
     public static final String CORE_COIN_NAME="XAS";
+    public static final String COIN_NAME_KMC="koumei.KMC";
+    public static final String COIN_NAME_XCT="cctime.XCT";
+    public static final String COIN_NAME_BCH="BCH";
+    public static final String COIN_NAME_BTC="BTC";
+    public static final String COIN_NAME_ETH="ETH";
+
     public static final int CORE_COIN_PRECISION=8;
     //public static final long CORE_COIN_QU
 

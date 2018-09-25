@@ -43,6 +43,24 @@ import so.asch.sdk.impl.AschConst;
 
 public class AppUtil {
 
+    public static int getIconIdByName(String iconName){
+        int id;
+        if (iconName.equals(AschConst.COIN_NAME_KMC)){
+            id = R.mipmap.icon_kmc;
+        } else if(iconName.equals(AschConst.CORE_COIN_NAME)){
+            id = R.mipmap.icon_xas;
+        } else if(iconName.equals(AschConst.COIN_NAME_BTC)){
+            id = R.mipmap.icon_bth;
+        } else if(iconName.equals(AschConst.COIN_NAME_ETH)){
+            id = R.mipmap.icon_eth;
+        } else if(iconName.equals(AschConst.COIN_NAME_XCT)){
+            id = R.mipmap.icon_xct;
+        } else {
+            id = R.mipmap.other_coin_icon;
+        }
+        return id;
+    }
+
     public static BigDecimal decimalFromBigint(long bigInt, int precision){
 
         return BigDecimal.valueOf(bigInt, precision);

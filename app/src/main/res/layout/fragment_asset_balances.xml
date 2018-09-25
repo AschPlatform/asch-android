@@ -15,7 +15,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="220dp"
         android:fitsSystemWindows="true"
         android:theme="@style/AppTheme.AppBarOverlay">
 
@@ -26,6 +26,7 @@
             android:fitsSystemWindows="true"
             android:background="@drawable/toolbar"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
             <ImageView
                 android:id="@+id/parallax"
                 android:layout_width="match_parent"
@@ -38,107 +39,50 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"></LinearLayout>
-            <LinearLayout
-                android:id="@+id/materialup.title_container"
-                android:layout_marginBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="13.33dp"
-                android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax"
-                android:orientation="horizontal"
-                android:paddingTop="8dp"
-                android:gravity="left|center_vertical"
+                android:layout_height="match_parent"
                 >
-                <!--app:civ_border_color="@color/white"-->
-                <!--app:civ_border_width="2dp"-->
-                <ImageView
-                    android:id="@+id/ident_icon"
-                    android:padding="1dp"
-                    android:scaleType="centerInside"
-                    android:background="@drawable/square_bg"
-                    android:layout_width="@dimen/head_coin_size"
-                    android:layout_height="@dimen/head_coin_size"
-                    android:layout_margin="8dp"
-                    android:src="@mipmap/default_avatar"
-                    />
-                ​<LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/name_tv"
-                    android:layout_width="wrap_content"
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/toolBarHeight"
+                    >
+                    <TextView
+                        android:id="@+id/tag_home_page"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/btn_add"
+                        android:gravity="center_vertical"
+                        android:text="@string/home_page"
+                        style="@style/Title_Appearance"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="40dp"
+                        />
+                    <ImageView
+                        android:id="@+id/add_icon_scroll"
+                        android:layout_width="@dimen/btn_add"
+                        android:layout_height="@dimen/btn_add"
+                        android:src="@mipmap/more_menu_icon"
+                        android:layout_alignParentRight="true"
+                        android:cropToPadding="false"
+                        android:layout_alignBottom="@+id/tag_home_page"
+                        android:layout_marginRight="20dp"
+                        android:padding="6dp"
+                        />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                    android:text=""
-                    android:textSize="18sp"
-                    />
-                ​
-                <Button
-                    android:id="@+id/backup_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="18dp"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:gravity="center"
-                    android:background="@drawable/backup_bg"
-                    android:text="@string/please_backup"
-                    android:visibility="gone"
-                    android:textSize="10sp"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    />
-            </LinearLayout>
+                    android:layout_gravity="center_horizontal">
+
+
+                    <include layout="@layout/layout_head_info"></include>
+
+                </RelativeLayout>
+
                 <LinearLayout
-                    android:orientation="horizontal"
-                    android:gravity="right"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    ​<ImageView
-                    android:id="@+id/add_btn"
-                    android:cropToPadding="false"
-                    android:layout_width="36dp"
-                    android:layout_height="56dp"
-                    android:layout_marginRight="20dp"
-                    android:paddingTop="16dp"
-                    android:paddingBottom="16dp"
-                    android:paddingLeft="6dp"
-                    android:paddingRight="6dp"
-                    android:clickable="true"
-                    android:visibility="visible"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center|right"
-                    android:src="@mipmap/more_menu_icon"
-                    />
-                </LinearLayout>
-            </LinearLayout>
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:paddingLeft="24dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/xas_balance_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:textSize="32sp"
-                        android:text="0"
-                        />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:text="@string/xas_balance"
-                        />
-                </LinearLayout>
+                    android:layout_height="30dp"></LinearLayout>
+
             </LinearLayout>
             <asch.so.widget.toolbar.TitleToolbar
                 android:id="@+id/toolbar_in"
@@ -247,8 +191,8 @@
         </android.support.v7.widget.ButtonBarLayout>
         <ImageView
             android:id="@+id/add_icon"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="@dimen/btn_add"
+            android:layout_height="@dimen/btn_add"
             android:cropToPadding="false"
             android:layout_marginRight="20dp"
             android:padding="6dp"

@@ -63,6 +63,8 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     Spinner assetsSp;
     @BindView(R.id.center_ll)
     View centerLl;
+    @BindView(R.id.receive_info)
+    TextView infoTv;
 
     private Bitmap qrcodeBmp;
 
@@ -113,6 +115,10 @@ public class AssetReceiveFragment extends BaseFragment implements AssetReceiveCo
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_asset_receive,container,false);
         ButterKnife.bind(this,rootView);
+
+        infoTv.setText(R.string.receive_info);
+
+//            infoTv.setText(String.format(getString(R.string.receive_mulit_chain).toString(),currency,currency));
 
         presenter=new AssetReceivePresenter(getActivity(),this);
         //fragment.setPresenter(presenter);

@@ -6,40 +6,52 @@
     android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
-        android:layout_above="@+id/bottom_bar"
+
+    <LinearLayout
         android:layout_alignParentTop="true"
+        android:layout_above="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:srlPrimaryColor="@color/colorPrimary"
-        app:srlAccentColor="@android:color/white"
-        app:srlEnableHeaderTranslationContent="false"
-        app:srlEnablePreviewInEditMode="false"
-        app:srlEnableNestedScrolling="false">
-        <com.scwang.smartrefresh.header.MaterialHeader
-            android:id="@+id/header"
+        android:orientation="vertical">
+
+        <include layout="@layout/header_asset_transactions"/>
+
+        <LinearLayout
+            android:id="@+id/transaction_record_tag"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <ezy.ui.layout.LoadingLayout
-            android:id="@+id/loading_ll"
+            android:layout_height="40dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:textColor="#333333"
+                android:textSize="13sp"
+                android:text="@string/transfer_record" />
+        </LinearLayout>
+
+        <com.flyco.tablayout.SegmentTabLayout
+            android:id="@+id/tablayout_record"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginVertical="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:tl_indicator_anim_enable="true"
+            app:tl_indicator_bounce_enable="false"
+            app:tl_indicator_color="@color/main_color"
+            app:tl_tab_padding="20dp"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/record_pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:llLoadingResId="@layout/common_loading"
-            app:llEmptyResId="@layout/common_no_data"
-            app:llErrorImage="@drawable/ic_error"
-            >
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/asset_transactions_rcv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
-        />
-        </ezy.ui.layout.LoadingLayout>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/bottom_bar"
@@ -73,7 +85,6 @@
             android:textSize="15sp"
             android:text="@string/receipt"
             tools:ignore="HardcodedText" />
-
 
     </LinearLayout>
 </RelativeLayout>

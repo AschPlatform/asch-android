@@ -23,6 +23,12 @@
     <string name="title_activity_vote">VoteActivity</string>
 
     <!--TODO：没翻译的-->
+    <string name="done">完成</string>
+    <string name="record_transfer">转账记录</string>
+    <string name="record_deposit">充值记录</string>
+    <string name="record_withdraw">提现记录</string>
+    <string name="withdraw">提现</string>
+    <string name="home_page">首页</string>
     <string name="remember_second_password_info">功能开启后，后续交易将不再需要输入二级密码</string>
     <string name="remember_second_password">开启免输二级密码功能</string>
     <string name="xas_transfer">XAS转账</string>
@@ -55,7 +61,7 @@
     <string name="account_del">输入你的助记词，使用空格分离</string>
     <string name="del_err">助记词不匹配，请重新检查后输入</string>
     <string name="receive_info">*请将XAS充值到上述地址，该地址可用于接收XAS、ASCH链内资产、ASCH跨链资产</string>
-
+    <string name="receive_mulit_chain">*请将 %s充值到上述地址，该地址仅支持接收 %s，如果需要转入其他 token，请切换到相对应的 token 获取转入地址 钱包收款地址。</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="asch">Asch</string>

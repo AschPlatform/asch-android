@@ -6,7 +6,7 @@
     android:padding="8dp"
     app:bl_arrowDirection="top"
     app:bl_arrowHeight="8dp"
-    app:bl_arrowPosition="70dp"
+    app:bl_arrowPosition="85dp"
     app:bl_arrowWidth="12dp"
     app:bl_strokeWidth="0dp"
     app:bl_bubbleColor="@color/main_color"

@@ -5,4 +5,8 @@ package asch.so.wallet.model.entity;
  */
 
 public class UIAAsset extends BaseAsset{
+
+    public UIAAsset(){
+        this.setType(TYPE_UIA);
+    }
 }

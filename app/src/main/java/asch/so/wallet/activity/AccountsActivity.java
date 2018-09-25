@@ -36,58 +36,19 @@ import butterknife.ButterKnife;
  * Created by kimziv on 2017/9/21.
  */
 
-public class AccountsActivity extends TitleToolbarActivity implements View.OnClickListener {
-
-
-
+public class AccountsActivity extends TitleToolbarActivity  {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    EasyPopup moreEasyPopup;
+
     AccountsFragment accountsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        setRightTitle("");
         setTitle(getString(R.string.all_account));
-        initPopupMenu();
         accountsFragment=AccountsFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), accountsFragment, R.id.fragment_container);
     }
 
-    @Override
-    protected void onRightClicked(View v) {
-        showPopupMenu(v, SizeUtils.dp2px(30), SizeUtils.dp2px(-12));
-    }
-
-    private void showPopupMenu(View view, int offsetX, int offsetY) {
-        moreEasyPopup.showAtAnchorView(view, VerticalGravity.BELOW, HorizontalGravity.LEFT, offsetX,offsetY);
-    }
-
-    private void initPopupMenu() {
-        moreEasyPopup = new EasyPopup(AccountsActivity.this)
-                .setContentView(R.layout.menu_account)
-                .setAnimationStyle(R.style.PopupMenuAnimation)
-                .setFocusAndOutsideEnable(true)
-                .createPopup();
-        View contentView = moreEasyPopup.getContentView();
-        View addItem = contentView.findViewById(R.id.add_ll);
-        View importItem = contentView.findViewById(R.id.import_ll);
-        addItem.setOnClickListener(this);
-        importItem.setOnClickListener(this);
-
-    }
-
-
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.add_ll) {
-            moreEasyPopup.dismiss();
-            accountsFragment.addAccount();
-        } else if (v.getId() == R.id.import_ll) {
-            moreEasyPopup.dismiss();
-            accountsFragment.impAccount();
-        }
-    }
 }

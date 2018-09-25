@@ -17,6 +17,7 @@ public final class AschSDK {
     public final static UIA UIA;
     public final static Peer Peer;
     public final static Misc Misc;
+    public final static Gateway Gateway;
 
     public final static AschSDKConfig Config = AschSDKConfig.getInstance();
     public final static AschHelper Helper = new AschHelper();
@@ -33,6 +34,7 @@ public final class AschSDK {
         UIA = factory.getService(so.asch.sdk.UIA.class);
         Peer = factory.getService(so.asch.sdk.Peer.class);
         Misc = factory.getService(so.asch.sdk.Misc.class);
+        Gateway = factory.getService(so.asch.sdk.Gateway.class);
     }
 
 }

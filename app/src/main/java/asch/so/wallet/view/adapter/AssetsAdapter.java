@@ -14,6 +14,7 @@ import asch.so.wallet.R;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
+import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import so.asch.sdk.impl.AschConst;
@@ -38,7 +39,8 @@ public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHol
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Balance balance =assetList.get(position);
-        holder.currencyIconIv.setImageResource(balance.getCurrency().equals(AschConst.CORE_COIN_NAME)?R.mipmap.xas_icon:R.mipmap.other_coin_icon);
+        String currency = balance.getCurrency();
+        holder.currencyIconIv.setImageResource(AppUtil.getIconIdByName(currency));
         holder.assetNameTv.setText(balance.getCurrency());
         holder.balanceTv.setText(balance.getBalanceString());
     }

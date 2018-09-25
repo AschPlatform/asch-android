@@ -53,6 +53,13 @@ public class Wallet {
         this.context=ctx;
         this.allssets=new LinkedHashMap<>();
         this.allssets.put("XAS",new CoreAsset());
+        loadAssets(true,new Wallet.OnLoadAssetsListener() {
+            @Override
+            public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
+                LogUtils.dTag(TAG,"all assets:"+assetsMap.toString());
+            }
+        });
+
         try {
             InputStream wis = ctx.getResources().getAssets().open(Bip39.BIP39_WORDLIST_FILENAME);
             if(wis != null) {
@@ -118,61 +125,68 @@ public class Wallet {
     }
 
     public LinkedHashMap<String, BaseAsset> getAllssets() {
+
         return allssets;
     }
+
+
 
     public void setAllssets(LinkedHashMap<String, BaseAsset> allssets) {
         this.allssets = allssets;
     }
 
 
-
-    public  rx.Observable<List<UIAAsset>> createLoadAllAssetsObservable(boolean ignoreCache){
-        return rx.Observable.create(new Observable.OnSubscribe<List<UIAAsset>>(){
+    //读取所有资产种类，合并获取UIA与Gateway资产
+    public  rx.Observable<List<BaseAsset>> createLoadAllAssetsObservable(boolean ignoreCache){
+        return rx.Observable.create(new Observable.OnSubscribe<List<BaseAsset>>(){
             @Override
-            public void call(Subscriber<? super List<UIAAsset>> subscriber) {
+            public void call(Subscriber<? super List<BaseAsset>> subscriber) {
 //                String cacheJson=CacheUtils.getInstance().getString(UIA_ASSETS_CACHE_KEY);
 //                if (!ignoreCache && !TextUtils.isEmpty(cacheJson)){
 //                    JSONObject resultJSONObj=JSONObject.parseObject(cacheJson);
 //                    JSONArray balanceJsonArray=resultJSONObj.getJSONArray("assets");
-//                    List<UIAAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),UIAAsset.class);
+//                    List<BaseAsset> assets= JSON.parseArray(balanceJsonArray.toJSONString(),BaseAsset.class);
 //                    subscriber.onNext(assets);
 //                    subscriber.onCompleted();
 //                    return;
 //                }
-                AschResult result = AschSDK.UIA.getAssets(100,0);
-                AschResult result2 = AschSDK.UIA.getGatewayAssets(100,0);
+                AschResult resultUIA = AschSDK.UIA.getAssets(100,0);
+                AschResult resultGateway = AschSDK.UIA.getGatewayAssets(100,0);
 
-                LogUtils.iTag(TAG,result.getRawJson());
-                if (result.isSuccessful() && result2.isSuccessful()){
-                    String rawJson=result.getRawJson();
+                LogUtils.iTag(TAG,resultUIA.getRawJson());
+                if (resultUIA.isSuccessful() && resultGateway.isSuccessful()){
+                    ArrayList<BaseAsset> allAssets = new ArrayList<>();
+
+                    //解析UIA资产
+                    String rawJson=resultUIA.getRawJson();
                     JSONObject resultJSONObj=JSONObject.parseObject(rawJson);
                     JSONArray assetJsonArray=resultJSONObj.getJSONArray("assets");
-                    List<UIAAsset> assets= JSON.parseArray(assetJsonArray.toJSONString(),UIAAsset.class);
+                    List<BaseAsset> assetsUIA= JSON.parseArray(assetJsonArray.toJSONString(),BaseAsset.class);
+                    for (BaseAsset as:assetsUIA)
+                        as.setType(BaseAsset.TYPE_UIA);
+                    allAssets.addAll(assetsUIA);
 
-                    rawJson=result2.getRawJson();
-                    resultJSONObj=JSONObject.parseObject(rawJson);
-                    assetJsonArray=resultJSONObj.getJSONArray("currencies");
-                    ArrayList<UIAAsset> allAssets=new ArrayList<>(assets);
-
+                    //解析Gateway资产
+                    String rawJsonGateway=resultGateway.getRawJson();
+                    JSONObject resultJSONObjGateway=JSONObject.parseObject(rawJsonGateway);
+                    JSONArray assetJsonArrayGateway=resultJSONObjGateway.getJSONArray("currencies");
                     for (Object obj :
-                            assetJsonArray) {
-                        UIAAsset asset=new UIAAsset();
+                            assetJsonArrayGateway) {
+                        BaseAsset assetGateway=new BaseAsset();
                         JSONObject jsonObj=(JSONObject)obj;
-                        asset.setName(jsonObj.getString("symbol"));
-                        asset.setPrecision(jsonObj.getIntValue("precision"));
-                        asset.setGateway(jsonObj.getString("gateway"));
-                        asset.setDesc(jsonObj.getString("desc"));
-                        allAssets.add(asset);
+                        assetGateway.setName(jsonObj.getString("symbol"));
+                        assetGateway.setPrecision(jsonObj.getIntValue("precision"));
+                        assetGateway.setGateway(jsonObj.getString("gateway"));
+                        assetGateway.setDesc(jsonObj.getString("desc"));
+                        assetGateway.setType(BaseAsset.TYPE_GATEWAY);
+                        allAssets.add(assetGateway);
                     }
-                   // List<UIAAsset> assets2= JSON.parseArray(assetJsonArray.toJSONString(),UIAAsset.class);
-
 
                     CacheUtils.getInstance().put(UIA_ASSETS_CACHE_KEY,rawJson,AppConstants.DEFAULT_CACHE_TIMEOUT);
                     subscriber.onNext(allAssets);
                     subscriber.onCompleted();
                 }else{
-                    subscriber.onError(result.getException());
+                    subscriber.onError(resultUIA.getException());
                 }
             }
         });
@@ -184,7 +198,7 @@ public class Wallet {
         Subscription subscription= uiaOervable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<List<UIAAsset>>() {
+                .subscribe(new Subscriber<List<BaseAsset>>() {
                     @Override
                     public void onCompleted() {
 
@@ -199,10 +213,10 @@ public class Wallet {
                     }
 
                     @Override
-                    public void onNext(List<UIAAsset> assets) {
-                        for (UIAAsset uiaAsset :
+                    public void onNext(List<BaseAsset> assets) {
+                        for (BaseAsset baseAsset :
                                 assets) {
-                            allssets.put(uiaAsset.getName(),uiaAsset);
+                            allssets.put(baseAsset.getName(),baseAsset);
                         }
                         if (callback!=null){
                             callback.onLoadAllAssets(allssets,null);

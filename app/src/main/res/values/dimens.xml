@@ -15,4 +15,5 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="head_coin_size">54dp</dimen>
+    <dimen name="btn_add">36dp</dimen>
 </resources>
