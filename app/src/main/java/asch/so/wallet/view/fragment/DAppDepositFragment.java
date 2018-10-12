@@ -1,17 +1,11 @@
 package asch.so.wallet.view.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
-import android.text.TextUtils;
-import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -34,14 +28,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import asch.so.base.fragment.BaseFragment;
-import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
-import asch.so.wallet.activity.AssetTransferActivity;
-import asch.so.wallet.activity.QRCodeScanActivity;
-import asch.so.wallet.contract.AssetTransferContract;
+import asch.so.wallet.accounts.AssetManager;
 import asch.so.wallet.contract.DAppDepositContract;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.AschAsset;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.QRCodeURL;
@@ -52,8 +44,6 @@ import asch.so.wallet.view.widget.SecondPasswdDialog;
 import asch.so.wallet.view.widget.TransferConfirmationDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import so.asch.sdk.impl.AschConst;
-import so.asch.sdk.impl.Validation;
 
 /**
  * Created by kimziv on 2018/2/11.
@@ -111,11 +101,8 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
         return AccountsManager.getInstance().getCurrentAccount();
     }
 
-    private Balance getBalance(){
-        if (currency!=null && (getAccount().getFullAccount()!=null)&&(getAccount().getFullAccount().getBalancesMap()!=null)){
-            return  getAccount().getFullAccount().getBalancesMap().get(currency);
-        }
-        return null;
+    private AschAsset getBalance(){
+        return AssetManager.getInstance().queryAschAssetByName(currency);
     }
 
     private boolean hasSecondPasswd(){
@@ -137,7 +124,7 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
 //            // AppUtil.toastError(getContext(),"收款二维码有错误");
 //        }
 
-        Balance balanceRemain=getBalance();
+        AschAsset balanceRemain=getBalance();
         balanceTv.setText(balanceRemain==null?"":balanceRemain.getBalanceString());
 
         //targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));

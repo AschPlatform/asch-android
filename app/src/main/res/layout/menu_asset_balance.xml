@@ -9,7 +9,7 @@
     app:bl_arrowPosition="99dp"
     app:bl_arrowWidth="12dp"
     app:bl_strokeWidth="0dp"
-    app:bl_bubbleColor="@color/main_color"
+    app:bl_bubbleColor="@color/menu_dark_background"
     app:bl_cornersRadius="1dp"
     >
 
@@ -23,19 +23,12 @@
 
         <LinearLayout
             android:id="@+id/scan_ll"
-            android:background="@drawable/menu_item_selector"
             android:clickable="true"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
-                android:layout_marginLeft="10dp"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/property_pull_down_scan"
-                />
+
             <TextView
                 android:id="@+id/scan_item"
                 android:layout_width="match_parent"
@@ -47,21 +40,20 @@
                 android:textSize="14sp"/>
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color"
+            />
+
     <LinearLayout
         android:id="@+id/receive_ll"
-        android:background="@drawable/menu_item_selector"
         android:clickable="true"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:layout_marginLeft="10dp"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_gravity="center"
-            android:src="@mipmap/property_pull_down_incept"
-            />
+
         <TextView
             android:id="@+id/receive_item"
             android:layout_width="match_parent"
@@ -69,33 +61,60 @@
             android:gravity="center"
             android:textColor="@color/white"
             android:clickable="false"
-            android:text="@string/receipt"
+            android:text="@string/receipt_code"
             android:textSize="14sp"/>
         </LinearLayout>
-    <!--<LinearLayout-->
-        <!--android:id="@+id/transactions_ll"-->
-        <!--android:background="@drawable/menu_item_selector"-->
-        <!--android:clickable="true"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-        <!--<ImageView-->
-            <!--android:layout_marginLeft="10dp"-->
-            <!--android:layout_width="16dp"-->
-            <!--android:layout_height="16dp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:src="@mipmap/property_pull_down_bill"-->
-            <!--/>-->
-        <!--<TextView-->
-            <!--android:id="@+id/bill_item"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:gravity="center"-->
-            <!--android:clickable="false"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:text="@string/bill"-->
-            <!--android:textSize="14sp"/>-->
-        <!--</LinearLayout>-->
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color"
+            />
+
+        <LinearLayout
+            android:id="@+id/add_asset_ll"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/add_asset_item"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:clickable="false"
+                android:text="@string/add_asset"
+                android:textSize="14sp"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_color"
+            />
+
+        <LinearLayout
+            android:id="@+id/import_account_ll"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/import_account_item"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:clickable="false"
+                android:text="@string/import_account"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+
+
     </LinearLayout>
 </com.daasuu.bl.BubbleLayout>

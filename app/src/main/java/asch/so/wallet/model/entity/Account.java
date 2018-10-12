@@ -11,7 +11,9 @@ import com.alibaba.fastjson.annotation.JSONField;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.accounts.AssetManager;
 import asch.so.wallet.crypto.AccountSecurity;
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -56,6 +58,15 @@ public class Account extends RealmObject{
 
     public void setFullAccount(FullAccount fullAccount) {
         this.fullAccount = fullAccount;
+        AschAsset aschAsset = new AschAsset();
+        aschAsset.setBalance(fullAccount.getAccount().getBalance());
+        aschAsset.setAddress(address);
+        aschAsset.setName(AppConstants.XAS_NAME);
+        aschAsset.setType(AschAsset.TYPE_XAS);
+        aschAsset.setShowState(AschAsset.STATE_SHOW);
+        aschAsset.setPrecision(AppConstants.PRECISION);
+        aschAsset.setTrueBalance ((float) (Double.parseDouble(aschAsset.getBalance())/(Math.pow(10,AppConstants.PRECISION))));
+        AssetManager.getInstance().addAsset(aschAsset);
     }
 
 
@@ -170,11 +181,11 @@ public class Account extends RealmObject{
 
 
     public String getSecondSecret(String password) {
-        return AccountSecurity.decryptPassword(secondSecret,password);
+        return AccountSecurity.decryptSecondPwd(password,secondSecret);
     }
 
-    public void setSecondSecret(String secondSecret) {
-        this.secondSecret = AccountSecurity.encryptPwd(secondSecret);;
+    public void setSecondSecret(String password,String secondSecret) {
+        this.secondSecret = AccountSecurity.encryptSecondPwd(password,secondSecret);;
     }
 
     public String getTmpPasswd() {
@@ -199,9 +210,9 @@ public class Account extends RealmObject{
     }
 
     public long getXASLongBalance(){
-        if (this.getFullAccount().getBalances()!=null && this.getFullAccount().getBalances().size()>0)
+        if (AssetManager.getInstance().getBalances()!=null && AssetManager.getInstance().getBalances().size()>0)
         {
-            Balance balance=this.getFullAccount().getBalances().get(0);
+            AschAsset balance=AssetManager.getInstance().getBalances().get(0);
             long amount =balance.getLongBalance();
             return amount;
         }

@@ -193,7 +193,6 @@ public class AppUtil {
                             }
                         }
 
-
                         return updateAppBean;
                     }
 
@@ -316,7 +315,7 @@ public class AppUtil {
             }
             case UIAAssetV2:
             {
-                return R.string.uia_asset;
+                return R.string.uia_asset_register;
             }
 //            case UIAFlags:
 //            {

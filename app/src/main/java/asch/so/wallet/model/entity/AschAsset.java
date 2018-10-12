@@ -1,45 +1,57 @@
 package asch.so.wallet.model.entity;
 
 import android.support.annotation.IntDef;
+import android.text.TextUtils;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * Created by kimziv on 2017/9/27.
- */
+import asch.so.wallet.AppConstants;
+import asch.so.wallet.util.AppUtil;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import so.asch.sdk.Gateway;
 
-/*
-            "name": "CCTime.XCT",
-            "desc": "Token for CCTime",
-            "maximum": "1000000000000000000",
-            "precision": 8,
-            "strategy": "",
-            "quantity": "100000000000000000",
-            "height": 183,
-            "issuerId": "3196144307608101364",
-            "acl": 0,
-            "writeoff": 0,
-            "allowWriteoff": 0,
-            "allowWhitelist": 0,
-            "allowBlacklist": 0,
-            "maximumShow": "10000000000",
-            "quantityShow": "1000000000"
- */
-public class BaseAsset {
+public class AschAsset extends RealmObject {
 
 
+    @IntDef({STATE_UNSETTING,STATE_SHOW,STATE_UNSHOW})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface State {}
+    public static final int STATE_UNSETTING = 0;
+    public static final int STATE_SHOW = 1;
+    public static final int STATE_UNSHOW = 2;
+    private @State int showState;
+
+    private String address;
+
+    @PrimaryKey
+    private String aid;
     private int type;
     private String name;
     private String desc;
     private int precision;
+    private String balance;
+    private float trueBalance;
 
-
+    private String tid;
     private String maximum;
-    private String strategy;
     private String quantity;
-    private long height;
     private String issuerId;
+    private long timestamp;
+    private int version;
+
+    private String gateway;
+    private String symbol;
+    private int revoked;
+    private int flag;
+
+
+    private int createTimestamp;
+    private int updateTimestamp;
+
+    private String strategy;
+    private long height;
     private int acl;
     private int writeoff;
     private int allowWriteoff;
@@ -47,22 +59,111 @@ public class BaseAsset {
     private int allowBlacklist;
     private String maximumShow;
     private String quantityShow;
-    private String gateway;
-    private String symbol;
-    private int revoked;
 
 
-    public Balance toBalance(){
-        Balance balance = new Balance();
-        balance.setPrecision(precision);
-        balance.setType(type);
-        balance.setCurrency(name);
-        balance.setState(Balance.STATE_UNSETTING);
+    public void setAidFromAsset(AschAsset asset){
+        if(asset.getType()==AschAsset.TYPE_GATEWAY){
+            aid =asset.name+"_"+String.valueOf(asset.getType())+"_"+asset.getGateway();
+        }
+        else if (asset.getType()==AschAsset.TYPE_UIA)
+            aid = asset.getName()+"_"+String.valueOf(asset.getType())+"_"+asset.getTid();
+        else
+            aid = asset.getName();
+    }
 
-        return balance;
+    public void setTrueBalance(float trueBalance) {
+        this.trueBalance = trueBalance;
+    }
+
+    public float getTrueBalance(){
+        return this.trueBalance;
     }
 
 
+
+
+
+
+//    public Balance toBalance(){
+//        Balance balance = new Balance();
+//        balance.setPrecision(precision);
+//        balance.setType(type);
+//        balance.setCurrency(name);
+//
+//        return balance;
+//    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getAid() {
+        return aid;
+    }
+
+    public void setAid(String aid) {
+        this.aid = aid;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getTid() {
+        return tid;
+    }
+
+    public void setTid(String tid) {
+        this.tid = tid;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public int getShowState() {
+        return showState;
+    }
+
+    public void setShowState(int showState) {
+        this.showState = showState;
+    }
+
+    public int getCreateTimestamp() {
+        return createTimestamp;
+    }
+
+    public void setCreateTimestamp(int createTimestamp) {
+        this.createTimestamp = createTimestamp;
+    }
+
+    public int getUpdateTimestamp() {
+        return updateTimestamp;
+    }
+
+    public void setUpdateTimestamp(int updateTimestamp) {
+        this.updateTimestamp = updateTimestamp;
+    }
 
     @IntDef({TYPE_XAS,TYPE_UIA,TYPE_GATEWAY})
     @Retention(RetentionPolicy.SOURCE)
@@ -222,6 +323,27 @@ public class BaseAsset {
     public void setRevoked(int revoked) {
         this.revoked = revoked;
     }
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
+
+    public String getBalanceString(){
+        long longBalance=Long.parseLong(balance);
+        int preci=0;
+        preci=this.getPrecision();
+        return longBalance==0?"0":AppUtil.decimalFormat(AppUtil.decimalFromBigint(longBalance,preci));
+    }
+
+    public long getLongBalance(){
+        long longBalance=Long.parseLong(balance);
+        return longBalance;
+    }
+
 
 
 }

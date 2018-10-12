@@ -47,12 +47,15 @@ import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.activity.AccountDetailActivity;
+import asch.so.wallet.activity.AssetManageActivity;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransactionsActivity;
+import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.AschAsset;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.presenter.AssetBalancePresenter;
@@ -99,9 +102,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     View copyAddress;
     EasyPopup moreEasyPopup;
 
-    private Balance accountBalance=null;
     Unbinder unbinder;
-    private List<Balance> assetList = new ArrayList<>();
+    private List<AschAsset> assetList = new ArrayList<>();
     private AssetsAdapter adapter = new AssetsAdapter(assetList);
     private AssetBalanceContract.Presenter presenter;
 
@@ -130,7 +132,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
                 Bundle bundle = new Bundle();
-                Balance balance = assetList.get(position);
+                AschAsset balance = assetList.get(position);
                 String json = JSON.toJSONString(balance);
                 bundle.putString("balance", json);
                 BaseActivity.start(getActivity(), AssetTransactionsActivity.class, bundle);
@@ -175,7 +177,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
                 int scrollRange = appBarLayout.getTotalScrollRange();
-                LogUtils.vTag(TAG, "verticalOffset:" + verticalOffset + ", scrollRange:" + scrollRange);
+//                LogUtils.vTag(TAG, "verticalOffset:" + verticalOffset + ", scrollRange:" + scrollRange);
                 float fraction = 1f * (scrollRange + verticalOffset) / scrollRange;
                 toolbar.setAlpha((1 - fraction));
 
@@ -216,6 +218,24 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             startActivity(intent);
         } else if (view==copyAddress){
             AppUtil.copyText(getActivity(),addressTv.getText().toString());
+        } else if(view.getId()==R.id.add_asset_ll){
+            moreEasyPopup.dismiss();
+            Intent intent = new Intent(getActivity(),AssetManageActivity.class);
+            startActivityForResult(intent,1);
+
+        } else if(view.getId()==R.id.import_account_ll){
+            moreEasyPopup.dismiss();
+            Intent intent = new Intent(getActivity(),CheckPasswordActivity.class);
+            intent.putExtra("title",AssetBalanceFragment.class.getSimpleName());
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1&&resultCode==1){
+            presenter.editAssets();
         }
     }
 
@@ -232,8 +252,12 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
         View contentView = moreEasyPopup.getContentView();
         View scanItem = contentView.findViewById(R.id.scan_ll);
         View receiveItem = contentView.findViewById(R.id.receive_ll);
+        View addItem = contentView.findViewById(R.id.add_asset_ll);
+        View importItem = contentView.findViewById(R.id.import_account_ll);
         scanItem.setOnClickListener(this);
         receiveItem.setOnClickListener(this);
+        addItem.setOnClickListener(this);
+        importItem.setOnClickListener(this);
     }
 
     @Override
@@ -263,7 +287,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     }
 
     @Override
-    public void displayAssets(List<Balance> balances) {
+    public void displayAssets(List<AschAsset> balances) {
         this.assetList.clear();
         this.assetList.addAll(balances);
         adapter.notifyDataSetChanged();
@@ -271,10 +295,9 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     }
 
     @Override
-    public void displayXASBalance(Balance balance) {
+    public void displayXASBalance(AschAsset balance) {
         String amount =balance.getBalanceString();  // String.valueOf(balance.getRealBalance());
-        topBalanceTv.setText(amount + " XAS");
-        accountBalance=balance;
+        topBalanceTv.setText(amount + balance.getName());
     }
 
     @Override

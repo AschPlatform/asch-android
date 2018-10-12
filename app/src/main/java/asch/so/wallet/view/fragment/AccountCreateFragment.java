@@ -164,11 +164,11 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
     }
 
     private void finishPage(){
-        if (getArguments()!=null &&  ImportOrCreateAccoutActivity.class.getName().equals(getArguments().getString("clazz"))){
+        if (getArguments()!=null &&  ImportOrCreateAccoutActivity.class.getSimpleName().equals(getArguments().getString("clazz"))){
             Intent intent =new Intent(getActivity(), MainTabActivity.class);
             startActivity(intent);
             ActivityStackManager.getInstance().finishAll();
-        }else if(getArguments()!=null &&  CheckPasswordActivity.class.getName().equals(getArguments().getString("clazz"))) {
+        }else if(getArguments()!=null &&  CheckPasswordActivity.class.getSimpleName().equals(getArguments().getString("clazz"))) {
             Intent intent = new Intent(getActivity(), AccountsActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
@@ -182,7 +182,7 @@ public class AccountCreateFragment extends BaseFragment implements AccountCreate
         if (secret!=null) {
             Bundle bundle = new Bundle();
             bundle.putString("secret", secret);
-            if (getArguments()!=null &&  ImportOrCreateAccoutActivity.class.getName().equals(getArguments().getString("clazz"))){
+            if (getArguments()!=null &&  ImportOrCreateAccoutActivity.class.getSimpleName().equals(getArguments().getString("clazz"))){
                 bundle.putInt("action", SecretBackupActivity.Action.BackupFromStart.getValue());
             }else {
                 bundle.putInt("action", SecretBackupActivity.Action.BackupFromInApp.getValue());

@@ -21,6 +21,7 @@ import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.activity.ImportOrCreateAccoutActivity;
+import asch.so.wallet.activity.MainTabActivity;
 import asch.so.wallet.contract.AccountImportContract;
 import asch.so.wallet.presenter.AccountImportPresenter;
 import asch.so.wallet.util.AppUtil;
@@ -156,12 +157,16 @@ public class AccountImportFragment extends BaseFragment implements AccountImport
         if (res) {
 
             AppUtil.toastSuccess(getContext(), msg);
-
-            if (getArguments()!=null && ImportOrCreateAccoutActivity.class.getName().equals(getArguments().getString("clazz"))){
+            //初始化时的导入
+            if (getArguments()!=null && ImportOrCreateAccoutActivity.class.getSimpleName().equals(getArguments().getString("clazz"))){
                 getActivity().setResult(1);
                 getActivity().finish();
-            }else {
+            }else if (getArguments()!=null && AccountsActivity.class.getSimpleName().equals(getArguments().getString("clazz"))){
                 Intent intent = new Intent(getActivity(), AccountsActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                getActivity().startActivity(intent);
+            }else if (getArguments()!=null && AssetBalanceFragment.class.getSimpleName().equals(getArguments().getString("clazz"))){
+                Intent intent = new Intent(getActivity(), MainTabActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 getActivity().startActivity(intent);
             }

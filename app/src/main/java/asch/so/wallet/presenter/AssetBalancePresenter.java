@@ -1,15 +1,13 @@
 package asch.so.wallet.presenter;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.blankj.utilcode.util.LogUtils;
 
 import java.util.Observer;
 
-import asch.so.base.view.Throwable;
-import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.accounts.AssetManager;
 import asch.so.wallet.contract.AssetBalanceContract;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.FullAccount;
@@ -65,7 +63,7 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
     @Override
     public void loadAssets(){
 
-       Observable<FullAccount> observable = AccountsManager.getInstance().createLoadFullAccountObservable();
+       Observable<FullAccount> observable = AccountsManager.getInstance().loadAccountAndAssetsObservable();
       Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -79,22 +77,18 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
                     public void onError(java.lang.Throwable e) {
                         LogUtils.dTag("xasObservable error:",e.toString());
                         view.displayError(e);
-//                        view.displayError(new Throwable(context.getString(R.string.balance_get_error)));
                     }
 
                     @Override
                     public void onNext(FullAccount fullAccount) {
-                        LogUtils.dTag(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getBalances().toString());
+                        LogUtils.dTag(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getAccount().getBalance().toString());
                         getAccount().setFullAccount(fullAccount);
-
-                        if (fullAccount!=null){
-                            view.displayXASBalance(fullAccount.getBalances().get(0));
-                        }
-                        view.displayAssets(fullAccount.getBalances());
+                        view.displayAssets(AssetManager.getInstance().queryAssetsForShow());
                     }
                 });
       subscriptions.add(subscription);
     }
+
 
 
     @Override
@@ -103,5 +97,10 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
             loadAccount();
             loadAssets();
         }
+    }
+
+    @Override
+    public void editAssets() {
+        view.displayAssets(AssetManager.getInstance().queryAssetsForShow());
     }
 }

@@ -180,16 +180,16 @@ public class AccountsDao {
         });
     }
 
-    public void  updateSaveSecondPwd(Account account, @Account.States int STATE_SAVE_SECOND, String secondPwd, OnUpdateSaveSecondPwdStateListener listener){
+    public void  updateSaveSecondPwd(Account account, @Account.States int STATE_SAVE_SECOND, String password,String secondPwd, OnUpdateSaveSecondPwdStateListener listener){
 
         getRealm().executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 Account dbAccount=queryAccount(account.getAddress());
                 account.setSaveSecondPasswordState(STATE_SAVE_SECOND);
-                account.setSecondSecret(secondPwd);
+                account.setSecondSecret(password,secondPwd);
                 dbAccount.setSaveSecondPasswordState(STATE_SAVE_SECOND);
-                dbAccount.setSecondSecret(secondPwd);
+                dbAccount.setSecondSecret(password,secondPwd);
                 if (listener!=null){
                     listener.OnUpdateSaveSecondPwdStateListener(account,STATE_SAVE_SECOND);
                 }

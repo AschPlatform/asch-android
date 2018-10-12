@@ -36,4 +36,23 @@ public class GatewayService extends AschRESTService implements Gateway {
             return fail(ex);
         }
     }
+
+    @Override
+    public AschResult getGatewayAssets(int limit, int offset) {
+        try {
+            Argument.require(Validation.isValidLimit(limit), "invalid limit");
+            Argument.require(Validation.isValidOffset(offset), "invalid offset");
+
+            return get(AschServiceUrls.Gateway.GET_GATEWAY_CURRENCIES, createLimitAndOffsetParameters(limit, offset));
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
+    private ParameterMap createLimitAndOffsetParameters(int limit, int offset){
+        return new ParameterMap()
+                .put("limit", limit)
+                .put("offset", offset);
+    }
 }

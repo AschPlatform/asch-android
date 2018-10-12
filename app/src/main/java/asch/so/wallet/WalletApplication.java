@@ -92,9 +92,9 @@ public class WalletApplication extends MultiDexApplication {
         configLog();
         initBuglySDK();
         AppConfig.init(this);
+        initRealm();
         initWallet();
         initAschSDK();
-        initRealm();
         initLockManager();
         IdenticonGenerator.init(this);
         setupDownloader();

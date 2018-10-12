@@ -16,14 +16,14 @@ import asch.so.wallet.model.entity.Withdraw;
 public interface RecordMulitChainContract {
 
     interface View extends BaseView<Presenter>{
-        void displayFirstPageTransactions(List<?> records);
-        void displayMorePageTransactions(List<?> records);
+        void displayFirstPageRecords(List<?> records);
+        void displayMorePageRecords(List<?> records);
 
     }
 
     interface Presenter extends BasePresenter{
-        void loadFirstPageTransactions();
-        void loadMorePageTransactions();
+        void loadFirstPageRecords();
+        void loadMorePageRecords();
 
     }
 }

@@ -1,7 +1,11 @@
 package asch.so.wallet.model.entity;
 
+import android.support.annotation.IntDef;
+
 import com.alibaba.fastjson.annotation.JSONField;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.math.BigDecimal;
 
 import asch.so.wallet.AppConstants;
@@ -22,6 +26,26 @@ import asch.so.wallet.util.AppUtil;
 
 
 public class Balance {
+
+
+    @IntDef({STATE_UNSETTING,STATE_SHOW,STATE_UNSHOW})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface State {}
+    public static final int STATE_UNSETTING = 0;
+    public static final int STATE_SHOW = 1;
+    public static final int STATE_UNSHOW = 2;
+    //显示状态
+    public @State int state = 0;
+    public int getState() {
+        return state;
+    }
+    public void setState(@State int s) {
+        this.state = s;
+    }
+
+
+
+    private String address;
     private String currency;
     private String balance;
     private String maximum;
@@ -43,6 +67,24 @@ public class Balance {
         private int precision;
         private String quantity;
         private String desc;
+        private String issuerId;
+        private int _version_;
+
+        public String getIssuerId() {
+            return issuerId;
+        }
+
+        public void setIssuerId(String issuerId) {
+            this.issuerId = issuerId;
+        }
+
+        public int get_version_() {
+            return _version_;
+        }
+
+        public void set_version_(int _version_) {
+            this._version_ = _version_;
+        }
 
         public String getName() {
             return name;
@@ -99,6 +141,8 @@ public class Balance {
         public void setDesc(String desc) {
             this.desc = desc;
         }
+
+
     }
 
     public static class GatewayAsset {
@@ -147,6 +191,61 @@ public class Balance {
         public void setRevoked(int revoked) {
             this.revoked = revoked;
         }
+
+
+    }
+
+    public AschAsset gatewayToAschAsset(){
+        AschAsset aschAsset = new AschAsset();
+        aschAsset.setName(gatewayAsset.symbol);
+        aschAsset.setDesc(gatewayAsset.desc);
+        aschAsset.setPrecision(gatewayAsset.precision);
+        aschAsset.setRevoked(gatewayAsset.revoked);
+        aschAsset.setGateway(gatewayAsset.gateway);
+        aschAsset.setAddress(address);
+        aschAsset.setBalance(balance);
+        aschAsset.setFlag(flag);
+        aschAsset.setType(AschAsset.TYPE_GATEWAY);
+        aschAsset.setAidFromAsset(aschAsset);
+        aschAsset.setTrueBalance(getRealBalance());
+        return aschAsset;
+    }
+
+    public AschAsset uiaToAschAsset(){
+        AschAsset aschAsset = new AschAsset();
+        aschAsset.setName(uiaAsset.name);
+        aschAsset.setTid(uiaAsset.tid);
+        aschAsset.setTimestamp(uiaAsset.timestamp);
+        aschAsset.setMaximum(uiaAsset.maximum);
+        aschAsset.setPrecision(uiaAsset.precision);
+        aschAsset.setQuantity(uiaAsset.quantity);
+        aschAsset.setDesc(uiaAsset.desc);
+        aschAsset.setIssuerId(uiaAsset.issuerId);
+        aschAsset.setVersion(uiaAsset._version_);
+        aschAsset.setType(AschAsset.TYPE_UIA);
+        aschAsset.setFlag(flag);
+        aschAsset.setAddress(address);
+        aschAsset.setBalance(balance);
+        aschAsset.setAidFromAsset(aschAsset);
+        aschAsset.setTrueBalance(getRealBalance());
+        return aschAsset;
+    }
+
+    public AschAsset toAschAsset(){
+        if (flag==3){
+            return gatewayToAschAsset();
+        }else if(flag ==2){
+            return uiaToAschAsset();
+        }else
+            return new AschAsset();
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getCurrency() {
@@ -158,6 +257,7 @@ public class Balance {
     }
 
     public String getBalance() {
+
         return balance;
     }
 
@@ -261,4 +361,6 @@ public class Balance {
     public void setFlag(int flag) {
         this.flag = flag;
     }
+
+
 }

@@ -52,6 +52,7 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+        <activity android:name=".activity.AssetManageActivity"/>
         <activity android:name=".activity.SecondCheckPasswordActivity"/>
         <activity android:name=".activity.CheckPasswordActivity"></activity>
         <activity android:name=".activity.SecureSettingActivity"></activity>

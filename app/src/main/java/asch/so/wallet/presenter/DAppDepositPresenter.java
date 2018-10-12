@@ -13,10 +13,12 @@ import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.accounts.AssetManager;
 import asch.so.wallet.accounts.Wallet;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.contract.DAppDepositContract;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.AschAsset;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.UIAAsset;
 import rx.Observable;
@@ -115,26 +117,27 @@ public class DAppDepositPresenter implements DAppDepositContract.Presenter {
     @Override
     public void loadAssets(String currency, boolean ignoreCache) {
 
-        Subscription subscription=  Wallet.getInstance().loadAssets(ignoreCache, new Wallet.OnLoadAssetsListener() {
-            @Override
-            public void onLoadAllAssets(LinkedHashMap<String, BaseAsset> assetsMap, Throwable exception) {
-                if (exception!=null){
-                    view.displayError(new Throwable(context.getString(R.string.asset_get_error)));
-                }else {
-                    Iterator<Map.Entry<String,BaseAsset>> it=assetsMap.entrySet().iterator();
-                    LinkedHashMap<String, BaseAsset> map=new LinkedHashMap<>();
-                   // ArrayList<Delegate> delegates=new ArrayList<>();
-                    while (it.hasNext()){
-                        Map.Entry<String,BaseAsset> entry =it.next();
-                       if (hasAsset(entry.getKey())){
-                           map.put(entry.getKey(),entry.getValue());
-                       }
-                    }
-                    view.displayAssets(map);
-                }
-            }
-        });
-        subscriptions.add(subscription);
+//        //TODO
+//        Subscription subscription=  AssetManager.getInstance().loadAssets(new AssetManager.OnLoadAssetsListener() {
+//            @Override
+//            public void onLoadAllAssets(List<AschAsset> assetsMap, Throwable exception) {
+//                if (exception!=null){
+//                    view.displayError(new Throwable(context.getString(R.string.asset_get_error)));
+//                }else {
+////                    Iterator<Map.Entry<String,BaseAsset>> it=assetsMap.entrySet().iterator();
+//                    LinkedHashMap<String, BaseAsset> map=new LinkedHashMap<>();
+////                   // ArrayList<Delegate> delegates=new ArrayList<>();
+////                    while (it.hasNext()){
+////                        Map.Entry<String,BaseAsset> entry =it.next();
+////                       if (hasAsset(entry.getKey())){
+////                           map.put(entry.getKey(),entry.getValue());
+////                       }
+////                    }
+//                    view.displayAssets(map);
+//                }
+//            }
+//        });
+//        subscriptions.add(subscription);
     }
 
 //    private int getSelectedIndex(List<UIAAsset> assets, String currency){
@@ -151,7 +154,5 @@ public class DAppDepositPresenter implements DAppDepositContract.Presenter {
 //        return index;
 //    }
 
-    private boolean hasAsset(String currency){
-        return (getAccount()!=null && getAccount().getFullAccount()!=null && getAccount().getFullAccount().hasAsset(currency));
-    }
+
 }

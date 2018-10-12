@@ -87,7 +87,7 @@ project.ext {
 //    ]
     android = [
             compileSdkVersion: 26,
-            buildToolsVersion: "27.0.3",
+            buildToolsVersion: "28.0.2",
             applicationId    : "asch.so.wallet",
             applicationIdTest    : "asch.so.wallet.test",
             minSdkVersion    : 16,
@@ -98,7 +98,7 @@ project.ext {
 
     aschsdk = [
             compileSdkVersion: 26,
-            buildToolsVersion: "27.0.3",
+            buildToolsVersion: "28.0.2",
             applicationId    : "asch.so.wallet",
             minSdkVersion    : 16,
             targetSdkVersion : 26,

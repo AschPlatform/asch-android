@@ -16,4 +16,5 @@
     <color name="update_btn_color">#32b3e3</color>
     <color name="main_color">#FFFF9A28</color>
     <color name="list_del">#fdbc79</color>
+    <color name="menu_dark_background">#2d2d2d</color>
 </resources>

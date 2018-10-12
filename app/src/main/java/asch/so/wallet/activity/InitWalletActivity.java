@@ -60,7 +60,7 @@ public class InitWalletActivity extends BaseActivity implements View.OnClickList
         if (view==createBtn){
             if (checkBox.isChecked()){
                 Bundle bundle=new Bundle();
-                bundle.putString("clazz",InitWalletActivity.class.getName());
+                bundle.putString("clazz",InitWalletActivity.class.getSimpleName());
                 if (Wallet.getInstance().isSetPwd()){
                     start(this,ImportOrCreateAccoutActivity.class,bundle);
                 }else {

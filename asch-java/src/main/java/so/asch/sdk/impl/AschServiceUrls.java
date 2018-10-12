@@ -12,7 +12,7 @@ public final class AschServiceUrls {
         static final String GENERATE_PUBLIC_KEY ="/api/accounts/generatePublicKey";
         static final String GET_VOTED_DELEGATES ="/api/accounts/delegates";
         static final String GET_DELEGATE_FEE ="/api/accounts/delegates/fee";
-        static final String GET_TOP_ACCOUNTS ="/api/accounts/top"; //x
+        static final String GET_TOP_ACCOUNTS ="/api/accounts/top";
     }
 
     final static class Delegate{

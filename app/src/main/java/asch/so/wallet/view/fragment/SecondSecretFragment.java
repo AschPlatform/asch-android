@@ -10,12 +10,11 @@ import android.widget.EditText;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-import asch.so.base.activity.ActivityStackManager;
-import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
-import asch.so.wallet.activity.AccountsActivity;
+import asch.so.wallet.accounts.AssetManager;
 import asch.so.wallet.activity.SecureSettingActivity;
 import asch.so.wallet.contract.SecondSecretContract;
 import asch.so.wallet.model.entity.Account;
@@ -74,10 +73,7 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
     public void saveSecondPassword(){
         String passwd=passwdEt1.getText().toString();
         String passwd2=passwdEt2.getText().toString();
-        if (getAccount().getFullAccount()!=null &&
-                getAccount().getFullAccount().getBalances()!=null &&
-                getAccount().getFullAccount().getBalances().size()!=0 &&
-                       getAccount().getXASLongBalance() <= FeeCalculater.calcFee(TransactionType.basic_setPassword)){
+        if (AssetManager.getInstance().queryAschAssetByName(AppConstants.XAS_NAME).getLongBalance() <= FeeCalculater.calcFee(TransactionType.basic_setPassword)){
             AppUtil.toastError(getContext(),getString(R.string.account_balance_insufficient));
             return;
         }

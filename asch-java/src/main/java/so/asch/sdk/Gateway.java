@@ -33,4 +33,10 @@ public interface Gateway extends AschInterface {
 //    currency	string	币种
     AschResult getWithdrawRecord(WithdrawQueryParameters parameters);
 
+//    获取支持的所有跨链币种
+//    接口地址：/api/v2/gateways/currencies
+//    请求方式：GET
+//    支持格式：urlencoded
+    AschResult getGatewayAssets(int limit, int offset);
+
 }

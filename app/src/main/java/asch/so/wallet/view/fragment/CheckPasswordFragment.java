@@ -22,6 +22,7 @@ import asch.so.wallet.activity.AccountBackUpAttentionActivity;
 import asch.so.wallet.activity.AccountCreateActivity;
 import asch.so.wallet.activity.AccountDeleteActivity;
 import asch.so.wallet.activity.AccountImportActivity;
+import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.activity.SecondCheckPasswordActivity;
 import asch.so.wallet.activity.SecondSecretActivity;
@@ -97,25 +98,31 @@ public class CheckPasswordFragment extends BaseFragment {
             }else if(title.equals(getString(R.string.set_second_secret))){
                 bundle.putString("password",pwdEt.getText().toString());
                 BaseActivity.start(getActivity(),SecondSecretActivity.class,bundle);
-            }else if(title.equals(getString(R.string.import_account))){
-                    bundle.putString("clazz",CheckPasswordActivity.class.getName());
+            }else if(title.equals(AccountsActivity.class.getSimpleName())){
+                bundle.putString("clazz",AccountsActivity.class.getSimpleName());
                 BaseActivity.start(getActivity(), AccountImportActivity.class,bundle);
             }else if(title.equals(getString(R.string.add_account))){
-                bundle.putString("clazz", CheckPasswordActivity.class.getName());
+                bundle.putString("clazz", CheckPasswordActivity.class.getSimpleName());
                 BaseActivity.start(getActivity(), AccountCreateActivity.class,bundle);
             }else if(title.equals(getString(R.string.delete_account))){
                 bundle.putString("password",pwdEt.getText().toString());
                 BaseActivity.start(getActivity(), AccountDeleteActivity.class,bundle);
+            }else if(title.equals(AssetBalanceFragment.class.getSimpleName())){
+                bundle.putString("clazz",AssetBalanceFragment.class.getSimpleName());
+                BaseActivity.start(getActivity(), AccountImportActivity.class,bundle);
             }
             //转账
             else if(title.equals(AssetTransferFragment.class.getSimpleName())){
 
+
+                //保存二级密码的情况
                 if (getArguments().getBoolean("hasSecondPwd")){
-                    //保存二级密码的情况
+
                     Account account = AccountsManager.getInstance().getCurrentAccount();
                     int state = account.getSaveSecondPasswordState();
                     if (state==Account.STATE_REMEMBER){
-                        backToTransfer(pwdEt.getText().toString(),AccountsManager.getInstance().getCurrentAccount().getSecondSecret(pwdEt.getText().toString()));
+                        String secondPwd = AccountsManager.getInstance().getCurrentAccount().getSecondSecret(pwdEt.getText().toString());
+                        backToTransfer(pwdEt.getText().toString(),secondPwd);
                         return;
                     }
 

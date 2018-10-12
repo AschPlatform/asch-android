@@ -25,6 +25,9 @@ public class AccountSecurity {
 
     private static final byte[] salt = "Asch_Wallet_Security_Initialize_".getBytes();
 
+
+
+
     public static String encryptPwd(String pwd){
         try {
             SecretKeys key =generateKeyFromPassword(pwd,saltString(salt));
@@ -37,6 +40,34 @@ public class AccountSecurity {
         }
         return null;
     }
+
+    public static String encryptSecondPwd(String pwd,String secondPwd){
+        try {
+            SecretKeys key =generateKeyFromPassword(pwd,saltString(salt));
+            AesCbcWithIntegrity.CipherTextIvMac civ =encrypt(secondPwd, key);
+            return civ.toString();
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String decryptSecondPwd(String pwd,String encryptedSecondPwd){
+        try {
+            SecretKeys key =generateKeyFromPassword(pwd,saltString(salt));
+            CipherTextIvMac civ =new CipherTextIvMac(encryptedSecondPwd);
+            String decrytText = decryptString(civ, key);
+            return  decrytText;
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 
     /**

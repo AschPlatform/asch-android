@@ -102,6 +102,8 @@ public class AccountImportPresenter implements AccountImportContract.Presenter {
                         LogUtils.iTag(TAG, result.getRawJson());
                         FullAccount fullAccount = JSON.parseObject(result.getRawJson(), FullAccount.class);
                         account.setFullAccount(fullAccount);
+
+
                         if (fullAccount.getAccount()==null){
                             FullAccount.AccountInfo accountInfo = new FullAccount.AccountInfo();
                             accountInfo.setAddress(address);

@@ -43,16 +43,17 @@ public class RecordMulitChainFragment extends BaseFragment implements RecordMuli
     LoadingLayout loadingLayout;
     @BindView(R.id.asset_transactions_rcv)
     RecyclerView txRcv;
+    //记录类型
     RecordMulitChainPresenter.RecordType recordType;
     private AssetTransactionsAdapter adapter;
     private RecordMulitChainContract.Presenter presenter;
-    //转账、（跨链）充值，提现。
-    @BaseAsset.Type int type;
+    //币种的类别
+    @BaseAsset.Type int assetType;
     String currency;
 
-    public static RecordMulitChainFragment getInstance(String title,int type,String currency,RecordMulitChainPresenter.RecordType recordType) {
+    public static RecordMulitChainFragment getInstance(String title,int assetType,String currency,RecordMulitChainPresenter.RecordType recordType) {
         RecordMulitChainFragment fragment = new RecordMulitChainFragment();
-        fragment.type = type;
+        fragment.assetType = assetType;
         fragment.currency = currency;
         fragment.recordType = recordType;
         return fragment;
@@ -72,7 +73,7 @@ public class RecordMulitChainFragment extends BaseFragment implements RecordMuli
         txRcv.setItemAnimator(new DefaultItemAnimator());
         txRcv.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         txRcv.setAdapter(adapter);
-        presenter = new RecordMulitChainPresenter(getActivity(),this,type,currency, recordType);
+        presenter = new RecordMulitChainPresenter(getActivity(),this,assetType,currency, recordType);
 
         if (recordType== RecordMulitChainPresenter.RecordType.transfer)
             adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -90,7 +91,7 @@ public class RecordMulitChainFragment extends BaseFragment implements RecordMuli
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 if (presenter!=null) {
-                    presenter.loadFirstPageTransactions();
+                    presenter.loadFirstPageRecords();
                 }
             }
         });
@@ -99,31 +100,31 @@ public class RecordMulitChainFragment extends BaseFragment implements RecordMuli
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 if (presenter!=null) {
-                    presenter.loadMorePageTransactions();
+                    presenter.loadMorePageRecords();
                 }
             }
         });
         refreshLayout.autoRefresh();
 
-        presenter.loadFirstPageTransactions();
+        presenter.loadFirstPageRecords();
         return v;
     }
 
 
     @Override
-    public void displayFirstPageTransactions(List<?> transactions) {
-        if (transactions.isEmpty()) {
+    public void displayFirstPageRecords(List<?> records) {
+        if (records.isEmpty()) {
             loadingLayout.showEmpty();
         }else {
             loadingLayout.showContent();
         }
-        adapter.replaceData(transactions);
+        adapter.replaceData(records);
         refreshLayout.finishRefresh(500);
     }
 
     @Override
-    public void displayMorePageTransactions(List<?> transactions) {
-        adapter.addData(transactions);
+    public void displayMorePageRecords(List<?> records) {
+        adapter.addData(records);
         refreshLayout.finishLoadmore(500);
     }
 

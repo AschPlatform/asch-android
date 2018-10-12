@@ -1,19 +1,16 @@
 package asch.so.wallet.presenter;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.blankj.utilcode.util.LogUtils;
 
 import asch.so.base.view.Throwable;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
-import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.contract.SecondSecretContract;
 import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.FullAccount;
-import asch.so.wallet.util.AppUtil;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -22,8 +19,6 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.AschSDK;
-import so.asch.sdk.TransactionType;
-import so.asch.sdk.impl.FeeCalculater;
 import so.asch.sdk.impl.Validation;
 
 /**
@@ -96,7 +91,7 @@ public class SecondSecretPresenter implements SecondSecretContract.Presenter{
 
 
     private void refreshAccountState(){
-        Observable<FullAccount> observable = AccountsManager.getInstance().createLoadFullAccountObservable();
+        Observable<FullAccount> observable = AccountsManager.getInstance().loadAccountAndAssetsObservable();
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
@@ -115,7 +110,7 @@ public class SecondSecretPresenter implements SecondSecretContract.Presenter{
 
                     @Override
                     public void onNext(FullAccount fullAccount) {
-                        LogUtils.dTag(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getBalances().toString());
+//                        LogUtils.dTag(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getBalances().toString());
                         getAccount().setFullAccount(fullAccount);
 
 

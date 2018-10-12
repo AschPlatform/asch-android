@@ -51,12 +51,12 @@ public class ImportOrCreateAccoutActivity extends BaseActivity implements View.O
     public void onClick(View view) {
         if (view==createBtn){
             Bundle bundle=new Bundle();
-            bundle.putString("clazz",ImportOrCreateAccoutActivity.class.getName());
+            bundle.putString("clazz",ImportOrCreateAccoutActivity.class.getSimpleName());
             start(this,AccountCreateActivity.class,bundle);
         }else if (view==importBtn){
             Intent intent=new Intent(this,AccountImportActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putString("clazz",ImportOrCreateAccoutActivity.class.getName());
+            bundle.putString("clazz",ImportOrCreateAccoutActivity.class.getSimpleName());
             intent.putExtras(bundle);
             startActivityForResult(intent,AccountImportActivity.REQUEST_CODE_FROM_START);
         }

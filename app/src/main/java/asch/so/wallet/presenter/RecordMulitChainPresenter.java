@@ -71,18 +71,17 @@ public class RecordMulitChainPresenter implements RecordMulitChainContract.Prese
                 if (recordType == RecordType.transfer)
                     loadTransactions(param1, param2);
                 else if(recordType == RecordType.deposit)
-                    loadDeposit(param1, param2);
+                    loadDeposit();
                 else if(recordType == RecordType.withdraw)
-                    loadWithdraw(param1, param2);
+                    loadWithdraw();
             }
         };
         this.pager.setStartPageIndex(0);
         this.pager.setPageSize(20);
     }
 
-    private void loadDeposit(int pageIndex,int pageSize){
-        int offset = pageIndex * pageSize;
-        int limit = pageSize;
+    //TODO 分页的问题，接口没有分页 2018年09月25日
+    private void loadDeposit(){
         String address = getAccount().getAddress();
         Subscription subscription = Observable.create((Observable.OnSubscribe<List<Deposit>>) subscriber -> {
             AschResult result;
@@ -112,26 +111,19 @@ public class RecordMulitChainPresenter implements RecordMulitChainContract.Prese
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        view.displayError(new Throwable(context.getString(R.string.net_error)));
-                        pager.finishLoad(true);
+                        displayError();
                     }
 
                     @Override
                     public void onNext(List<Deposit> deposits) {
-                        if (pager.isFirstPage()) {
-                            view.displayFirstPageTransactions(deposits);
-                        } else {
-                            view.displayMorePageTransactions(deposits);
-                        }
-                        pager.finishLoad(true);
+                        displayNext(deposits);
                     }
                 });
         subscriptions.add(subscription);
     }
 
-    private void loadWithdraw(int pageIndex,int pageSize){
-        int offset = pageIndex * pageSize;
-        int limit = pageSize;
+    //TODO 分页的问题，接口没有分页 2018年09月25日
+    private void loadWithdraw(){
         String address = getAccount().getAddress();
         Subscription subscription = Observable.create((Observable.OnSubscribe<List<Withdraw>>) subscriber -> {
             AschResult result;
@@ -161,18 +153,12 @@ public class RecordMulitChainPresenter implements RecordMulitChainContract.Prese
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        view.displayError(new Throwable(context.getString(R.string.net_error)));
-                        pager.finishLoad(true);
+                        displayError();
                     }
 
                     @Override
                     public void onNext(List<Withdraw> withdraws) {
-                        if (pager.isFirstPage()) {
-                            view.displayFirstPageTransactions(withdraws);
-                        } else {
-                            view.displayMorePageTransactions(withdraws);
-                        }
-                        pager.finishLoad(true);
+                       displayNext(withdraws);
                     }
                 });
         subscriptions.add(subscription);
@@ -230,21 +216,30 @@ public class RecordMulitChainPresenter implements RecordMulitChainContract.Prese
 
                     @Override
                     public void onError(java.lang.Throwable e) {
-                        view.displayError(new Throwable(context.getString(R.string.net_error)));
-                        pager.finishLoad(true);
+                       displayError();
                     }
 
                     @Override
                     public void onNext(List<Transaction> transactions) {
-                        if (pager.isFirstPage()) {
-                            view.displayFirstPageTransactions(transactions);
-                        } else {
-                            view.displayMorePageTransactions(transactions);
-                        }
-                        pager.finishLoad(true);
+                        displayNext(transactions);
+
                     }
                 });
         subscriptions.add(subscription);
+    }
+
+    private void displayError(){
+        view.displayError(new Throwable(context.getString(R.string.net_error)));
+        pager.finishLoad(true);
+    }
+
+    private void displayNext(List<?> records){
+        if (pager.isFirstPage()) {
+            view.displayFirstPageRecords(records);
+        } else {
+            view.displayMorePageRecords(records);
+        }
+        pager.finishLoad(true);
     }
 
     @Override
@@ -259,17 +254,13 @@ public class RecordMulitChainPresenter implements RecordMulitChainContract.Prese
         return AccountsManager.getInstance().getCurrentAccount();
     }
 
-    private String getAddress() {
-        return getAccount().getAddress();
-    }
-
     @Override
-    public void loadFirstPageTransactions() {
+    public void loadFirstPageRecords() {
         pager.loadPage(true);
     }
 
     @Override
-    public void loadMorePageTransactions() {
+    public void loadMorePageRecords() {
         pager.loadPage(false);
     }
 

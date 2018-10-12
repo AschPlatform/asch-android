@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.R;
+import asch.so.wallet.view.fragment.AssetBalanceFragment;
 import asch.so.wallet.view.fragment.AssetTransferFragment;
 import asch.so.wallet.view.fragment.CheckPasswordFragment;
 
@@ -29,9 +30,16 @@ public class CheckPasswordActivity extends TitleToolbarActivity {
             title = getString(R.string.please_input_account_password);
         }
         //不同币种的转账
-        if (title.equals(AssetTransferFragment.class.getSimpleName())){
+        else if (title.equals(AssetTransferFragment.class.getSimpleName())){
             title = getBundle().getString("currency")+getString(R.string.transfer);
         }
+        else if (title.equals(AccountsActivity.class.getSimpleName())){
+            title = getString(R.string.import_account);
+        }
+        else if(title.equals(AssetBalanceFragment.class.getSimpleName())) {
+            title = getString(R.string.import_account);
+        }
+
         setTitle(title);
     }
 }

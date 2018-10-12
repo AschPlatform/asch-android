@@ -171,7 +171,7 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
             title = getString(R.string.delete_account);
             AccountsManager.getInstance().setDelAccount(account);
         }else if(Flag == FLAG_IMPORT_ACCOUNT){
-            title = getString(R.string.import_account);
+            title = AccountsActivity.class.getSimpleName();
         }else if(Flag == FLAG_ADD_ACCOUNT){
             title = getString(R.string.add_account);
         }

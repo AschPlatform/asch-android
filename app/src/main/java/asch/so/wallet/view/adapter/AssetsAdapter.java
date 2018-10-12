@@ -12,6 +12,7 @@ import java.util.List;
 import asch.so.base.adapter.BaseRecyclerViewAdapter;
 import asch.so.wallet.R;
 import asch.so.wallet.model.entity.Account;
+import asch.so.wallet.model.entity.AschAsset;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.util.AppUtil;
@@ -25,8 +26,8 @@ import so.asch.sdk.impl.AschConst;
 
 public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHolder>{
 
-    private final List<Balance> assetList;
-    public AssetsAdapter(List<Balance>  assets){
+    private final List<AschAsset> assetList;
+    public AssetsAdapter(List<AschAsset>  assets){
         this.assetList=assets;
     }
 
@@ -38,10 +39,10 @@ public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHol
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Balance balance =assetList.get(position);
-        String currency = balance.getCurrency();
+        AschAsset balance =assetList.get(position);
+        String currency = balance.getName();
         holder.currencyIconIv.setImageResource(AppUtil.getIconIdByName(currency));
-        holder.assetNameTv.setText(balance.getCurrency());
+        holder.assetNameTv.setText(balance.getName());
         holder.balanceTv.setText(balance.getBalanceString());
     }
 

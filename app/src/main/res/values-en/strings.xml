@@ -238,7 +238,7 @@
     <string name="out_transfer">Dapp Withdraw</string>
     <string name="store_transaction">Haystack</string>
     <string name="uia_issuer">Issuer Register</string>
-    <string name="uia_asset">Asset Register</string>
+    <string name="uia_asset_register">Asset Register</string>
     <string name="uia_flags">Setting ACL model</string>
     <string name="uia_acl">Updating ACL</string>
     <string name="uia_issue_asset">Issuing Asset</string>
@@ -315,7 +315,7 @@
     <string name="open_dapp">Open DAPP</string>
     <string name="authorize">Authorize</string>
     <string name="dapp_authorize">DAPP Authorize</string>
-    <string name="dapp_authorize_alert">CCTime applies for the application's permission to operate on this account</string>
+    <string name="dapp_authorize_alert">CCTime applies for the application\'s permission to operate on this account</string>
 
     <string name="block_browse">Block Browse</string>
     <string name="height">Height</string>

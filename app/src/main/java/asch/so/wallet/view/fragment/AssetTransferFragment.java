@@ -27,7 +27,6 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -36,12 +35,13 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.accounts.AssetManager;
 import asch.so.wallet.activity.AssetTransferActivity;
 import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.contract.AssetTransferContract;
 import asch.so.wallet.model.entity.Account;
-import asch.so.wallet.model.entity.Balance;
+import asch.so.wallet.model.entity.AschAsset;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.presenter.AssetTransferPresenter;
@@ -79,7 +79,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     EditText memoEt;
 
     KProgressHUD hud;
-    private Balance balanceRemain;
+    private AschAsset balanceRemain;
     private QRCodeURL qrCodeURL;
     private HashMap<String, BaseAsset> assetsMap;
     private List<String> nameList;
@@ -109,10 +109,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         return AccountsManager.getInstance().getCurrentAccount();
     }
 
-    private Balance getBalance(){
-        if (currency!=null && (getAccount().getFullAccount()!=null)&&(getAccount().getFullAccount().getBalancesMap()!=null)){
-            return  getAccount().getFullAccount().getBalancesMap().get(currency);
-        }
+    private AschAsset getBalance(){
+        AssetManager.getInstance().queryAschAssetByName(currency);
         return null;
     }
 
@@ -137,7 +135,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
         this.balanceRemain=getBalance();
         balanceTv.setText(this.balanceRemain==null?"":this.balanceRemain.getBalanceString());
-        coinNameTv.setText(getBalance().getCurrency());
+        coinNameTv.setText(getBalance().getName());
         targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,11 +182,18 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 amountDecimal=amountDecimal.multiply(new BigDecimal(10).pow(precision),mc);
                 amount = amountDecimal.longValue();
                 long remainBalance=balanceRemain!=null?balanceRemain.getLongBalance():-1;
-                if (remainBalance>=0 && remainBalance-0.1<amount){
-                    AppUtil.toastError(getContext(),getString(R.string.money_not_enough));
-                    return;
+                //XAS转账计算手续费判断，其他的余额可以全转
+                if (currency==AppConstants.XAS_NAME){
+                    if (remainBalance>=0 && remainBalance-0.1<amount){
+                        AppUtil.toastError(getContext(),getString(R.string.money_not_enough));
+                        return;
+                    }
+                }else {
+                    if (remainBalance>=0 && remainBalance<amount){
+                        AppUtil.toastError(getContext(),getString(R.string.money_not_enough));
+                        return;
+                    }
                 }
-
                 Intent intent = new Intent(getActivity(), CheckPasswordActivity.class);
                 Bundle bundle = new Bundle();
                 String title = currency+getString(R.string.transfer);
@@ -281,17 +286,18 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
 
     @Override
-   public void displayAssets(LinkedHashMap<String,BaseAsset> assetsMap){
+   public void displayAssets(LinkedHashMap<String,AschAsset> assetsMap){
         LogUtils.dTag(TAG,"++++assets:"+assetsMap.toString());
-        this.assetsMap=assetsMap;
-        List<String> nameList=new ArrayList<>(assetsMap.keySet());
-        this.nameList=nameList;
-        int selectIndex= nameList.indexOf(currency);
-        BaseAsset asset=assetsMap.get(currency);
-        selectedAsset=asset;
-        if (asset==null){
-            presenter.loadAssets(currency,true);
-        }
+        //TODO
+//        this.assetsMap=assetsMap;
+//        List<String> nameList=new ArrayList<>(assetsMap.keySet());
+//        this.nameList=nameList;
+//        int selectIndex= nameList.indexOf(currency);
+//        BaseAsset asset=assetsMap.get(currency);
+//        selectedAsset=asset;
+//        if (asset==null){
+//            presenter.loadAssets(currency,true);
+//        }
 
         ArrayAdapter<String> adapter =new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_item,nameList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

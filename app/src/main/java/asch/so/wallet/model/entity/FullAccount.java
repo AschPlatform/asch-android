@@ -7,8 +7,10 @@ package asch.so.wallet.model.entity;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 import asch.so.wallet.AppConstants;
@@ -96,10 +98,7 @@ public class FullAccount {
     private BlockInfo latestBlock;
     private VersionInfo version;
 
-    @JSONField(serialize=false)
-    private List<Balance> balances;
-    @JSONField(serialize=false)
-    private HashMap<String,Balance> balancesMap =new HashMap<>();
+
 
     public AccountInfo getAccount() {
         return account;
@@ -125,39 +124,6 @@ public class FullAccount {
         this.version = version;
     }
 
-    public List<Balance> getBalances() {
-        return balances;
-    }
-
-    public HashMap<String, Balance> getBalancesMap() {
-        return balancesMap;
-    }
-
-    public void setBalancesMap(HashMap<String, Balance> balancesMap) {
-        this.balancesMap = balancesMap;
-    }
-
-    public  boolean hasAsset(String currency){
-       return  (balancesMap!=null && balancesMap.containsKey(currency));
-    }
-
-    public void setBalances(List<Balance> balances) {
-        this.balances = balances;
-        balancesMap.clear();
-        if (balances!=null) {
-            for (Balance balance :
-                    balances) {
-                balancesMap.put(balance.getCurrency(), balance);
-            }
-//            balances.forEach(new Consumer<Balance>() {
-//                @Override
-//                public void accept(Balance balance) {
-//                    balancesMap.put(balance.getCurrency(), balance);
-//                }
-//            });
-        }
-    }
-
     public static class AccountInfo{
         private String address;
         @JSONField(name="xas")
@@ -179,9 +145,6 @@ public class FullAccount {
             this.address = address;
         }
 
-        public String getBalance() {
-            return balance;
-        }
 
         public BigDecimal getBalanceDecimalValue(){
             return AppUtil.decimalFromBigint(Long.parseLong(balance), AschConst.CORE_COIN_PRECISION);
@@ -189,6 +152,10 @@ public class FullAccount {
 
         public void setBalance(String balance) {
             this.balance = balance;
+        }
+
+        public String getBalance() {
+            return balance;
         }
 
         public String getPublicKey() {

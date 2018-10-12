@@ -87,7 +87,7 @@ public class SecondCheckPasswordFragment extends BaseFragment {
             dialog.setOkListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AccountsManager.getInstance().setSaveSecondPwd(Account.STATE_REMEMBER,secondPwd);
+                    AccountsManager.getInstance().setSaveSecondPwd(Account.STATE_REMEMBER,getArguments().getString("password"),secondPwd);
                     dialog.dismiss();
                     transfer(secondPwd);
                 }
@@ -95,7 +95,7 @@ public class SecondCheckPasswordFragment extends BaseFragment {
             dialog.setCancelListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AccountsManager.getInstance().setSaveSecondPwd(Account.STATE_FORGET,"");
+                    AccountsManager.getInstance().setSaveSecondPwd(Account.STATE_FORGET,getArguments().getString("password"),"");
                     dialog.dismiss();
                     transfer(secondPwd);
                 }

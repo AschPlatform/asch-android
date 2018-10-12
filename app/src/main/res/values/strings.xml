@@ -23,6 +23,11 @@
     <string name="title_activity_vote">VoteActivity</string>
 
     <!--TODO：没翻译的-->
+    <string name="main_asset">主资产</string>
+    <string name="uia_asset">链内资产</string>
+    <string name="gateway_asset">跨链资产</string>
+    <string name="add_asset">添加资产</string>
+    <string name="receipt_code">收款码</string>
     <string name="done">完成</string>
     <string name="record_transfer">转账记录</string>
     <string name="record_deposit">充值记录</string>
@@ -275,7 +280,7 @@
     <string name="out_transfer">Dapp提现</string>
     <string name="store_transaction">小文件存储</string>
     <string name="uia_issuer">发行商注册</string>
-    <string name="uia_asset">资产注册</string>
+    <string name="uia_asset_register">资产注册</string>
     <string name="uia_flags">设置ACL模式</string>
     <string name="uia_acl">更新ACL访问控制列表</string>
     <string name="uia_issue_asset">资发行产</string>
