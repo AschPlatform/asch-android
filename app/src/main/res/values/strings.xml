@@ -22,7 +22,13 @@
     </string>
     <string name="title_activity_vote">VoteActivity</string>
 
-    <!--TODO：没翻译的-->
+
+    <string name="create_gateway_account_dialog">您还没有开通%s充值地址，该操作消耗0.1XAS</string>
+    <string name="fast">快</string>
+    <string name="slow">慢</string>
+    <string name="bch_hint">*BCH提现手续费为BCH网络矿工收取，为了保障您的交易可以正常进行，提现手续费最低为0.00001 BCH，但考虑到区块链网络拥堵的可能，您可以根据自身实际需求增加打包费用。</string>
+    <string name="withdraw_amount_hint">请输入提现金额</string>
+    <string name="address_input_hint">请输入你想提现的地址</string>
     <string name="main_asset">主资产</string>
     <string name="uia_asset">链内资产</string>
     <string name="gateway_asset">跨链资产</string>
@@ -33,7 +39,6 @@
     <string name="record_deposit">充值记录</string>
     <string name="record_withdraw">提现记录</string>
     <string name="withdraw">提现</string>
-    <string name="home_page">首页</string>
     <string name="remember_second_password_info">功能开启后，后续交易将不再需要输入二级密码</string>
     <string name="remember_second_password">开启免输二级密码功能</string>
     <string name="xas_transfer">XAS转账</string>
@@ -66,8 +71,13 @@
     <string name="account_del">输入你的助记词，使用空格分离</string>
     <string name="del_err">助记词不匹配，请重新检查后输入</string>
     <string name="receive_info">*请将XAS充值到上述地址，该地址可用于接收XAS、ASCH链内资产、ASCH跨链资产</string>
-    <string name="receive_mulit_chain">*请将 %s充值到上述地址，该地址仅支持接收 %s，如果需要转入其他 token，请切换到相对应的 token 获取转入地址 钱包收款地址。</string>
+    <string name="receive_multi_chain">*请将 %s充值到上述地址，该地址仅支持接收 %s，如果需要转入其他 token，请切换到相对应的 token 获取转入地址 钱包收款地址。</string>
+
+
+
+
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="err_get_asset">获取资产异常</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="asch">Asch</string>
     <string name="phone_wallet">手机钱包</string>
@@ -383,7 +393,6 @@
     <string name="dialog_content_cancel">取消</string>
     <string name="date_time_picker_title">选择日期时间</string>
     <string name="error_lock_heigh">锁仓高度无效</string>
-    <string name="discovery">发现</string>
     <string name="delegate_list">受托人列表</string>
     <string name="account_balance_insufficient">账户余额不足</string>
     <string name="blockchain_is_not_ready">区块没有同步好</string>
@@ -394,4 +403,7 @@
     <string name="locked_deadline_colon">锁仓截止时间：</string>
     <string name="error_failed_to_verify_signature">验证签名失败</string>
     <string name="confirmations">确认数</string>
+    <string name="Discovery">发现</string>
+    <string name="language_selecting">选择语言</string>
+    <string name="Home">首页</string>
 </resources>

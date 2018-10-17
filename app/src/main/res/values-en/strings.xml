@@ -30,10 +30,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="err_get_asset">Get asset error</string>
     <string name="phone_wallet">Mobile Wallet</string>
-    <string name="confirm">confirm</string>
-    <string name="cancel">cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
     <string name="add_account">Add Account</string>
     <string name="create_account">Create Account</string>
     <string name="set_wallet_pwd">Set Wallet Password</string>
@@ -68,7 +68,6 @@
     <string name="out_off_hint">Click to log out</string>
     <string name="assets">Assets</string>
     <string name="find_out">Discovery</string>
-    <string name="mine">Mine</string>
     <string name="please_backup">Please Backup</string>
     <string name="have_backup">You had a backup</string>
     <string name="net_error">Net error</string>
@@ -310,11 +309,11 @@
     <string name="day">Day</string>
     <string name="lock_warning">Maximum lock height exceeded</string>
     <string name="lock_warning_2">Lock is not enough</string>
-    <string name="input_second_secret_hint">Please enter 8-16 letters and numbers</string>
+    <string name="input_second_secret_hint">Please enter 8 – 16 letters and numbers</string>
     <string name="lock_clear">Unlock</string>
-    <string name="open_dapp">Open DAPP</string>
+    <string name="open_dapp">Open DApp</string>
     <string name="authorize">Authorize</string>
-    <string name="dapp_authorize">DAPP Authorize</string>
+    <string name="dapp_authorize">DApp Authorize</string>
     <string name="dapp_authorize_alert">CCTime applies for the application\'s permission to operate on this account</string>
 
     <string name="block_browse">Block Browse</string>
@@ -337,7 +336,7 @@
     <string name="dialog_content_cancel">Cancel</string>
     <string name="date_time_picker_title">Select Date Time</string>
     <string name="error_lock_heigh">Invalid lock height</string>
-    <string name="discovery">Discovery</string>
+    <string name="Discovery">Discovery</string>
     <string name="delegate_list">Delegate List</string>
     <string name="account_balance_insufficient">Insufficient account balances</string>
     <string name="blockchain_is_not_ready">Blockchain is not ready</string>
@@ -349,4 +348,52 @@
     <string name="locked_deadline_colon">Deadline：</string>
     <string name="error_failed_to_verify_signature">Faied to verify signature</string>
     <string name="confirmations">Confirmations</string>
+    <string name="language_selecting">Language</string>
+    <string name="Home">Home</string>
+    <string name="create_gateway_account_dialog">You have not activated the %s top up address. It consumes 0.1XAS</string>
+    <string name="fast">Fast</string>
+    <string name="slow">Slow</string>
+    <string name="bch_hint">* The BCH withdrawal fee is charged by BCH miners. To ensure your transaction can proceed normally, the withdrawal fee is at least 0.00001 BCH. In case of the congestion of blockchain network, you can increase the fee according to your actual needs. In principle, the more fees you pay the higher priority your order will have.</string>
+    <string name="withdraw_amount_hint">Please enter withdrawal amount</string>
+    <string name="address_input_hint">Please enter withdrawal address</string>
+    <string name="main_asset">Main Asset</string>
+    <string name="uia_asset">UIA Assets</string>
+    <string name="gateway_asset">Cross-chain Assets</string>
+    <string name="add_asset">Add Assets</string>
+    <string name="receipt_code">Receive</string>
+    <string name="done">Completed</string>
+    <string name="record_transfer">Transfer Records</string>
+    <string name="record_deposit">Deposit Records</string>
+    <string name="record_withdraw">Withdrawal Records</string>
+    <string name="remember_second_password_info">After the function is enabled, subsequent transactions will no longer need to enter secondary password.</string>
+    <string name="withdraw">Withdraw</string>
+    <string name="remember_second_password">Enable the secondary-password-free function</string>
+    <string name="xas_transfer">XAS Transfer</string>
+    <string name="account_balance">Account Balance</string>
+    <string name="second_pwd_info">Warning: Setting a secondary password can make your assets more secure, but the secondary password is recorded on the blockchain. Once it is lost, it cannot be retrieved or modified. Please be sure to keep it safely. \\n\\n Setting a secondary password will consume 5XAS.</string>
+    <string name="set_now">Set Now</string>
+    <string name="init_wallet">Initiate Wallet</string>
+    <string name="wallet_pwd">Enter wallet password</string>
+    <string name="ensure_wallet_pwd">Confirm wallet password</string>
+    <string name="account_remark_hint">Account remark. 6–12 letters, numbers, and underscores</string>
+    <string name="set_password_info">Please enter wallet password. The password must be 8–16 characters in length and contain both letters and numbers.</string>
+    <string name="password_unvalid">Please enter wallet password. The password must be 8–16 characters in length and contain both letters and numbers.</string>
+    <string name="secret_key_hint">Note: Your wallet assets can be fully controlled with the mnemonics, it is highly recommended that you make a backup before using your wallet and save your wallet mnemonics to a safe place.</string>
+    <string name="secure_setting">Security Settings</string>
+    <string name="account_backup">Backup Account</string>
+    <string name="second_pwd">Secondary Password</string>
+    <string name="enter_wallet_pwd">Please enter wallet password</string>
+    <string name="backup_attention">Note: Your wallet assets can be fully controlled with the mnemonics, it is highly recommended that you make a backup before using your wallet and save your wallet mnemonics to a safe place.</string>
+    <string name="backup_now">Backup Now</string>
+    <string name="backup_info">The wallet mnemonics are used to restore the wallet assets. With the mnemonics, your wallet assets can be fully controlled. Please be sure to keep it safely. If you lose your mnemonics, you will lose your wallet assets. ASCH does not store users’ mnemonics and unable to recover it.</string>
+    <string name="backup_order">Please click on the mnemonics in order to verify your backup mnemonics are correct.</string>
+    <string name="check_order_err">Please click on the mnemonics in order to verify your backup mnemonics are correct.</string>
+    <string name="check_order_success">Backup Successfully！</string>
+    <string name="check_order_success_content">Please keep your mnemonics in a safe place</string>
+    <string name="account_del">Please enter mnemonics, separated by space</string>
+    <string name="receive_info">* Please send XAS to the above address. It can be used to receive XAS, ASCH based assets, and ASCH cross-chain assets.</string>
+    <string name="receive_multi_chain">* Please top up %s to the above address，It only supports %s，If you need to top up other tokens, please switch to that token and get its receive address.</string>
+    <string name="asch">Asch</string>
+    <string name="transaction">Transaction</string>
+    <string name="set_second_secret_success">Secondary Password Set Successfully</string>
 </resources>
