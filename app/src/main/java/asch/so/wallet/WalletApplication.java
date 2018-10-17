@@ -1,10 +1,15 @@
 package asch.so.wallet;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Build;
+import android.os.LocaleList;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.multidex.MultiDexApplication;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.TextUtils;
@@ -78,11 +83,29 @@ public class WalletApplication extends MultiDexApplication {
         super.attachBaseContext(base);
     }
 
+
+
     @Override
     public void onCreate() {
         super.onCreate();
-
         LocaleChanger.initialize(getApplicationContext(), AppConstants.SUPPORTED_LOCALES);
+
+        String language;
+        Locale locale = Locale.getDefault();//获取
+        language = locale.getLanguage();
+        LocaleList list = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            list = LocaleList.getDefault();
+            language = list.get(0).getLanguage();
+            //多次设置之后，第一个默认会被固定，所以多次设置时自动跳过第一个长度小于3的语言信息。
+            if (language.length()<3&&list.size()>1)
+                language = list.get(1).getLanguage();
+        }
+
+        if (language.contains("zh"))
+            LocaleChanger.setLocale(AppConstants.SUPPORTED_LOCALES.get(1));
+        else
+            LocaleChanger.setLocale(AppConstants.SUPPORTED_LOCALES.get(2));
 
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
