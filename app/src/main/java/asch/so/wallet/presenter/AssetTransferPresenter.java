@@ -127,12 +127,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
         }
 
 
-    @Override
-    public void loadAssets(String currency, boolean ignoreCache) {
-//TODO
-//        view.displayAssets(AssetManager.getInstance().getAllBalance());
 
-    }
 
     private int getSelectedIndex(List<UIAAsset> assets, String currency){
         int index=0;

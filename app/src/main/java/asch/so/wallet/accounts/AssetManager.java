@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.blankj.utilcode.util.LogUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -12,11 +13,14 @@ import java.util.List;
 import java.util.Observable;
 
 import asch.so.base.view.Throwable;
+import asch.so.wallet.AppConstants;
+import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.AschAsset;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.GatewayAsset;
 import asch.so.wallet.model.entity.UIAAsset;
+import asch.so.wallet.util.AppUtil;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmObject;
@@ -32,8 +36,6 @@ import so.asch.sdk.Gateway;
 
 public class AssetManager extends Observable {
 
-    //读取所有的，保存到本地。
-
     private static final String TAG = AssetManager.class.getSimpleName();
     private static AssetManager assetManager = null;
 
@@ -44,14 +46,67 @@ public class AssetManager extends Observable {
 
     }
 
-    private Realm getRealm(){
-        //TODO 地址读取、排序、刷新
-//        String address = AccountsManager.getInstance().getCurrentAccount().getAddress();
-        RealmConfiguration config = new RealmConfiguration.Builder().name("test1"+".realm").build();
-        return Realm.getInstance(config);
+    public AssetManager(){
+       loadAccountAssets();
     }
 
 
+
+    public void loadAccountAssets(){
+        Account account = AccountsManager.getInstance().getCurrentAccount();
+        String ads = account.getAddress();
+        String xasBalance = account.getFullAccount().getAccount().getBalance();
+        long locked = account.getFullAccount().getAccount().getLockedAmount();
+        long longBalance = Long.parseLong(xasBalance);
+        long longTotal = locked+longBalance;
+        String xasTotal = getTotalBalanceString(longTotal,AppConstants.PRECISION);
+        AschAsset aschAsset = new AschAsset();
+        aschAsset.setBalance(xasBalance);
+        aschAsset.setXasTotal(xasTotal);
+        aschAsset.setName(AppConstants.XAS_NAME);
+        aschAsset.setType(AschAsset.TYPE_XAS);
+        aschAsset.setShowState(AschAsset.STATE_SHOW);
+        aschAsset.setPrecision(AppConstants.PRECISION);
+        aschAsset.setTrueBalance ((float) (Double.parseDouble(aschAsset.getBalance())/(Math.pow(10,AppConstants.PRECISION))));
+        addAsset(aschAsset);
+        loadBalanceAndAssets(new OnLoadAssetsListener() {
+            @Override
+            public void onLoadAllAssets(List<AschAsset> assets, Throwable exception) {
+                    addAssets(assets);
+            }
+        },ads);
+    }
+
+    private String getTotalBalanceString(long total,int precision){
+        return total==0?"0":AppUtil.decimalFormat(AppUtil.decimalFromBigint(total,precision));
+    }
+
+    private Realm getRealm(){
+        //TODO 排序
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .name(AccountsManager.getInstance().getCurrentAccount().getAddress()+".realm").build();
+
+        Realm instance = Realm.getInstance(config);
+        return instance;
+    }
+
+
+    public void delAccountAsset(Account account){
+
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .name(account.getAddress()+".realm").build();
+        Realm instance = Realm.getInstance(config);
+        instance.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                instance.delete(AschAsset.class);
+
+            }
+        });
+
+    }
 
     public void addAssets(List<AschAsset> assets){
         getRealm().executeTransaction(new Realm.Transaction() {
@@ -94,12 +149,11 @@ public class AssetManager extends Observable {
     }
 
     public RealmResults<AschAsset> queryAssetsForShow(){
+        if (queryAllAssets().size()<1)
+            loadAccountAssets();
 
         RealmResults<AschAsset> results = getRealm().where(AschAsset.class)
                 .equalTo("showState",AschAsset.STATE_SHOW)
-//                .or()
-//                .greaterThan("trueBalance",(float) 0)
-//                .equalTo("showState",AschAsset.STATE_UNSETTING)
                 .findAll();
 
         return results;
@@ -130,7 +184,7 @@ public class AssetManager extends Observable {
 
 
     public  interface OnLoadAssetsListener{
-        void onLoadAllAssets(List<AschAsset> assetsMap, Throwable exception);
+        void onLoadAllAssets(List<AschAsset> assets, Throwable exception);
     }
 
 

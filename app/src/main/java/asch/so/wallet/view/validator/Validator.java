@@ -10,11 +10,14 @@ import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.checkable.AccountNameCheckable;
 import asch.so.wallet.view.validator.checkable.AddressCheckable;
 import asch.so.wallet.view.validator.checkable.AmountCheckable;
+import asch.so.wallet.view.validator.checkable.BCHAddressCheckable;
 import asch.so.wallet.view.validator.checkable.Checkable;
+import asch.so.wallet.view.validator.checkable.NickNameCheckable;
 import asch.so.wallet.view.validator.checkable.NodeURLCheckable;
 import asch.so.wallet.view.validator.checkable.PasswordAdvancedCheckable;
 import asch.so.wallet.view.validator.checkable.PasswordCheckable;
 import asch.so.wallet.view.validator.checkable.QRCodeURLCheckable;
+import asch.so.wallet.view.validator.checkable.RemarkCheckable;
 import asch.so.wallet.view.validator.checkable.SecondSecretCheckable;
 import asch.so.wallet.view.validator.checkable.SecretCheckable;
 import asch.so.wallet.view.validator.checkable.TextCheckable;
@@ -37,6 +40,9 @@ public class Validator {
         PasswordAdvanced,
         SecondSecret,
         QRCodeUrl,
+        BchAddress,
+        NickNameOrAddress,
+        Remark
         ;
     }
 
@@ -60,6 +66,8 @@ public class Validator {
 //        setError(inputLayout, valid, error);
 //        return valid;
 //    }
+
+
 
 //    public static boolean check(TextInputLayout inputLayout, String pattern, String error) {
 //        Checkable checkable = getTypeValidator(inputLayout.getEditText());
@@ -119,6 +127,12 @@ public class Validator {
                 return new QRCodeURLCheckable(value);
             case PasswordAdvanced:
                 return new PasswordAdvancedCheckable(value);
+            case BchAddress:
+                return new BCHAddressCheckable(value);
+            case NickNameOrAddress:
+                return new NickNameCheckable(value);
+            case Remark:
+                return new RemarkCheckable(value);
             default : return new TextCheckable(value);
         }
 

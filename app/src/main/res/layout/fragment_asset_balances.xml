@@ -51,7 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/btn_add"
                         android:gravity="center_vertical"
-                        android:text="@string/home_page"
+                        android:text="@string/Home"
                         style="@style/Title_Appearance"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="40dp"

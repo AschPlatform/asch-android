@@ -24,8 +24,8 @@ public class SplashActivity extends BaseActivity {
 
    // @BindView(R.id.root_ll)
    // LinearLayout rootLl;
-    @BindView(R.id.splash_pv)
-    ParticleView particleView;
+//    @BindView(R.id.splash_pv)
+//    ParticleView particleView;
 
     private Unbinder unbinder;
 
@@ -44,7 +44,7 @@ public class SplashActivity extends BaseActivity {
         }
         SplashActivity.this.startActivity(intent);
         finish();
-//
+
 //        particleView.startAnim();
 //        particleView.setOnParticleAnimListener(new ParticleView.ParticleAnimListener() {
 //            @Override

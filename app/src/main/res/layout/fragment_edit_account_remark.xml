@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:background="@color/page_bg"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nickname"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/nickname_tv"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:background="@null"
+            android:text=""
+            android:textSize="15sp"
+            android:textColor="#333333"
+            android:inputType="textVisiblePassword"
+            android:maxLines="1" />
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/tag_remark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_remark"
+            android:textColor="@color/black"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"/>
+
+        <EditText
+            android:id="@+id/name_et"
+            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@+id/tag_remark"
+            android:layout_toRightOf="@+id/tag_remark"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:paddingRight="20dp"
+            android:hint="@string/account_hint"
+            android:inputType="textVisiblePassword"
+            android:maxLines="1"
+            android:textColor="#333333"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/account_remark_hint"
+        android:textColor="#888888"
+        android:textSize="10sp" />
+
+    <Button
+        android:id="@+id/create_btn"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        style="@style/PrimaryButton.Style"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/btn_height"
+        android:textColor="#FFFFFF"
+        android:textSize="@dimen/btn_text_size"
+        android:text="@string/save" />
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+    </FrameLayout>
+</LinearLayout>
+</ScrollView>

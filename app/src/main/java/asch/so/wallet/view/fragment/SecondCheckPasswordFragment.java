@@ -113,13 +113,13 @@ public class SecondCheckPasswordFragment extends BaseFragment {
         String title = getArguments().getString("title");
         if (TextUtils.isEmpty(title))
             return;
-        if (getArguments().getString("title").equals(AssetTransferFragment.class.getSimpleName())) {
-            Intent intent = new Intent();
-            intent.putExtra("secondPwd",pwd);
-            getActivity().setResult(1,intent);
-            getActivity().finish();
-            return;
-        }
+
+        Intent intent = new Intent();
+        intent.putExtra("secondPwd",pwd);
+        getActivity().setResult(1,intent);
+        getActivity().finish();
+        return;
+
     }
 
     @Override

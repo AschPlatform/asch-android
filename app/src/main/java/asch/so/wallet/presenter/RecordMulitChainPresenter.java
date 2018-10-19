@@ -20,6 +20,7 @@ import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.Deposit;
 import asch.so.wallet.model.entity.Transaction;
 import asch.so.wallet.model.entity.Withdraw;
+import asch.so.wallet.model.entity.WithdrawAsset;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -80,7 +81,7 @@ public class RecordMulitChainPresenter implements RecordMulitChainContract.Prese
         this.pager.setPageSize(20);
     }
 
-    //TODO 分页的问题，接口没有分页 2018年09月25日
+
     private void loadDeposit(){
         String address = getAccount().getAddress();
         Subscription subscription = Observable.create((Observable.OnSubscribe<List<Deposit>>) subscriber -> {
@@ -134,9 +135,28 @@ public class RecordMulitChainPresenter implements RecordMulitChainContract.Prese
             result = AschSDK.Gateway.getWithdrawRecord(params);
 
             if (result.isSuccessful()) {
+                //这里面的内部类不能自动解析。只能拆开来手解。
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                 JSONArray withdrawsJsonArray = resultJSONObj.getJSONArray("withdrawals");
-                List<Withdraw> withdraws = JSON.parseArray(withdrawsJsonArray.toJSONString(), Withdraw.class);
+                List<Withdraw> withdraws = new ArrayList<>();
+                for (int i=0;i<withdrawsJsonArray.size();i++){
+                    JSONObject object = withdrawsJsonArray.getJSONObject(i);
+                    int time = object.getIntValue("timestamp");
+                    String amount = object.getString("amount");
+                    Withdraw withdraw =new Withdraw();
+                    withdraw.setAmount(Long.valueOf(amount));
+                    withdraw.setTimestamp(time);
+                    withdraw.setRecipientId(object.getString("recipientId"));
+                    JSONObject asset = object.getJSONObject("asset");
+                    String symbol = asset.getString("symbol");
+                    WithdrawAsset wa =  new WithdrawAsset();
+                    wa.setSymbol(symbol);
+                    wa.setPrecision(asset.getInteger("precision"));
+                    withdraw.setAsset(wa);
+                    withdraws.add(withdraw);
+
+                }
+//                List<Withdraw> withdraws = JSON.parseArray(withdrawsJsonArray.toJSONString(), Withdraw.class);
                 subscriber.onNext(withdraws);
                 subscriber.onCompleted();
             } else {

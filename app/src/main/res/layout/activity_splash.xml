@@ -1,39 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <asch.so.widget.particleview.ParticleView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:pv="http://schemas.android.com/apk/res-auto"
-        android:fitsSystemWindows="true"
-        android:id="@+id/splash_pv"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@drawable/start_bg"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="62dp"
+        android:layout_height="77dp"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:src="@mipmap/asch_logo"
+        />
+
+    <TextView
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/start_bg"
-        pv:pv_background_color="#2E2E2E"
-        pv:pv_host_text="ASCH"
-        pv:pv_host_text_size="32sp"
-        pv:pv_particle_text="@string/phone_wallet"
-        pv:pv_particle_text_size="20sp"
-        pv:pv_text_color="#FFF" />
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:textColor="#FFFFFFFF"
+        android:layout_marginTop="10dp"
+        android:textSize="13sp"
+        android:alpha="0.5"
+        android:text="@string/wallet_slogan" />
 
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:pv="http://schemas.android.com/apk/res-auto"-->
-    <!--android:id="@+id/root_ll"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:background="@color/colorPrimary"-->
-    <!--android:fitsSystemWindows="true"-->
-    <!--android:orientation="vertical">-->
+    <LinearLayout
+        android:id="@+id/create_ll"
+        android:layout_marginTop="130dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"></LinearLayout>
 
-    <!--<asch.so.widget.particleview.ParticleView-->
-        <!--android:id="@+id/splash_pv"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="#FD5F15"-->
-        <!--pv:pv_background_color="#2E2E2E"-->
-        <!--pv:pv_host_text="ASCH"-->
-        <!--pv:pv_host_text_size="32sp"-->
-        <!--pv:pv_particle_text=".so"-->
-        <!--pv:pv_particle_text_size="20sp"-->
-        <!--pv:pv_text_color="#FFF" />-->
 
-<!--</LinearLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginRight="1dp"
+            android:buttonTint="@color/white"
+            android:checked="true"
+            android:clickable="false"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/term_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="1dp"
+            android:clickable="true"
+            android:text="@string/terms_service"
+            android:textColor="@android:color/white"
+            android:textSize="13sp" />
+    </LinearLayout>
+</LinearLayout>

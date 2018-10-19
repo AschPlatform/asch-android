@@ -1,6 +1,8 @@
 package so.asch.sdk.impl;
 
 
+import java.util.ArrayList;
+
 import so.asch.sdk.AschResult;
 import so.asch.sdk.UIA;
 import so.asch.sdk.dbc.Argument;
@@ -170,7 +172,7 @@ public class UIAService extends AschRESTService implements UIA {
             Argument.require(Validation.isValidAddress(recipientId), "invalid recipientId");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
             Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
-
+            Argument.require(Validation.isValidRemark(message),"invalid remark length");
             TransactionInfo transaction = getTransactionBuilder()
                     .buildUIATransfer(currency, amount, recipientId, message, secret, secondSecret);
             System.out.println("====== transaction:"+transaction.toString());

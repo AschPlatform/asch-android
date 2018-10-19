@@ -31,6 +31,7 @@ public class PassWordEditText extends RelativeLayout implements View.OnClickList
         mainLayout = (RelativeLayout) rootView.findViewById(id);
         eyeIv = (ImageView)mainLayout.findViewById(R.id.eye);
         eyeIv.setOnClickListener(this);
+        eyeIv.setVisibility(View.INVISIBLE);
         clearIv = (ImageView)mainLayout.findViewById(R.id.clear);
         clearIv.setVisibility(View.INVISIBLE);
         clearIv.setOnClickListener(this);
@@ -46,8 +47,10 @@ public class PassWordEditText extends RelativeLayout implements View.OnClickList
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().length()>0){
                     clearIv.setVisibility(View.VISIBLE);
+                    eyeIv.setVisibility(View.VISIBLE);
                 }else {
                     clearIv.setVisibility(View.INVISIBLE);
+                    eyeIv.setVisibility(View.INVISIBLE);
                 }
             }
 

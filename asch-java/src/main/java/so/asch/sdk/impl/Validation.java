@@ -17,7 +17,8 @@ public class Validation {
     private static final int MIN_ADDRESS_LENGTH = 1;
     private static final int MAX_ADDRESS_LENGTH = 100;
     private static final int PUBLIC_KEY_LENGTH = 32;
-
+    private static final int MAX_MESSAGE_LENGTH = 255;
+    private static final String NICKNAME_PATTERN = "^[a-z0-9]{2,20}";
     private static final String HEX_PATTERN = "^([0-9]|[A-F]|[a-f])+$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String BASE58_PATTERN = "^([1-9]|[A-H]|[J-Z]|[a-k]|[m-z])+$";
@@ -55,6 +56,32 @@ public class Validation {
                         ( address.matches(BASE58_PATTERN) && address.charAt(0) == AschConst.BASE58_ADDRESS_PREFIX )
                 );
     }
+
+    public static boolean isValidBCHAddress(String address){
+
+        return address != null &&
+                ( address.length() >= MIN_ADDRESS_LENGTH && address.length() <= MAX_ADDRESS_LENGTH) &&
+                ( address.matches(NUMBER_PATTERN) ||
+                         address.matches(BASE58_PATTERN)
+                );
+    }
+
+    public static boolean isValidNicknameOrAddress(String name){
+
+        return name != null &&
+                ( name.matches(NICKNAME_PATTERN)||isValidAddress(name));
+    }
+
+
+    public static boolean isValidRemark(String remark){
+        if (remark!=null && remark.length()>MAX_MESSAGE_LENGTH)
+            return false;
+        else
+            return true;
+
+    }
+
+
 
     public static boolean isValidDAppId(String dappid){
         return (dappid != null && dappid.length()>0);

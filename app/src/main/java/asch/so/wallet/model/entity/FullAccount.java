@@ -136,6 +136,15 @@ public class FullAccount {
         @JSONField(name="weight")
         private long lockedAmount;
         private long lockHeight;
+        private String name;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
 
         public String getAddress() {
             return address;

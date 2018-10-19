@@ -58,15 +58,7 @@ public class Account extends RealmObject{
 
     public void setFullAccount(FullAccount fullAccount) {
         this.fullAccount = fullAccount;
-        AschAsset aschAsset = new AschAsset();
-        aschAsset.setBalance(fullAccount.getAccount().getBalance());
-        aschAsset.setAddress(address);
-        aschAsset.setName(AppConstants.XAS_NAME);
-        aschAsset.setType(AschAsset.TYPE_XAS);
-        aschAsset.setShowState(AschAsset.STATE_SHOW);
-        aschAsset.setPrecision(AppConstants.PRECISION);
-        aschAsset.setTrueBalance ((float) (Double.parseDouble(aschAsset.getBalance())/(Math.pow(10,AppConstants.PRECISION))));
-        AssetManager.getInstance().addAsset(aschAsset);
+
     }
 
 

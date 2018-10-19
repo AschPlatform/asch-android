@@ -26,13 +26,6 @@
         tools:replace="android:label">
         <activity android:name="asch.so.base.activity.BaseActivity" />
         <activity android:name=".activity.ImportOrCreateAccoutActivity">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
@@ -52,6 +45,9 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+        <activity android:name=".activity.EditAccountNicknameActivity"/>
+        <activity android:name=".activity.AssetGatewayDepositActivity"/>
+        <activity android:name=".activity.AssetWithdrawActivity"/>
         <activity android:name=".activity.AssetManageActivity"/>
         <activity android:name=".activity.SecondCheckPasswordActivity"/>
         <activity android:name=".activity.CheckPasswordActivity"></activity>

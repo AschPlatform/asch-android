@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import asch.so.base.adapter.BaseRecyclerViewAdapter;
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.model.entity.AschAsset;
@@ -43,7 +44,10 @@ public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHol
         String currency = balance.getName();
         holder.currencyIconIv.setImageResource(AppUtil.getIconIdByName(currency));
         holder.assetNameTv.setText(balance.getName());
-        holder.balanceTv.setText(balance.getBalanceString());
+        if (balance.getName().equals(AppConstants.XAS_NAME))
+            holder.balanceTv.setText(balance.getXasTotal());
+        else
+            holder.balanceTv.setText(balance.getBalanceString());
     }
 
     @Override

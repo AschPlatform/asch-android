@@ -23,9 +23,7 @@ public class AboutActivity extends TitleToolbarActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.about));
-
         AboutFragment fragment=AboutFragment.newInstance();
-
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);
     }
 

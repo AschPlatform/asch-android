@@ -34,6 +34,7 @@ import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.AppSettingActivity;
 import asch.so.wallet.activity.BlockBrowseActivity;
 import asch.so.wallet.activity.BlockInfoActivity;
+import asch.so.wallet.activity.EditAccountNicknameActivity;
 import asch.so.wallet.activity.LockCoinsActivity;
 import asch.so.wallet.activity.PeersActivity;
 import asch.so.wallet.activity.SecureSettingActivity;
@@ -51,13 +52,14 @@ import asch.so.wallet.view.entity.MineItem;
 import asch.so.wallet.view.entity.MineSection;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by kimziv on 2017/9/21.
  */
 
-public class MineFragment extends BaseFragment implements MineContract.View{
+public class MineFragment extends BaseFragment implements MineContract.View,View.OnClickListener {
     private  static final  String TAG=MineFragment.class.getSimpleName();
     MineContract.Presenter presenter;
     @BindView(R.id.mine_rcv)
@@ -101,6 +103,8 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                 copyAddress();
             }
         });
+        identicon.setOnClickListener(this);
+        nameTv.setOnClickListener(this);
         mineRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         mineRcv.setItemAnimator(new DefaultItemAnimator());
         mineRcv.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayout.VERTICAL));
@@ -112,7 +116,7 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                 if (!section.isHeader){
                     MineItem item=section.t;
                     switch (item.getIcon()){
-                        case R.mipmap.my_account_managment:
+                        case R.mipmap.icon_anto:
                         {
                             Intent intent = new Intent(getActivity(), AccountsActivity.class);
                             startActivity(intent);
@@ -129,16 +133,19 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                             BaseActivity.start(getActivity(), TransactionsActivity.class, new Bundle());
                         }
                         break;
+
                         case R.mipmap.personal_center:
                         {
                             BaseActivity.start(getActivity(),AccountInfoActivity.class,null);
                         }
                         break;
+
                         case R.mipmap.node_vote:
                         {
                             BaseActivity.start(getActivity(),VoteActivity.class,null);
                         }
                         break;
+
                         case  R.mipmap.vote_list:
                         {
                             BaseActivity.start(getActivity(),PeersActivity.class,null);
@@ -154,18 +161,18 @@ public class MineFragment extends BaseFragment implements MineContract.View{
                             BaseActivity.start(getActivity(),BlockBrowseActivity.class,null);
                         }
                         break;
-                        case  R.mipmap.my_settings:
+                        case  R.mipmap.icon_shez:
                         {
                             BaseActivity.start(getActivity(),AppSettingActivity.class,null);
 
                         }
                         break;
-                        case  R.mipmap.user_manual:
+                        case  R.mipmap.icon_shiy:
                         {
                             BaseActivity.start(getActivity(),WebActivity.class,null);
                         }
                         break;
-                        case  R.mipmap.about_us:
+                        case  R.mipmap.icon_myuser:
                         {
                             BaseActivity.start(getActivity(),AboutActivity.class,null);
                         }
@@ -194,6 +201,8 @@ public class MineFragment extends BaseFragment implements MineContract.View{
             AppUtil.copyText(getActivity(),address);
         }
     }
+
+
 
     @Override
     public void onDestroyView() {
@@ -227,5 +236,13 @@ public class MineFragment extends BaseFragment implements MineContract.View{
     @Override
     public void displayItems(List<MineSection> items) {
         this.adapter.replaceData(items);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v==identicon||v==nameTv){
+            Intent intent = new Intent(getActivity(),EditAccountNicknameActivity.class);
+            startActivity(intent);
+        }
     }
 }

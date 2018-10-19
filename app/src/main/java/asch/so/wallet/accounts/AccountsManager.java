@@ -84,7 +84,6 @@ public class AccountsManager extends Observable {
     }
 
     public void setCurrentAccount(Account currentAccount) {
-
         this.currentAccount = currentAccount;
         loadFullAccount(currentAccount);
         this.setChanged();
@@ -125,6 +124,7 @@ public class AccountsManager extends Observable {
      * @param account
      */
     public void removeAccount(Account account) {
+        AssetManager.getInstance().delAccountAsset(account);
         accounts.remove(account);
         if (currentAccount.getAddress().equals(account.getAddress())) {
             if (accounts.size() > 0) {
@@ -134,6 +134,7 @@ public class AccountsManager extends Observable {
             }
         }
         delAccount = null;
+
         AccountsDao.getInstance().removeAccount(account);
     }
 
@@ -327,14 +328,8 @@ public class AccountsManager extends Observable {
         String publicKey = account.getPublicKey();
         String address = account.getAddress();
         rx.Observable loginObservable = createLoginAccountObservable(publicKey);
-        rx.Observable balanceAndAssetObservable = AssetManager.getInstance().balanceAndAssetsObservable(address);
-        rx.Observable combinedObservable = rx.Observable.combineLatest(loginObservable, balanceAndAssetObservable, new Func2<FullAccount, List<AschAsset>, FullAccount>() {
-            @Override
-            public FullAccount call(FullAccount fullAccount, List<AschAsset> balances) {
-                return fullAccount;
-            }
-        });
-        return combinedObservable;
+
+        return loginObservable;
     }
 
     public void loadFullAccount(Account account) {

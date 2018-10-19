@@ -18,7 +18,6 @@ public interface AssetTransferContract {
     interface View extends BaseView<Presenter>{
        // void displayToast(String toast);
         //void displayAssets(List<UIAAsset> assets, int selectIndex);
-        void displayAssets(LinkedHashMap<String,AschAsset> assetsMap);
         void displayTransferResult(boolean res, String msg);
         void displayPasswordValidMessage(boolean res, String msg);
     }
@@ -27,6 +26,5 @@ public interface AssetTransferContract {
 
         void transfer(String currency, String targetAddress, long amount, String message, String secret, String secondSecret,String password);
 
-        void loadAssets(String currency, boolean ignoreCache);
     }
 }

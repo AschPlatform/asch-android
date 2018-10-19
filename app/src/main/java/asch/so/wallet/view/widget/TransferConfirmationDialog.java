@@ -42,13 +42,13 @@ public class TransferConfirmationDialog extends BaseDialogFragment implements Vi
 
 
     public static TransferConfirmationDialog newInstance(String address, String amount, String currency,String secondPasswd) {
-        
+
         Bundle args = new Bundle();
         args.putString("address",address);
         args.putString("amount",amount);
         args.putString("currency",currency);
         args.putString("second_password",secondPasswd);
-        
+
         TransferConfirmationDialog fragment = new TransferConfirmationDialog();
         fragment.setArguments(args);
         return fragment;
@@ -104,7 +104,7 @@ public class TransferConfirmationDialog extends BaseDialogFragment implements Vi
     public void onClick(View view) {
         if (view==tranferBtn){
             if (this.onClickListener!=null){
-               this.onClickListener.onConfirm(this);
+                this.onClickListener.onConfirm(this);
             }
         }
     }

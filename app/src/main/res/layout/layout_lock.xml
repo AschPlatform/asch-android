@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:id="@+id/view_lock_info"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:background="@color/white"
+android:orientation="vertical">
+<View
+    android:id="@+id/line_transfer"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/gray_back_dialog"
+    />
+<RelativeLayout
+
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+    <View
+        android:id="@+id/line_vertical_transfer"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:background="@color/gray_back_dialog" />
+
+    <ImageView
+        android:id="@+id/can_use_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/yes"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/can_use_icon">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/can_use"/>
+
+        <TextView
+            android:id="@+id/can_use_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"/>
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/lock_icon"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/lock"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/line_vertical_transfer"
+        android:layout_marginLeft="20dp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/lock_icon">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/have_lock"/>
+
+        <TextView
+            android:id="@+id/lock_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"/>
+    </LinearLayout>
+
+
+
+</RelativeLayout>
+
+
+</LinearLayout>

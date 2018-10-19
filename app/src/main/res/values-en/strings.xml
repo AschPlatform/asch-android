@@ -26,12 +26,15 @@
 
 	Asch chain\n
 	</string>
-    <string name="title_activity_vote">Vote Activity</string>
 
+
+    <string name="transfer_confirm_hint">Once the transfer is confirmed, it cannot be refunded. Please ensure the transfer address and amount are correct</string>
+    <string name="confirm_transfer">Transfer Confirm</string>
+    <string name="title_activity_vote">Vote Activity</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="err_get_asset">Get asset error</string>
-    <string name="phone_wallet">Mobile Wallet</string>
+    <string name="phone_wallet">Wallet</string>
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="add_account">Add Account</string>
@@ -81,10 +84,11 @@
     <string name="node_vote">Node Vote</string>
     <string name="vote">Vote</string>
     <string name="account_management">Account management</string>
+    <string name="system_set">System Setting</string>
     <string name="set">Setting</string>
     <string name="contact_person">Contact</string>
     <string name="block_details">Block Details</string>
-    <string name="about">About</string>
+    <string name="about">About Us</string>
     <string name="account_create_success">The new account is created  successfully</string>
     <string name="backup_account">Please backup account</string>
     <string name="delete_account">Delete Account</string>
@@ -348,7 +352,6 @@
     <string name="locked_deadline_colon">Deadline：</string>
     <string name="error_failed_to_verify_signature">Faied to verify signature</string>
     <string name="confirmations">Confirmations</string>
-    <string name="language_selecting">Language</string>
     <string name="Home">Home</string>
     <string name="create_gateway_account_dialog">You have not activated the %s top up address. It consumes 0.1XAS</string>
     <string name="fast">Fast</string>
@@ -396,4 +399,21 @@
     <string name="asch">Asch</string>
     <string name="transaction">Transaction</string>
     <string name="set_second_secret_success">Secondary Password Set Successfully</string>
+    <string name="mine">Mine</string>
+    <string name="wallet_slogan">"Manage Your Asset Easily "</string>
+    <string name="del_err">Mnemonic words do not match, please check and try again</string>
+    <string name="invalid_lock_height">Invalid lock block height</string>
+    <string name="input_locked_Height">Please enter lock block height</string>
+    <string name="recipients_nickname">Nickname:</string>
+    <string name="recipients_address">Address:</string>
+    <string name="transfer_amount_dialog">Amount:</string>
+    <string name="can_use">Avalible</string>
+    <string name="update_version">Version Update</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="go_rate">Review</string>
+    <string name="please_enter_remark">Please enter remark</string>
+    <string name="remark_err">Remark length should be less than 255 characters</string>
+    <string name="nickname">Nickname</string>
+    <string name="account_remark">Account Remark</string>
+    <string name="edit_account_remark">Edit Remark</string>
 </resources>

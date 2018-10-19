@@ -1,5 +1,6 @@
 package asch.so.wallet.view.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -48,7 +49,7 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
     KProgressHUD hud=null;
 
     private int currentPostion=0;
-
+    Activity mActivity;
     BaseRecyclerAdapter<Item> adapter = new BaseRecyclerAdapter<Item>(Arrays.asList(Item.values()), R.layout.item_languages, this) {
         @Override
         protected void onBindViewHolder(SmartViewHolder holder, Item model, int position) {
@@ -85,7 +86,7 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
         switch (item){
             case Default:
             {
-                LocaleChanger.setLocale(AppConstants.SUPPORTED_LOCALES.get(0));
+                AppUtil.setDefaultLanguage();
             }
             break;
             case Chinese:
@@ -104,30 +105,30 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
         }
 
 
-        ActivityRecreationHelper.recreate(getActivity(), false);
+        ActivityRecreationHelper.recreate(mActivity, false);
 
         adapter.notifyDataSetChanged();
         //getActivity().finish();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                getActivity().runOnUiThread(new Runnable() {
+                mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        AppUtil.restartApp(getContext());
-                        dismissHUD();
+                        AppUtil.restartApp(mActivity.getApplicationContext());
+//                        dismissHUD();
                     }
                 });
             }
         },1000);
-        showHUD();
+//        showHUD();
 
     }
 
 
     private  void  showHUD(){
         if (hud==null){
-            hud = KProgressHUD.create(getActivity())
+            hud = KProgressHUD.create(mActivity)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setCancellable(true)
                     .show();
@@ -172,6 +173,7 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
+        mActivity = getActivity();
         return rootView;
     }
 }

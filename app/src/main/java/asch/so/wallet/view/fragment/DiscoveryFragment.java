@@ -1,7 +1,5 @@
 package asch.so.wallet.view.fragment;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -20,27 +18,15 @@ import java.util.List;
 import asch.so.base.activity.BaseActivity;
 import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
-import asch.so.wallet.activity.AboutActivity;
-import asch.so.wallet.activity.AccountInfoActivity;
-import asch.so.wallet.activity.AccountsActivity;
-import asch.so.wallet.activity.AppSettingActivity;
 import asch.so.wallet.activity.BlockBrowseActivity;
 import asch.so.wallet.activity.BlockInfoActivity;
 import asch.so.wallet.activity.PeersActivity;
-import asch.so.wallet.activity.TodoActivity;
-import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.activity.VoteActivity;
-import asch.so.wallet.activity.WebActivity;
 import asch.so.wallet.contract.DiscoveryContract;
-import asch.so.wallet.contract.MineContract;
-import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.presenter.DiscoveryPresenter;
-import asch.so.wallet.presenter.MinePresenter;
-import asch.so.wallet.util.IdenticonGenerator;
 import asch.so.wallet.view.adapter.MineAdapter;
 import asch.so.wallet.view.entity.MineItem;
 import asch.so.wallet.view.entity.MineSection;
-import asch.so.widget.toolbar.BaseToolbar;
 import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -121,7 +107,7 @@ public class DiscoveryFragment extends BaseFragment implements DiscoveryContract
         toolbar.setBackVisible(false);
         toolbar.setRightVisible(false);
         toolbar.setCloseVisible(false);
-        toolbar.setTitle(getString(R.string.discovery));
+        toolbar.setTitle(getString(R.string.Discovery));
     }
 
     @Override

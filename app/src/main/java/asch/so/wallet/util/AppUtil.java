@@ -6,6 +6,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.LocaleList;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.Gravity;
@@ -43,8 +44,28 @@ import so.asch.sdk.impl.AschConst;
 
 public class AppUtil {
 
+    public static void setDefaultLanguage(){
+        String language;
+        Locale locale = Locale.getDefault();//获取
+        language = locale.getLanguage();
+        LocaleList list = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            list = LocaleList.getDefault();
+            language = list.get(0).getLanguage();
+            //多次设置之后，第一个默认会被固定，所以多次设置时自动跳过第一个长度小于3的语言信息。
+            if (language.length()<3&&list.size()>1)
+                language = list.get(1).getLanguage();
+        }
+
+        if (language.contains("zh"))
+            LocaleChanger.setLocale(AppConstants.SUPPORTED_LOCALES.get(1));
+        else
+            LocaleChanger.setLocale(AppConstants.SUPPORTED_LOCALES.get(2));
+    }
+
     public static int getIconIdByName(String iconName){
         int id;
+
         if (iconName.equals(AschConst.COIN_NAME_KMC)){
             id = R.mipmap.icon_kmc;
         } else if(iconName.equals(AschConst.CORE_COIN_NAME)){
@@ -53,11 +74,14 @@ public class AppUtil {
             id = R.mipmap.icon_bth;
         } else if(iconName.equals(AschConst.COIN_NAME_ETH)){
             id = R.mipmap.icon_eth;
+        } else if (iconName.equals(AschConst.COIN_NAME_BCH)){
+            id = R.mipmap.bch;
         } else if(iconName.equals(AschConst.COIN_NAME_XCT)){
             id = R.mipmap.icon_xct;
         } else {
-            id = R.mipmap.other_coin_icon;
+            id = R.mipmap.uia;
         }
+
         return id;
     }
 
@@ -68,7 +92,6 @@ public class AppUtil {
 
     public  static String decimalFormat(BigDecimal decimal){
         DecimalFormat df = new DecimalFormat("#.########");
-
         return df.format(decimal);
     }
 

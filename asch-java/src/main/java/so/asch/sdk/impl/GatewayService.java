@@ -3,10 +3,14 @@ package so.asch.sdk.impl;
 import so.asch.sdk.AschResult;
 import so.asch.sdk.Gateway;
 import so.asch.sdk.Transaction;
+import so.asch.sdk.TransactionType;
 import so.asch.sdk.dbc.Argument;
 import so.asch.sdk.dto.query.DepositQueryParameters;
 import so.asch.sdk.dto.query.TransactionQueryParameters;
 import so.asch.sdk.dto.query.WithdrawQueryParameters;
+import so.asch.sdk.security.SecurityException;
+import so.asch.sdk.transaction.TransactionBuilder;
+import so.asch.sdk.transaction.TransactionInfo;
 
 public class GatewayService extends AschRESTService implements Gateway {
 
@@ -54,5 +58,46 @@ public class GatewayService extends AschRESTService implements Gateway {
         return new ParameterMap()
                 .put("limit", limit)
                 .put("offset", offset);
+    }
+
+    @Override
+    public AschResult withdraw(String address,String gateway,String currency,
+                               Long amount,String fee,String message,String secret,String secondSecret)  {
+        try {
+            TransactionInfo info = new TransactionBuilder().buildWithdrawTransaction(address,gateway,
+                    currency,amount,fee,message,secret,secondSecret);
+
+            return broadcastTransaction(info);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+
+    }
+
+    @Override
+    public AschResult getGatewayAccount(String name, String address) {
+        try {
+            Argument.require(Validation.isValidAddress(address), "invalid limit");
+
+            return get(AschServiceUrls.Gateway.GET_GATEWAY_GETACCOUNT.replace(":name",name).replace(":address",address),
+                    new ParameterMap());
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
+    @Override
+    public AschResult openGatewayAccount(String gateway, String message, String secret, String secondSecret) {
+        try {
+            TransactionInfo info = new TransactionBuilder().buildOpenGatewayAccountTransaction(gateway,
+                    message,secret,secondSecret);
+
+            return broadcastTransaction(info);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
     }
 }

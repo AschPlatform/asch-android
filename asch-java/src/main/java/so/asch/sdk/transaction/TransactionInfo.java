@@ -22,9 +22,38 @@ import java.nio.ByteOrder;
 public class TransactionInfo {
     private static final int MAX_BUFFER_SIZE = 1024 * 5;
 
+
+
+    @JSONField(name = "id")
+    private String transactionId = null;
+    private transient TransactionType transactionType = null;
+    private String recipientId = null;
+
+    private String requestorId = null;
+    private String senderId = null;
+
+    private String requesterPublicKey = null;
+    private String senderPublicKey = null;
+    private String message = null;
+    private Integer timestamp = null;
+    private Long amount = null;
+    private Long fee = null;
+    private ContractType contractType=null;
+    //private String signature = null;
+    private String[] signatures = null;
+    //    private String signSignature = null;
+    private String secondSignature=null;
+    private AssetInfo assetInfo = null;
+    private transient OptionInfo optionInfo = null;
+    //private String args=null;
+    private Object[] args = null;
+
+
     public Integer getType() {
         return transactionType == null ? null : transactionType.getCode();
     }
+
+
 
     public TransactionInfo setTransactionType(TransactionType type) {
         this.transactionType = type;
@@ -211,29 +240,6 @@ public class TransactionInfo {
         return this;
     }
 
-    @JSONField(name = "id")
-    private String transactionId = null;
-    private transient TransactionType transactionType = null;
-    private String recipientId = null;
-
-    private String requestorId = null;
-    private String senderId = null;
-
-    private String requesterPublicKey = null;
-    private String senderPublicKey = null;
-    private String message = null;
-    private Integer timestamp = null;
-    private Long amount = null;
-    private Long fee = null;
-    private ContractType contractType=null;
-    //private String signature = null;
-    private String[] signatures = null;
-//    private String signSignature = null;
-    private String secondSignature=null;
-    private AssetInfo assetInfo = null;
-    private transient OptionInfo optionInfo = null;
-    //private String args=null;
-    private Object[] args = null;
 
 
     public byte[] getBytes(boolean skipSignature , boolean skipSignSignature){

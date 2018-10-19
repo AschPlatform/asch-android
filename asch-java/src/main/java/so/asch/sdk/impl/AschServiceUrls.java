@@ -103,8 +103,8 @@ public final class AschServiceUrls {
     final static class Gateway{
          static final String GET_GATEWAY_CURRENCIES="/api/v2/gateways/currencies";
          static final String GET_GATEWAY_DEPOSITS="/api/v2/gateways/deposits/%s/%s";
-            static final String GET_GATEWAY_WITHDRAWALS="/api/v2/gateways/withdrawals/%s/%s";
-
+         static final String GET_GATEWAY_WITHDRAWALS="/api/v2/gateways/withdrawals/%s/%s";
+         static final String GET_GATEWAY_GETACCOUNT="/api/v2/gateways/:name/accounts/:address";
     }
 
 }

@@ -3,17 +3,19 @@ package asch.so.wallet.model.entity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import asch.so.wallet.util.AppUtil;
 import so.asch.sdk.AschSDK;
 
 /**
- * Created by Deng on 2018年09月25
+ * Created by Deng on 2018 09 25
  */
 
 public class Withdraw {
-
     String tid;
+    int timestamp;
+    String _version_;
     String gateway;
     String senderId;
     String recipientId;
@@ -24,10 +26,19 @@ public class Withdraw {
     int signs;
     int ready;
     int oid;
-    String _version_;
-    int timestamp;
-    asset asset;
 
+    WithdrawAsset asset;
+
+    public WithdrawAsset getAsset() {
+        return asset;
+    }
+
+    public void setAsset(WithdrawAsset asset) {
+        this.asset = asset;
+    }
+
+
+    //    String outTransaction;
     public String getBanlanceShow(){
         if (asset==null)
             return "";
@@ -47,83 +58,28 @@ public class Withdraw {
         this.timestamp = timestamp;
     }
 
-    class outTransaction{
-        String txhex;
-        ArrayList<String>input;
+//    class outTransaction{
+//        String txhex;
+//        ArrayList<String>input;
+//
+//        public String getTxhex() {
+//            return txhex;
+//        }
+//
+//        public void setTxhex(String txhex) {
+//            this.txhex = txhex;
+//        }
+//
+//        public ArrayList<String> getInput() {
+//            return input;
+//        }
+//
+//        public void setInput(ArrayList<String> input) {
+//            this.input = input;
+//        }
+//    };
 
-        public String getTxhex() {
-            return txhex;
-        }
 
-        public void setTxhex(String txhex) {
-            this.txhex = txhex;
-        }
-
-        public ArrayList<String> getInput() {
-            return input;
-        }
-
-        public void setInput(ArrayList<String> input) {
-            this.input = input;
-        }
-    };
-
-    class asset{
-        String gateway;
-        String symbol;
-        String desc;
-        int precision;
-        String revoked;
-        String _version_;
-
-        public String getGateway() {
-            return gateway;
-        }
-
-        public void setGateway(String gateway) {
-            this.gateway = gateway;
-        }
-
-        public String getSymbol() {
-            return symbol;
-        }
-
-        public void setSymbol(String symbol) {
-            this.symbol = symbol;
-        }
-
-        public String getDesc() {
-            return desc;
-        }
-
-        public void setDesc(String desc) {
-            this.desc = desc;
-        }
-
-        public int getPrecision() {
-            return precision;
-        }
-
-        public void setPrecision(int precision) {
-            this.precision = precision;
-        }
-
-        public String getRevoked() {
-            return revoked;
-        }
-
-        public void setRevoked(String revoked) {
-            this.revoked = revoked;
-        }
-
-        public String get_version_() {
-            return _version_;
-        }
-
-        public void set_version_(String _version_) {
-            this._version_ = _version_;
-        }
-    }
     public String getTid() {
         return tid;
     }

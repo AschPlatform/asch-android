@@ -20,9 +20,19 @@
 
         阿希链\n
     </string>
+
+    <string name="remark_err">备注长度不能超过255个字符</string>
+    <string name="go_rate">去评分</string>
+    <string name="update_version">版本更新</string>
+    <string name="contact_us">联系我们</string>
+    <string name="transfer_amount_dialog">转账金额：</string>
+    <string name="recipients_address">收款方地址：</string>
+    <string name="recipients_nickname">收款方昵称：</string>
+    <string name="transfer_confirm_hint">数字资产转账一旦确认，将不可找回，请务必确认,您转账的地址和金额是否正确。</string>
+    <string name="confirm_transfer">转账确认</string>
+
+
     <string name="title_activity_vote">VoteActivity</string>
-
-
     <string name="create_gateway_account_dialog">您还没有开通%s充值地址，该操作消耗0.1XAS</string>
     <string name="fast">快</string>
     <string name="slow">慢</string>
@@ -131,10 +141,11 @@
     <string name="node_vote">受托人投票</string>
     <string name="vote">投票</string>
     <string name="account_management">账户管理</string>
+    <string name="system_set">系统设置</string>
     <string name="set">设置</string>
     <string name="contact_person">联系人</string>
     <string name="block_details">区块详情</string>
-    <string name="about">关于</string>
+    <string name="about">关于我们</string>
     <string name="account_create_success">新账户创建成功</string>
     <string name="backup_account">备份账户</string>
     <string name="delete_account">删除账户</string>
@@ -404,6 +415,10 @@
     <string name="error_failed_to_verify_signature">验证签名失败</string>
     <string name="confirmations">确认数</string>
     <string name="Discovery">发现</string>
-    <string name="language_selecting">选择语言</string>
     <string name="Home">首页</string>
+    <string name="can_use">可用</string>
+    <string name="please_enter_remark">请输入备注</string>
+    <string name="nickname">昵称</string>
+    <string name="account_remark">账户备注</string>
+    <string name="edit_account_remark">修改账户备注</string>
 </resources>

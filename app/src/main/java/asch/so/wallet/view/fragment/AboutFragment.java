@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 public class AboutFragment extends BaseFragment {
 
 
-    @BindView(R.id.version_tv)
+    @BindView(R.id.about_wallet)
     TextView versionTv;
 
     public static AboutFragment newInstance() {
@@ -41,7 +41,7 @@ public class AboutFragment extends BaseFragment {
     }
 
     private void setVersion(){
-        versionTv.setText(String.format("Asch " +getString(R.string.phone_wallet)+"V%s(%d)", AppUtils.getAppVersionName(),AppUtils.getAppVersionCode()));
+        versionTv.setText(String.format("V%s(%d)", AppUtils.getAppVersionName(),AppUtils.getAppVersionCode()));
     }
 
 

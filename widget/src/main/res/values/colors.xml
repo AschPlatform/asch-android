@@ -21,6 +21,8 @@
     <color name="light_gray">#f0f6f9</color>
     <color name="dark_gray">#9baab2</color>
     <color name="light_gray_bar">#eaf2f5</color>
+    <color name="gray_back_dialog">#F7F7F7</color>
+    <color name="gray_text">#999999</color>
 
     <color name="warning_color">#f4511e</color>
     <color name="hint_color">#42000000</color>

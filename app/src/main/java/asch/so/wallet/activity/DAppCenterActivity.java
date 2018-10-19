@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
 import com.flyco.tablayout.SegmentTabLayout;
-import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
 import java.util.ArrayList;
@@ -16,9 +15,6 @@ import java.util.ArrayList;
 import asch.so.wallet.R;
 import asch.so.wallet.view.fragment.DAppsFragment;
 import asch.so.wallet.view.fragment.InstalledDAppsFragment;
-import asch.so.wallet.view.fragment.MyVoteRecordFragment;
-import asch.so.wallet.view.fragment.VoteDelegatesFragment;
-import asch.so.wallet.view.fragment.WhoVoteForMeFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -48,7 +44,7 @@ public class DAppCenterActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(getString(R.string.discovery));
+        setTitle(getString(R.string.Discovery));
         mTitles = new String[]{getString(R.string.dapps_list), getString(R.string.my_dapps)};
         ButterKnife.bind(this);
 

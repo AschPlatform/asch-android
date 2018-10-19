@@ -16,6 +16,7 @@
 
         <include layout="@layout/header_asset_transactions"/>
 
+        <include layout="@layout/layout_lock" />
         <LinearLayout
             android:id="@+id/transaction_record_tag"
             android:layout_alignParentBottom="true"

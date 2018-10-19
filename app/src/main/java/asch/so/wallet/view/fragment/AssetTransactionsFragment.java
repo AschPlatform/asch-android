@@ -2,11 +2,13 @@ package asch.so.wallet.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,29 +16,40 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.SizeUtils;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.zyyoona7.lib.EasyPopup;
 import com.zyyoona7.lib.HorizontalGravity;
 import com.zyyoona7.lib.VerticalGravity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
+import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.activity.AssetGatewayDepositActivity;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
+import asch.so.wallet.activity.AssetWithdrawActivity;
+import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.contract.AssetTransactionsContract;
+import asch.so.wallet.model.entity.AschAsset;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.model.entity.QRCodeURL;
 import asch.so.wallet.presenter.AssetTransactionsPresenter;
 import asch.so.wallet.presenter.RecordMulitChainPresenter;
 import asch.so.wallet.util.AppUtil;
+import asch.so.wallet.view.widget.AlertDialog;
+import asch.so.wallet.view.widget.CreateGatewayAccountDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import so.asch.sdk.impl.AschConst;
@@ -64,11 +77,19 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     ViewPager pager;
     @BindView(R.id.transaction_record_tag)
     View tagRecord;
+    @BindView(R.id.can_use_text)
+    TextView canUseTv;
+    @BindView(R.id.lock_text)
+    TextView lockTv;
+    @BindView(R.id.view_lock_info)
+    LinearLayout lockLl;
+
     EasyPopup moreEasyPopup;
+    KProgressHUD hud;
 
     String[] pagerTitle;
     private ArrayList<RecordMulitChainFragment> recordsFragments = new ArrayList<>();
-    private Balance balance;
+    private AschAsset balance;
     private AssetTransactionsContract.Presenter presenter;
     int type;
 
@@ -82,7 +103,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        balance= (Balance) JSON.parseObject(getArguments().getString("balance"),Balance.class);
+        balance= (AschAsset) JSON.parseObject(getArguments().getString("balance"),AschAsset.class);
         type = balance.getType();
     }
 
@@ -95,17 +116,29 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         presenter=new AssetTransactionsPresenter(getActivity(),this);
         transferBtn.setOnClickListener(this);
         receiveBtn.setOnClickListener(this);
+
+
         this.displayBalance(balance);
         return rootView;
     }
 
     @Override
-    public void displayBalance(Balance balance) {
+    public void displayBalance(AschAsset balance) {
         if (type==BaseAsset.TYPE_GATEWAY)
             setHasOptionsMenu(true);
-        amountTv.setText(balance.getBalanceString());
-        assetTv.setText(balance.getCurrency());
-        iconIv.setImageResource(AppUtil.getIconIdByName(balance.getCurrency()));
+        if (balance.getName().equals(AppConstants.XAS_NAME)){
+            lockLl.setVisibility(View.VISIBLE);
+            long locked = AccountsManager.getInstance().getCurrentAccount().getFullAccount().getAccount().getLockedAmount();
+            String lockStr = locked==0?"0":AppUtil.decimalFormat(AppUtil.decimalFromBigint(locked,AppConstants.PRECISION));
+            lockTv.setText(lockStr);
+            canUseTv.setText(balance.getBalanceString());
+            amountTv.setText(this.balance.getXasTotal());
+        }else{
+            lockLl.setVisibility(View.GONE);
+            amountTv.setText(this.balance==null?"":this.balance.getBalanceString());
+        }
+        assetTv.setText(balance.getName());
+        iconIv.setImageResource(AppUtil.getIconIdByName(balance.getName()));
     }
 
     private void initMultiTab() {
@@ -122,6 +155,8 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             tagRecord.setVisibility(View.VISIBLE);
         }
 
+
+
         for (String title : pagerTitle) {
             RecordMulitChainPresenter.RecordType type= RecordMulitChainPresenter.RecordType.transfer;
 
@@ -134,7 +169,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             else if(title.equals(getString(R.string.record_withdraw)))
                 type =  RecordMulitChainPresenter.RecordType.withdraw;
 
-            recordsFragments.add(RecordMulitChainFragment.getInstance(title,balance.getType(),balance.getCurrency(), type));
+            recordsFragments.add(RecordMulitChainFragment.getInstance(title,balance.getType(),balance.getName(), type));
         }
 
         tabLayout.setTabData(pagerTitle);
@@ -196,11 +231,11 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         if (v==transferBtn){
             Bundle bundle = getArguments();
             String json =bundle.getString("balance");
-            Balance balance=JSON.parseObject(json,Balance.class);
+            AschAsset balance=JSON.parseObject(json,AschAsset.class);
             QRCodeURL qrCodeURL=new QRCodeURL();
             if (balance!=null){
                 qrCodeURL.setAddress("");
-                qrCodeURL.setCurrency(balance.getCurrency());
+                qrCodeURL.setCurrency(balance.getName());
                 qrCodeURL.setAmount("");
             }else {
                 qrCodeURL.setAddress("");
@@ -215,8 +250,8 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
         }else if(v==receiveBtn){
             Bundle bundle = getArguments();
             String json =bundle.getString("balance");
-            Balance balance=JSON.parseObject(json,Balance.class);
-            String currency = balance.getCurrency();
+            AschAsset balance=JSON.parseObject(json,AschAsset.class);
+            String currency = balance.getName();
             Bundle params=new Bundle();
             params.putString("currency",currency);
             Intent intent = new Intent(getActivity(), AssetReceiveActivity.class);
@@ -224,13 +259,93 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             startActivity(intent);
         }
         if (v.getId() == R.id.menu_deposit) {
+
+            //判断是否开通bch充值地址。-》跳密码-》开户成功,请等开户生效后充值
+            presenter.loadGatewayAddress(balance.getGateway(),AccountsManager.getInstance().getCurrentAccount().getAddress());
             moreEasyPopup.dismiss();
 
         } else if (v.getId() == R.id.menu_withdraw) {
+            Bundle bundle = getArguments();
+            String json =bundle.getString("balance");
+            AschAsset balance=JSON.parseObject(json,AschAsset.class);
+            QRCodeURL qrCodeURL=new QRCodeURL();
+            if (balance!=null){
+                qrCodeURL.setAddress("");
+                qrCodeURL.setCurrency(balance.getName());
+                qrCodeURL.setAmount("");
+            }else {
+                qrCodeURL.setAddress("");
+                qrCodeURL.setCurrency(AschConst.CORE_COIN_NAME);
+                qrCodeURL.setAmount("");
+            }
+            bundle.putString("qrcode_uri",qrCodeURL.encodeQRCodeURL());
+            bundle.putInt("action", AssetWithdrawActivity.Action.AssetBalanceToTransfer.getValue());
+            Intent intent =new Intent(getActivity(), AssetWithdrawActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
             moreEasyPopup.dismiss();
 
         }
 
+    }
+
+    @Override
+    public void showDeposit(String address) {
+        dismissHUD();
+        Intent intent = new Intent(getActivity(),AssetGatewayDepositActivity.class);
+        intent.putExtra("currency",balance.getName());
+        intent.putExtra("address",address);
+        startActivity(intent);
+    }
+
+    @Override
+    public void showCreateAccountDialog() {
+        CreateGatewayAccountDialog dialog =
+                new CreateGatewayAccountDialog(getContext());
+
+        dialog.setContent(String.format(getString(R.string.create_gateway_account_dialog),balance.getName()))
+        .setOkOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getActivity(), CheckPasswordActivity.class);
+                Bundle bundle = new Bundle();
+                String clazz = AssetTransactionsFragment.class.getSimpleName();
+                bundle.putString("title",clazz);
+                bundle.putString("currency",balance.getName());
+                bundle.putBoolean("hasSecondPwd",hasSecondPasswd());
+                intent.putExtras(bundle);
+                startActivityForResult(intent,1);
+                dialog.dismiss();
+            }
+        });
+
+        dialog.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1&&resultCode==1){
+            String secondSecret = data.getStringExtra("secondPwd");
+            String password = data.getStringExtra("password");
+
+            if (hasSecondPasswd()&&TextUtils.isEmpty(secondSecret)){
+                AppUtil.toastError(getContext(),getString(R.string.error_failed_to_verify_signature));
+                return;
+            }
+
+            if (TextUtils.isEmpty(password)){
+                AppUtil.toastError(getContext(),getString(R.string.error_failed_to_verify_signature));
+                return;
+            }
+
+            presenter.createGatewayAccount(balance.getGateway(),null,password,hasSecondPasswd()?secondSecret:null);
+            showHUD();
+        }
+    }
+    private boolean hasSecondPasswd(){
+        return AccountsManager.getInstance().getCurrentAccount().hasSecondSecret();
     }
 
     @Override
@@ -287,8 +402,38 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     }
 
     @Override
-    public void displayError(Throwable exception) { }
+    public void displayError(Throwable exception) {
+        dismissHUD();
+        AppUtil.toastError(getContext(),exception!=null?exception.getMessage():getString(R.string.net_error));
+    }
 
+    private  void  showHUD(){
+        if (hud==null){
+            hud = KProgressHUD.create(getActivity())
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setCancellable(true)
+                    .show();
+        }
+    }
+    private  void  dismissHUD(){
+        if (hud!=null) {
+            hud.dismiss();
+            hud=null;
+        }
+    }
+
+    private void scheduleHUDDismiss() {
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                dismissHUD();
+                getActivity().finish();
+            }
+        }, 200);
+    }
 
 
 

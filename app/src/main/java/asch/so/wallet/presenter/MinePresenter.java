@@ -53,8 +53,8 @@ public class MinePresenter implements MineContract.Presenter, java.util.Observer
         ArrayList<MineSection> list=new ArrayList<>();
 
         list.add(new MineSection(true,"Section 1"));
-        list.add(new MineSection(new MineItem(R.mipmap.my_account_managment,context.getString(R.string.account_management))) );
-        list.add(new MineSection(new MineItem(R.mipmap.icon_safe,"安全设置")));
+        list.add(new MineSection(new MineItem(R.mipmap.icon_anto,context.getString(R.string.account_management))) );
+        list.add(new MineSection(new MineItem(R.mipmap.icon_safe,context.getString(R.string.secure_setting))));
 //        list.add(new MineSection(new MineItem(R.mipmap.my_bill,context.getString(R.string.bill))) );
 
 //        list.add(new MineSection(true,"Section 2"));
@@ -65,9 +65,9 @@ public class MinePresenter implements MineContract.Presenter, java.util.Observer
 //        //list.add(new MineSection(new MineItem(R.mipmap.my_contacts,context.getString(R.string.block_browse))));
 
         list.add(new MineSection(true,"Section 2"));
-        list.add(new MineSection(new MineItem(R.mipmap.my_settings,context.getString(R.string.set))));
-        list.add(new MineSection(new MineItem(R.mipmap.user_manual,context.getString(R.string.use_explain))));
-        list.add(new MineSection(new MineItem(R.mipmap.about_us,context.getString(R.string.about_us))));
+        list.add(new MineSection(new MineItem(R.mipmap.icon_shez,context.getString(R.string.set))));
+        list.add(new MineSection(new MineItem(R.mipmap.icon_shiy,context.getString(R.string.use_explain))));
+        list.add(new MineSection(new MineItem(R.mipmap.icon_myuser,context.getString(R.string.about_us))));
 
         view.displayItems(list);
     }

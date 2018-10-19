@@ -144,7 +144,7 @@
 
     <style name="TextLable_tag">
         <item name="android:textColor">@color/black</item>
-        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_width">60dp</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>

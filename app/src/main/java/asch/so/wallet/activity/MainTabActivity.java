@@ -64,7 +64,6 @@ public class MainTabActivity extends BasePinCompatActivity implements MainContra
     private MainPresenter mainPresenter;
     private boolean isExit;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

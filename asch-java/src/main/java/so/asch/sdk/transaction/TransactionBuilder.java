@@ -1,5 +1,6 @@
 package so.asch.sdk.transaction;
 
+import android.content.Intent;
 import android.util.DebugUtils;
 import android.util.Log;
 
@@ -20,6 +21,56 @@ import java.security.PublicKey;
 public class TransactionBuilder {
 
     private static final String TAG=TransactionBuilder.class.getSimpleName();
+
+
+
+    public TransactionInfo buildOpenGatewayAccountTransaction(String gateway, String message, String secret, String secondSecret) throws SecurityException {
+        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+        TransactionInfo transaction =  newTransaction(
+                TransactionType.gateway_openAccount,
+                keyPair.getPublic())
+                .setTransactionType(TransactionType.gateway_openAccount)
+                .setArgs(new String[]{gateway})
+                .setMessage(message)
+                .calcFee()
+                ;
+
+        return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),secondSecret);
+
+    }
+
+
+    public TransactionInfo buildWithdrawTransaction(String address,String gateway,String currency,
+                                                    Long amount,String fee,String message,String secret,String secondSecret) throws SecurityException {
+        String strAmount  = amount.longValue()+"";
+        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+        TransactionInfo transaction =  newTransaction(
+                TransactionType.gateway_withdrawal,
+                keyPair.getPublic())
+                .setTransactionType(TransactionType.gateway_withdrawal)
+                .setArgs(new String[]{address,gateway,currency,strAmount,fee})
+                .setMessage(message)
+                .calcFee()
+                ;
+
+        return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),secondSecret);
+
+    }
+
+    public TransactionInfo buildTransfer(String targetAddress, long amount, String message,
+                                         String secret, String secondSecret) throws  SecurityException{
+        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+
+        TransactionInfo transaction =  newTransaction(
+                TransactionType.basic_transfer,
+                keyPair.getPublic())
+//                .setSenderPublicKey(getSecurity().encodePublicKey(keyPair.getPublic()))
+                .setMessage(message)
+                .setArgs(new String[]{ amount+"", targetAddress })
+                .calcFee();
+
+        return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
+    }
 
     public TransactionInfo buildVote(String[] upvotePublicKeys, String[] downvotePublicKeys,
                                      String secret, String secondSecret ) throws SecurityException {
@@ -90,20 +141,7 @@ public class TransactionBuilder {
 
     }
 
-    public TransactionInfo buildTransfer(String targetAddress, long amount, String message,
-                                         String secret, String secondSecret) throws  SecurityException{
-        KeyPair keyPair = getSecurity().generateKeyPair(secret);
 
-        TransactionInfo transaction =  newTransaction(
-                TransactionType.basic_transfer,
-                keyPair.getPublic())
-//                .setSenderPublicKey(getSecurity().encodePublicKey(keyPair.getPublic()))
-                .setMessage(message)
-                .setArgs(new String[]{ amount+"", targetAddress })
-                .calcFee();
-
-        return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
-    }
 
     public TransactionInfo buildStore(byte[] contentBuffer, int wait,
                                       String secret, String secondSecret)throws SecurityException{
@@ -187,8 +225,12 @@ public class TransactionBuilder {
     }
 
 
+
+
+
     protected TransactionInfo newTransaction(TransactionType type, long amount, long fee, PublicKey publicKey, String dappID, OptionInfo optionInfo) throws SecurityException{
         switch (type){
+
             case basic_transfer:
                 return new TransactionInfo()
                         .setTransactionType(type)

@@ -111,15 +111,17 @@ public class CheckPasswordFragment extends BaseFragment {
                 bundle.putString("clazz",AssetBalanceFragment.class.getSimpleName());
                 BaseActivity.start(getActivity(), AccountImportActivity.class,bundle);
             }
-            //转账
-            else if(title.equals(AssetTransferFragment.class.getSimpleName())){
+            //转账、提现。
+            else if(title.equals(AssetTransferFragment.class.getSimpleName())
+                    ||title.equals(AssetWithdrawFragment.class.getSimpleName())
+                    ||title.equals(AssetTransactionsFragment.class.getSimpleName())){
 
-
-                //保存二级密码的情况
+//                需要校验二级密码的情况
                 if (getArguments().getBoolean("hasSecondPwd")){
 
                     Account account = AccountsManager.getInstance().getCurrentAccount();
                     int state = account.getSaveSecondPasswordState();
+                    //保存二级密码的情况
                     if (state==Account.STATE_REMEMBER){
                         String secondPwd = AccountsManager.getInstance().getCurrentAccount().getSecondSecret(pwdEt.getText().toString());
                         backToTransfer(pwdEt.getText().toString(),secondPwd);
@@ -131,7 +133,7 @@ public class CheckPasswordFragment extends BaseFragment {
                     if (!TextUtils.isEmpty(currency)){
                         bundle.putString("currency",currency);
                     }
-                    bundle.putString("title",AssetTransferFragment.class.getSimpleName());
+                    bundle.putString("title",title);
                     bundle.putString("password",pwdEt.getText().toString());
                     Intent intent = new Intent(getActivity(),SecondCheckPasswordActivity.class);
                     intent.putExtras(bundle);
@@ -141,6 +143,7 @@ public class CheckPasswordFragment extends BaseFragment {
                 backToTransfer(pwdEt.getText().toString(),"");
 
             }
+
 
         }else {
             AppUtil.toastError(getActivity(),getString(R.string.password_error));

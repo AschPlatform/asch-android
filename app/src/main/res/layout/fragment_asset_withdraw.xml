@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/page_bg"
+        android:orientation="vertical"
+        >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"></View>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="30dp"
+
+                android:layout_height="30dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@mipmap/icon_meony"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.021"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.051" />
+
+            <TextView
+                android:id="@+id/tag_text_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/account_balance"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+            <TextView
+                android:id="@+id/transfer_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="0"
+                android:textColor="@color/main_color"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/transfer_coin_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="8dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/transfer_balance"
+                android:text="BCH"
+                android:textColor="@color/main_color"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="@+id/transfer_balance"
+                app:layout_constraintStart_toEndOf="@+id/transfer_balance" />
+
+
+        </android.support.constraint.ConstraintLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@android:color/white"
+            >
+            <TextView
+                android:id="@+id/address_tag"
+                style="@style/TextLable_tag"
+                android:text="@string/address"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"/>
+            <EditText
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/address_tag"
+                android:id="@+id/target_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:hint="@string/address_input_hint"
+                android:textSize="12sp"
+                android:textColor="#333333"
+                android:cursorVisible="true"
+                android:focusable="true"
+                android:inputType="text"
+                android:maxLines="1" />
+            <ImageView
+                android:id="@+id/transfer_scan"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/account_scan"/>
+
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"
+            />
+        <LinearLayout
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            >
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/TextLable_tag"
+                    android:text="@string/transaction_money"/>
+
+                <EditText
+                    android:id="@+id/ammount_et"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    android:hint="@string/withdraw_amount_hint"
+                    android:textSize="12sp"
+                    android:textColor="#333333"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/second_passwd_ll"
+            android:visibility="gone"
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            >
+            <EditText
+                android:id="@+id/second_passwd_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:hint="@string/secondary_password"
+                android:textSize="15sp"
+                android:textColor="#333333"
+                android:inputType="textPassword"
+                android:maxLines="1" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="57dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            android:gravity="center_vertical"
+            >
+            <EditText
+                android:id="@+id/memo_et"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:background="@null"
+                android:hint="@string/remark"
+                android:textSize="15sp"
+                android:textColor="#333333"
+                android:inputType="text"
+                android:maxLines="1" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:orientation="vertical">
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="57dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                >
+                <TextView
+                    style="@style/TextLable_tag"
+                    android:text="@string/lock_fee"/>
+
+                <TextView
+                    android:id="@+id/withdraw_fee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="12sp"
+                    android:textColor="#333333"
+                    android:text=""/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatSeekBar
+                android:id="@+id/withdraw_seekerBar"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="match_parent"
+                android:thumb="@mipmap/label_du"
+                android:progressDrawable="@drawable/fee_tumb"
+                android:maxHeight="3dp"
+                android:minHeight="3dp"
+                android:layout_height="40dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="@string/slow"/>
+
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/fast"/>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/bch_hint"
+            android:layout_margin="10dp"
+            android:textColor="#999999"
+            android:textSize="10sp"/>
+
+
+
+        <Button
+            android:id="@+id/transfer_btn"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            style="@style/PrimaryButton.Style"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:text="@string/withdraw" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            >
+
+            <!-- footer -->
+
+        </FrameLayout>
+    </LinearLayout>
+</ScrollView>

@@ -9,6 +9,7 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.base.util.ActivityUtils;
 import asch.so.wallet.R;
 import asch.so.wallet.contract.AssetTransactionsContract;
+import asch.so.wallet.model.entity.AschAsset;
 import asch.so.wallet.model.entity.Balance;
 import asch.so.wallet.presenter.AssetTransactionsPresenter;
 import asch.so.wallet.util.StatusBarUtil;
@@ -29,8 +30,8 @@ public class AssetTransactionsActivity extends TitleToolbarActivity {
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
         String json =intent.getExtras().getString("balance");
-        Balance balance=JSON.parseObject(json,Balance.class);
-        setTitle(balance.getCurrency());
+        AschAsset balance=JSON.parseObject(json,AschAsset.class);
+        setTitle(balance.getName());
         fragment=AssetTransactionsFragment.newInstance();
         fragment.setArguments(intent.getExtras());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);

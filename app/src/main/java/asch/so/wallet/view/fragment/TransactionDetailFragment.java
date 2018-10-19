@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,6 +49,13 @@ public class TransactionDetailFragment extends BaseFragment implements View.OnCl
     LinearLayout memoLl;
     @BindView(R.id.memo_tv)
     TextView memoTv;
+    @BindView(R.id.icon_transaction)
+    ImageView iconIv;
+    @BindView(R.id.ammount_tv)
+    TextView amountTv;
+    @BindView(R.id.asset_tv)
+    TextView assetTv;
+
 
 
     public static TransactionDetailFragment newInstance() {
@@ -87,6 +95,9 @@ public class TransactionDetailFragment extends BaseFragment implements View.OnCl
         }else {
             txFeeTv.setText(0);
         }
+        iconIv.setImageResource(AppUtil.getIconIdByName(transaction.getCurrency()));
+        amountTv.setText(amountFroTransaction(transaction));
+        assetTv.setText("");
             // txConfirmationsTv.setText(String.valueOf(transaction.getConfirmations()));
        // txBlockIdTv.setText(transaction.getBlockId());
 
@@ -140,7 +151,8 @@ public class TransactionDetailFragment extends BaseFragment implements View.OnCl
             {
                 Transaction.AssetInfo asset=(Transaction.AssetInfo)transaction.getAssetInfo();
                 if (asset!=null){
-                    return AppUtil.decimalFormat(AppUtil.decimalFromBigint(transaction.getAmount(), asset.getPrecision()))+" "+asset.getName();
+                    String name = asset.getName()==null?asset.getSymbol():asset.getName();
+                    return AppUtil.decimalFormat(AppUtil.decimalFromBigint(transaction.getAmount(), asset.getPrecision()))+" "+name;
                 }else {
                     return "0";
                 }
@@ -149,6 +161,7 @@ public class TransactionDetailFragment extends BaseFragment implements View.OnCl
 //                    return String.format("%s %s",asset.getUiaTransfer().getAmountShow(),asset.getUiaTransfer().getCurrency());
 //                }
             }
+
             case Lock:
                 break;
             default:

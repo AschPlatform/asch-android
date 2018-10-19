@@ -51,7 +51,7 @@ public class AppConstants {
     public static final int UIA_FLAG=2;
     public static final int GATEWAY_FLAG=3;
 
-    public static final List<Locale> SUPPORTED_LOCALES =
+    public static  List<Locale> SUPPORTED_LOCALES =
             Arrays.asList(
                     Locale.getDefault(),
                     new Locale("zh"),

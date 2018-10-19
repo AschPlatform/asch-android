@@ -59,6 +59,8 @@ public class AschAsset extends RealmObject {
     private int allowBlacklist;
     private String maximumShow;
     private String quantityShow;
+    private String xasTotal;
+
 
 
     public void setAidFromAsset(AschAsset asset){
@@ -79,9 +81,13 @@ public class AschAsset extends RealmObject {
         return this.trueBalance;
     }
 
+    public String getXasTotal() {
+        return xasTotal;
+    }
 
-
-
+    public void setXasTotal(String xasTotal) {
+        this.xasTotal = xasTotal;
+    }
 
 
 //    public Balance toBalance(){

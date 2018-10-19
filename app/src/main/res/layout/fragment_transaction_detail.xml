@@ -12,27 +12,9 @@ android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/header_bg"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/mine_header_bg"
-            />
+        <include
+            layout="@layout/header_asset_transactions"/>
 
-        <LinearLayout
-            android:background="@mipmap/circle_bg"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:layout_marginTop="120dp"
-            android:layout_width="60dp"
-            android:layout_height="60dp">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@mipmap/amount_icon"
-                />
-        </LinearLayout>
     </RelativeLayout>
 
 
