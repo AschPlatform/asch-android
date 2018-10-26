@@ -45,9 +45,18 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".activity.EditAccountNicknameActivity"/>
+        <activity android:name=".activity.RegisterUiaAssetActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            />
+        <activity android:name=".activity.RegisterIssuerActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
+        <activity android:name=".activity.IssuerAgreementActivity"/>
+        <activity android:name=".activity.IssuerAssetsActivity"/>
+        <activity android:name=".activity.EditAccountNicknameActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity android:name=".activity.AssetGatewayDepositActivity"/>
-        <activity android:name=".activity.AssetWithdrawActivity"/>
+        <activity android:name=".activity.AssetWithdrawActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity android:name=".activity.AssetManageActivity"/>
         <activity android:name=".activity.SecondCheckPasswordActivity"/>
         <activity android:name=".activity.CheckPasswordActivity"></activity>

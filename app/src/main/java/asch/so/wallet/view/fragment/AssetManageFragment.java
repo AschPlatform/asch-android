@@ -156,15 +156,10 @@ public class AssetManageFragment extends BaseFragment implements AssetManageCont
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        if (unbinder!=null)
+            unbinder.unbind();
         presenter.unSubscribe();
-
-
     }
-
-
-
-
 
 
     @Override

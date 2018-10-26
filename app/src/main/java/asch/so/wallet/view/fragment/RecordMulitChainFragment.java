@@ -32,6 +32,7 @@ import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.AssetTransactionsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import ezy.ui.layout.LoadingLayout;
 
 @SuppressLint("ValidFragment")
@@ -43,6 +44,7 @@ public class RecordMulitChainFragment extends BaseFragment implements RecordMuli
     LoadingLayout loadingLayout;
     @BindView(R.id.asset_transactions_rcv)
     RecyclerView txRcv;
+    Unbinder unbinder;
     //记录类型
     RecordMulitChainPresenter.RecordType recordType;
     private AssetTransactionsAdapter adapter;
@@ -68,7 +70,7 @@ public class RecordMulitChainFragment extends BaseFragment implements RecordMuli
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_record_mulit_chain, null);
-        ButterKnife.bind(this,v);
+        unbinder = ButterKnife.bind(this, v);
         txRcv.setLayoutManager(new LinearLayoutManager(getContext()));
         txRcv.setItemAnimator(new DefaultItemAnimator());
         txRcv.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
@@ -133,7 +135,7 @@ public class RecordMulitChainFragment extends BaseFragment implements RecordMuli
 
     @Override
     public void setPresenter(RecordMulitChainContract.Presenter presenter) {
-        presenter = this.presenter;
+         this.presenter = presenter;
     }
 
     @Override
@@ -150,5 +152,13 @@ public class RecordMulitChainFragment extends BaseFragment implements RecordMuli
         }else {
             refreshLayout.finishLoadmore(500);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 }

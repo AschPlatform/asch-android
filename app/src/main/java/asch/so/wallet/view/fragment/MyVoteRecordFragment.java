@@ -36,6 +36,7 @@ import asch.so.wallet.view.fragment.dummy.DummyContent.DummyItem;
 import asch.so.wallet.view.widget.AllPasswdsDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import ezy.ui.layout.LoadingLayout;
 
 /**
@@ -61,6 +62,7 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
     Button downVoteBtn;
     @BindView(R.id.status_tv)
     TextView statusTv;
+    Unbinder unbinder;
 
     private AllPasswdsDialog dialog=null;
     private KProgressHUD hud=null;
@@ -97,7 +99,7 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myvoterecord_list, container, false);
-        ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
         downVoteBtn.setOnClickListener(this);
         presenter=new MyVoteRecordPresenter(getContext(),this);
         adapter=new MyVoteRecordAdapter(this);
@@ -162,6 +164,8 @@ public class MyVoteRecordFragment extends BaseFragment implements MyVoteRecordCo
         if (presenter!=null){
             presenter.unSubscribe();
         }
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     private Account getAccount(){

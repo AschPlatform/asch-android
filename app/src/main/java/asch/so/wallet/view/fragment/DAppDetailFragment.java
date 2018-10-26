@@ -42,6 +42,7 @@ import asch.so.wallet.view.adapter.DAppsAdapter;
 import asch.so.widget.downloadbutton.DownloadProgressButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import so.asch.sdk.Dapp;
 
 /**
@@ -60,6 +61,8 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
     Button balanceBtn;
     @BindView(R.id.download_btn)
     DownloadProgressButton downloadBtn;
+    Unbinder unbinder;
+
     private DAppDetailContract.Presenter presenter;
     private String dappId;
     private DApp dapp;
@@ -113,7 +116,7 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_dapp_detail,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         depositBtn.setOnClickListener(new View.OnClickListener(){
 
@@ -317,6 +320,8 @@ public class DAppDetailFragment extends BaseFragment implements DAppDetailContra
         if (type==INSATLLED){
             presenter.unSubscribe();
         }
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     @Override

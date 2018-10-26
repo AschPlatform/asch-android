@@ -23,7 +23,6 @@ import butterknife.Unbinder;
 
 public class SecureSettingFragment extends BaseFragment implements View.OnClickListener{
 
-    Unbinder unbinder;
     @BindView(R.id.account_backup)
     TextView backUpTv;
     @BindView(R.id.second_pwd)
@@ -36,6 +35,7 @@ public class SecureSettingFragment extends BaseFragment implements View.OnClickL
     ImageView backupArrow;
     @BindView(R.id.second_pwd_arrow)
     ImageView pwdArrow;
+    Unbinder unbinder;
 
 
     public static SecureSettingFragment newInstance() {

@@ -155,7 +155,7 @@ public interface UIA extends AschInterface {
     //secondSecret  string  Y   二级密码
     //返回参数说明：
     //success	boole	是否成功
-    AschResult createAsset(String currency, String desc, long maximum, byte precision, String strategy, String secret, String secondSecret);
+    AschResult createAsset(String currency, String desc, String maximum, String precision, String secret, String secondSecret);
 
 
     //资产设置acl模式

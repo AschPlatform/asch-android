@@ -30,6 +30,7 @@ import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.TransactionsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import ezy.ui.layout.LoadingLayout;
 
 /**
@@ -44,6 +45,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     RefreshLayout refreshLayout;
     @BindView(R.id.loading_ll)
     LoadingLayout loadingLayout;
+    Unbinder unbinder;
     TransactionsAdapter adapter;
     TransactionsContract.Presenter presenter;
 
@@ -67,7 +69,7 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_transactions,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -104,6 +106,8 @@ public class TransactionsFragment extends BaseFragment implements TransactionsCo
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     @Override

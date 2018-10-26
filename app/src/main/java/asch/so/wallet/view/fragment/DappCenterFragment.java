@@ -20,6 +20,7 @@ import asch.so.wallet.R;
 import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by kimziv on 2017/10/11.
@@ -34,7 +35,7 @@ public class DappCenterFragment extends BaseFragment{
     SegmentTabLayout tablayout;
     @BindView(R.id.view_pager)
     ViewPager viewPager;
-
+    Unbinder unbinder;
     private  MyPagerAdapter adapter;
     private DAppsFragment dAppsFragment;
     private InstalledDAppsFragment installedDAppsFragment;
@@ -61,7 +62,7 @@ public class DappCenterFragment extends BaseFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.activity_dapp_center,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         initView();
         return rootView;
     }
@@ -147,5 +148,12 @@ public class DappCenterFragment extends BaseFragment{
             return mFagments.get(position);
         }
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 }

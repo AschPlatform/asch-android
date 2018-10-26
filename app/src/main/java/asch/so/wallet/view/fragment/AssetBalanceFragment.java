@@ -51,6 +51,7 @@ import asch.so.wallet.activity.AssetManageActivity;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransactionsActivity;
 import asch.so.wallet.activity.CheckPasswordActivity;
+import asch.so.wallet.activity.EditAccountNicknameActivity;
 import asch.so.wallet.activity.QRCodeScanActivity;
 import asch.so.wallet.activity.TransactionsActivity;
 import asch.so.wallet.contract.AssetBalanceContract;
@@ -183,19 +184,14 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
 
                 if (fraction < 0.1 && misAppbarExpand) {
                     misAppbarExpand = false;
-                    //addIconIv.setAlpha(1.0f);
                     topBalanceTv.setAlpha(1.0f);
                     addIconIv.setClickable(true);
-                   // toolbar.setVisibility(View.VISIBLE);
                 }
 
                 if (fraction > 0.8 && !misAppbarExpand) {
                     misAppbarExpand = true;
-                    // addIconIv.setAlpha(0);
 
                     topBalanceTv.setAlpha(0);
-//                    addIconIv.setClickable(false);
-                   // toolbar.setVisibility(View.GONE);
                 }
             }
         });
@@ -227,6 +223,10 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             moreEasyPopup.dismiss();
             Intent intent = new Intent(getActivity(),CheckPasswordActivity.class);
             intent.putExtra("title",AssetBalanceFragment.class.getSimpleName());
+            startActivity(intent);
+        }
+        else if (view==identicon||view==nameTv){
+            Intent intent = new Intent(getActivity(),EditAccountNicknameActivity.class);
             startActivity(intent);
         }
     }
@@ -263,6 +263,8 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (unbinder!=null)
+            unbinder.unbind();
         presenter.unSubscribe();
     }
 

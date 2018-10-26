@@ -38,6 +38,7 @@ public class AppConfig {
         if (lastAccountAddress==null){
             lastAccountAddress= Hawk.get(LAST_ACCOUNT_ADDRESS_KEY);
         }
+
         return lastAccountAddress;
     }
 

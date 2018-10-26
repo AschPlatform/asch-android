@@ -26,6 +26,7 @@ import asch.so.wallet.view.adapter.DAppBalanceAdapter;
 import asch.so.wallet.view.adapter.PeersAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import ezy.ui.layout.LoadingLayout;
 
 /**
@@ -40,6 +41,8 @@ public class DAppBalanceFragment extends BaseFragment implements DAppBalanceCont
     RefreshLayout refreshLayout;
     @BindView(R.id.loading_ll)
     LoadingLayout loadingLayout;
+    Unbinder unbinder;
+
     DAppBalanceAdapter adapter;
     DAppBalanceContract.Presenter presenter;
     String dappId;
@@ -63,7 +66,7 @@ public class DAppBalanceFragment extends BaseFragment implements DAppBalanceCont
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_dapp_balance,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         presenter=new DAppBalancePresenter(getContext(),this,dappId);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -90,6 +93,8 @@ public class DAppBalanceFragment extends BaseFragment implements DAppBalanceCont
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     @Override

@@ -18,6 +18,7 @@ public interface AssetTransactionsContract {
         void displayBalance(AschAsset balance);
         void showDeposit(String address);
         void showCreateAccountDialog();
+        void showCreateSuccessDialog();
     }
 
     interface Presenter extends BasePresenter{

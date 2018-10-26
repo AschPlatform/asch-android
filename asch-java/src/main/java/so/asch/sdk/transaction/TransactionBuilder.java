@@ -24,6 +24,32 @@ public class TransactionBuilder {
 
 
 
+    public TransactionInfo buildRegisterAsset(String currency, String desc, String maximum, String precision, String secret, String secondSecret) throws SecurityException {
+        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+        TransactionInfo transaction =  newTransaction(
+                TransactionType.uia_registerAsset,
+                keyPair.getPublic())
+                .setTransactionType(TransactionType.uia_registerAsset)
+                .setArgs(new Object[]{currency,desc,maximum,Integer.valueOf(precision)})
+                .setMessage(null)
+                .calcFee()
+                ;
+        return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),secondSecret);
+    }
+
+    public TransactionInfo buildRegisterIssuer(String name,String desc,String secret,String secondSecret) throws SecurityException {
+        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+        TransactionInfo transaction =  newTransaction(
+                TransactionType.uia_registerIssuer,
+                keyPair.getPublic())
+                .setTransactionType(TransactionType.uia_registerIssuer)
+                .setArgs(new String[]{name,desc})
+                .setMessage(null)
+                .calcFee()
+                ;
+        return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),secondSecret);
+    }
+
     public TransactionInfo buildOpenGatewayAccountTransaction(String gateway, String message, String secret, String secondSecret) throws SecurityException {
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
         TransactionInfo transaction =  newTransaction(
@@ -31,7 +57,7 @@ public class TransactionBuilder {
                 keyPair.getPublic())
                 .setTransactionType(TransactionType.gateway_openAccount)
                 .setArgs(new String[]{gateway})
-                .setMessage(message)
+                .setMessage(null)
                 .calcFee()
                 ;
 
@@ -50,8 +76,7 @@ public class TransactionBuilder {
                 .setTransactionType(TransactionType.gateway_withdrawal)
                 .setArgs(new String[]{address,gateway,currency,strAmount,fee})
                 .setMessage(message)
-                .calcFee()
-                ;
+                .calcFee();
 
         return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),secondSecret);
 

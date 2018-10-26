@@ -24,6 +24,7 @@ import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import so.asch.sdk.AschSDK;
 
 /**
@@ -38,6 +39,7 @@ public class NodeURLSettingFragment extends BaseFragment implements View.OnClick
     TextView urltEt;
     @BindView(R.id.default_url_btn)
     Button defaultURLBtn;
+    Unbinder unbinder;
 
     public static NodeURLSettingFragment newInstance() {
         
@@ -57,7 +59,7 @@ public class NodeURLSettingFragment extends BaseFragment implements View.OnClick
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_node_url_setting,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         defaultURLBtn.setOnClickListener(this);
        String  url = AppConfig.getNodeURL();
         if (TextUtils.isEmpty(url))
@@ -118,8 +120,14 @@ public class NodeURLSettingFragment extends BaseFragment implements View.OnClick
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder!=null)
+            unbinder.unbind();
+    }
 
-//    public static void configAschSDK(){
+    //    public static void configAschSDK(){
 //
 //        String url = AppConfig.getNodeURL();
 //        AschSDK.Config.initBIP39(Wallet.getInstance().getMnemonicCode());

@@ -24,6 +24,7 @@ import asch.so.wallet.presenter.BlockInfoPresenter;
 import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import ezy.ui.layout.LoadingLayout;
 import so.asch.sdk.AschSDK;
 
@@ -54,7 +55,7 @@ public class BlockDetailFragment extends Fragment implements BlockDetailContract
     TextView confirmationsTv;
     @BindView(R.id.loading_ll)
     LoadingLayout loadingLayout;
-
+    Unbinder unbinder;
     private Block block;
 
     private BlockDetailContract.Presenter presenter;
@@ -82,7 +83,7 @@ public class BlockDetailFragment extends Fragment implements BlockDetailContract
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_block_detail, container, false);
-        ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
 
         presenter=new BlockDetailPresenter(getContext(),this);
         presenter.loadBlockInfo(block.getId());
@@ -151,5 +152,12 @@ public class BlockDetailFragment extends Fragment implements BlockDetailContract
             loadingLayout.showError();
         }
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 }

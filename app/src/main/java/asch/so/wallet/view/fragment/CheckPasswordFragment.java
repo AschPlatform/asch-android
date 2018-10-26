@@ -111,10 +111,12 @@ public class CheckPasswordFragment extends BaseFragment {
                 bundle.putString("clazz",AssetBalanceFragment.class.getSimpleName());
                 BaseActivity.start(getActivity(), AccountImportActivity.class,bundle);
             }
-            //转账、提现。
+            //转账、提现、注册发行商、注册资产。
             else if(title.equals(AssetTransferFragment.class.getSimpleName())
                     ||title.equals(AssetWithdrawFragment.class.getSimpleName())
-                    ||title.equals(AssetTransactionsFragment.class.getSimpleName())){
+                    ||title.equals(AssetTransactionsFragment.class.getSimpleName())
+                    ||title.equals(RegisterIssuerFragment.class.getSimpleName())
+                    ||title.equals(RegisterUIAAssetFragment.class.getSimpleName())){
 
 //                需要校验二级密码的情况
                 if (getArguments().getBoolean("hasSecondPwd")){

@@ -9,6 +9,45 @@ import so.asch.sdk.dbc.Argument;
 import so.asch.sdk.transaction.TransactionInfo;
 
 public class UIAService extends AschRESTService implements UIA {
+
+    @Override
+    public AschResult createAsset(String currency, String desc, String maximum, String precision, String secret, String secondSecret) {
+
+        try {
+            Argument.notNullOrEmpty(currency, "invalid name");
+            Argument.require(Validation.isValidSecret(secret), "invalid secret");
+            Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
+            Argument.require(Validation.isValidRemark(desc),"invalid remark length");
+            Argument.require(Validation.isValidPrecision(precision),"invalid precision");
+//            Argument.require(Validation.isValidIssueMaximum(maximum),"invalid maxium");
+
+            TransactionInfo transaction = getTransactionBuilder()
+                    .buildRegisterAsset(currency,desc,maximum,precision, secret, secondSecret);
+            System.out.println("====== createAssetTransaction:"+transaction.toString());
+            return broadcastTransaction(transaction);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
+    @Override
+    public AschResult createIssuer(String name,String desc, String secret, String secondSecret) {
+        try {
+            Argument.notNullOrEmpty(name, "invalid name");
+            Argument.require(Validation.isValidSecret(secret), "invalid secret");
+            Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
+            Argument.require(Validation.isValidRemark(desc),"invalid remark length");
+            TransactionInfo transaction = getTransactionBuilder()
+                    .buildRegisterIssuer(name,desc, secret, secondSecret);
+            System.out.println("====== createIssuerTransaction:"+transaction.toString());
+            return broadcastTransaction(transaction);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
     @Override
     public AschResult getIssuers(int limit, int offset) {
         try {
@@ -145,15 +184,9 @@ public class UIAService extends AschRESTService implements UIA {
         }
     }
 
-    @Override
-    public AschResult createIssuer(String name, String desc, String secret, String secondSecret) {
-        return null;
-    }
 
-    @Override
-    public AschResult createAsset(String currency, String desc, long maximum, byte precision, String strategy, String secret, String secondSecret) {
-        return null;
-    }
+
+
 
     @Override
     public AschResult setAssetACL(String currency, int assertStatus, boolean whiteListMode, String secret, String secondSecret) {

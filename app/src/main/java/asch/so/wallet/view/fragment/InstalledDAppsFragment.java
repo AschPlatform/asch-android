@@ -34,6 +34,7 @@ import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.InstalledDAppsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import ezy.ui.layout.LoadingLayout;
 
 /**
@@ -47,6 +48,7 @@ public class InstalledDAppsFragment extends BaseFragment implements InstalledDap
     RefreshLayout refreshLayout;
     @BindView(R.id.loading_ll)
     LoadingLayout loadingLayout;
+    Unbinder unbinder;
     private InstalledDappsContract.Presenter presenter;
     private InstalledDAppsAdapter adapter;
 
@@ -69,7 +71,7 @@ public class InstalledDAppsFragment extends BaseFragment implements InstalledDap
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_installed_dapps, container, false);
-        ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -128,6 +130,8 @@ public class InstalledDAppsFragment extends BaseFragment implements InstalledDap
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     @Override

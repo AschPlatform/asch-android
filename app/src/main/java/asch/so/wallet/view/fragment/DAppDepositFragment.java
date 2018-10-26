@@ -44,6 +44,7 @@ import asch.so.wallet.view.widget.SecondPasswdDialog;
 import asch.so.wallet.view.widget.TransferConfirmationDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by kimziv on 2018/2/11.
@@ -71,6 +72,7 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
     EditText secondPasswdEt;
     @BindView(R.id.balance_tv)
     TextView balanceTv;
+    Unbinder unbinder;
 
     KProgressHUD hud;
     private Balance balance;
@@ -111,7 +113,7 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_dapp_deposit,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         hideKeyboard();
 
@@ -216,6 +218,8 @@ public class DAppDepositFragment extends BaseFragment implements DAppDepositCont
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     private void showConfirmationDialog(String address, String amount, String currency, String secondPasswd, TransferConfirmationDialog.OnConfirmListener onConfirmListener){

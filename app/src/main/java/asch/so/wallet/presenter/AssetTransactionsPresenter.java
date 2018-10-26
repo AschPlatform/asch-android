@@ -125,8 +125,6 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
                 }
                 AschResult result = AschSDK.Gateway.openGatewayAccount(gateway,message,decryptSecret,secondSecret);
                 LogUtils.dTag(TAG,"getGatewayAccount result:"+result==null?"null":result.getRawJson());
-//                JSONObject object = JSONObject.parseObject(result.getRawJson()).getJSONObject("account");
-//                GatewayAccount account = object.toJavaObject(GatewayAccount.class);
                 if (result!=null && result.isSuccessful()){
                     subscriber.onNext(result);
                     subscriber.onCompleted();
@@ -149,7 +147,7 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
 
                     @Override
                     public void onNext(AschResult aschResult) {
-                        view.showDeposit("add");
+                        view.showCreateSuccessDialog();
                     }
                 });
         subscriptions.add(subscription);

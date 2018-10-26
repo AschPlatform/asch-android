@@ -20,6 +20,7 @@ import asch.so.wallet.presenter.SecretBackupPresenter;
 import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by kimziv on 2017/10/17.
@@ -32,7 +33,7 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
     Button copyBtn;
     @BindView(R.id.secret_tv)
     TextView secretTv;
-
+    Unbinder unbinder;
     SecretBackupContract.Presenter presenter;
 
     public static SecretBackupFragment newInstance() {
@@ -46,8 +47,8 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-         View rootView =inflater.inflate(R.layout.fragment_secret_backup,container,false);
-        ButterKnife.bind(this,rootView);
+        View rootView =inflater.inflate(R.layout.fragment_secret_backup,container,false);
+        unbinder = ButterKnife.bind(this, rootView);
         copyBtn.setOnClickListener(this);
         String password=getArguments().getString("password");
         secretTv.setText(AccountSecurity.decryptSecret(password));
@@ -70,6 +71,8 @@ public class SecretBackupFragment extends BaseFragment implements SecretBackupCo
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     @Override

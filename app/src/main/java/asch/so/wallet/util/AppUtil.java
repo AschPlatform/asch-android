@@ -85,6 +85,7 @@ public class AppUtil {
         return id;
     }
 
+
     public static BigDecimal decimalFromBigint(long bigInt, int precision){
 
         return BigDecimal.valueOf(bigInt, precision);
@@ -94,6 +95,19 @@ public class AppUtil {
         DecimalFormat df = new DecimalFormat("#.########");
         return df.format(decimal);
     }
+
+    public static String getStringFromBigAmount(String amount,int precision){
+        BigDecimal big = new BigDecimal(amount);
+
+        for (int i = 0; i < precision; ++i) {
+            big = big.divide(new BigDecimal("10"));
+        }
+
+        return big.toString();
+
+    }
+
+
 
     public static long scaledAmountFromDecimal(float amount, int precision){
         long scaled_precision = 1;

@@ -89,16 +89,6 @@ public class AschAsset extends RealmObject {
         this.xasTotal = xasTotal;
     }
 
-
-//    public Balance toBalance(){
-//        Balance balance = new Balance();
-//        balance.setPrecision(precision);
-//        balance.setType(type);
-//        balance.setCurrency(name);
-//
-//        return balance;
-//    }
-
     public int getVersion() {
         return version;
     }

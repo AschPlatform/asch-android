@@ -43,6 +43,7 @@ import asch.so.wallet.view.widget.DateTimePickerDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import so.asch.sdk.AschHelper;
 import so.asch.sdk.AschSDK;
 import so.asch.sdk.TransactionType;
@@ -69,6 +70,7 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     TextView block_height;
     @BindView(R.id.lock_fee_tv)
     TextView lockFeeTv;
+    Unbinder unbinder;
     private  long lockHeight;
     private  long initMills;
     private Calendar minLockCalaendar;
@@ -96,7 +98,7 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_lock_coins, container, false);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         //
         okBtn.setOnClickListener(this);
         presenter=new LockCoinsPresenter(getContext(), this);
@@ -308,4 +310,10 @@ public class LockCoinsFragment extends BaseFragment implements LockCoinsContract
         return AccountsManager.getInstance().getCurrentAccount();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder!=null)
+            unbinder.unbind();
+    }
 }

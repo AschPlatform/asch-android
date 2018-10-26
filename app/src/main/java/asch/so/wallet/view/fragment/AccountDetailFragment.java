@@ -19,6 +19,7 @@ import asch.so.wallet.util.IdenticonGenerator;
 import asch.so.widget.toolbar.TitleToolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by kimziv on 2017/9/21.
@@ -36,9 +37,8 @@ public class AccountDetailFragment extends BaseFragment implements AccountDetail
     TextView balanceTv;
     @BindView(R.id.ident_icon)
     ImageView identiconIv;
-
     AccountDetailContract.Presenter presenter;
-
+    Unbinder unbinder;
     public static AccountDetailFragment newInstance() {
         
         Bundle args = new Bundle();
@@ -52,7 +52,7 @@ public class AccountDetailFragment extends BaseFragment implements AccountDetail
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_account_detail, container, false);
 
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         presenter=new AccountDetailPresenter(getContext(),this);
         presenter.loadAccount(null);
@@ -63,6 +63,10 @@ public class AccountDetailFragment extends BaseFragment implements AccountDetail
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        if (unbinder!=null){
+            unbinder.unbind();
+        }
+
     }
 
     @Override

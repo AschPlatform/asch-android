@@ -50,6 +50,7 @@ import asch.so.wallet.view.validator.Validator;
 import asch.so.wallet.view.widget.AssetTransferAlertDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import so.asch.sdk.impl.AschConst;
 import so.asch.sdk.impl.Validation;
 
@@ -82,7 +83,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     TextView lockTv;
     @BindView(R.id.view_lock_info)
     LinearLayout lockLl;
-
+    Unbinder unbinder;
 
 
     KProgressHUD hud;
@@ -106,6 +107,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         action= AssetTransferActivity.Action.valueOf(getArguments().getInt("action"));
         String uri = getArguments().getString("qrcode_uri");
         parseQRUri(uri);
+
         presenter =new AssetTransferPresenter(getContext(),this);
     }
 
@@ -125,7 +127,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_asset_transfer,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         hideKeyboard();
 
         if (qrCodeURL!=null){
@@ -269,6 +271,8 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
 

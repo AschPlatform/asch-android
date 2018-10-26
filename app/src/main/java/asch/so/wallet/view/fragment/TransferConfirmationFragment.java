@@ -12,6 +12,7 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -27,11 +28,12 @@ public class TransferConfirmationFragment extends BaseFragment implements View.O
     TextView ammountTv;
     @BindView(R.id.transfer_btn)
     Button tranferBtn;
+    Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_transfer_confirmation,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         tranferBtn.setOnClickListener(this);
         return rootView;
     }
@@ -41,5 +43,12 @@ public class TransferConfirmationFragment extends BaseFragment implements View.O
         if (view==tranferBtn){
             // TODO: 2017/10/26
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 }

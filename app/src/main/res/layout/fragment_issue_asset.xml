@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/page_bg"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <EditText
+                android:id="@+id/issuer_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:hint="@string/hint_issue_amount"
+                android:textSize="14sp"
+                android:background="@color/white"
+                android:paddingLeft="20dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+
+                android:textColor="@color/gray_text"
+                android:text="@string/max_issue_amount_colon"/>
+            <TextView
+                android:id="@+id/max_issue_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="@color/gray_text"
+                android:text=""/>
+
+        </LinearLayout>
+
+
+        <Button
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            style="@style/PrimaryButton.Style"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/btn_height"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/btn_text_size"
+            android:layout_marginTop="200dp"
+            android:text="@string/issue"/>
+
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="10sp"
+            android:text="@string/issue_asset_cost_note"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="500dp">
+
+        </FrameLayout>
+    </LinearLayout>
+</ScrollView>

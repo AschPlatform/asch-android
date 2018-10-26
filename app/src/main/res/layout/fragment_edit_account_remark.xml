@@ -21,10 +21,10 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:gravity="center"
             android:text="@string/nickname"
             android:textColor="@color/black"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="20dp"/>
 
@@ -50,8 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="57dp"
         android:orientation="vertical"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+
         android:background="@android:color/white">
 
         <TextView

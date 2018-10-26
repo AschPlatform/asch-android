@@ -14,15 +14,12 @@ import asch.so.wallet.view.fragment.EditAccountRemarkFragment;
 
 public class EditAccountNicknameActivity extends TitleToolbarActivity {
 
-
-
     private AccountCreateContract.Presenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(getString(R.string.edit_account_remark));
-
         EditAccountRemarkFragment fragment =EditAccountRemarkFragment.newInstance();
         fragment.setArguments(getBundle());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);

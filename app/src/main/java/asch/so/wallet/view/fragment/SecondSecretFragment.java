@@ -32,7 +32,6 @@ import so.asch.sdk.impl.FeeCalculater;
  */
 public class SecondSecretFragment extends BaseFragment implements SecondSecretContract.View {
 
-    private Unbinder unbinder;
     KProgressHUD hud=null;
     private SecondSecretContract.Presenter presenter;
     @BindView(R.id.passwd_et1)
@@ -41,6 +40,7 @@ public class SecondSecretFragment extends BaseFragment implements SecondSecretCo
     EditText passwdEt2;
     @BindView(R.id.save_btn)
     Button save_btn;
+    private Unbinder unbinder;
 
 
     public static SecondSecretFragment newInstance() {

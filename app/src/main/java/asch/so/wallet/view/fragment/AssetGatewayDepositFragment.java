@@ -30,6 +30,7 @@ import asch.so.wallet.presenter.AssetReceivePresenter;
 import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import so.asch.sdk.impl.AschConst;
 
 /**
@@ -60,8 +61,7 @@ public class AssetGatewayDepositFragment extends BaseFragment implements AssetGa
 
     String currency="";
     String address = "";
-   // private HashMap<String, BaseAsset> assetsMap;
-
+    Unbinder unbinder;
     TextWatcher textWatcher=new TextWatcher() {
 
         @Override
@@ -104,8 +104,7 @@ public class AssetGatewayDepositFragment extends BaseFragment implements AssetGa
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_asset_receive,container,false);
-        ButterKnife.bind(this,rootView);
-
+        unbinder = ButterKnife.bind(this, rootView);
         infoTv.setText(String.format(getString(R.string.receive_multi_chain),currency,currency));
 
 //            infoTv.setText(String.format(getString(R.string.receive_mulit_chain).toString(),currency,currency));
@@ -155,7 +154,8 @@ public class AssetGatewayDepositFragment extends BaseFragment implements AssetGa
     public void onDestroyView() {
         super.onDestroyView();
         ammountEt.removeTextChangedListener(textWatcher);
-        presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     @Override

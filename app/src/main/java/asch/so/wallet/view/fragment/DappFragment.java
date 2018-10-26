@@ -35,6 +35,7 @@ import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.IdenticonGenerator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -57,6 +58,7 @@ public class DappFragment extends BaseFragment implements View.OnClickListener {
     Button testBtn;
     @BindView(R.id.identicon)
     ImageView identiconIv;
+    Unbinder unbinder;
     //Bitmap bitmap
 
     ValueCallback<Uri> mUploadMessage;
@@ -74,7 +76,7 @@ public class DappFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_dapp, container, false);
-        ButterKnife.bind(this, rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         webView.setDefaultHandler(new DefaultHandler());
         webView.setWebChromeClient(new WebChromeClient() {
@@ -215,5 +217,10 @@ public class DappFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder!=null)
+            unbinder.unbind();
+    }
 }

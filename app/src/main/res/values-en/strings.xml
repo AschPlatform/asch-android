@@ -416,4 +416,6 @@
     <string name="nickname">Nickname</string>
     <string name="account_remark">Account Remark</string>
     <string name="edit_account_remark">Edit Remark</string>
+    <string name="activate_gateway_address_success">Success! Please wait for the account to be activated before topping up</string>
+    <string name="agreement_url">file:///android_asset/agreement_en.html</string>
 </resources>

@@ -26,6 +26,7 @@ import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.PeersAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import ezy.ui.layout.LoadingLayout;
 
 /**
@@ -39,6 +40,7 @@ public class PeersFragment extends BaseFragment implements PeesContact.View{
     RefreshLayout refreshLayout;
     @BindView(R.id.loading_ll)
     LoadingLayout loadingLayout;
+    Unbinder unbinder;
     PeersAdapter adapter;
     PeesContact.Presenter presenter;
 
@@ -62,7 +64,7 @@ public class PeersFragment extends BaseFragment implements PeesContact.View{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_peers,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         presenter=new PeersPresenter(getContext(),this);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -99,6 +101,8 @@ public class PeersFragment extends BaseFragment implements PeesContact.View{
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     @Override

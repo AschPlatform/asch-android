@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    
+    <LinearLayout
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/issuer_register"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/my_issue_assets"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:paddingLeft="20dp"
+            android:paddingVertical="10dp"/>
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srlPrimaryColor="@color/colorPrimary"
+            app:srlAccentColor="@android:color/white"
+            app:srlEnableHeaderTranslationContent="false"
+            app:srlEnableLoadmore="true">
+            <com.scwang.smartrefresh.header.MaterialHeader
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <ezy.ui.layout.LoadingLayout
+                android:id="@+id/loading_ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:llLoadingResId="@layout/common_loading"
+                app:llEmptyResId="@layout/common_no_data"
+                app:llErrorImage="@drawable/ic_error"
+                >
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/white"
+                    tools:listitem="@layout/item_transaction"/>
+            </ezy.ui.layout.LoadingLayout>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </LinearLayout>
+  
+    <Button
+        android:id="@+id/issuer_register"
+        style="@style/PrimaryButton.Style"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/register_new_asset"
+        android:layout_marginHorizontal="20dp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>
+

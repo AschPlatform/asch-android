@@ -33,6 +33,7 @@ import asch.so.wallet.view.adapter.BaseRecyclerAdapter;
 import asch.so.wallet.view.adapter.SmartViewHolder;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 import static android.R.layout.simple_list_item_1;
 import static android.R.layout.simple_list_item_2;
@@ -45,7 +46,7 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-
+    Unbinder unbinder;
     KProgressHUD hud=null;
 
     private int currentPostion=0;
@@ -104,7 +105,7 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
                 break;
         }
 
-
+        AppUtil.toastSuccess(getActivity(),getString(R.string.change_language_success));
         ActivityRecreationHelper.recreate(mActivity, false);
 
         adapter.notifyDataSetChanged();
@@ -168,12 +169,19 @@ public class LanguagesFragment extends BaseFragment implements AdapterView.OnIte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_languages,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(adapter);
         mActivity = getActivity();
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 }

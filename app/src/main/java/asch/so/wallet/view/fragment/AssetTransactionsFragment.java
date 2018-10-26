@@ -32,9 +32,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import asch.so.base.fragment.BaseFragment;
+import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.accounts.AssetManager;
 import asch.so.wallet.activity.AssetGatewayDepositActivity;
 import asch.so.wallet.activity.AssetReceiveActivity;
 import asch.so.wallet.activity.AssetTransferActivity;
@@ -52,6 +54,7 @@ import asch.so.wallet.view.widget.AlertDialog;
 import asch.so.wallet.view.widget.CreateGatewayAccountDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import so.asch.sdk.impl.AschConst;
 
 /**
@@ -83,7 +86,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     TextView lockTv;
     @BindView(R.id.view_lock_info)
     LinearLayout lockLl;
-
+    Unbinder unbinder;
     EasyPopup moreEasyPopup;
     KProgressHUD hud;
 
@@ -110,7 +113,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_asset_transactions,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         initMultiTab();
         initPopupMenu();
         presenter=new AssetTransactionsPresenter(getActivity(),this);
@@ -308,15 +311,19 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(getActivity(), CheckPasswordActivity.class);
-                Bundle bundle = new Bundle();
-                String clazz = AssetTransactionsFragment.class.getSimpleName();
-                bundle.putString("title",clazz);
-                bundle.putString("currency",balance.getName());
-                bundle.putBoolean("hasSecondPwd",hasSecondPasswd());
-                intent.putExtras(bundle);
-                startActivityForResult(intent,1);
-                dialog.dismiss();
+                float xasBalance =  AssetManager.getInstance().queryAschAssetByName(AppConstants.XAS_NAME).getTrueBalance();
+                if (xasBalance>(float) 0.1) {
+                    Intent intent = new Intent(getActivity(), CheckPasswordActivity.class);
+                    Bundle bundle = new Bundle();
+                    String clazz = AssetTransactionsFragment.class.getSimpleName();
+                    bundle.putString("title", clazz);
+                    bundle.putString("currency", balance.getName());
+                    bundle.putBoolean("hasSecondPwd", hasSecondPasswd());
+                    intent.putExtras(bundle);
+                    startActivityForResult(intent, 1);
+                    dialog.dismiss();
+                }else
+                    AppUtil.toastError(getActivity(),getString(R.string.account_balance_insufficient));
             }
         });
 
@@ -344,6 +351,14 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             showHUD();
         }
     }
+
+    @Override
+    public void showCreateSuccessDialog() {
+        dismissHUD();
+        AlertDialog alertDialog = new AlertDialog(getContext()).setContent(getString(R.string.activate_gateway_address_success));
+        alertDialog.show();
+    }
+
     private boolean hasSecondPasswd(){
         return AccountsManager.getInstance().getCurrentAccount().hasSecondSecret();
     }
@@ -394,6 +409,8 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     @Override

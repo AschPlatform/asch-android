@@ -10,6 +10,8 @@ import asch.so.wallet.view.fragment.AssetTransactionsFragment;
 import asch.so.wallet.view.fragment.AssetTransferFragment;
 import asch.so.wallet.view.fragment.AssetWithdrawFragment;
 import asch.so.wallet.view.fragment.CheckPasswordFragment;
+import asch.so.wallet.view.fragment.RegisterIssuerFragment;
+import asch.so.wallet.view.fragment.RegisterUIAAssetFragment;
 
 
 public class CheckPasswordActivity extends TitleToolbarActivity {
@@ -42,6 +44,10 @@ public class CheckPasswordActivity extends TitleToolbarActivity {
         }
         else if (title.equals(AccountsActivity.class.getSimpleName())||title.equals(AssetBalanceFragment.class.getSimpleName())){
             title = getString(R.string.import_account);
+        }else if (title.equals(RegisterIssuerFragment.class.getSimpleName())){
+            title = getString(R.string.register_issuer);
+        }else if (title.equals(RegisterUIAAssetFragment.class.getSimpleName())){
+            title = getString(R.string.register_new_asset);
         }
 
         setTitle(title);

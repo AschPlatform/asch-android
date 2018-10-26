@@ -5,6 +5,7 @@ import so.asch.sdk.ContentEncoding;
 import so.asch.sdk.dto.query.*;
 import so.asch.sdk.security.Bip39;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.function.Predicate;
 
@@ -12,13 +13,18 @@ import java.util.function.Predicate;
  * Created by eagle on 17-7-18.
  */
 public class Validation {
+
     private static final int MIN_SECURE_LENGTH = 1;
+    private static final int MAX_PRECISION = 16;
+    private static final int MAX_ISSUE_AMOUNT = 30;
     private static final int MAX_SECURE_LENGTH = 100;
     private static final int MIN_ADDRESS_LENGTH = 1;
     private static final int MAX_ADDRESS_LENGTH = 100;
     private static final int PUBLIC_KEY_LENGTH = 32;
     private static final int MAX_MESSAGE_LENGTH = 255;
     private static final String NICKNAME_PATTERN = "^[a-z0-9]{2,20}";
+    private static final String ISSUER_NAME_PATTERN = "^[A-Za-z]{1,15}";
+    private static final String ISSUE_ASSET_NAME_PATTERN = "^[A-Z]{3,6}";
     private static final String HEX_PATTERN = "^([0-9]|[A-F]|[a-f])+$";
     private static final String NUMBER_PATTERN = "^\\d+$";
     private static final String BASE58_PATTERN = "^([1-9]|[A-H]|[J-Z]|[a-k]|[m-z])+$";
@@ -28,6 +34,36 @@ public class Validation {
             +"(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
             +"(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)\\."
             +"(1\\d{2}|2[0-4]\\d|25[0-5]|[1-9]\\d|\\d)$";
+
+
+
+    public static boolean isValidIssueAssetName(String name){
+        return (null != name) &&name.matches(ISSUE_ASSET_NAME_PATTERN);
+    }
+
+
+    public static boolean isValidIssueName(String name){
+        return (null != name) &&name.matches(ISSUER_NAME_PATTERN);
+    }
+
+    public static boolean isValidIssueMaximum(String max){
+        try {
+            BigDecimal x = new BigDecimal(max);
+            return  max.length()>0&&max.length()<=MAX_ISSUE_AMOUNT;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
+
+    public static boolean isValidPrecision(String precision){
+        try {
+            return  Integer.valueOf(precision)>0&&Integer.valueOf(precision)<=MAX_PRECISION;
+        }catch (Exception e){
+            return false;
+        }
+
+    }
 
     public static boolean isHex(String hexString){
         return  (null != hexString) && hexString.matches(HEX_PATTERN);

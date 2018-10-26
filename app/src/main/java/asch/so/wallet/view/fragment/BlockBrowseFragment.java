@@ -33,6 +33,7 @@ import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.BlockBrowseAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import ezy.ui.layout.LoadingLayout;
 
 /**
@@ -49,7 +50,7 @@ public class BlockBrowseFragment extends Fragment implements BlockExplorerContra
     LoadingLayout loadingLayout;
     @BindView(R.id.searchEdit)
     SearchView searchView;
-
+    Unbinder unbinder;
     BlockExplorerContract.Presenter presenter;
     BlockBrowseAdapter adapter;
 
@@ -74,7 +75,7 @@ public class BlockBrowseFragment extends Fragment implements BlockExplorerContra
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_block_browse, container, false);
-        ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
         presenter=new BlockExplorerPresenter(getContext(),this);
         searchView.setSubmitButtonEnabled(false);
         searchView.setQueryHint(getString(R.string.search_hint));
@@ -134,6 +135,8 @@ public class BlockBrowseFragment extends Fragment implements BlockExplorerContra
         {
             presenter.unSubscribe();
         }
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     @Override

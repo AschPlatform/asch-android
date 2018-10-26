@@ -230,7 +230,8 @@ public class AccountsFragment extends BaseFragment implements AccountsContract.V
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
+        if (unbinder!=null)
+            unbinder.unbind();
         presenter.unSubscribe();
     }
 

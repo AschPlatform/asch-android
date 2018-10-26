@@ -39,9 +39,10 @@ import so.asch.sdk.security.SecurityStrategy;
 
 
 public class SecondCheckPasswordFragment extends BaseFragment {
-    Unbinder unbinder;
     @BindView(R.id.check_pwd_ok)
     Button okBtn;
+    Unbinder unbinder;
+
     PassWordEditText pwdEt;
 
     public static SecondCheckPasswordFragment newInstance() {

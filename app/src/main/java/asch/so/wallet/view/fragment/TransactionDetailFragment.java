@@ -20,6 +20,7 @@ import asch.so.wallet.model.entity.UIATransferAsset;
 import asch.so.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by kimziv on 2017/10/27.
@@ -55,7 +56,7 @@ public class TransactionDetailFragment extends BaseFragment implements View.OnCl
     TextView amountTv;
     @BindView(R.id.asset_tv)
     TextView assetTv;
-
+    Unbinder unbinder;
 
 
     public static TransactionDetailFragment newInstance() {
@@ -71,7 +72,7 @@ public class TransactionDetailFragment extends BaseFragment implements View.OnCl
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_transaction_detail,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         Transaction transaction = getTransaction();
         txIDTv.setText(transaction.getId());
@@ -219,4 +220,10 @@ public class TransactionDetailFragment extends BaseFragment implements View.OnCl
         return transaction;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder!=null)
+            unbinder.unbind();
+    }
 }

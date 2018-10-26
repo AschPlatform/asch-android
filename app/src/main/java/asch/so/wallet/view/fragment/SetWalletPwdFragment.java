@@ -29,15 +29,11 @@ import butterknife.Unbinder;
 
 public class SetWalletPwdFragment extends BaseFragment implements View.OnClickListener, SetWalletPwdContract.View{
 
-    Unbinder unbinder;
-
-
     @BindView(R.id.create_btn)
     Button createBtn;
-
-    PassWordEditText passwdEt;
-    PassWordEditText passwdEt2;
-
+    PassWordEditText pwdEt;
+    PassWordEditText pwdEt2;
+    Unbinder unbinder;
 
     KProgressHUD hud=null;
     private SetWalletPwdContract.Presenter presenter;
@@ -60,16 +56,16 @@ public class SetWalletPwdFragment extends BaseFragment implements View.OnClickLi
         unbinder= ButterKnife.bind(this,rootView);
         createBtn.setOnClickListener(this);
         presenter=new SetWalletPwdPresenter(getContext(),this);
-        passwdEt = new PassWordEditText(getActivity(),R.id.set_pwd_edit1,rootView);
-        passwdEt.setHint(getString(R.string.wallet_pwd));
-        passwdEt2 = new PassWordEditText(getActivity(),R.id.set_pwd_edit2,rootView);
-        passwdEt2.setHint(getString(R.string.ensure_wallet_pwd));
+        pwdEt = new PassWordEditText(getActivity(),R.id.set_pwd_edit1,rootView);
+        pwdEt.setHint(getString(R.string.wallet_pwd));
+        pwdEt2 = new PassWordEditText(getActivity(),R.id.set_pwd_edit2,rootView);
+        pwdEt2.setHint(getString(R.string.ensure_wallet_pwd));
         return rootView;
     }
 
     private void createWallet(){
-        String passwd=passwdEt.getText().toString();
-        String passwd2=passwdEt2.getText().toString();
+        String passwd=pwdEt.getText().toString();
+        String passwd2=pwdEt2.getText().toString();
 
 
         if (!Validator.check(getContext(), Validator.Type.SecondSecret,passwd,getString(R.string.password_unvalid))){

@@ -37,6 +37,7 @@ import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.adapter.DAppsAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import ezy.ui.layout.LoadingLayout;
 
 /**
@@ -50,6 +51,7 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
     RefreshLayout refreshLayout;
     @BindView(R.id.loading_ll)
     LoadingLayout loadingLayout;
+    Unbinder unbinder;
 
     DappsContract.Presenter presenter;
     DAppsAdapter adapter;
@@ -72,7 +74,7 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_dapps, container, false);
-        ButterKnife.bind(this,view);
+        unbinder = ButterKnife.bind(this, view);
         presenter=new DappsPresenter(getContext(),this);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
@@ -113,6 +115,8 @@ public class DAppsFragment extends BaseFragment implements DappsContract.View{
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     @Override

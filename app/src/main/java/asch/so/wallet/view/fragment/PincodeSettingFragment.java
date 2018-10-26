@@ -11,6 +11,7 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import in.arjsna.passcodeview.PassCodeView;
 
 /**
@@ -23,7 +24,7 @@ public class PincodeSettingFragment extends BaseFragment {
     TextView promptView;
     @BindView(R.id.pass_code_view)
     PassCodeView passCodeView;
-
+    Unbinder unbinder;
     public static PincodeSettingFragment newInstance() {
         
         Bundle args = new Bundle();
@@ -36,7 +37,7 @@ public class PincodeSettingFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pincode,container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
         Typeface typeFace = Typeface.createFromAsset(getActivity().getAssets(), "Font-Bold.ttf");
         passCodeView.setTypeFace(typeFace);
         passCodeView.setKeyTextColor(R.color.black);
@@ -61,5 +62,12 @@ public class PincodeSettingFragment extends BaseFragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 }

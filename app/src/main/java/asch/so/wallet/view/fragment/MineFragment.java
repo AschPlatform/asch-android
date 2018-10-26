@@ -53,6 +53,7 @@ import asch.so.wallet.view.entity.MineSection;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -72,6 +73,7 @@ public class MineFragment extends BaseFragment implements MineContract.View,View
     ImageView identicon;
     @BindView(R.id.copy_address)
     View copyView;
+    Unbinder unbinder;
 
     private List<MineSection> itemList=new ArrayList<>();
     private MineAdapter adapter =new MineAdapter(itemList);
@@ -95,7 +97,7 @@ public class MineFragment extends BaseFragment implements MineContract.View,View
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_mine, container,false);
-        ButterKnife.bind(this,rootView);
+        unbinder = ButterKnife.bind(this, rootView);
 
         copyView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +210,8 @@ public class MineFragment extends BaseFragment implements MineContract.View,View
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
     @Override

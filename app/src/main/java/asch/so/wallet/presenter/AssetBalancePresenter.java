@@ -62,31 +62,31 @@ public class AssetBalancePresenter implements AssetBalanceContract.Presenter,Obs
 
     @Override
     public void loadAssets(){
+        Observable<FullAccount> observable = AccountsManager.getInstance().loadAccountAndAssetsObservable();
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .unsubscribeOn(Schedulers.io())
+                    .subscribe(new Subscriber<FullAccount>() {
+                        @Override
+                        public void onCompleted() {
 
-       Observable<FullAccount> observable = AccountsManager.getInstance().loadAccountAndAssetsObservable();
-      Subscription subscription = observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .subscribe(new Subscriber<FullAccount>() {
-                    @Override
-                    public void onCompleted() {
+                        }
 
-                    }
+                        @Override
+                        public void onError(java.lang.Throwable e) {
+                            LogUtils.dTag("xasObservable error:",e.toString());
+                            view.displayError(e);
+                        }
 
-                    @Override
-                    public void onError(java.lang.Throwable e) {
-                        LogUtils.dTag("xasObservable error:",e.toString());
-                        view.displayError(e);
-                    }
-
-                    @Override
-                    public void onNext(FullAccount fullAccount) {
-                        LogUtils.dTag(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getAccount().getBalance().toString());
-                        getAccount().setFullAccount(fullAccount);
-                        view.displayAssets(AssetManager.getInstance().queryAssetsForShow());
-                    }
-                });
-      subscriptions.add(subscription);
+                        @Override
+                        public void onNext(FullAccount fullAccount) {
+                            LogUtils.dTag(TAG,"FullAccount info:"+fullAccount.getAccount().getAddress()+" balances:"+fullAccount.getAccount().getBalance().toString());
+                            getAccount().setFullAccount(fullAccount);
+                            AssetManager.getInstance().loadAccountAssets();
+                            view.displayAssets(AssetManager.getInstance().queryAssetsForShow());
+                        }
+                    });
+        subscriptions.add(subscription);
     }
 
 

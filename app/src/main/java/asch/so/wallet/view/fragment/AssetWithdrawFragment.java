@@ -51,6 +51,7 @@ import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.view.validator.Validator;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import so.asch.sdk.impl.AschConst;
 import so.asch.sdk.impl.Validation;
 
@@ -98,7 +99,7 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
     private long longFee;
     private String minFee = "0.00001";
     private String gateway = null;
-
+    Unbinder unbinder;
     public static AssetWithdrawFragment newInstance() {
         Bundle args = new Bundle();
         AssetWithdrawFragment fragment = new AssetWithdrawFragment();
@@ -130,8 +131,7 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView=inflater.inflate(R.layout.fragment_asset_withdraw,container,false);
-        ButterKnife.bind(this,rootView);
-
+        unbinder = ButterKnife.bind(this, rootView);
         if (qrCodeURL!=null){
             targetEt.setText(qrCodeURL.getAddress());
             amountEt.setText(qrCodeURL.getAmount());
@@ -273,6 +273,8 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
     public void onDestroyView() {
         super.onDestroyView();
         presenter.unSubscribe();
+        if (unbinder!=null)
+            unbinder.unbind();
     }
 
 

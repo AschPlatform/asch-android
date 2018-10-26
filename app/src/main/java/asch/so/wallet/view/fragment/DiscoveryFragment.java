@@ -20,6 +20,7 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.BlockBrowseActivity;
 import asch.so.wallet.activity.BlockInfoActivity;
+import asch.so.wallet.activity.IssuerAssetsActivity;
 import asch.so.wallet.activity.PeersActivity;
 import asch.so.wallet.activity.VoteActivity;
 import asch.so.wallet.contract.DiscoveryContract;
@@ -44,9 +45,8 @@ public class DiscoveryFragment extends BaseFragment implements DiscoveryContract
     private List<MineSection> itemList=new ArrayList<>();
     private MineAdapter adapter =new MineAdapter(itemList);
     public static DiscoveryFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
         DiscoveryFragment fragment = new DiscoveryFragment();
         fragment.setArguments(args);
         return fragment;
@@ -71,7 +71,8 @@ public class DiscoveryFragment extends BaseFragment implements DiscoveryContract
                     switch (item.getIcon()){
                         case R.mipmap.node_vote:
                         {
-                            BaseActivity.start(getActivity(),VoteActivity.class,null);
+                            BaseActivity.start(getActivity(),IssuerAssetsActivity.class,null);
+
                         }
                         break;
                         case  R.mipmap.vote_list:
