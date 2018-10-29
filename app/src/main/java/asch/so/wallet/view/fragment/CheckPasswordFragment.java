@@ -116,7 +116,8 @@ public class CheckPasswordFragment extends BaseFragment {
                     ||title.equals(AssetWithdrawFragment.class.getSimpleName())
                     ||title.equals(AssetTransactionsFragment.class.getSimpleName())
                     ||title.equals(RegisterIssuerFragment.class.getSimpleName())
-                    ||title.equals(RegisterUIAAssetFragment.class.getSimpleName())){
+                    ||title.equals(RegisterUIAAssetFragment.class.getSimpleName())
+                    ||title.equals(IssueAssetFragment.class.getSimpleName())){
 
 //                需要校验二级密码的情况
                 if (getArguments().getBoolean("hasSecondPwd")){

@@ -177,7 +177,7 @@ public interface UIA extends AschInterface {
     //secondSecret  string  Y   二级密码
     //返回参数说明：
     //success	boole	是否成功
-    AschResult issue(String currency, long amount, String secret, String secondSecret);
+    AschResult issue(String currency, String amount, String secret, String secondSecret);
 
     //资产转账
     //请求参数说明：

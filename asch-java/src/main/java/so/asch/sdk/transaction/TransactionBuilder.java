@@ -24,6 +24,19 @@ public class TransactionBuilder {
 
 
 
+    public TransactionInfo buildIssueAsset(String currency, String amount,String secret, String secondSecret) throws SecurityException {
+        KeyPair keyPair = getSecurity().generateKeyPair(secret);
+        TransactionInfo transaction =  newTransaction(
+                TransactionType.uia_issue,
+                keyPair.getPublic())
+                .setTransactionType(TransactionType.uia_issue)
+                .setArgs(new Object[]{currency,amount})
+                .setMessage(null)
+                .calcFee()
+                ;
+        return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),secondSecret);
+    }
+
     public TransactionInfo buildRegisterAsset(String currency, String desc, String maximum, String precision, String secret, String secondSecret) throws SecurityException {
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
         TransactionInfo transaction =  newTransaction(

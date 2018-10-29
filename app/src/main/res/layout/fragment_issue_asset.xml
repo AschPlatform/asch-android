@@ -19,6 +19,8 @@
 
             <EditText
                 android:id="@+id/issuer_name_et"
+                android:inputType="number"
+                android:digits="0123456789"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
@@ -54,6 +56,7 @@
 
 
         <Button
+            android:id="@+id/issue_asset_btn"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             style="@style/PrimaryButton.Style"

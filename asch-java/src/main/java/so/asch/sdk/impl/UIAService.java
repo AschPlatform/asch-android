@@ -11,6 +11,24 @@ import so.asch.sdk.transaction.TransactionInfo;
 public class UIAService extends AschRESTService implements UIA {
 
     @Override
+    public AschResult issue(String currency, String amount, String secret, String secondSecret) {
+        try {
+            Argument.notNullOrEmpty(currency, "invalid name");
+            Argument.require(Validation.isValidSecret(secret), "invalid secret");
+            Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
+//            Argument.require(Validation.isValidIssueMaximum(maximum),"invalid maxium");
+
+            TransactionInfo transaction = getTransactionBuilder()
+                    .buildIssueAsset(currency,amount,secret, secondSecret);
+            System.out.println("====== createAssetTransaction:"+transaction.toString());
+            return broadcastTransaction(transaction);
+        }
+        catch (Exception ex){
+            return fail(ex);
+        }
+    }
+
+    @Override
     public AschResult createAsset(String currency, String desc, String maximum, String precision, String secret, String secondSecret) {
 
         try {
@@ -193,10 +211,7 @@ public class UIAService extends AschRESTService implements UIA {
         return null;
     }
 
-    @Override
-    public AschResult issue(String currency, long amount, String secret, String secondSecret) {
-        return null;
-    }
+
 
     @Override
     public AschResult transfer(String currency, String recipientId, long amount, String message, String secret, String secondSecret) {

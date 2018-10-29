@@ -51,7 +51,7 @@ public class DiscoveryPresenter implements DiscoveryContract.Presenter {
 
         list.add(new MineSection(true,"Section 1"));
         list.add(new MineSection(new MineItem(R.mipmap.node_vote,"发行资产")));
-        list.add(new MineSection(new MineItem(R.mipmap.my_contacts,context.getString(R.string.block_browse))));
+//        list.add(new MineSection(new MineItem(R.mipmap.my_contacts,context.getString(R.string.block_browse))));
         view.displayItems(list);
     }
 

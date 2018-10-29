@@ -28,6 +28,7 @@ import asch.so.base.fragment.BaseFragment;
 import asch.so.wallet.P;
 import asch.so.wallet.R;
 import asch.so.wallet.accounts.AccountsManager;
+import asch.so.wallet.activity.IssueAssetActivity;
 import asch.so.wallet.activity.IssuerAgreementActivity;
 import asch.so.wallet.activity.RegisterIssuerActivity;
 import asch.so.wallet.activity.RegisterUiaAssetActivity;
@@ -90,7 +91,13 @@ public class IssuerAssetsFragment extends BaseFragment implements IssuerAssetsCo
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                AppUtil.toastSuccess(getActivity(),String.valueOf(position));
+                IssuerAssets assets = (IssuerAssets) adapter.getItem(position);
+                String name = assets.getName();
+                String max = AppUtil.getStringFromBigAmount(assets.getMaximum(),assets.getPrecision());
+                Bundle bundle = new Bundle();
+                bundle.putString("name",name);
+                bundle.putString("max",max);
+                BaseActivity.start(getActivity(),IssueAssetActivity.class,bundle);
             }
         });
 

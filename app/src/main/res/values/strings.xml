@@ -422,6 +422,7 @@
     <string name="account_remark">账户备注</string>
     <string name="edit_account_remark">修改账户备注</string>
     <string name="activate_gateway_address_success">开户成功,请等开户生效后充值</string>
+    <string name="agreement_url">file:///android_asset/agreement_cn.html</string>
     <string name="asset_issue">资产发行</string>
     <string name="registe_now">立即注册</string>
     <string name="dialog_registe_issuer_title">您还没有注册发行商</string>
@@ -443,7 +444,6 @@
     <string name="my_issue_assets">我发行的资产</string>
     <string name="deny">拒绝</string>
     <string name="i_agree">我同意</string>
-    <string name="agreement_url">file:///android_asset/agreement_cn.html</string>
     <string name="register_issuer">注册发行商</string>
     <string name="register_new_asset">注册新资产</string>
     <string name="change_language_success">切换语言成功，将重新加载应用</string>
@@ -456,5 +456,9 @@
     <string name="err_issue_asset_max">注册资产的最大发行量应为1-30位数字</string>
     <string name="err_issue_asset_precision">注册资产的精度应为1-16</string>
     <string name="register_asset_success">注册资产成功！等待信息后同步生效。</string>
-
+    <string name="issue_asset_success">发行资产成功！等待信息后同步生效。</string>
+    <string name="err_issue_asset_amount">发行数量应为不包含小数点的纯1-30位的整数</string>
+    <string name="err_issue_asset_over_max">发行数量不能超过最大发行量</string>
+    <string name="err_issue_asset_zero">发行数量不能为0</string>
+    <string name="issue_asset">发行资产</string>
 </resources>
