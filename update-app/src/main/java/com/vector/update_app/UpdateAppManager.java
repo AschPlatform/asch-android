@@ -533,7 +533,7 @@ public class UpdateAppManager {
         }
 
         /**
-         * @return 是否影藏对话框
+         * @return 是否隐藏对话框
          */
         public boolean isHideDialog() {
             return mHideDialog;

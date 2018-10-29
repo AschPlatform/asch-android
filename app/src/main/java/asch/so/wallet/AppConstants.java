@@ -31,7 +31,8 @@ public class AppConstants {
     public static final String USER_MANNUAL_URL_EN = "https://bbs.asch.io/topic/3785/user-manual-of-asch-phone-wallet";
 
     public static final String OFFICIAL_WEBSITE_URL = "http://asch.io/";
-    public static String UPADATE_URL = "http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/android/update.json";
+    public static String UPDATE_URL = "http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/android/update.json";
+//    public static String UPDATE_URL = "http://asch-public.oss-cn-beijing.aliyuncs.com/Android/test/update.json";
 
     public static final String BUGLY_APP_ID = "7e968af450";
 

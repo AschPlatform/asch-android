@@ -2,7 +2,6 @@ package asch.so.wallet.util;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
@@ -24,12 +23,10 @@ import com.vector.update_app.UpdateAppManager;
 import com.vector.update_app.UpdateCallback;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-import asch.so.base.util.DateConvertUtils;
 import asch.so.wallet.AppConstants;
 import asch.so.wallet.BuildConfig;
 import asch.so.wallet.R;
@@ -205,7 +202,7 @@ public class AppUtil {
                 //当前Activity
                 .setActivity(activity)
                 //更新地址
-                .setUpdateUrl(AppConstants.UPADATE_URL)
+                .setUpdateUrl(AppConstants.UPDATE_URL)
                 //实现httpManager接口的对象
                 .setHttpManager(new UpdateAppHttpUtil())
                 .setTopPic(R.mipmap.update_top)
