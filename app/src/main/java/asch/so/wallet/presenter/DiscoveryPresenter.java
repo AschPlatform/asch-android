@@ -50,7 +50,7 @@ public class DiscoveryPresenter implements DiscoveryContract.Presenter {
         ArrayList<MineSection> list=new ArrayList<>();
 
         list.add(new MineSection(true,"Section 1"));
-        list.add(new MineSection(new MineItem(R.mipmap.node_vote,"发行资产")));
+        list.add(new MineSection(new MineItem(R.mipmap.node_vote,context.getString(R.string.issue_asset))));
 //        list.add(new MineSection(new MineItem(R.mipmap.my_contacts,context.getString(R.string.block_browse))));
         view.displayItems(list);
     }

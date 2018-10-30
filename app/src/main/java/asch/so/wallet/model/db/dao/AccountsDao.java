@@ -10,6 +10,7 @@ import javax.inject.Inject;
 
 import asch.so.wallet.model.entity.Account;
 import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 import rx.Observable;
 import rx.Subscription;
@@ -44,6 +45,7 @@ public class AccountsDao {
     }
 
     private Realm getRealm(){
+
         return Realm.getDefaultInstance();
     }
 

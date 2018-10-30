@@ -49,9 +49,11 @@ import asch.so.wallet.model.entity.BaseAsset;
 import asch.so.wallet.util.AppUtil;
 import asch.so.wallet.util.IdenticonGenerator;
 import io.realm.DynamicRealm;
+import io.realm.FieldAttribute;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
+import io.realm.RealmSchema;
 import so.asch.sdk.AschSDK;
 
 /**
@@ -147,17 +149,20 @@ public class WalletApplication extends MultiDexApplication {
     }
 
     private void initRealm() {
+
+
         Realm.init(this);
         RealmConfiguration configuration = new RealmConfiguration.Builder()
                 .name("wallet.db")
                 .schemaVersion(AppConstants.DB_SCHEME_VERSION_CURRENT)
                 .migration(new DBMigration())
-                //.deleteRealmIfMigrationNeeded()
                 .build();
         //Realm.deleteRealm(configuration);
         Realm.setDefaultConfiguration(configuration);
         // TestData.createTestAccountsData();
     }
+
+
 
     private void initLockManager() {
         LockManager<AppPinActivity> lockManager = LockManager.getInstance();

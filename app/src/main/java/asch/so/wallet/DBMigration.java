@@ -57,23 +57,48 @@ public class DBMigration implements RealmMigration {
             oldVersion++;
         }
 
+        if (oldVersion == 3) {
+            schema.create("AschAsset")
+                    .addField("showState",int.class)
+                    .addField("address",String.class)
+                    .addField("aid",String.class,FieldAttribute.PRIMARY_KEY)
+                    .addField("type",int.class)
+                    .addField("name",String.class)
+                    .addField("desc",String.class)
+                    .addField("precision",int.class)
+                    .addField("balance",String.class)
+                    .addField("trueBalance",float.class)
+                    .addField("tid",String.class)
+                    .addField("maximum",String.class)
+                    .addField("quantity",String.class)
+                    .addField("issuerId",String.class)
+                    .addField("timestamp",long.class)
+                    .addField("version",int.class)
+                    .addField("gateway",String.class)
+                    .addField("symbol",String.class)
+                    .addField("revoked",int.class)
+                    .addField("flag",int.class)
+                    .addField("createTimestamp",int.class)
+                    .addField("updateTimestamp",int.class)
+                    .addField("strategy",String.class)
+                    .addField("height",long.class)
+                    .addField("acl",int.class)
+                    .addField("writeoff",int.class)
+                    .addField("allowWriteoff",int.class)
+                    .addField("allowWhitelist",int.class)
+                    .addField("allowBlacklist",int.class)
+                    .addField("maximumShow",String.class)
+                    .addField("quantityShow",String.class)
+                    .addField("xasTotal",String.class);
 
-//        // Migrate to version 2: Add a primary key + object references
-//        // Example:
-//        // public Person extends RealmObject {
-//        //     private String name;
-//        //     @PrimaryKey
-//        //     private int age;
-//        //     private Dog favoriteDog;
-//        //     private RealmList<Dog> dogs;
-//        //     // getters and setters left out for brevity
-//        // }
-//        if (oldVersion == 1) {
-//            schema.get("Person")
-//                    .addField("id", long.class, FieldAttribute.PRIMARY_KEY)
-//                    .addRealmObjectField("favoriteDog", schema.get("Dog"))
-//                    .addRealmListField("dogs", schema.get("Dog"));
-//            oldVersion++;
-//        }
+            schema.get("Account")
+                    .addField("saveSecondPwdState", int.class)
+                    .removeField("enryptSecondSecret")
+                    .removeField("encryptPasswd")
+                    .removeField("hint")
+                    .removeField("passwd");
+
+            oldVersion++;
+        }
     }
 }
