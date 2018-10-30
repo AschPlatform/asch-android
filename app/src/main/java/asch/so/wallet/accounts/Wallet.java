@@ -21,6 +21,7 @@ import java.util.List;
 import asch.so.base.view.Throwable;
 import asch.so.wallet.AppConfig;
 import asch.so.wallet.AppConstants;
+import asch.so.wallet.P;
 import asch.so.wallet.R;
 import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.entity.Account;
@@ -86,7 +87,8 @@ public class Wallet {
     }
 
 
-    private String getEncryptPassword(){
+    public String getEncryptPassword(){
+
         return AppConfig.getWalletPwd();
     }
 

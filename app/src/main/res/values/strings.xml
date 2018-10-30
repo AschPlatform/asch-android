@@ -461,4 +461,5 @@
     <string name="err_issue_asset_over_max">发行数量不能超过最大发行量</string>
     <string name="err_issue_asset_zero">发行数量不能为0</string>
     <string name="issue_asset">发行资产</string>
+    <string name="err_invalid_secret">私钥解析错误。</string>
 </resources>

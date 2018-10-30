@@ -15,6 +15,7 @@ import asch.so.wallet.AppConstants;
 import asch.so.wallet.accounts.AccountsManager;
 import asch.so.wallet.accounts.AssetManager;
 import asch.so.wallet.crypto.AccountSecurity;
+import asch.so.wallet.util.AppUtil;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.Ignore;
@@ -121,6 +122,7 @@ public class Account extends RealmObject{
         if (passwd==null || passwd.length()==0)
             return null;
         String decryptSecret= AccountSecurity.decryptSecret(encryptSecret,passwd);
+
         return decryptSecret;
     }
 

@@ -27,12 +27,6 @@ public class AppConfig {
     public static void init(Context context){
         Hawk.init(context).build();
     }
-    /**
-     *lastAccountAddress get, put, delete
-     *
-     */
-
-
 
     public static String getLastAccountAddress(){
         if (lastAccountAddress==null){

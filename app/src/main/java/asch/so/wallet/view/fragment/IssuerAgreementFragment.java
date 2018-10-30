@@ -15,6 +15,7 @@ import asch.so.base.activity.BaseActivity;
 import asch.so.wallet.P;
 import asch.so.wallet.R;
 import asch.so.wallet.activity.RegisterIssuerActivity;
+import asch.so.wallet.activity.RegisterUiaAssetActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -53,7 +54,9 @@ public class IssuerAgreementFragment extends Fragment  {
                 if (from.equals(getString(R.string.register_issuer))){
                     BaseActivity.start(getActivity(),RegisterIssuerActivity.class,new Bundle());
                 }
-//                else if(from.equals())
+                else if(from.equals(getString(R.string.register_new_asset))){
+                    BaseActivity.start(getActivity(),RegisterUiaAssetActivity.class,new Bundle());
+                }
 
             }
         });

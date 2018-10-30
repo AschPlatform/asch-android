@@ -26,6 +26,7 @@ import asch.so.wallet.activity.AccountsActivity;
 import asch.so.wallet.activity.CheckPasswordActivity;
 import asch.so.wallet.activity.SecondCheckPasswordActivity;
 import asch.so.wallet.activity.SecondSecretActivity;
+import asch.so.wallet.activity.SetWalletPwdActivity;
 import asch.so.wallet.crypto.AccountSecurity;
 import asch.so.wallet.model.entity.Account;
 import asch.so.wallet.util.AppUtil;
@@ -64,7 +65,12 @@ public class CheckPasswordFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+//        if (TextUtils.isEmpty(Wallet.getInstance().getEncryptPassword())){
+//            Bundle bundle = new Bundle();
+//            bundle.putString("title",CheckPasswordFragment.class.getSimpleName());
+//            BaseActivity.start(getActivity(),SetWalletPwdActivity.class,bundle);
+//            return;
+//        }
     }
 
     @Override
@@ -85,6 +91,8 @@ public class CheckPasswordFragment extends BaseFragment {
 
 
     private void checkPwd(){
+
+
 
         if(Wallet.getInstance().checkPassword(pwdEt.getText().toString())){
 

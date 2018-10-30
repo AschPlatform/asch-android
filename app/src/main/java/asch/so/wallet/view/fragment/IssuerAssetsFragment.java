@@ -156,7 +156,9 @@ public class IssuerAssetsFragment extends BaseFragment implements IssuerAssetsCo
 
     @Override
     public void startRegisterAssetsActivity() {
-        BaseActivity.start(getActivity(),RegisterUiaAssetActivity.class,new Bundle());
+        Bundle bundle  = new Bundle();
+        bundle.putString("title",getString(R.string.register_new_asset));
+        BaseActivity.start(getActivity(),IssuerAgreementActivity.class,bundle);
         dismissHUD();
 
     }

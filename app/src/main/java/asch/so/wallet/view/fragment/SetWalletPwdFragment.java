@@ -3,6 +3,7 @@ package asch.so.wallet.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
@@ -124,12 +125,15 @@ public class SetWalletPwdFragment extends BaseFragment implements View.OnClickLi
     public void displayCreateAccountResult(boolean res, String msg, String secret) {
         if (getActivity()==null)
             return;
+        if (!res)
+            AppUtil.toastError(getContext(),msg);
 
-        if (res) {
-            BaseActivity.start(getActivity(), ImportOrCreateAccoutActivity.class, new Bundle());
+        String from = getArguments().getString("title");
+        if (!TextUtils.isEmpty(from)&&from.equals(CheckPasswordFragment.class.getSimpleName())) {
             getActivity().finish();
         }else {
-            AppUtil.toastError(getContext(),msg);
+            BaseActivity.start(getActivity(), ImportOrCreateAccoutActivity.class, new Bundle());
+            getActivity().finish();
         }
     }
 

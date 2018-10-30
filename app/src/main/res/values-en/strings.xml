@@ -456,5 +456,6 @@
     <string name="err_issue_asset_over_max">Issuing amount cannot exceed the maximum amount. </string>
     <string name="err_issue_asset_zero">Issuing amount cannot be 0. </string>
     <string name="issue_asset">Issue Asset</string>
+    <string name="err_invalid_secret">invalid secret</string>
 
 </resources>
