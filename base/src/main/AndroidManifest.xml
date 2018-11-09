@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 
-    package="asch.so.base">
+    package="asch.io.base">
 
     <application android:allowBackup="true"
         android:supportsRtl="true">

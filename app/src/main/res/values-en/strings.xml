@@ -55,7 +55,7 @@
 
     <string name="secret_key_null">Secret key cannot be vacant</string>
     <string name="secret_key_error">The format of secret key is unmatched with BIP39</string>
-    <string name="wallet_name_invalid">Wallet name doesn’t meet the requirement</string>
+    <string name="wallet_name_invalid">Account remark require 6–12 letters, numbers, and underscores</string>
     <string name="account_name">Account Name</string>
     <string name="wallet_name_input">Wallet Name</string>
     <string name="wallet_name_exist">The wallet name exists</string>
@@ -457,5 +457,9 @@
     <string name="err_issue_asset_zero">Issuing amount cannot be 0. </string>
     <string name="issue_asset">Issue Asset</string>
     <string name="err_invalid_secret">invalid secret</string>
+    <string name="err_transfer_self">Not allowed to transfer to yourself</string>
+    <string name="next_time">Later</string>
+    <string name="fee">Fee</string>
+    <string name="in_confirm">Confirming</string>
 
 </resources>

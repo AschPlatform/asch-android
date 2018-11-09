@@ -11,7 +11,7 @@
         android:orientation="vertical"
         android:background="@mipmap/asset_header_bg"
         >
-        <asch.so.widget.toolbar.TitleToolbar
+        <asch.io.widget.toolbar.TitleToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolBarHeight"

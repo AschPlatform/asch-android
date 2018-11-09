@@ -69,8 +69,18 @@
             android:textColor="#333333"
             android:inputType="textPersonName"
             android:maxLines="1" />
+
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/gray_text"
+        android:textSize="12sp"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="@string/account_remark_hint" />
 
     <Button
         android:id="@+id/import_btn"
@@ -92,5 +102,7 @@
         <!-- footer -->
 
     </FrameLayout>
+
+
 </LinearLayout>
 </ScrollView>

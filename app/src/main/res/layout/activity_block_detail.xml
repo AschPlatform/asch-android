@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="asch.so.wallet.activity.BlockDetailActivity">
+    tools:context="asch.io.wallet.activity.BlockDetailActivity">
 
 </android.support.constraint.ConstraintLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="asch.so.wallet">
+    package="asch.io.wallet">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
-        android:name=".WalletApplication"
+        android:name="asch.io.wallet.WalletApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="${APP_NAME}"
@@ -24,10 +24,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name="asch.so.base.activity.BaseActivity" />
-        <activity android:name=".activity.ImportOrCreateAccoutActivity">
+        <activity android:name="asch.io.base.activity.BaseActivity" />
+        <activity android:name="asch.io.wallet.activity.ImportOrCreateAccoutActivity">
         </activity>
-        <activity android:name=".activity.SplashActivity">
+        <activity android:name="asch.io.wallet.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainTabActivity"
+            android:name="asch.io.wallet.activity.MainTabActivity"
             android:theme="@style/AppTheme">
 
             <!-- <intent-filter> -->
@@ -45,104 +45,104 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".activity.IssueAssetActivity"
+        <activity android:name="asch.io.wallet.activity.IssueAssetActivity"
             android:windowSoftInputMode="adjustPan|adjustResize"/>
-        <activity android:name=".activity.RegisterUiaAssetActivity"
+        <activity android:name="asch.io.wallet.activity.RegisterUiaAssetActivity"
             android:windowSoftInputMode="adjustPan|adjustResize"
             />
-        <activity android:name=".activity.RegisterIssuerActivity"
+        <activity android:name="asch.io.wallet.activity.RegisterIssuerActivity"
             android:windowSoftInputMode="adjustPan|adjustResize"/>
-        <activity android:name=".activity.IssuerAgreementActivity"/>
-        <activity android:name=".activity.IssuerAssetsActivity"/>
-        <activity android:name=".activity.EditAccountNicknameActivity"
+        <activity android:name="asch.io.wallet.activity.IssuerAgreementActivity"/>
+        <activity android:name="asch.io.wallet.activity.IssuerAssetsActivity"/>
+        <activity android:name="asch.io.wallet.activity.EditAccountNicknameActivity"
             android:windowSoftInputMode="adjustPan|adjustResize"/>
-        <activity android:name=".activity.AssetGatewayDepositActivity"/>
-        <activity android:name=".activity.AssetWithdrawActivity"
+        <activity android:name="asch.io.wallet.activity.AssetGatewayDepositActivity"/>
+        <activity android:name="asch.io.wallet.activity.AssetWithdrawActivity"
             android:windowSoftInputMode="adjustPan|adjustResize"/>
-        <activity android:name=".activity.AssetManageActivity"/>
-        <activity android:name=".activity.SecondCheckPasswordActivity"/>
-        <activity android:name=".activity.CheckPasswordActivity"></activity>
-        <activity android:name=".activity.SecureSettingActivity"></activity>
-        <activity android:name=".activity.AccountDeleteActivity"/>
-        <activity android:name=".activity.AccountBackUpCheckOrderActivity"/>
-        <activity android:name=".activity.AccountBackUpShowMnemonicActivity"/>
-        <activity android:name=".activity.AccountBackUpAttentionActivity"></activity>
-        <activity android:name=".activity.AccountsActivity" />
+        <activity android:name="asch.io.wallet.activity.AssetManageActivity"/>
+        <activity android:name="asch.io.wallet.activity.SecondCheckPasswordActivity"/>
+        <activity android:name="asch.io.wallet.activity.CheckPasswordActivity"></activity>
+        <activity android:name="asch.io.wallet.activity.SecureSettingActivity"></activity>
+        <activity android:name="asch.io.wallet.activity.AccountDeleteActivity"/>
+        <activity android:name="asch.io.wallet.activity.AccountBackUpCheckOrderActivity"/>
+        <activity android:name="asch.io.wallet.activity.AccountBackUpShowMnemonicActivity"/>
+        <activity android:name="asch.io.wallet.activity.AccountBackUpAttentionActivity"></activity>
+        <activity android:name="asch.io.wallet.activity.AccountsActivity" />
         <activity
-            android:name=".activity.AccountImportActivity"
+            android:name="asch.io.wallet.activity.AccountImportActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".activity.InitWalletActivity"></activity>
+        <activity android:name="asch.io.wallet.activity.InitWalletActivity"></activity>
         <activity
-            android:name=".activity.SetWalletPwdActivity"
+            android:name="asch.io.wallet.activity.SetWalletPwdActivity"
             android:windowSoftInputMode="adjustPan|adjustResize"
             />
         <activity
-            android:name=".activity.AccountCreateActivity"
+            android:name="asch.io.wallet.activity.AccountCreateActivity"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity android:name=".activity.QRCodeScanActivity" />
+        <activity android:name="asch.io.wallet.activity.QRCodeScanActivity" />
         <activity
-            android:name=".activity.AssetTransactionsActivity"
+            android:name="asch.io.wallet.activity.AssetTransactionsActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.AssetTransferActivity"
+            android:name="asch.io.wallet.activity.AssetTransferActivity"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".activity.AssetReceiveActivity"
+            android:name="asch.io.wallet.activity.AssetReceiveActivity"
             android:windowSoftInputMode="adjustPan|adjustResize" />
-        <activity android:name=".activity.DappActivity" />
-        <activity android:name=".activity.WebActivity" />
-        <activity android:name=".activity.TransactionsActivity" />
-        <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.PincodeSettingActivity" />
-        <activity android:name=".activity.AppSettingActivity" />
-        <activity android:name=".activity.NodeURLSettingActivity" />
-        <activity android:name=".activity.BackupActivity" />
-        <activity android:name=".activity.AccountDetailActivity" />
-        <activity android:name=".activity.LanguagesActivity" />
-        <activity android:name=".activity.SecretBackupActivity" />
-        <activity android:name=".activity.AppPinActivity" />
-        <activity android:name=".activity.TodoActivity" />
-        <activity android:name=".activity.TermServiceActivity" />
-        <activity android:name=".activity.TransactionDetailActivity" />
-        <activity android:name=".activity.BlockInfoActivity" />
-        <activity android:name=".activity.PeersActivity" />
+        <activity android:name="asch.io.wallet.activity.DappActivity" />
+        <activity android:name="asch.io.wallet.activity.WebActivity" />
+        <activity android:name="asch.io.wallet.activity.TransactionsActivity" />
+        <activity android:name="asch.io.wallet.activity.AboutActivity" />
+        <activity android:name="asch.io.wallet.activity.PincodeSettingActivity" />
+        <activity android:name="asch.io.wallet.activity.AppSettingActivity" />
+        <activity android:name="asch.io.wallet.activity.NodeURLSettingActivity" />
+        <activity android:name="asch.io.wallet.activity.BackupActivity" />
+        <activity android:name="asch.io.wallet.activity.AccountDetailActivity" />
+        <activity android:name="asch.io.wallet.activity.LanguagesActivity" />
+        <activity android:name="asch.io.wallet.activity.SecretBackupActivity" />
+        <activity android:name="asch.io.wallet.activity.AppPinActivity" />
+        <activity android:name="asch.io.wallet.activity.TodoActivity" />
+        <activity android:name="asch.io.wallet.activity.TermServiceActivity" />
+        <activity android:name="asch.io.wallet.activity.TransactionDetailActivity" />
+        <activity android:name="asch.io.wallet.activity.BlockInfoActivity" />
+        <activity android:name="asch.io.wallet.activity.PeersActivity" />
         <activity
-            android:name=".activity.VoteActivity"
+            android:name="asch.io.wallet.activity.VoteActivity"
             android:label="@string/title_activity_vote"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.AccountInfoActivity"
+            android:name="asch.io.wallet.activity.AccountInfoActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.LockCoinsActivity"
+            android:name="asch.io.wallet.activity.LockCoinsActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.BaseCordovaActivity"
+            android:name="asch.io.wallet.activity.BaseCordovaActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.DeviceDefault.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".activity.DAppCenterActivity"
+            android:name="asch.io.wallet.activity.DAppCenterActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.DAppDetailActivity"
+            android:name="asch.io.wallet.activity.DAppDetailActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.DAppBalanceActivity"
+            android:name="asch.io.wallet.activity.DAppBalanceActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activity.DAppDepositActivity"
+            android:name="asch.io.wallet.activity.DAppDepositActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".activity.SecondSecretActivity"
+            android:name="asch.io.wallet.activity.SecondSecretActivity"
             android:theme="@style/AppTheme" />
-        <activity android:name=".activity.BlockBrowseActivity"
+        <activity android:name="asch.io.wallet.activity.BlockBrowseActivity"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustPan|adjustResize"
             />
-        <activity android:name=".activity.BlockDetailActivity"></activity>
+        <activity android:name="asch.io.wallet.activity.BlockDetailActivity"></activity>
     </application>
 
 </manifest>

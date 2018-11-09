@@ -13,10 +13,10 @@
         <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
     </feature>
     <feature name="DAppPlugin">
-        <param name="android-package" value="asch.so.wallet.cordova.DAppPlugin"/>
+        <param name="android-package" value="asch.io.wallet.cordova.DAppPlugin"/>
     </feature>
     <feature name="CCTimePlugin">
-        <param name="android-package" value="asch.so.wallet.cordova.CCTimePlugin"/>
+        <param name="android-package" value="asch.io.wallet.cordova.CCTimePlugin"/>
     </feature>
     <name>HelloCordova</name>
     <description>

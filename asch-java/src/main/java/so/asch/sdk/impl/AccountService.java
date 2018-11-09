@@ -173,7 +173,7 @@ public class AccountService extends so.asch.sdk.impl.AschRESTService implements 
     @Override
     public AschResult transfer(String targetAddress, long amount, String message, String secret, String secondSecret){
         try {
-            Argument.require(Validation.isValidAddress(targetAddress), "invalid target address");
+            Argument.require(Validation.isValidNicknameOrAddress(targetAddress), "invalid target address");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
            // Argument.optional(secondSecret, Validation::isValidSecondSecret, "invalid second secret");
             Argument.optional(secondSecret,Validation.isValidSecondSecret(secondSecret),"invalid second secret");

@@ -217,7 +217,7 @@ public class UIAService extends AschRESTService implements UIA {
     public AschResult transfer(String currency, String recipientId, long amount, String message, String secret, String secondSecret) {
         try {
             Argument.notNullOrEmpty(currency, "invalid currency");
-            Argument.require(Validation.isValidAddress(recipientId), "invalid recipientId");
+            Argument.require(Validation.isValidNicknameOrAddress(recipientId), "invalid recipientId");
             Argument.require(Validation.isValidSecret(secret), "invalid secret");
             Argument.optional(secondSecret, Validation.isValidSecondSecret(secondSecret), "invalid second secret");
             Argument.require(Validation.isValidRemark(message),"invalid remark length");

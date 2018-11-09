@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="asch.so.wallet.view.fragment.AssetBalanceFragment">
+    tools:context="asch.io.wallet.view.fragment.AssetBalanceFragment">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -84,7 +84,7 @@
                     android:layout_height="30dp"></LinearLayout>
 
             </LinearLayout>
-            <asch.so.widget.toolbar.TitleToolbar
+            <asch.io.widget.toolbar.TitleToolbar
                 android:id="@+id/toolbar_in"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolBarHeight"
@@ -106,7 +106,7 @@
                 app:titleTextAppearance="@style/Title_Appearance"
                 app:titleTextColor="@android:color/white"
                 app:title_gravity="center" >
-            </asch.so.widget.toolbar.TitleToolbar>
+            </asch.io.widget.toolbar.TitleToolbar>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -141,7 +141,7 @@
         <!--</ezy.ui.layout.LoadingLayout>-->
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>
-    <asch.so.widget.toolbar.TitleToolbar
+    <asch.io.widget.toolbar.TitleToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolBarHeight"
@@ -201,6 +201,6 @@
             android:layout_gravity="center_vertical|right"
             android:src="@mipmap/more_menu_icon"
             />
-    </asch.so.widget.toolbar.TitleToolbar>
+    </asch.io.widget.toolbar.TitleToolbar>
 </FrameLayout>
 

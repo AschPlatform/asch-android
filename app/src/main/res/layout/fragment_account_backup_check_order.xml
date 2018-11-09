@@ -36,7 +36,7 @@
         android:layout_marginBottom="20dp"
         />
 
-    <asch.so.wallet.view.widget.TagContainerLayout
+    <asch.io.wallet.view.widget.TagContainerLayout
         android:id="@+id/tag_group"
         android:layout_below="@+id/backup_order_mnemonic"
         android:layout_width="match_parent"

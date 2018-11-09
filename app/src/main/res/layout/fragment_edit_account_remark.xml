@@ -36,10 +36,11 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
             android:background="@null"
-            android:text=""
+            android:text="@string/not_set"
             android:textSize="15sp"
-            android:textColor="#333333"
+            android:textColor="@color/gray_text"
             android:inputType="textVisiblePassword"
+
             android:maxLines="1" />
 
     </RelativeLayout>

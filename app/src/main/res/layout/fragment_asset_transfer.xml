@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/transfer_scroll"
     android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -126,7 +127,7 @@
                 android:textColor="#333333"
                 android:cursorVisible="true"
                 android:focusable="true"
-                android:inputType="text"
+                android:inputType="textVisiblePassword"
                 android:maxLines="1" />
             <ImageView
                 android:id="@+id/transfer_scan"
@@ -182,7 +183,7 @@
         <LinearLayout
             android:background="@android:color/white"
             android:layout_width="match_parent"
-            android:layout_height="57dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center_vertical"
             >
@@ -195,15 +196,16 @@
                     android:text="@string/remark"/>
 
                 <EditText
+                    android:minHeight="57dp"
                     android:id="@+id/remark_et"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="@string/please_enter_remark"
                     android:textSize="12sp"
                     android:textColor="#333333"
-                    android:maxLines="1" />
+                    />
 
             </LinearLayout>
 
@@ -274,7 +276,7 @@
             >
             <TextView
                 style="@style/TextLable_tag"
-                android:text="@string/lock_fee"/>
+                android:text="@string/fee"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -291,7 +293,7 @@
 
         <Button
             android:id="@+id/transfer_btn"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             style="@style/PrimaryButton.Style"
@@ -304,7 +306,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             >
 
             <!-- footer -->

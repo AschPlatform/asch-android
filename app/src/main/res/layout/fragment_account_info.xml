@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="asch.so.wallet.view.fragment.AccountInfoFragment">
+    tools:context="asch.io.wallet.view.fragment.AccountInfoFragment">
             <LinearLayout
                 android:layout_marginTop="0dp"
                 android:background="@android:color/white"

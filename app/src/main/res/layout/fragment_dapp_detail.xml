@@ -71,7 +71,7 @@
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-                <asch.so.widget.statebutton.StateButton
+                <asch.io.widget.statebutton.StateButton
                     android:id="@+id/deposit_btn"
                     android:layout_marginTop="2dp"
                     android:layout_width="68dp"
@@ -95,7 +95,7 @@
                     <!--android:textSize="12sp"-->
                     <!--app:progress_btn_ball_style="STYLE_BALL_PULSE"-->
                     <!--app:progress_btn_border_width="2dp" />-->
-                <asch.so.widget.statebutton.StateButton
+                <asch.io.widget.statebutton.StateButton
                     android:id="@+id/balance_btn"
                     android:layout_marginTop="2dp"
                     android:layout_width="68dp"
@@ -372,7 +372,7 @@
                     android:background="@color/divider_color"
                     />
             </LinearLayout>
-            <asch.so.widget.downloadbutton.DownloadProgressButton
+            <asch.io.widget.downloadbutton.DownloadProgressButton
                 android:id="@+id/download_btn"
                 android:layout_marginTop="20dp"
                 android:layout_marginLeft="40dp"

@@ -47,13 +47,13 @@
             android:background="@color/divider_color" />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
-            android:name="asch.so.wallet.view.fragment.VoteConfirmationFragment"
+            android:name="asch.io.wallet.view.fragment.VoteConfirmationFragment"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             app:layoutManager="LinearLayoutManager"
-            tools:context="asch.so.wallet.view.fragment.VoteConfirmationFragment"
+            tools:context="asch.io.wallet.view.fragment.VoteConfirmationFragment"
             tools:listitem="@layout/item_voteconfirmation" />
 
         <FrameLayout
