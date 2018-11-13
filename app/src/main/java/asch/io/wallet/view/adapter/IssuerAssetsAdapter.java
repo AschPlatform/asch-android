@@ -46,7 +46,8 @@ public class IssuerAssetsAdapter extends BaseQuickAdapter<IssuerAssets, IssuerAs
             amount = AppUtil.getStringFromBigAmount(amount,p);
             viewHolder.max_issue_tv.setText(max);
             viewHolder.amount_tv.setText(amount);
-            viewHolder.issuer_time_tv.setText(AppUtil.getDateTimeFromTimestamp(context, assets.dateFromAschTimestamp().getTime()));
+            CharSequence time=  AppUtil.getDateTimeFromTimestamp(context, assets.dateFromAschTimestamp().getTime());
+            viewHolder.issuer_time_tv.setText(time);
         }
 
     }

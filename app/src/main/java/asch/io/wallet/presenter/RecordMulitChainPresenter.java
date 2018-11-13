@@ -123,7 +123,6 @@ public class RecordMulitChainPresenter implements RecordMulitChainContract.Prese
         subscriptions.add(subscription);
     }
 
-    //TODO 分页的问题，接口没有分页 2018年09月25日
     private void loadWithdraw(){
         String address = getAccount().getAddress();
         Subscription subscription = Observable.create((Observable.OnSubscribe<List<Withdraw>>) subscriber -> {

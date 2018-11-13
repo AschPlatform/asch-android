@@ -104,7 +104,7 @@ public class AssetWithdrawPresenter implements AssetWithdrawContract.Presenter {
                         @Override
                         public void onNext(AschResult aschResult) {
                             LogUtils.iTag(TAG, "+++++++"+aschResult.getRawJson());
-                            view.displayTransferResult(true,context.getString(R.string.transfer_success));
+                            view.displayTransferResult(true,context.getString(R.string.withdraw_success));
                         }
                     });
          subscriptions.add(subscription);

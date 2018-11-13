@@ -163,25 +163,37 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         targetEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int y =mainSv.getScrollY();
-                if (y<300)
-                    mainSv.smoothScrollTo(0,300);
-            }
+                if (mainSv==null){
+                    return;
+                }
+                    int y =mainSv.getScrollY();
+                    if (y<300)
+                        mainSv.smoothScrollTo(0,300);
+                }
+
+
         });
         amountEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus){
-                    int y =mainSv.getScrollY();
-                    if (y<400)
-                        mainSv.smoothScrollTo(0,400);
+                if (mainSv==null) {
+                    return;
+                }
+                    if (hasFocus) {
+                        int y = mainSv.getScrollY();
+                        if (y < 400)
+                            mainSv.smoothScrollTo(0, 400);
+                    }
                 }
 
-            }
+
         });
         remarkEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                if (mainSv==null){
+                    return;
+                }
                 if (hasFocus){
                     int y =mainSv.getScrollY();
                     if (y<500)

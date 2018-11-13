@@ -76,7 +76,6 @@ public class AssetWithdrawActivity extends TitleToolbarActivity implements EasyP
         if (resultCode== Activity.RESULT_OK) {
             String qrDecodeString = data.getStringExtra("QRDecodeString");
 
-//            AppUtil.toastInfo(this,qrDecodeString);
             if (fragment != null) {
                 fragment.setTargetAddress(qrDecodeString);
             }

@@ -140,7 +140,11 @@ public class AppUtil {
                 |DateUtils.FORMAT_ABBREV_MONTH
                 |DateUtils.FORMAT_SHOW_TIME
                 ;
-        return DateUtils.formatDateTime(context,millis,flags);
+        try {
+            return DateUtils.formatDateTime(context,millis,flags);
+        }catch (Exception e){
+            return "";
+        }
 
     }
 

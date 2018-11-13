@@ -64,6 +64,8 @@ public class GatewayService extends AschRESTService implements Gateway {
     public AschResult withdraw(String address,String gateway,String currency,
                                Long amount,String fee,String message,String secret,String secondSecret)  {
         try {
+            Argument.require(Validation.isValidBCHAddress(address), "invalid address");
+            Argument.notNull(currency, "invalid currency");
             TransactionInfo info = new TransactionBuilder().buildWithdrawTransaction(address,gateway,
                     currency,amount,fee,message,secret,secondSecret);
 

@@ -88,7 +88,7 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
     private HashMap<String, AschAsset> assetsMap;
     private List<String> nameList;
     private AschAsset selectedAsset;
-    private String currency=null;
+    private String currency;
     private AssetWithdrawActivity.Action action;
     long amount;
     private int max = 10000;
@@ -117,9 +117,7 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
         return AccountsManager.getInstance().getCurrentAccount();
     }
 
-    private AschAsset getBalance(){
-        return AssetManager.getInstance().queryAschAssetByName(currency);
-    }
+
 
     private boolean hasSecondPasswd(){
         return getAccount().hasSecondSecret();
@@ -130,17 +128,17 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
         View rootView=inflater.inflate(R.layout.fragment_asset_withdraw,container,false);
         unbinder = ButterKnife.bind(this, rootView);
         if (qrCodeURL!=null){
-            targetEt.setText(qrCodeURL.getAddress());
-            amountEt.setText(qrCodeURL.getAmount());
+//            targetEt.setText(qrCodeURL.getAddress());
+//            amountEt.setText(qrCodeURL.getAmount());
             String assetName = qrCodeURL.getCurrency();
-            this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
+            this.currency= TextUtils.isEmpty(assetName)? AschConst.COIN_NAME_BCH:assetName;
         }
 
 
-        this.balanceRemain=getBalance();
+        this.balanceRemain=AssetManager.getInstance().queryAschAssetByName(currency);
 
         balanceTv.setText(this.balanceRemain==null?"":this.balanceRemain.getBalanceString());
-        feeTv.setText(minFee + " " + getBalance().getName());
+        feeTv.setText(minFee + " " + balanceRemain.getName());
         feeSeekBar.setMax(max);
         feeSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -150,7 +148,7 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
                 }
                 fee = Double.valueOf(minFee) * progress;
                 String v = String.format("%.5f", fee);
-                feeTv.setText(v + " " + getBalance().getName());
+                feeTv.setText(v + " " + balanceRemain.getName());
             }
 
             @Override
@@ -163,8 +161,7 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
 
             }
         });
-        coinNameTv.setText(getBalance().getName());
-//        targetEt.setKeyListener(DigitsKeyListener.getInstance(AppConstants.DIGITS));
+        coinNameTv.setText(balanceRemain.getName());
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -179,18 +176,26 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
         targetEt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int y =mainSv.getScrollY();
-                if (y<200)
-                    mainSv.smoothScrollTo(0,200);
+                if (mainSv==null){
+                    return;
+                }
+                int y = mainSv.getScrollY();
+                if (y < 200)
+                    mainSv.smoothScrollTo(0, 200);
+
             }
         });
         amountEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                int y =mainSv.getScrollY();
-                if (y<300)
-                    mainSv.smoothScrollTo(0,300);
-            }
+                if (mainSv==null){
+                    return;
+                }
+                    int y =mainSv.getScrollY();
+                    if (y<300)
+                        mainSv.smoothScrollTo(0,300);
+                }
+
         });
         transferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,7 +206,7 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
                 String message=memoEt.getText().toString();
                 boolean hasSecondPwd=hasSecondPasswd();
 
-                if (currency==null) {
+                if (TextUtils.isEmpty(balanceRemain.getName())) {
                     AppUtil.toastError(getContext(),getString(R.string.err_get_asset));
                     return;
                 }
@@ -219,8 +224,10 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
                     return;
                 }
 
+
+
                 //余额校验
-                int precision=getBalance().getPrecision();
+                int precision=balanceRemain.getPrecision();
                 amount = strToLong(amountStr,precision);
                 long remainBalance = balanceRemain!=null?balanceRemain.getLongBalance():-1;
                 if (remainBalance>=0 && remainBalance<amount-fee){
@@ -232,9 +239,13 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
 
                 longFee = strToLong(String.valueOf(fee),precision);
 
+                if (longFee>amount){
+                    AppUtil.toastError(getActivity(),getString(R.string.amount_bigger_fee));
+                    return;
+                }
+
                 Intent intent = new Intent(getActivity(), CheckPasswordActivity.class);
                 Bundle bundle = new Bundle();
-                String title = currency+getString(R.string.transfer);
                 String clazz = AssetWithdrawFragment.class.getSimpleName();
                 bundle.putString("title",clazz);
                 bundle.putString("currency",currency);
@@ -311,7 +322,7 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
             {
                 Intent intent =new Intent(getActivity(), QRCodeScanActivity.class);
                 Bundle bundle=new Bundle();
-                bundle.putInt("action", QRCodeScanActivity.Action.ScanAddressToPaste.value);
+                bundle.putInt("action", QRCodeScanActivity.Action.ScanBCHAddressToPaste.value);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, 11);
             }
@@ -338,7 +349,7 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
     @Override
     public void displayTransferResult(boolean res, String msg) {
         AppUtil.toastSuccess(getContext(),msg);
-            scheduleHUDDismiss();
+        scheduleHUDDismiss();
     }
 
     @Override
@@ -380,15 +391,7 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
 
     private void parseQRUri(String uri){
         try {
-            if (Validation.isValidAddress(uri)){
-                qrCodeURL=new QRCodeURL();
-                qrCodeURL.setAmount("");
-                qrCodeURL.setCurrency(AschConst.CORE_COIN_NAME);
-                qrCodeURL.setAddress(uri);
-            }else {
-                qrCodeURL=QRCodeURL.decodeQRCodeURL(uri);
-            }
-
+            qrCodeURL=QRCodeURL.decodeQRCodeURL(uri);
         }catch (Exception e){
             qrCodeURL=null;
             e.printStackTrace();
@@ -397,17 +400,16 @@ public class AssetWithdrawFragment extends BaseFragment implements AssetWithdraw
 
     public void setTargetAddress(String uri){
         parseQRUri(uri);
-        if (qrCodeURL!=null){
-            targetEt.setText(qrCodeURL.getAddress());
-            amountEt.setText(qrCodeURL.getAmount());
-            String assetName = qrCodeURL.getCurrency();
 
-            //this.currency= TextUtils.isEmpty(assetName)? AschConst.CORE_COIN_NAME:assetName;
-            this.currency= assetName;
-
-        }else {
+        if (qrCodeURL==null){
             AppUtil.toastError(getContext(),getString(R.string.receipt_rq_error));
         }
+
+        if (qrCodeURL.getAddress()!=null)
+            targetEt.setText(qrCodeURL.getAddress());
+
+        if (qrCodeURL.getAmount()!=null)
+            amountEt.setText(qrCodeURL.getAmount());
 
     }
 }

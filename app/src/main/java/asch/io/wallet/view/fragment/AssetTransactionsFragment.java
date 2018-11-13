@@ -269,15 +269,13 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             String json =bundle.getString("balance");
             AschAsset balance=JSON.parseObject(json,AschAsset.class);
             QRCodeURL qrCodeURL=new QRCodeURL();
-            if (balance!=null){
-                qrCodeURL.setAddress("");
-                qrCodeURL.setCurrency(balance.getName());
-                qrCodeURL.setAmount("");
-            }else {
-                qrCodeURL.setAddress("");
-                qrCodeURL.setCurrency(AschConst.CORE_COIN_NAME);
-                qrCodeURL.setAmount("");
+            if (balance==null){
+                AppUtil.toastError(getContext(),getString(R.string.err_get_asset));
+                return;
             }
+//            qrCodeURL.setAddress("");
+            qrCodeURL.setCurrency(balance.getName());
+//            qrCodeURL.setAmount("");
             bundle.putString("qrcode_uri",qrCodeURL.encodeQRCodeURL());
             bundle.putInt("action", AssetWithdrawActivity.Action.AssetBalanceToTransfer.getValue());
             Intent intent =new Intent(getActivity(), AssetWithdrawActivity.class);

@@ -461,5 +461,6 @@
     <string name="next_time">Later</string>
     <string name="fee">Fee</string>
     <string name="in_confirm">Confirming</string>
+    <string name="withdraw_success">Withdraw Success</string>
 
 </resources>

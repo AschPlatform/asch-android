@@ -54,7 +54,7 @@ public class IssuerAssetsFragment extends BaseFragment implements IssuerAssetsCo
     KProgressHUD hud;
     private Unbinder unbinder;
     IssuerAssetsContract.Presenter presenter;
-    private IssuerAssetsAdapter adapter = new IssuerAssetsAdapter(getActivity());
+    private IssuerAssetsAdapter adapter;
 
     public static IssuerAssetsFragment newInstance() {
 
@@ -69,6 +69,7 @@ public class IssuerAssetsFragment extends BaseFragment implements IssuerAssetsCo
         View rootView=inflater.inflate(R.layout.fragment_issuer_assets,container,false);
         unbinder = ButterKnife.bind(this,rootView);
         presenter = new IssuerAssetsPresenter(getActivity(),this);
+        adapter =  new IssuerAssetsAdapter(getActivity());
         registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

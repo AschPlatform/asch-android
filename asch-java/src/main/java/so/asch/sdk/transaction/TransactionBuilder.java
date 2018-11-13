@@ -89,7 +89,8 @@ public class TransactionBuilder {
                 .setTransactionType(TransactionType.gateway_withdrawal)
                 .setArgs(new String[]{address,gateway,currency,strAmount,fee})
                 .setMessage(message)
-                .calcFee();
+                .calcFee()
+                ;
 
         return signatureAndGenerateTransactionId(transaction,keyPair.getPrivate(),secondSecret);
 

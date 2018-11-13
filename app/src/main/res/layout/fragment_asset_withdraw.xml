@@ -113,7 +113,7 @@
                 android:layout_height="50dp"
                 android:background="@null"
                 android:hint="@string/address_input_hint"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 android:textColor="#333333"
                 android:cursorVisible="true"
                 android:focusable="true"

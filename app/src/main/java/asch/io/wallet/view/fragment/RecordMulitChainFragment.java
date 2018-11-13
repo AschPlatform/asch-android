@@ -124,7 +124,9 @@ public class RecordMulitChainFragment extends BaseFragment implements RecordMuli
 
     @Override
     public void displayMorePageRecords(List<?> records) {
-        adapter.addData(records);
+        //提现记录目前没有分页
+        if (recordType!=RecordMulitChainPresenter.RecordType.withdraw)
+            adapter.addData(records);
         refreshLayout.finishLoadmore(500);
     }
 
