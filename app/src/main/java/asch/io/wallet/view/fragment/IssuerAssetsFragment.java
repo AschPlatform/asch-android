@@ -17,6 +17,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import asch.io.base.activity.BaseActivity;
@@ -87,9 +88,15 @@ public class IssuerAssetsFragment extends BaseFragment implements IssuerAssetsCo
                 IssuerAssets assets = (IssuerAssets) adapter.getItem(position);
                 String name = assets.getName();
                 String max = AppUtil.getStringFromBigAmount(assets.getMaximum(),assets.getPrecision());
+                String stock = AppUtil.getStringFromBigAmount(assets.getQuantity(),assets.getPrecision());
+
+                BigDecimal bdMax = new BigDecimal(max);
+                BigDecimal bdStock = new BigDecimal(stock);
+                BigDecimal bdRemain = bdMax.subtract(bdStock);
+
                 Bundle bundle = new Bundle();
                 bundle.putString("name",name);
-                bundle.putString("max",max);
+                bundle.putString("max",bdRemain.toString());
                 bundle.putInt("precision",assets.getPrecision());
                 BaseActivity.start(getActivity(),IssueAssetActivity.class,bundle);
             }

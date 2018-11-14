@@ -1,6 +1,7 @@
 package asch.io.wallet.presenter;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -82,6 +83,7 @@ public class RecordMulitChainPresenter implements RecordMulitChainContract.Prese
     }
 
 
+    //充值记录
     private void loadDeposit(){
         String address = getAccount().getAddress();
         Subscription subscription = Observable.create((Observable.OnSubscribe<List<Deposit>>) subscriber -> {
@@ -93,11 +95,15 @@ public class RecordMulitChainPresenter implements RecordMulitChainContract.Prese
             result = AschSDK.Gateway.getDepositRecord(params);
 
             if (result.isSuccessful()) {
-                JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
-                JSONArray depositsJsonArray = resultJSONObj.getJSONArray("deposits");
-                List<Deposit> deposits = JSON.parseArray(depositsJsonArray.toJSONString(), Deposit.class);
-                subscriber.onNext(deposits);
-                subscriber.onCompleted();
+                if (!result.toString().contains("deposits")){
+                    subscriber.onNext(new ArrayList<Deposit>());
+                }else {
+                    JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
+                    JSONArray depositsJsonArray = resultJSONObj.getJSONArray("deposits");
+                    List<Deposit> deposits = JSON.parseArray(depositsJsonArray.toJSONString(), Deposit.class);
+                    subscriber.onNext(deposits);
+                    subscriber.onCompleted();
+                }
             } else {
                 subscriber.onError(result.getException());
             }
@@ -208,8 +214,13 @@ public class RecordMulitChainPresenter implements RecordMulitChainContract.Prese
                 JSONObject resultJSONObj = JSONObject.parseObject(result.getRawJson());
                 JSONArray transactionsJsonArray = resultJSONObj.getJSONArray("transfers");
                 List<Transaction> transactions = JSON.parseArray(transactionsJsonArray.toJSONString(), Transaction.class);
+
                 ArrayList<Transaction> filteredTransactions = new ArrayList<Transaction>();
-                for (Transaction transaction : transactions) {
+                for (int i=0;i<transactions.size();i++) {
+                    Transaction transaction  = transactions.get(i);
+                    String message = transactionsJsonArray.getJSONObject(i).getJSONObject("transaction").getString("message");
+                    if (!TextUtils.isEmpty(message))
+                        transaction.setMessage(message);
                     transaction.setType(transaction.getTransaction().getType());
                     if (transaction.getType() == TransactionType.basic_transfer.getCode()) {
                         transaction.setAssetInfo(new Transaction.AssetInfo());

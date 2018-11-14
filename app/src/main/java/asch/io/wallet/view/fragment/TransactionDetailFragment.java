@@ -15,11 +15,13 @@ import com.blankj.utilcode.util.TimeUtils;
 import asch.io.base.fragment.BaseFragment;
 import asch.io.wallet.AppConstants;
 import asch.io.wallet.R;
+import asch.io.wallet.accounts.AccountsManager;
 import asch.io.wallet.model.entity.Transaction;
 import asch.io.wallet.util.AppUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import so.asch.sdk.TransactionType;
 
 /**
  * Created by kimziv on 2017/10/27.
@@ -27,6 +29,16 @@ import butterknife.Unbinder;
 
 public class TransactionDetailFragment extends BaseFragment implements View.OnClickListener{
 
+    @BindView(R.id.transaction_detail_balance_tv)
+    TextView amountTv;
+    @BindView(R.id.transaction_detail_type_tv)
+    TextView typeTv;
+    @BindView(R.id.transaction_detail_iv)
+    ImageView typeIv;
+
+
+    @BindView(R.id.tx_height_tv)
+    TextView txHeightTv;
     @BindView(R.id.tx_id_tv)
     TextView txIDTv;
     @BindView(R.id.tx_type_tv)
@@ -49,12 +61,6 @@ public class TransactionDetailFragment extends BaseFragment implements View.OnCl
     LinearLayout memoLl;
     @BindView(R.id.memo_tv)
     TextView memoTv;
-    @BindView(R.id.icon_transaction)
-    ImageView iconIv;
-    @BindView(R.id.ammount_tv)
-    TextView amountTv;
-    @BindView(R.id.asset_tv)
-    TextView assetTv;
     Unbinder unbinder;
 
 
@@ -84,23 +90,21 @@ public class TransactionDetailFragment extends BaseFragment implements View.OnCl
         txSenderTv.setText(transaction.getSenderId());
         txReceiveTv.setText(transaction.getRecipientId());
         txAmountTv.setText(amountFroTransaction(transaction));
-        if (TextUtils.isEmpty(transaction.getMessage())){
-            memoLl.setVisibility(View.GONE);
-        }else {
-            memoLl.setVisibility(View.VISIBLE);
-            memoTv.setText(transaction.getMessage());
-        }
+
+        memoLl.setVisibility(View.VISIBLE);
+        memoTv.setText(transaction.getMessage());
+
         if (transaction.getTransaction()!=null){
             txFeeTv.setText(AppUtil.decimalFormat(AppUtil.decimalFromBigint(transaction.getTransaction().getFee(), AppConstants.PRECISION))+" XAS");
         }else {
             txFeeTv.setText(0);
         }
-        iconIv.setImageResource(AppUtil.getIconIdByName(transaction.getCurrency()));
         amountTv.setText(amountFroTransaction(transaction));
-        assetTv.setText("");
-            // txConfirmationsTv.setText(String.valueOf(transaction.getConfirmations()));
-       // txBlockIdTv.setText(transaction.getBlockId());
 
+        boolean isSender=AccountsManager.getInstance().getCurrentAccount().getAddress().equals(transaction.getSenderId());
+        typeIv.setImageResource(isSender?R.mipmap.icon_transfer_accounts:R.mipmap.icon_receivables);
+        typeTv.setText(isSender?getString(R.string.transfer):getString(R.string.receipt));
+        txHeightTv.setText(String.valueOf(transaction.getHeight()));
         txSenderTv.setOnClickListener(this);
         txReceiveTv.setOnClickListener(this);
 

@@ -93,7 +93,7 @@ project.ext {
             minSdkVersion    : 16,
             targetSdkVersion : 26,
             versionCode      : 17,
-            versionName      : "1.4.0"
+            versionName      : "1.4.5"
     ]
 
     aschsdk = [

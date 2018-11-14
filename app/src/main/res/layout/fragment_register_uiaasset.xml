@@ -30,6 +30,19 @@
                 android:background="@color/white"
                 android:paddingLeft="20dp" />
 
+            <TextView
+                android:id="@+id/issuer_name_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="0/6"
+                android:textSize="12sp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+
+                />
+
         </RelativeLayout>
         <View
             android:layout_width="match_parent"
@@ -99,6 +112,8 @@
                 android:gravity="left|top"
                 android:hint="@string/description"
                 android:textSize="12sp"
+                android:scrollbars="vertical"
+                android:overScrollMode="ifContentScrolls"
                 android:background="@color/white"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"/>
@@ -114,7 +129,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="10dp"
-                android:visibility="invisible"
                 />
 
         </RelativeLayout>

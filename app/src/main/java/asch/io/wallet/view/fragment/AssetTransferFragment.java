@@ -208,7 +208,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
                 String targetAddress= targetEt.getText().toString().trim();
                 String amountStr=amountEt.getText().toString().trim();
-                String remark=remarkEt.getText().toString();
+                remark=remarkEt.getText().toString();
                 boolean hasSecondPwd=hasSecondPasswd();
 
                 if (currency==null) {

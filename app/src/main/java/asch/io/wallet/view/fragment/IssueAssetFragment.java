@@ -36,6 +36,7 @@ public class IssueAssetFragment extends BaseFragment implements IssueAssetContra
     String amount;
     int precision;
 
+
     @BindView(R.id.issuer_name_et)
     EditText issueAssetNum;
     @BindView(R.id.max_issue_tv)

@@ -394,7 +394,7 @@
     <string name="check_order_success">Backup Successfully！</string>
     <string name="check_order_success_content">Please keep your mnemonics in a safe place</string>
     <string name="account_del">Please enter mnemonics, separated by space</string>
-    <string name="receive_info">* Please send XAS to the above address. It can be used to receive XAS, ASCH based assets, and ASCH cross-chain assets.</string>
+    <string name="receive_info">* Please send %s to the above address. It can be used to receive XAS, ASCH based assets, and ASCH cross-chain assets.</string>
     <string name="receive_multi_chain">* Please top up %s to the above address，It only supports %s，If you need to top up other tokens, please switch to that token and get its receive address.</string>
     <string name="asch">Asch</string>
     <string name="transaction">Transaction</string>
@@ -462,5 +462,7 @@
     <string name="fee">Fee</string>
     <string name="in_confirm">Confirming</string>
     <string name="withdraw_success">Withdraw Success</string>
+    <string name="enable">Enable</string>
+    <string name="assets_list">Assets List</string>
 
 </resources>

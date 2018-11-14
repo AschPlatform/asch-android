@@ -13,7 +13,7 @@ public class IssuerAssetsActivity extends TitleToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(getString(R.string.asset_issue));
+        setTitle(getString(R.string.assets_list));
         IssuerAssetsFragment fragment=IssuerAssetsFragment.newInstance();
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(), fragment, R.id.fragment_container);
     }

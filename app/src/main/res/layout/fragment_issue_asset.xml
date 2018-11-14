@@ -43,7 +43,7 @@
                 android:textSize="10sp"
 
                 android:textColor="@color/gray_text"
-                android:text="@string/max_issue_amount_colon"/>
+                android:text="@string/remain_issue_amount_colon"/>
             <TextView
                 android:id="@+id/max_issue_tv"
                 android:layout_width="wrap_content"

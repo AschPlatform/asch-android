@@ -66,8 +66,7 @@ import so.asch.sdk.impl.AschConst;
 public class Transaction {
     @JSONField(name="tid")
     private String id; //交易ID
-    @JSONField(name="t_height")
-    private String height;//区块高度
+    private int height;//区块高度
     private String blockId;//区块ID
     @JSONField(name="t_type")
     private int type;//交易类型
@@ -94,6 +93,7 @@ public class Transaction {
 
 
 
+
     /**
      "transaction": {
      "id": "343cfc15d931554f2f276846597b31fbeaf80774aed518643918f575dcebd915",
@@ -112,6 +112,7 @@ public class Transaction {
      "_version_": 1
      }
      */
+
     public  static  class  TransactionInfo{
         private String id;
         private int type;
@@ -123,6 +124,15 @@ public class Transaction {
         private String issuerId;
         @JSONField(name="_version_")
         private int version;
+        String message;
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
 
         public String getId() {
             return id;
@@ -483,11 +493,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public String getHeight() {
+    public int getHeight() {
         return height;
     }
 
-    public void setHeight(String height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 

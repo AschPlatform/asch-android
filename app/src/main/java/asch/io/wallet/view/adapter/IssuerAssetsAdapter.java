@@ -30,13 +30,13 @@ public class IssuerAssetsAdapter extends BaseQuickAdapter<IssuerAssets, IssuerAs
     protected void convert(ViewHolder viewHolder, IssuerAssets assets) {
 
         String name = assets.getName();
-        String subName = "";
-        if (name!=null&&name.contains(".")){
-            subName = name.substring(name.indexOf(".")+1);
-            name = name.substring(0,name.indexOf("."));
-        }
+//        String subName = "";
+//        if (name!=null&&name.contains(".")){
+//            subName = name.substring(name.indexOf(".")+1);
+//            name = name.substring(0,name.indexOf("."));
+//        }
         viewHolder.name_main.setText(name==null?"":name);
-        viewHolder.name_minor.setText(subName);
+//        viewHolder.name_minor.setText(subName);
         if (assets.getPrecision()!=0&&!TextUtils.isEmpty(assets.getMaximum())&&!TextUtils.isEmpty(assets.getQuantity())){
             viewHolder.precision_tv.setText(String.valueOf(assets.getPrecision())==null?"":String.valueOf(assets.getPrecision()));
             String max = assets.getMaximum();
@@ -55,9 +55,6 @@ public class IssuerAssetsAdapter extends BaseQuickAdapter<IssuerAssets, IssuerAs
     static class ViewHolder extends BaseViewHolder {
         @BindView(R.id.asset_name_tv)
         TextView name_main;
-
-        @BindView(R.id.asset_name_tv2)
-        TextView name_minor;
 
         @BindView(R.id.amount_tv)
         TextView amount_tv;

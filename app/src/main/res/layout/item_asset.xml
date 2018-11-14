@@ -22,30 +22,22 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/currency_icon"
         android:layout_marginLeft="10dp"
-        android:layout_above="@+id/center_line"
+        android:layout_centerVertical="true"
         android:textAppearance="?attr/textAppearanceListItem"
         android:textColor="#444444"
         android:textSize="18sp"
         android:text="XAS"
         />
-    <View
-        android:id="@+id/center_line"
-        android:layout_centerVertical="true"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        />
+
     <TextView
         android:id="@+id/balance_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/center_line"
         android:layout_alignParentRight="true"
-        android:layout_toRightOf="@id/currency_icon"
-        android:layout_marginLeft="10dp"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
         android:textColor="#666666"
-        android:textSize="13sp"
+        android:textSize="14sp"
         android:text="889"
         />
 

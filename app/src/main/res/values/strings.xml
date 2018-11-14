@@ -80,7 +80,7 @@
     <string name="check_order_success_content">请妥善保管您的助记词</string>
     <string name="account_del">请输入你的助记词，使用空格分离开</string>
     <string name="del_err">助记词不匹配，请重新检查后输入</string>
-    <string name="receive_info">*请将XAS充值到上述地址，该地址可用于接收XAS、ASCH链内资产、ASCH跨链资产</string>
+    <string name="receive_info">*请将%s充值到上述地址，该地址可用于接收XAS、ASCH链内资产、ASCH跨链资产</string>
     <string name="receive_multi_chain">*请将 %s充值到上述地址，该地址仅支持接收 %s，如果需要转入其他 token，请切换到相对应的 token，获取对应token的收款地址。</string>
 
 
@@ -206,8 +206,8 @@
     <string name="transaction">交易</string>
     <string name="transaction_type">交易类型</string>
     <string name="transaction_time">交易时间</string>
-    <string name="transaction_sender">发送者</string>
-    <string name="transaction_receiver">接受者</string>
+    <string name="transaction_sender">转出账户</string>
+    <string name="transaction_receiver">收款账户</string>
     <string name="transaction_money">金额</string>
     <string name="transaction_cost">交易费</string>
     <string name="sure_time">确认数</string>
@@ -429,6 +429,7 @@
     <string name="dialog_registe_issuer_content">注册资产需要先注册发行商身份</string>
     <string name="current_stock">当前存量：</string>
     <string name="precision_colon">精度：</string>
+    <string name="remain_issue_amount_colon">当前最大可发行量：</string>
     <string name="max_issue_amount_colon">最大发行量：</string>
     <string name="issue_time_colon">发行时间：</string>
     <string name="register_issuer_note">*注册发行商，将消耗100XAS</string>
@@ -439,7 +440,7 @@
     <string name="asset_name">资产名称</string>
     <string name="register_uiaasset_note">*注册资产需要消耗500XAS</string>
     <string name="hint_issue_amount">请输入本次要发行的数量</string>
-    <string name="issue_asset_cost_note">* 操作资产发行资产需要消耗0.1XAS</string>
+    <string name="issue_asset_cost_note">* 发行操作需要消耗0.1XAS</string>
     <string name="issue">发行</string>
     <string name="my_issue_assets">我发行的资产</string>
     <string name="deny">拒绝</string>
@@ -469,4 +470,5 @@
     <string name="withdraw_success">提现成功</string>
     <string name="amount_bigger_fee">提现金额需要大于手续费</string>
     <string name="enable">开启</string>
+    <string name="assets_list">资产列表</string>
 </resources>

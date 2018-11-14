@@ -3,6 +3,7 @@ package asch.io.wallet.view.fragment;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,11 @@ public class EditAccountRemarkFragment extends BaseFragment{
              public void onClick(View view) {
                     createAccount();
              }});
-        nicknameTv.setText(AccountsManager.getInstance().getCurrentAccount().getFullAccount().getAccount().getName());
+        String nickname = AccountsManager.getInstance().getCurrentAccount().getFullAccount().getAccount().getName();
+        if (TextUtils.isEmpty(nickname))
+            nicknameTv.setText(getString(R.string.not_set));
+        else
+            nicknameTv.setText(nickname);
         nameEt.setText(AccountsManager.getInstance().getCurrentAccount().getName());
         nameEt.selectAll();
 

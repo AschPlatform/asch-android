@@ -111,6 +111,11 @@ public class MineFragment extends BaseFragment implements MineContract.View,View
                 if (!section.isHeader){
                     MineItem item=section.t;
                     switch (item.getIcon()){
+                        case  R.mipmap.icon_myuser:
+                        {
+                            BaseActivity.start(getActivity(),AboutActivity.class,null);
+                        }
+                        break;
                         case R.mipmap.icon_anto:
                         {
                             Intent intent = new Intent(getActivity(), AccountsActivity.class);
@@ -167,11 +172,7 @@ public class MineFragment extends BaseFragment implements MineContract.View,View
                             BaseActivity.start(getActivity(),WebActivity.class,null);
                         }
                         break;
-                        case  R.mipmap.icon_myuser:
-                        {
-                            BaseActivity.start(getActivity(),AboutActivity.class,null);
-                        }
-                        break;
+
                         default:
                         {
                             BaseActivity.start(getActivity(), TodoActivity.class,null);

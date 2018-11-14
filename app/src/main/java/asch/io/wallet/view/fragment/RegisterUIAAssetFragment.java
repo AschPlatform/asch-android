@@ -7,6 +7,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -31,8 +32,10 @@ import butterknife.Unbinder;
 import so.asch.sdk.impl.Validation;
 
 
-public class RegisterUIAAssetFragment  extends BaseFragment implements RegisterAssetContract.View {
+public class RegisterUIAAssetFragment  extends BaseFragment implements RegisterAssetContract.View,View.OnTouchListener {
 
+    @BindView(R.id.issuer_name_count)
+    TextView nameCountTv;
     @BindView(R.id.issuer_name_et)
     EditText issuerNameEt;
     @BindView(R.id.asset_max)
@@ -138,11 +141,69 @@ public class RegisterUIAAssetFragment  extends BaseFragment implements RegisterA
 
             }
         });
+
+        issuerDetailEt.setOnTouchListener(this);
+        issuerNameEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int c = s.toString().length();
+                String amount = "/6";
+                String current = String.valueOf(c);
+                if (c>6){
+                    nameCountTv.setTextColor(Color.RED);
+                }else
+                    nameCountTv.setTextColor(Color.BLACK);
+
+                nameCountTv.setText(current+amount);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         presenter = new RegisterAssetPresenter(getContext(), this);
         return rootView;
     }
 
 
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        //触摸的是EditText并且当前EditText可以滚动则将事件交给EditText处理；否则将事件交由其父类处理
+        if ((view.getId() == R.id.issuer_detail_et && canVerticalScroll(issuerDetailEt))) {
+            view.getParent().requestDisallowInterceptTouchEvent(true);
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                view.getParent().requestDisallowInterceptTouchEvent(false);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * EditText竖直方向是否可以滚动
+     * @param editText  需要判断的EditText
+     * @return  true：可以滚动   false：不可以滚动
+     */
+    private boolean canVerticalScroll(EditText editText) {
+        //滚动的距离
+        int scrollY = editText.getScrollY();
+        //控件内容的总高度
+        int scrollRange = editText.getLayout().getHeight();
+        //控件实际显示的高度
+        int scrollExtent = editText.getHeight() - editText.getCompoundPaddingTop() -editText.getCompoundPaddingBottom();
+        //控件内容总高度与实际显示高度的差值
+        int scrollDifference = scrollRange - scrollExtent;
+
+        if(scrollDifference == 0) {
+            return false;
+        }
+
+        return (scrollY > 0) || (scrollY < scrollDifference - 1);
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

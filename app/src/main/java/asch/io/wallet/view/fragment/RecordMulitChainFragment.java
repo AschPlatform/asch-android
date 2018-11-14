@@ -84,6 +84,7 @@ public class RecordMulitChainFragment extends BaseFragment implements RecordMuli
                     Bundle bundle=new Bundle();
                     bundle.putString("transaction",json);
                     BaseActivity.start(getActivity(), TransactionDetailActivity.class,bundle);
+
                 }
             });
 

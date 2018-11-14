@@ -41,15 +41,18 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Object, AssetTran
             viewHolder.transactionTv.setText(transaction.getRecipientId());
             boolean isSender=getAccount().getAddress().equals(transaction.getSenderId());
             setTransferIcon(viewHolder.transferIcon,transaction.getType(),isSender);
+            if (isSender){
+                viewHolder.transationFee.setText(R.string.transaction_fee);
+            }else {
+                viewHolder.transationFee.setText("");
+            }
             // int resId=AppUtil.getResIdFromCode(Transaction.Type.fromCode(transaction.getType()));
             //String transactionType=context.getResources().getString(resId);
             //viewHolder.amountTv.setText(transactionType);
             viewHolder.amountTv.setText(transaction.getBanlanceShow(isSender));
             CharSequence ago= AppUtil.getDateTimeFromTimestamp(context, transaction.dateFromAschTimestamp().getTime());
             viewHolder.dateTv.setText(ago);
-            if (transaction.getFee()!=0){
-                viewHolder.transationFee.setText(R.string.transaction_fee);
-            }
+
         }else if(object instanceof Deposit){
             Deposit deposit = (Deposit)object;
             viewHolder.transactionTv.setText(deposit.getAddress());
@@ -84,6 +87,7 @@ public class AssetTransactionsAdapter extends BaseQuickAdapter<Object, AssetTran
     private void setTransferIcon(ImageView imageView, int type, boolean isSender){
         if ( TransactionType.basic_transfer.getCode()==type || TransactionType.UIATransferV2.getCode()==type){
             imageView.setImageResource(isSender?R.mipmap.icon_transfer_accounts:R.mipmap.icon_receivables);
+
             return;
         }
         imageView.setImageResource(R.mipmap.transfer_other_icon);

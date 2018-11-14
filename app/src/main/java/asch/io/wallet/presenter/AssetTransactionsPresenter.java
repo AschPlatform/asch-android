@@ -48,6 +48,7 @@ public class AssetTransactionsPresenter implements AssetTransactionsContract.Pre
         subscriptions.clear();
     }
 
+
     @Override
     public void loadGatewayAddress(String gateway,String address) {
 
