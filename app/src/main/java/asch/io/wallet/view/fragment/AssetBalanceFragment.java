@@ -121,8 +121,7 @@ public class AssetBalanceFragment extends BaseFragment implements AssetBalanceCo
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long itemId) {
                 Bundle bundle = new Bundle();
                 AschAsset asset = assetList.get(position);
-                String json = JSON.toJSONString(asset);
-                bundle.putString("balance", json);
+                bundle.putString("balance", asset.getName());
                 BaseActivity.start(getActivity(), AssetTransactionsActivity.class, bundle);
             }
         });

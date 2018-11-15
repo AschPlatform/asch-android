@@ -188,7 +188,7 @@ public interface UIA extends AschInterface {
     //secondSecret  string  Y   二级密码
     //返回参数说明：
     //success	boole	是否成功
-    AschResult transfer(String currency, String recipientId, long amount, String message, String secret, String secondSecret);
+    AschResult transfer(String currency, String recipientId, String amount, String message, String secret, String secondSecret);
 
     //资产注销
     //资产设置acl模式

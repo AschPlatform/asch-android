@@ -64,7 +64,7 @@ public class Main {
 
             //转账(金额为1XAS)
             result = AschSDK.Account.transfer("11705168753296944226",
-                    AschSDK.Helper.amountForCoins(1),
+                    String.valueOf(AschSDK.Helper.amountForCoins(1)),
                     /*"Transfer by Test" */
                     "  ", secret, secondSecret);
             System.out.println(result.getRawJson());

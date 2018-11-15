@@ -214,7 +214,7 @@ public class UIAService extends AschRESTService implements UIA {
 
 
     @Override
-    public AschResult transfer(String currency, String recipientId, long amount, String message, String secret, String secondSecret) {
+    public AschResult transfer(String currency, String recipientId, String amount, String message, String secret, String secondSecret) {
         try {
             Argument.notNullOrEmpty(currency, "invalid currency");
             Argument.require(Validation.isValidNicknameOrAddress(recipientId), "invalid recipientId");

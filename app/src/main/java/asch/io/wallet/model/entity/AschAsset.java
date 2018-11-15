@@ -4,6 +4,7 @@ import android.support.annotation.IntDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.math.BigDecimal;
 
 import asch.io.wallet.util.AppUtil;
 import io.realm.RealmObject;
@@ -326,10 +327,12 @@ public class AschAsset extends RealmObject {
     }
 
     public String getBalanceString(){
-        long longBalance=Long.parseLong(balance);
-        int preci=0;
-        preci=this.getPrecision();
-        return longBalance==0?"0":AppUtil.decimalFormat(AppUtil.decimalFromBigint(longBalance,preci));
+        try {
+            return AppUtil.getStringFromBigAmount(balance,precision);
+        }catch (Exception e){
+            return "";
+        }
+
     }
 
     public long getLongBalance(){

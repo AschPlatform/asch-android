@@ -103,7 +103,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        balance= (AschAsset) JSON.parseObject(getArguments().getString("balance"),AschAsset.class);
+        balance= AssetManager.getInstance().queryAschAssetByName(getArguments().getString("balance"));
         type = balance.getType();
     }
 
@@ -137,6 +137,8 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             lockLl.setVisibility(View.GONE);
             amountTv.setText(this.balance==null?"":this.balance.getBalanceString());
         }
+        if (amountTv.getText().toString().length()>10)
+            amountTv.setTextSize(16);
         assetTv.setText(balance.getName());
         iconIv.setImageResource(AppUtil.getIconIdByName(balance.getName()));
     }
@@ -230,8 +232,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
     public void onClick(View v) {
         if (v==transferBtn){
             Bundle bundle = getArguments();
-            String json =bundle.getString("balance");
-            AschAsset balance=JSON.parseObject(json,AschAsset.class);
+            String name =bundle.getString("balance");
             QRCodeURL qrCodeURL=new QRCodeURL();
             if (balance!=null){
                 qrCodeURL.setAddress("");
@@ -249,8 +250,6 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
             startActivity(intent);
         }else if(v==receiveBtn){
             Bundle bundle = getArguments();
-            String json =bundle.getString("balance");
-            AschAsset balance=JSON.parseObject(json,AschAsset.class);
             String currency = balance.getName();
             Bundle params=new Bundle();
             params.putString("currency",currency);
@@ -266,8 +265,7 @@ public class AssetTransactionsFragment extends BaseFragment implements AssetTran
 
         } else if (v.getId() == R.id.menu_withdraw) {
             Bundle bundle = getArguments();
-            String json =bundle.getString("balance");
-            AschAsset balance=JSON.parseObject(json,AschAsset.class);
+
             QRCodeURL qrCodeURL=new QRCodeURL();
             if (balance==null){
                 AppUtil.toastError(getContext(),getString(R.string.err_get_asset));

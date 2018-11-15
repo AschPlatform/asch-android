@@ -18,7 +18,7 @@ public interface AssetTransferContract {
 
     interface Presenter extends BasePresenter{
 
-        void transfer(String currency, String targetAddress, long amount, String message, String secret, String secondSecret,String password);
+        void transfer(String currency, String targetAddress, String amount, String message, String secret, String secondSecret,String password);
 
     }
 }

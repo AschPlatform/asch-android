@@ -16,4 +16,5 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="head_coin_size">54dp</dimen>
     <dimen name="btn_add">36dp</dimen>
+    <dimen name="transfer_top_height">130dp</dimen>
 </resources>

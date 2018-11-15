@@ -468,7 +468,9 @@
     <string name="fee">手续费</string>
     <string name="in_confirm">确认中</string>
     <string name="withdraw_success">提现成功</string>
-    <string name="amount_bigger_fee">提现金额需要大于手续费</string>
+    <string name="amount_bigger_fee">提现金额需要大于提现手续费</string>
     <string name="enable">开启</string>
     <string name="assets_list">资产列表</string>
+    <string name="not_enough_xas">转账需要0.1XAS手续费，请检查XAS余额</string>
+    <string name="err_precision">输入的金额精度不正确</string>
 </resources>

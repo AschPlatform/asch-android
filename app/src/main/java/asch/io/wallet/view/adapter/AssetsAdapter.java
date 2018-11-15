@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import asch.io.base.adapter.BaseRecyclerViewAdapter;
@@ -40,10 +41,17 @@ public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHol
         String currency = balance.getName();
         holder.currencyIconIv.setImageResource(AppUtil.getIconIdByName(currency));
         holder.assetNameTv.setText(balance.getName());
+        String amount = balance.getBalanceString();
+        if (amount.length()>8){
+            BigDecimal amountBd = new BigDecimal(amount);
+            amountBd = amountBd.setScale(8,BigDecimal.ROUND_DOWN);
+            amount = amountBd.stripTrailingZeros().toPlainString();
+        }
+
         if (balance.getName().equals(AppConstants.XAS_NAME))
             holder.balanceTv.setText(balance.getXasTotal());
         else
-            holder.balanceTv.setText(balance.getBalanceString());
+            holder.balanceTv.setText(amount);
     }
 
     @Override
@@ -56,7 +64,6 @@ public class AssetsAdapter extends BaseRecyclerViewAdapter<AssetsAdapter.ViewHol
         ImageView currencyIconIv;
         @BindView(R.id.asset_name_tv)
         TextView assetNameTv;
-
         @BindView(R.id.balance_tv)
         TextView balanceTv;
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.text.TextUtils;
 import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
@@ -57,6 +58,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
     private  static  final String TAG=AssetTransferFragment.class.getSimpleName();
 
     AssetTransferContract.Presenter presenter;
+
     @BindView(R.id.transfer_scroll)
     ScrollView mainSv;
     @BindView(R.id.target_et)
@@ -84,10 +86,11 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
 
     KProgressHUD hud;
     private AschAsset balanceRemain;
+    int precision;
     private QRCodeURL qrCodeURL;
     private String currency=null;
     private AssetTransferActivity.Action action;
-    long amount;
+    BigDecimal amount;
     String remark;
     public static AssetTransferFragment newInstance() {
         
@@ -134,6 +137,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         }
 
         this.balanceRemain=getBalance();
+        precision=balanceRemain.getPrecision();
         if (balanceRemain.getName().equals(AppConstants.XAS_NAME)){
             lockLl.setVisibility(View.VISIBLE);
             long locked = getAccount().getFullAccount().getAccount().getLockedAmount();
@@ -142,10 +146,12 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
             canUseTv.setText(balanceRemain.getBalanceString());
             balanceTv.setText(this.balanceRemain.getXasTotal());
         }else{
+
             lockLl.setVisibility(View.GONE);
             balanceTv.setText(this.balanceRemain==null?"":this.balanceRemain.getBalanceString());
         }
-
+        if (balanceTv.getText().toString().length()>10)
+            balanceTv.setTextSize(16);
 
 
         coinNameTv.setText(getBalance().getName());
@@ -238,25 +244,31 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                     return;
                 }
 
+                if (amountStr.contains(".")&&amountStr.substring(amountStr.indexOf(".")+1).length()>precision){
+                    AppUtil.toastError(getActivity(),getString(R.string.err_precision));
+                    return;
+                }
 
                 //余额校验
-                int precision=getBalance().getPrecision();
-                BigDecimal amountDecimal=new BigDecimal(amountStr);
-                MathContext mc=new MathContext(amountStr.length(), RoundingMode.HALF_UP);
-                amountDecimal=amountDecimal.multiply(new BigDecimal(10).pow(precision),mc);
-                amount = amountDecimal.longValue();
-                long remainBalance=balanceRemain!=null?balanceRemain.getLongBalance():-1;
+
+                amount=new BigDecimal(amountStr);
+                BigDecimal remainBd = new BigDecimal(balanceRemain.getBalanceString());
                 //XAS转账计算手续费判断，其他的余额可以全转
                 if (currency==AppConstants.XAS_NAME){
-                    if (remainBalance>=0 && remainBalance-0.1<amount){
+                    if (remainBd.subtract(new BigDecimal(0.1)).compareTo(amount)!=1){
                         AppUtil.toastError(getContext(),getString(R.string.money_not_enough));
                         return;
                     }
                 }else {
-                    if (remainBalance>=0 && remainBalance<amount){
+                    if (remainBd.compareTo(amount)!=1){
                         AppUtil.toastError(getContext(),getString(R.string.money_not_enough));
                         return;
                     }
+                    if (AssetManager.getInstance().queryAschAssetByName(AppConstants.XAS_NAME).getTrueBalance()<(float) 0.1){
+                        AppUtil.toastError(getContext(),getString(R.string.not_enough_xas));
+                        return;
+                    }
+
                 }
 
                 AssetTransferAlertDialog dialog = new AssetTransferAlertDialog(getContext(),targetAddress,
@@ -303,7 +315,7 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
                 AppUtil.toastError(getContext(),getString(R.string.error_failed_to_verify_signature));
                 return;
             }
-            presenter.transfer(currency,targetEt.getText().toString().trim(),amount,remark,null,hasSecondPasswd()?secondSecret:null,password);
+            presenter.transfer(currency,targetEt.getText().toString().trim(),AppUtil.scaleStringFromBigAmount(amount.toString(),precision),remark,null,hasSecondPasswd()?secondSecret:null,password);
             showHUD();
         }
     }

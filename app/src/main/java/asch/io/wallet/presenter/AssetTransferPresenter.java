@@ -56,7 +56,7 @@ public class AssetTransferPresenter implements AssetTransferContract.Presenter {
     }
 
     @Override
-    public void transfer(String currency, String targetAddress, long amount, String message, String secret, String secondSecret, String password) {
+    public void transfer(String currency, String targetAddress, String amount, String message, String secret, String secondSecret, String password) {
         String encryptSecret=getAccount().getEncryptSeed();
          Subscription subscription= Observable.create(new Observable.OnSubscribe<AschResult>(){
 

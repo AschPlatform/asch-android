@@ -96,7 +96,7 @@ public class TransactionBuilder {
 
     }
 
-    public TransactionInfo buildTransfer(String targetAddress, long amount, String message,
+    public TransactionInfo buildTransfer(String targetAddress, String amount, String message,
                                          String secret, String secondSecret) throws  SecurityException{
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
 
@@ -105,7 +105,7 @@ public class TransactionBuilder {
                 keyPair.getPublic())
 //                .setSenderPublicKey(getSecurity().encodePublicKey(keyPair.getPublic()))
                 .setMessage(message)
-                .setArgs(new String[]{ amount+"", targetAddress })
+                .setArgs(new String[]{ amount, targetAddress })
                 .calcFee();
 
         return signatureAndGenerateTransactionId(transaction, keyPair.getPrivate(), secondSecret);
@@ -214,7 +214,7 @@ public class TransactionBuilder {
 //    }
 
 
-    public TransactionInfo buildUIATransfer(String currency, long amount, String targetAddress, String message,
+    public TransactionInfo buildUIATransfer(String currency, String amount, String targetAddress, String message,
                                             String secret, String secondSecret) throws SecurityException{
         KeyPair keyPair = getSecurity().generateKeyPair(secret);
 

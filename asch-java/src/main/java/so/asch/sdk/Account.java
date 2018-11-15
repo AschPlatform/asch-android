@@ -131,7 +131,7 @@ public interface Account extends AschInterface {
     //返回参数说明：
     //名称	类型	说明
     //success	boole	是否成功获得response数据
-    AschResult transfer(String targetAddress, long amount, String message, String secret, String secondSecret);
+    AschResult transfer(String targetAddress, String amount, String message, String secret, String secondSecret);
 
     //接口地址：/api/accounts/top
     //请求方式：get

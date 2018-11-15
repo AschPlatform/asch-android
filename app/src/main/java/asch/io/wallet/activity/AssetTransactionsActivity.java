@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 
 import asch.io.base.util.ActivityUtils;
 import asch.io.wallet.R;
+import asch.io.wallet.accounts.AssetManager;
 import asch.io.wallet.contract.AssetTransactionsContract;
 import asch.io.wallet.model.entity.AschAsset;
 import asch.io.wallet.util.StatusBarUtil;
@@ -24,9 +25,8 @@ public class AssetTransactionsActivity extends TitleToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent=getIntent();
-        String json =intent.getExtras().getString("balance");
-        AschAsset balance=JSON.parseObject(json,AschAsset.class);
-        setTitle(balance.getName());
+        String name =intent.getExtras().getString("balance");
+        setTitle(name);
         fragment=AssetTransactionsFragment.newInstance();
         fragment.setArguments(intent.getExtras());
         ActivityUtils.addFragmentToActivity(getSupportFragmentManager(),fragment,R.id.fragment_container);

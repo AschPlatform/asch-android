@@ -464,5 +464,8 @@
     <string name="withdraw_success">Withdraw Success</string>
     <string name="enable">Enable</string>
     <string name="assets_list">Assets List</string>
-
+    <string name="remain_issue_amount_colon">Current maximum issue quantity:</string>
+    <string name="amount_bigger_fee">Withdrawal amount should be greater than withdrawal fee</string>
+    <string name="not_enough_xas">Transfer consumes 0.1 XAS, please check your XAS balance</string>
+    <string name="err_precision">Error precision</string>
 </resources>

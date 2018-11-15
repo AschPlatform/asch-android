@@ -111,22 +111,44 @@ public class MineFragment extends BaseFragment implements MineContract.View,View
                 if (!section.isHeader){
                     MineItem item=section.t;
                     switch (item.getIcon()){
-                        case  R.mipmap.icon_myuser:
-                        {
-                            BaseActivity.start(getActivity(),AboutActivity.class,null);
-                        }
-                        break;
+                        //账户设置
                         case R.mipmap.icon_anto:
                         {
                             Intent intent = new Intent(getActivity(), AccountsActivity.class);
                             startActivity(intent);
                         }
                         break;
+
+                        //安全设置
                         case R.mipmap.icon_safe:{
                             Intent intent = new Intent(getActivity(), SecureSettingActivity.class);
                             startActivity(intent);
                         }
                         break;
+
+                        //设置
+                        case  R.mipmap.icon_shez:
+                        {
+                            BaseActivity.start(getActivity(),AppSettingActivity.class,null);
+
+                        }
+                        break;
+
+                        //关于我们
+                        case  R.mipmap.icon_shiy:
+                        {
+                            BaseActivity.start(getActivity(),WebActivity.class,null);
+                        }
+                        break;
+
+                        //关于我们
+                        case  R.mipmap.icon_myuser:
+                        {
+                            BaseActivity.start(getActivity(),AboutActivity.class,null);
+                        }
+                        break;
+
+                        //##################### INVISIBLE #####################
 
                         case R.mipmap.my_bill:
                         {
@@ -161,17 +183,8 @@ public class MineFragment extends BaseFragment implements MineContract.View,View
                             BaseActivity.start(getActivity(),BlockBrowseActivity.class,null);
                         }
                         break;
-                        case  R.mipmap.icon_shez:
-                        {
-                            BaseActivity.start(getActivity(),AppSettingActivity.class,null);
 
-                        }
-                        break;
-                        case  R.mipmap.icon_shiy:
-                        {
-                            BaseActivity.start(getActivity(),WebActivity.class,null);
-                        }
-                        break;
+
 
                         default:
                         {

@@ -102,7 +102,7 @@ public class AppUtil {
             big = big.divide(new BigDecimal("10"));
         }
 
-        return big.toString();
+        return big.stripTrailingZeros().toPlainString();
 
     }
 
@@ -113,7 +113,7 @@ public class AppUtil {
             big = big.multiply(new BigDecimal("10"));
         }
 
-        return big.toString();
+        return big.stripTrailingZeros().toPlainString();
 
     }
 

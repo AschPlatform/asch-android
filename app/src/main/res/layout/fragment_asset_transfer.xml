@@ -19,87 +19,104 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="20dp"></View>
-        <android.support.constraint.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="wrap_content"
             android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="30dp"
-
-                android:layout_height="30dp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:src="@mipmap/icon_meony"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.021"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.051" />
-
-            <TextView
-                android:id="@+id/tag_text_balance"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/account_balance"
-                android:textColor="@color/black"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/imageView" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/transfer_balance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:text="0"
-                android:textColor="@color/main_color"
-                android:textSize="32sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="30dp"
 
-            <TextView
-                android:id="@+id/transfer_coin_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="18dp"
-                android:layout_marginStart="8dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/transfer_balance"
-                android:text="XAS"
-                android:textColor="@color/main_color"
-                android:textSize="15sp"
-                app:layout_constraintBottom_toBottomOf="@+id/transfer_balance"
-                app:layout_constraintStart_toEndOf="@+id/transfer_balance" />
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@mipmap/icon_meony"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.021"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.051" />
 
+                <TextView
+                    android:id="@+id/tag_text_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/account_balance"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/transfer_balance"
+                    android:layout_width="wrap_content"
+                    android:maxWidth="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="0"
+                    android:layout_marginHorizontal="20dp"
+                    android:textColor="@color/main_color"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    android:layout_centerInParent="true"
+                   />
+
+                <TextView
+                    android:id="@+id/transfer_coin_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_toRightOf="@id/transfer_balance"
+                    android:text="XAS"
+                    android:layout_alignBaseline="@id/transfer_balance"
+                    android:textColor="@color/main_color"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/transfer_balance"
+                    app:layout_constraintStart_toEndOf="@+id/transfer_balance" />
+
+
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_marginTop="7dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/transfer_balance">
+
                 <include layout="@layout/layout_lock"></include>
 
             </LinearLayout>
 
 
-        </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_marginTop="20dp"
