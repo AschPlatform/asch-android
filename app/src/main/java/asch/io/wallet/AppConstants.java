@@ -17,7 +17,7 @@ public class AppConstants {
     // public static final  String DEFAULT_NODE_URL="http://101.200.84.232:4097";//"http://192.168.2.124:4096";//
     public static final String DEFAULT_MAIN_NODE_URL ="http://mainnet.asch.cn"; //"http://192.168.1.78:7800";//"http://192.168.1.43:4096";//
     public static final String DEFAULT_TEST_NODE_URL ="http://testnet.asch.io";//"http://192.168.1.76:4096";//"http://47.94.37.201:4006";//http://testnet.cctime.org:4096";// "http://testnet.asch.io"; //"http://testnet.asch.so:4096";  //"http://47.93.137.170:4097";
-    public static final String DEFAULT_NODE_URL = DEFAULT_TEST_NODE_URL ;
+    public static final String DEFAULT_NODE_URL = DEFAULT_MAIN_NODE_URL ;
     //public static final  String DEFAULT_NODE_URL="http://testnet.asch.io:4096";
 //   public static final  String DEFAULT_MAGIC="594fe0f3";
 
@@ -31,8 +31,8 @@ public class AppConstants {
     public static final String USER_MANNUAL_URL_EN = "https://bbs.asch.io/topic/3785/user-manual-of-asch-phone-wallet";
 
     public static final String OFFICIAL_WEBSITE_URL = "http://asch.io/";
-    public static String UPDATE_URL = "http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/android/update.json";
-//    public static String UPDATE_URL = "http://asch-public.oss-cn-beijing.aliyuncs.com/Android/test/update.json";
+//    public static String UPDATE_URL = "http://asch-public.oss-cn-beijing.aliyuncs.com/appupdate/android/update.json";
+    public static String UPDATE_URL = "http://asch-public.oss-cn-beijing.aliyuncs.com/Android/test/update.json";
 
     public static final String BUGLY_APP_ID = "7e968af450";
 

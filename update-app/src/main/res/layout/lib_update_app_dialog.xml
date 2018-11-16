@@ -49,6 +49,7 @@
                     android:layout_height="wrap_content"
                     android:text="1，xxxxxxxx\n2，ooooooooo"
                     android:textColor="#666"
+                    android:autoLink="web"
                     android:textSize="14sp"/>
             </ScrollView>
 

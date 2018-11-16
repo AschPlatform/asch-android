@@ -5,7 +5,7 @@
     <!--<string name="transaction_cost">transaction costs</string>-->
     <!--<string name="depositary">depositary</string>-->
 
-    <string name="app_name">ASCH Wallet</string>
+    <string name="app_name">ASCH Wallet Pro</string>
     <string name="app_name_test">ASCH Wallet Test</string>
     <string name="term_service_title">
 	Risk statement about users’ secret key

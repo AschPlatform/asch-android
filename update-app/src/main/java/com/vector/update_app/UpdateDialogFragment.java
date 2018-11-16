@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
@@ -51,6 +52,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     private NumberProgressBar mNumberProgressBar;
     private ImageView mIvClose;
     private TextView mTitleTextView;
+    private final static int INSTALL_APK_REQUESTCODE = 66;
     /**
      * 回调
      */
@@ -255,26 +257,14 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         mIgnore.setOnClickListener(this);
     }
 
+
+
     @Override
     public void onClick(View view) {
         int i = view.getId();
         if (i == R.id.btn_ok) {
 
-            //权限判断是否有访问外部存储空间权限
-            int flag = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
-            if (flag != PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                    // 用户拒绝过这个权限了，应该提示用户，为什么需要这个权限。
-                    Toast.makeText(getActivity(), getString(R.string.storage_permission), Toast.LENGTH_LONG).show();
-                } else {
-                    // 申请授权。
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                }
-
-            } else {
-                installApp();
-                mUpdateOkButton.setVisibility(View.GONE);
-            }
+            checkInstallPermission();
 
         } else if (i == R.id.iv_close) {
 //            if (mNumberProgressBar.getVisibility() == View.VISIBLE) {
@@ -284,6 +274,39 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         } else if (i == R.id.tv_ignore) {
             AppUpdateUtils.saveIgnoreVersion(getActivity(), mUpdateApp.getNewVersion());
             dismiss();
+        }
+    }
+
+
+    private void checkInstallPermission(){
+        if (Build.VERSION.SDK_INT >= 26){
+            boolean installAllowed= getActivity().getPackageManager().canRequestPackageInstalls();
+            if (installAllowed) {
+                checkFileInputPermission();
+            } else {
+                //无权限 申请权限
+                requestPermissions( new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES}, INSTALL_APK_REQUESTCODE);
+            }
+        }else {
+            checkFileInputPermission();
+        }
+    }
+
+    private void checkFileInputPermission(){
+        //权限判断是否有访问外部存储空间权限
+        int flag = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (flag != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // 用户拒绝过这个权限了，应该提示用户，为什么需要这个权限。
+                Toast.makeText(getActivity(), getString(R.string.storage_permission), Toast.LENGTH_LONG).show();
+            } else {
+                // 申请授权。
+                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        } else {
+            installApp();
+            mUpdateOkButton.setVisibility(View.GONE);
         }
     }
 
@@ -301,6 +324,8 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         }
     }
 
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -314,6 +339,16 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                 Toast.makeText(getActivity(), TIPS, Toast.LENGTH_LONG).show();
                 dismiss();
 
+            }
+        }
+        if (requestCode==INSTALL_APK_REQUESTCODE) {
+            //有注册权限且用户允许安装
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                checkFileInputPermission();
+            } else {
+                //将用户引导至安装未知应用界面。
+                Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+                startActivityForResult(intent, 19900);
             }
         }
 
