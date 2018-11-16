@@ -27,6 +27,10 @@
         android:text="@string/gateway_asset"
         android:textColor="@color/black"
         android:layout_margin="10dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/divider_color"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/asset_manage_rcv_gateway"
