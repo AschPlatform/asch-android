@@ -414,12 +414,18 @@ public class AssetTransferFragment extends BaseFragment implements AssetTransfer
         }, 200);
     }
 
+//    private void parseQRUri(String uri) {
+//      this.parseQRUri(uri,true);
+//    }
     private void parseQRUri(String uri){
         try {
             if (Validation.isValidAddress(uri)){
                 qrCodeURL=new QRCodeURL();
                 qrCodeURL.setAmount("");
-                qrCodeURL.setCurrency(AschConst.CORE_COIN_NAME);
+                if (this.currency==null)
+                    qrCodeURL.setCurrency(AschConst.CORE_COIN_NAME);
+                else
+                    qrCodeURL.setCurrency(this.currency);
                 qrCodeURL.setAddress(uri);
             }else {
                 qrCodeURL=QRCodeURL.decodeQRCodeURL(uri);

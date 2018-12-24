@@ -92,8 +92,8 @@ project.ext {
             applicationIdTest    : "asch.io.wallet.test",
             minSdkVersion    : 16,
             targetSdkVersion : 26,
-            versionCode      : 17,
-            versionName      : "1.4.5"
+            versionCode      : 18,
+            versionName      : "1.4.6"
     ]
 
     aschsdk = [

@@ -238,8 +238,8 @@ public class MineFragment extends BaseFragment implements MineContract.View,View
         IdenticonGenerator.getInstance().generateBitmap(account.getPublicKey(), new IdenticonGenerator.OnIdenticonGeneratorListener() {
             @Override
             public void onIdenticonGenerated(Bitmap bmp) {
-
-                identicon.setImageBitmap(bmp);
+                if (identicon!=null && bmp!=null)
+                    identicon.setImageBitmap(bmp);
             }
         });
     }

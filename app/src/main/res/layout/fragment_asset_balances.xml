@@ -27,12 +27,12 @@
             android:background="@drawable/toolbar"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+            <!--android:src="@mipmap/asset_header_bg"-->
             <ImageView
                 android:id="@+id/parallax"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/asset_header_bg"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7"
                 android:fitsSystemWindows="true"/>
